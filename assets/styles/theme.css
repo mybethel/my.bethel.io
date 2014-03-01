@@ -6,13 +6,13 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-body.front {
+body.welcome {
   background: url(../images/background.jpg) no-repeat center center fixed #2F3439;
   background-size: cover;
   background-position: center;
 }
 
-#login-wrapper {
+#login-signup-wrapper {
   background: #FFF;
   padding: 20px;
   width: 360px;
@@ -29,7 +29,7 @@ body.front {
   border-radius: 4px;
 }
 
-#login-wrapper .logo {
+#login-signup-wrapper .logo {
   position: absolute;
   width: 120px;
   margin-top: -65px;
@@ -37,29 +37,29 @@ body.front {
   margin-left: -60px
 }
 
-#login-wrapper .user-login-form {
+#login-signup-wrapper .user-form {
   padding-top: 0;
 }
 
-#login-wrapper h2 {
+#login-signup-wrapper h2 {
   margin-top: 0;
   font-weight: 300;
   margin-bottom: 15px;
   text-align: center;
 }
 
-#login-wrapper .user-login-form .form-control {
+#login-signup-wrapper .user-form .form-control {
   padding: 10px;
   font-size: 16px;
   height: auto;
   position: relative;
 }
 
-#login-wrapper .user-login-form .form-item {
+#login-signup-wrapper .user-form .form-item {
   position: relative;
 }
 
-#login-wrapper .user-login-form i {
+#login-signup-wrapper .user-form i {
   position: absolute;
   z-index: 3;
   pointer-events: none;
@@ -67,21 +67,22 @@ body.front {
   color: #555;
 }
 
-#login-wrapper .user-login-form .form-control:focus {
+#login-signup-wrapper .user-form .form-control:focus {
   z-index: 2;
 }
 
-#login-wrapper .user-login-form .form-control {
+#login-signup-wrapper .user-form .form-control {
   padding-left: 35px;
 }
 
-#login-wrapper .user-login-form input[type="text"] {
+#login-signup-wrapper .user-form input[type="text"],
+#login-signup-wrapper .user-form input[type="email"] {
   margin-bottom: -1px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-#login-wrapper .user-login-form input[type="password"] {
+#login-signup-wrapper .user-form input[type="password"] {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

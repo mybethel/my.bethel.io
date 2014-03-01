@@ -35,7 +35,7 @@
     <!--STYLES END-->
   </head>
 
-  <body<% if (req.url === '/') { %> class="front"<% } %>>
+  <body<% if (req.url === '/' || req.url === '/user/new') { %> class="welcome"<% } %>>
     <%- body %>
 
 

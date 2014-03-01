@@ -28,6 +28,12 @@ module.exports = {
   	ministry: {
       model: 'ministry'
     }
+
+    toJSON: function() {
+      var obj = this.toObject();
+      delete password;
+      return obj;
+    }
     
   }
 
