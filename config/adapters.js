@@ -17,7 +17,7 @@ module.exports.adapters = {
   'default': 'mongo',
 
   mongo: {
-    module: 'sails-mongo'
+    module: 'sails-mongo',
     url: process.env.MONGO_URL
   },
 
