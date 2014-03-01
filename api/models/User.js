@@ -31,10 +31,18 @@ module.exports = {
 
     toJSON: function() {
       var obj = this.toObject();
-      delete password;
+      delete obj.password;
       return obj;
-    }
+    },
     
+  },
+
+  beforeCreate: function(values, next) {
+    require('bcrypt').hash(values.pass, 10, function passwordEncrypted(err, encryptedPassword) {
+      if (err) return next(err);
+      values.password = encryptedPassword;
+      next();
+    });
   }
 
 };
