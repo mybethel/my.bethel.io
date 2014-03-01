@@ -1,0 +1,2 @@
+# mybethel
+### a Sails application
