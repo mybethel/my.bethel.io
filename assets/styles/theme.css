@@ -15,7 +15,8 @@ body.welcome {
 #login-signup-wrapper {
   background: #FFF;
   padding: 20px;
-  width: 360px;
+  width: 95%;
+  max-width: 360px;
   height: 220px;
   position: absolute;
   left: 0;
