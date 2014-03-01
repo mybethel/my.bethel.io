@@ -13,4 +13,13 @@
     </div>
     <input type="hidden" name="_csrf" value="<%= _csrf %>" />
   </form>
+  <% if (flash && flash.err) { %>
+  <div class="errors">
+    <ul>
+    <% Object.keys(flash.err).forEach(function(error) { %>
+      <li><%- JSON.stringify(flash.err[error]) %></li>
+    <% }) %>
+    <ul>
+  </div>
+  <% } %>
 </div>

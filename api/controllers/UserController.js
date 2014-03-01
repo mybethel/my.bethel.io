@@ -23,9 +23,16 @@ module.exports = {
 
   create: function (req, res) {
     User.create(req.params.all(), function userCreated (err, user) {
-      if (err) return next(err);
+      if (err) {
+        req.session.flash = {
+          err: err
+        }
+
+        return res.redirect('/user/new');
+      }
 
       res.json(user);
+      req.session.flash = {};
     });
   },
 
