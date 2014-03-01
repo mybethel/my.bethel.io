@@ -1,9 +1,9 @@
 <div id="login-signup-wrapper">
   <img src="/images/logo.png" class="logo" />
   <h2 class="title" id="page-title">Welcome back!</h2>
-  <form class="user-form" action="/" method="post" accept-charset="UTF-8">
+  <form class="user-form" action="/session/create" method="post" accept-charset="UTF-8">
     <div class="form-item form-type-textfield form-item-name">
-      <i class="glyphicon glyphicon-user"></i><input autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="autofocus" class="form-control form-text" placeholder="Username" type="text" id="edit-name" name="name" value="" size="60" maxlength="60">
+      <i class="glyphicon glyphicon-user"></i><input autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="autofocus" class="form-control form-text" placeholder="Username" type="email" id="edit-name" name="name" value="" size="60" maxlength="60">
     </div>
     <div class="form-item form-type-password form-item-pass">
       <i class="glyphicon glyphicon-lock"></i><input class="form-control form-text" placeholder="Password" type="password" id="edit-pass" name="pass" size="60" maxlength="128">
@@ -11,5 +11,15 @@
     <div class="form-actions form-wrapper pull-right" id="edit-actions">
       <input class="btn-md btn btn-primary button form-submit" type="submit" id="edit-submit" name="op" value="Log in">
     </div>
+    <input type="hidden" name="_csrf" value="<%= _csrf %>" />
   </form>
+  <% if (flash && flash.err) { %>
+  <div class="errors">
+    <ul>
+    <% Object.keys(flash.err).forEach(function(error) { %>
+      <li><%- JSON.stringify(flash.err[error]) %></li>
+    <% }) %>
+    <ul>
+  </div>
+  <% } %>
 </div>

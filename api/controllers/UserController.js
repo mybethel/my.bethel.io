@@ -16,6 +16,10 @@
  */
 
 module.exports = {
+
+  login: function (req, res) {
+    res.view();
+  },
     
   new: function (req, res) {
     res.view();
