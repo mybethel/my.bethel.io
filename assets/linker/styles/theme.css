@@ -49,8 +49,24 @@ body {
   position: relative;
 }
 
+#login-wrapper .user-login-form .form-item {
+  position: relative;
+}
+
+#login-wrapper .user-login-form i {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  padding: 14px;
+  color: #555;
+}
+
 #login-wrapper .user-login-form .form-control:focus {
   z-index: 2;
+}
+
+#login-wrapper .user-login-form .form-control {
+  padding-left: 35px;
 }
 
 #login-wrapper .user-login-form input[type="text"] {
