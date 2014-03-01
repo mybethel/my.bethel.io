@@ -147,6 +147,12 @@ module.exports = function (grunt) {
           cwd: './assets',
           src: ['**/*.!(coffee)'],
           dest: '.tmp/public'
+        },
+          {
+          expand: true,
+          cwd: './assets/fonts',
+          src: ['**/*'],
+          dest: '.tmp/public/linker/fonts'
         }
         ]
       },
