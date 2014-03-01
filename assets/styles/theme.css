@@ -6,6 +6,12 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+body.front {
+  background: url(../images/background.jpg) no-repeat center center fixed #2F3439;
+  background-size: cover;
+  background-position: center;
+}
+
 #login-wrapper {
   background: #FFF;
   padding: 20px;
