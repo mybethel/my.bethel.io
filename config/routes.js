@@ -44,7 +44,12 @@ module.exports.routes = {
   '/welcome': {
     controller: 'user',
     action: 'welcome'
-  }
+  },
+
+  '/podcasts': {
+    controller: 'podcast',
+    action: 'list'
+  },
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options

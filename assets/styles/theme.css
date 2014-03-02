@@ -36,6 +36,10 @@ body.welcome {
   padding-left: 45px;
 }
 
+.navbar ul.dropdown-menu {
+  min-width: 100%;
+}
+
 .navbar a .fa {
   font-size: 20px;
 }
@@ -121,6 +125,20 @@ ul#main-menu li.active a {
   background: transparent;
 }
 
+ul#main-menu li.active:after {
+  content: " ";
+  display: block;
+  width: 0; 
+  height: 0; 
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  margin-top: -7px;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent; 
+  border-right:7px solid #f4f6f8; 
+}
+
 ul#main-menu li a .fa {
   color: #FFF;
   position: absolute;
@@ -184,6 +202,11 @@ section.page-wrap {
 
 .nav-collapsed section.page-wrap {
   margin-left: 58px;
+}
+
+section.page-wrap h1 {
+  margin-top: 0;
+  font-weight: 300;
 }
 
 #login-signup-wrapper {
