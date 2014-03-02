@@ -36,10 +36,52 @@
     <!--STYLES END-->
   </head>
 
-  <body<% if (req.url === '/' || req.url === '/login' || req.url === '/register' || req.url === '/welcome') { %> class="welcome"<% } %>>
+  <body<% if (req.url === '/login' || req.url === '/register' || req.url === '/welcome') { %> class="welcome"<% } %>>
+    <% if (session.authenticated && req.url != '/welcome') { %>
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/">Bethel</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href="#"><i class="fa fa-bars"></i></a></li>
+        </ul>
+        <% if (session.User.name) { %>
+        <ul class="nav navbar-nav navbar-right">
+          <li id="menu-icon"><a class="menu-icon" href="#"><i class="fa fa-bell"></i></a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.User.name %></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Locations</a></li>
+              <li class="divider"></li>
+              <li><a href="#">My Account</a></li>
+              <li><a href="/logout">Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+        <% } %>
+      </div>
+    </nav>
+
+    <nav role="navigation">
+      <ul id="main-menu" class="nav nav-pills nav-stacked">
+        <li class="active"><a href="/"><i class="fa fa-tachometer"></i>Dashboard</a></li>
+        <li><a href="/"><i class="fa fa-microphone"></i>Podcasts</a></li>
+        <li><a href="/"><i class="fa fa-mobile"></i>Mobile App</a></li>
+        <li><a href="/"><i class="fa fa-users" ></i>Volunteers</a></li>
+        <li><a href="/"><i class="fa fa-video-camera"></i>Live Streaming</a></li>
+        <li><a href="/"><i class="fa fa-money"></i>Giving</a></li>
+      </ul>
+    </nav>
+
+    <section class="page-wrap">
+    <% } %>
+
     <%- body %>
 
-
+    <% if (session.authenticated && req.url != '/welcome') { %>
+    </section>
+    <% } %>
 
     <!--
         Client-side Templates
@@ -97,6 +139,8 @@
     <script src="/js/jquery-2.1.0.js"></script>
     <script src="/js/jquery.validate.js"></script>
     <script src="/js/bootstrap.js"></script>
+    <script src="/js/ui.js"></script>
+    <script src="/js/user-validate copy.js"></script>
     <script src="/js/user-validate.js"></script>
     <!--SCRIPTS END-->
   </body>

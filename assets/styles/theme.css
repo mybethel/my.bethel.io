@@ -1,8 +1,16 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:700,300,100);
 
+html, body {
+  height:100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto; 
+}
+
 body {
-  padding: 0 !important;
+  padding: 0;
   background: #2F3439;
+  position: fixed;
   font-family: 'Lato', sans-serif;
 }
 
@@ -10,6 +18,160 @@ body.welcome {
   background: url(../images/background.jpg) no-repeat center center fixed #2F3439;
   background-size: cover;
   background-position: center;
+}
+
+.navbar {
+  background: #1591b5;
+  border-color: #106982;
+  border-radius: 0;
+  border: 0;
+  margin-bottom: 0;
+}
+
+.navbar a.dropdown-toggle {
+  height: 51px;
+}
+
+.navbar a .fa {
+  font-size: 20px;
+}
+
+.navbar-inverse .navbar-nav>.open>a,
+.navbar-inverse .navbar-nav>.open>a:hover,
+.navbar-inverse .navbar-nav>.open>a:focus {
+  background: #106982
+}
+
+.navbar-inverse .navbar-brand,
+.navbar-inverse .navbar-nav>li>a {
+  color: #F2F2F2;
+}
+
+.navbar .navbar-header .navbar-brand {
+  background: url(../images/logo.png) 0 13px no-repeat;
+  background-size: contain;
+  width: 130px;
+  overflow: hidden;
+  text-indent: -9999px;
+  margin-left: 0;
+}
+
+ul#main-menu {
+  position: absolute;
+  width: 200px;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-transition: width .7s ease-in-out;
+  -moz-transition: width .7s ease-in-out;
+  -o-transition: width .7s ease-in-out;
+  -ms-transition: width .7s ease-in-out;
+  transition: width .7s ease-in-out;
+}
+
+.nav-collapsed ul#main-menu {
+  width: 58px;
+}
+
+ul#main-menu li {
+  margin-top: 0;
+  white-space: nowrap;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+
+ul#main-menu li:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+ul#main-menu li a {
+  color: rgba(255,255,255,1);
+  font-weight: 300;
+  -webkit-transition: color .7s ease-in-out;
+  -moz-transition: color .7s ease-in-out;
+  -o-transition: color .7s ease-in-out;
+  -ms-transition: color .7s ease-in-out;
+  transition: color .7s ease-in-out;
+}
+
+.nav-collapsed ul#main-menu li a {
+  color: rgba(255,255,255,0);
+}
+
+ul#main-menu li a {
+  padding: 15px 25px 16.9px 48px; 
+}
+
+ul#main-menu li a:hover {
+  background: transparent;
+}
+
+ul#main-menu li.active a {
+  font-weight: 700;
+  background: transparent;
+}
+
+ul#main-menu li a .fa {
+  color: #FFF;
+  position: absolute;
+  left: 18px;
+  padding-right: 10px;
+  font-size: 18px;
+}
+
+.nav-collapsed ul#main-menu li a .fa {
+  color: #FFF;
+}
+
+ul#main-menu li a .fa.fa-microphone {
+  left: 20px;
+}
+
+ul#main-menu li a .fa.fa-mobile {
+  left: 20px;
+  margin-top: -2px;
+  font-size: 25px;
+}
+
+ul#main-menu li a .fa.fa-users,
+ul#main-menu li a .fa.fa-video-camera,
+ul#main-menu li a .fa.fa-money {
+  font-size: 16px;
+}
+
+ul#main-menu li a .fa.fa-video-camera,
+ul#main-menu li a .fa.fa-money {
+  margin-top: 1px;
+}
+
+ul#main-menu span {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  position: relative;
+  white-space: nowrap; 
+  padding: 15px 25px 16.9px 18px; 
+}
+
+section.page-wrap {
+  position: absolute; 
+  height: auto;
+  background: #FFF;
+  margin-left: 200px;
+  width: auto;
+  background: #f4f6f8;
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 50px;
+  -webkit-transition: margin-left .7s ease-in-out;
+  -moz-transition: margin-left .7s ease-in-out;
+  -o-transition: margin-left .7s ease-in-out;
+  -ms-transition: margin-left .7s ease-in-out;
+  transition: margin-left .7s ease-in-out;
+  padding: 20px;
+}
+
+.nav-collapsed section.page-wrap {
+  margin-left: 58px;
 }
 
 #login-signup-wrapper {
