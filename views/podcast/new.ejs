@@ -1,6 +1,15 @@
 <form class="form-horizontal" role="form" action="/podcast/create" method="post" accept-charset="UTF-8">
   <div class="dash-panel-left">
     <h1>New Podcast</h1>
+    <% if (flash && flash.err) { %>
+    <div class="errors">
+      <ul>
+      <% Object.keys(flash.err).forEach(function(error) { %>
+        <li><%- JSON.stringify(flash.err[error]) %></li>
+      <% }) %>
+      <ul>
+    </div>
+    <% } %>
     <div class="panel panel-default panel-top">
       <div class="panel-heading">
         <h3 class="panel-title">Basic Details</h3>
@@ -10,12 +19,6 @@
           <label for="podcastTitle" class="col-sm-3 control-label">Title</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Podcast Title">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-3 control-label">Author</label>
-          <div class="col-sm-9">
-            <p class="form-control-static"><%= session.Ministry.name %><input type="hidden" name="ministry" value="<%= session.Ministry.id %>" /></p>
           </div>
         </div>
         <div class="form-group">
@@ -30,9 +33,15 @@
             <textarea class="form-control" name="description" rows="4" id="podcastDescription" placeholder="A few paragraphs describing your podcast that will appear in iTunes."></textarea>
           </div>
         </div>
+        <div class="form-group">
+          <label for="podcastKeywords" class="col-sm-3 control-label">Copyright</label>
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="copyright" title="podcastCopyright" placeholder="&copy; <%= session.Ministry.name %>" />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="panel panel-default panel-top">
+    <div class="panel panel-default panel-bottom">
       <div class="panel-heading">
         <h3 class="panel-title">Type and Hosting</h3>
       </div>
@@ -78,18 +87,10 @@
     <div id="dropzone">
       <div class="tag"><i class="fa fa-cloud-upload"></i><br />Thumbnail</div>
     </div>
-    <% if (flash && flash.err) { %>
-    <div class="errors">
-      <ul>
-      <% Object.keys(flash.err).forEach(function(error) { %>
-        <li><%- JSON.stringify(flash.err[error]) %></li>
-      <% }) %>
-      <ul>
-    </div>
-    <% } %>
     <div id="actions">
       <a href="/podcasts" class="btn btn-block btn-default">Cancel</a> <button type="submit" class="btn btn-block btn-lg btn-primary">Create Podcast</button>
     </div>
   </div>
+  <input type="hidden" name="ministry" value="<%= session.Ministry.id %>" />
   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>

@@ -12,6 +12,7 @@
 }
 
 .podcast-list .thumb {
+  padding-left: 0;
   width: 100px;
 }
 
@@ -65,4 +66,8 @@
 
 .dash-panel-left .panel-top {
   margin-top: 20px;
+}
+
+.dash-panel-left .panel-bottom {
+  margin-bottom: 0;
 }

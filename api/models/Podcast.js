@@ -16,6 +16,11 @@ module.exports = {
       required: true
     },
 
+    type: {
+      type: 'integer',
+      required: true
+    },
+
     source: {
       type: 'integer',
       required: true
@@ -37,8 +42,19 @@ module.exports = {
       type: 'string'
     },
 
+    image: {
+      type: 'string'
+    },
+
     ministry: {
       model: 'ministry'
+    },
+
+    imageUrl: function(size) {
+      if (this.image) {
+        return 'http://cdn.bethel.io/' + size + '/' + this.image;
+      }
+      return 'http://cdn.bethel.io/' + size + '/DefaultPodcaster.png';
     },
 
 	},

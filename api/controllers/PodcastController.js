@@ -8,7 +8,13 @@
 module.exports = {
 
   list: function (req, res) {
-    res.view();
+    Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
+      if (err) return next(err);
+
+      res.view({
+        podcasts: podcasts
+      });
+    });
   },
 
   new: function (req, res) {

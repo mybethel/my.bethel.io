@@ -10,29 +10,31 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="odd">
+      <% _.each(podcasts, function(podcast) { %>
+      <tr>
         <td class="thumb">
-          <img class="image-style-thumbnail" typeof="foaf:Image" src="http://162.243.222.13/sites/default/files/styles/thumbnail/public/podcast/podcast_logo.jpg?itok=RbS3u_HD" width="100" height="100" alt="">
+          <img class="image-style-thumbnail" typeof="foaf:Image" src="http://cdn.bethel.io/100x100/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>" width="100" height="100" alt="">
         </td>
-        <td class="title"><a href="/node/4">Coastal Community Church Audio</a></td>
-        <td class="type">Bethel</td>
+        <td class="title"><a href="/podcast/<%= podcast.id %>"><%= podcast.name %></a></td>
+        <td class="type"><% if (podcast.type == 1) { %>Audio<% } else { %>Video<% } %></td>
         <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days.">347</span></1></td>
         <td class="operations">
           <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-default">Manage</button>
+            <a href="/podcast/<%= podcast.id %>" class="btn btn-sm btn-default">Manage</a>
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
               <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
-              <li><a href="#">Edit podcast</a></li>
-              <li><a href="#">Manage media</a></li>
+              <li><a href="/podcast/edit/<%= podcast.id %>">Edit podcast</a></li>
+              <li><a href="/podcast/<%= podcast.id %>">Manage media</a></li>
               <li class="divider"></li>
-              <li><a href="#">Remove podcast</a></li>
+              <li><a href="/podcast/delete/<%= podcast.id %>">Remove podcast</a></li>
             </ul>
           </div>
         </td>
       </tr>
+      <% }) %>
     </tbody>
   </table>
 </div>
