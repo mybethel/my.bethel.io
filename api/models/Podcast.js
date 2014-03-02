@@ -9,6 +9,32 @@ module.exports = {
 
 	attributes: {
 
+    name: {
+      type: 'string',
+      required: true
+    },
+
+    source: {
+      type: 'integer',
+      required: true
+    },
+
+    sourceKey: {
+      type: 'string',
+      required: true
+    },
+
+    description: {
+      type: 'text'
+    },
+
+    tags: {
+      type: 'array'
+    },
+
+    copyright: {
+      type: 'string'
+    }
 
 	}
 
