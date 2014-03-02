@@ -39,6 +39,11 @@ module.exports.routes = {
   '/logout': {
     controller: 'session',
     action: 'destroy'
+  },
+
+  '/welcome': {
+    controller: 'user',
+    action: 'welcome'
   }
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 

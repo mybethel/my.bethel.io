@@ -16,17 +16,18 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': ['flash', 'sessionAuth'],
+  '*': ['flash', 'sessionAuth', 'completeRegistration'],
 
   user: {
-  	'*': ['flash', 'sessionAuth'],
+  	'*': ['flash', 'sessionAuth', 'completeRegistration'],
   	'login': 'flash',
   	'new': 'flash',
-  	'create': 'flash'
+  	'create': 'flash',
+  	'welcome': ['flash', 'sessionAuth']
   },
 
   session: {
-  	'*': ['flash', 'sessionAuth'],
+  	'*': ['flash', 'sessionAuth', 'completeRegistration'],
   	'create': 'flash'
   }
 

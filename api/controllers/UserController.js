@@ -32,12 +32,22 @@ module.exports = {
           err: err
         }
 
-        return res.redirect('/user/new');
+        return res.redirect('/register');
       }
 
-      res.json(user);
+      req.session.authenticated = true;
+      req.session.User = user;
       req.session.flash = {};
+
+      return res.redirect('/welcome');
     });
+  },
+
+  welcome: function (req, res) {
+    var gravatar = require('gravatar');
+    var avatarUrl = gravatar.url(req.session.User.email, {s: 100, d: 'mm'});
+
+    res.view({avatar: avatarUrl});
   },
 
 

@@ -25,4 +25,17 @@ $(document).ready(function(){
       element.addClass('valid');
     }
   });
-})
+
+  $('#welcome-carousel').bind('slid.bs.carousel', function (e) {
+    if($('.carousel-inner .item:first').hasClass('active')) {
+      $(this).children('.left.carousel-control').fadeOut();
+      $(this).children('.right.carousel-control').fadeIn();
+    }
+    else if($('.carousel-inner .item:last').hasClass('active')) {
+      $(this).children('.carousel-control').fadeOut();
+    }
+    else {
+      $(this).children('.carousel-control').fadeIn();
+    }
+  });
+});
