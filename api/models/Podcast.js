@@ -7,6 +7,8 @@
 
 module.exports = {
 
+  schema: true,
+
 	attributes: {
 
     name: {
@@ -20,8 +22,7 @@ module.exports = {
     },
 
     sourceKey: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     description: {
@@ -34,8 +35,17 @@ module.exports = {
 
     copyright: {
       type: 'string'
-    }
+    },
 
-	}
+    ministry: {
+      model: 'ministry'
+    },
+
+	},
+
+  beforeCreate: function(values, next) {
+    delete values.id;
+    next();
+  },
 
 };

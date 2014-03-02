@@ -17,6 +17,11 @@ module.exports = {
   	users: {
       collection: 'user',
       via: 'ministry'
+    },
+
+    podcasts: {
+      collection: 'podcast',
+      via: 'ministry'
     }
     
   }
