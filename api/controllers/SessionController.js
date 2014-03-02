@@ -41,7 +41,18 @@ module.exports = {
         req.session.authenticated = true;
         req.session.User = user;
 
-        return res.redirect('/');
+        var ministryId = user.ministry;
+        if (ministryId) {
+          Ministry.findOneById(ministryId, function foundMinistry(err, ministry) {
+            if (err) return next(err);
+
+            if (ministry) {
+              req.session.Ministry = ministry;
+            }
+
+            return res.redirect('/');
+          });
+        }
       });
     })
   },

@@ -32,8 +32,20 @@ body.welcome {
   height: 51px;
 }
 
+.navbar a.dropdown-toggle.avatar {
+  padding-left: 45px;
+}
+
 .navbar a .fa {
   font-size: 20px;
+}
+
+.navbar a img.avatar {
+  width: 30px;
+  border-radius: 50%;
+  position: absolute;
+  top: 11px;
+  left: 15px;
 }
 
 .navbar-inverse .navbar-nav>.open>a,

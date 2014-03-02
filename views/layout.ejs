@@ -47,14 +47,20 @@
           <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href="#"><i class="fa fa-bars"></i></a></li>
         </ul>
         <% if (session.User.name) { %>
-        <ul class="nav navbar-nav navbar-right">
-          <li id="menu-icon"><a class="menu-icon" href="#"><i class="fa fa-bell"></i></a></li>
+          <ul class="nav navbar-nav navbar-right">
+            <% if (session.Ministry) { %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.Ministry.name %></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Locations</a></li>
+              </ul>
+            </li>
+            <% } %>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.User.name %></a>
+            <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" src="<%= session.User.avatar %>" /></a>
             <ul class="dropdown-menu">
-              <li><a href="#">Locations</a></li>
-              <li class="divider"></li>
               <li><a href="#">My Account</a></li>
+              <li class="divider"></li>
               <li><a href="/logout">Logout</a></li>
             </ul>
           </li>
@@ -140,7 +146,6 @@
     <script src="/js/jquery.validate.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/ui.js"></script>
-    <script src="/js/user-validate copy.js"></script>
     <script src="/js/user-validate.js"></script>
     <!--SCRIPTS END-->
   </body>

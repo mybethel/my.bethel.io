@@ -29,6 +29,10 @@ module.exports = {
       model: 'ministry'
     },
 
+    avatar: {
+      type: 'string'
+    },
+
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
@@ -41,8 +45,21 @@ module.exports = {
     require('bcrypt').hash(values.pass, 10, function passwordEncrypted(err, encryptedPassword) {
       if (err) return next(err);
       values.password = encryptedPassword;
+
+      var gravatar = require('gravatar');
+      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'});
+
       next();
     });
+  },
+
+  beforeUpdate: function(values, next) {
+    if (values.email) {
+      var gravatar = require('gravatar');
+      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'});
+    }
+
+    next();
   }
 
 };

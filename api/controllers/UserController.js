@@ -44,10 +44,7 @@ module.exports = {
   },
 
   welcome: function (req, res) {
-    var gravatar = require('gravatar');
-    var avatarUrl = gravatar.url(req.session.User.email, {s: 100, d: 'mm'});
-
-    res.view({avatar: avatarUrl});
+    res.view();
   },
 
 
