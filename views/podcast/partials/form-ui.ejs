@@ -1,0 +1,27 @@
+<% if (flash && flash.err) { %>
+<div class="errors">
+  <ul>
+  <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(flash.err[error]) %></li>
+  <% }) %>
+  <ul>
+</div>
+<% } %>
+<div class="panel panel-default panel-top">
+  <div class="panel-heading">
+    <h3 class="panel-title">Basic Details</h3>
+  </div>
+  <div class="panel-body">
+    <%- partial('sections/form-main') %>
+  </div>
+</div>
+<div class="panel panel-default panel-bottom">
+  <div class="panel-heading">
+    <h3 class="panel-title">Type and Hosting</h3>
+  </div>
+  <div class="panel-body">
+    <%- partial('sections/form-type') %>
+  </div>
+</div>
+<input type="hidden" name="ministry" value="<%= session.Ministry.id %>" />
+<input type="hidden" name="_csrf" value="<%= _csrf %>" />

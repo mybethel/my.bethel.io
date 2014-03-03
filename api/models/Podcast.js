@@ -35,7 +35,7 @@ module.exports = {
     },
 
     tags: {
-      type: 'array'
+      type: 'string'
     },
 
     copyright: {

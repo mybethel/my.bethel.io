@@ -1,0 +1,24 @@
+<div class="form-group">
+  <label for="podcastTitle" class="col-sm-3 control-label">Title</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Podcast Title"<% if (typeof podcast != 'undefined') { %> value="<%= podcast.name %>"<% } %> />
+  </div>
+</div>
+<div class="form-group">
+  <label for="podcastKeywords" class="col-sm-3 control-label">Keywords</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="tags" title="podcastKeywords" placeholder="Keywords" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.tags %>"<% } %> />
+  </div>
+</div>
+<div class="form-group">
+  <label for="podcastDescription" class="col-sm-3 control-label">Description</label>
+  <div class="col-sm-9">
+    <textarea class="form-control" name="description" rows="4" id="podcastDescription" placeholder="A few paragraphs describing your podcast that will appear in iTunes."<% if (typeof podcast != 'undefined') { %> value="<%= podcast.description %>"<% } %>></textarea>
+  </div>
+</div>
+<div class="form-group">
+  <label for="podcastKeywords" class="col-sm-3 control-label">Copyright</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="copyright" title="podcastCopyright" placeholder="&copy; <%= session.Ministry.name %>"<% if (typeof podcast != 'undefined') { %> value="<%= podcast.copyright %>"<% } %> />
+  </div>
+</div>

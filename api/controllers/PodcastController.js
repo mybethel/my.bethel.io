@@ -35,5 +35,30 @@ module.exports = {
       return res.redirect('/podcasts');
     });
   },
+
+  edit: function (req, res) {
+    Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
+      if (err) return next(err);
+
+      res.view({
+        podcast: podcast
+      });
+    });
+  },
+
+  update: function(req, res) {
+    Podcast.update(req.param('id'), req.params.all(), function podcastUpdated(err) {
+      if (err) {
+        req.session.flash = {
+          err: err
+        }
+
+        return res.redirect('/podcast/edit/' + req.param('id'));
+      }
+      req.session.flash = {};
+
+      return res.redirect('/podcast/' + req.param('id'));
+    })
+  }
 	
 };
