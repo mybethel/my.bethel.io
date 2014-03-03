@@ -15,19 +15,19 @@
         <td class="thumb">
           <img class="image-style-thumbnail" typeof="foaf:Image" src="http://cdn.bethel.io/100x100/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>" width="100" height="100" alt="">
         </td>
-        <td class="title"><a href="/podcast/<%= podcast.id %>"><%= podcast.name %></a></td>
+        <td class="title"><a href="/podcast/show/<%= podcast.id %>"><%= podcast.name %></a></td>
         <td class="type"><% if (podcast.type == 1) { %>Audio<% } else { %>Video<% } %></td>
         <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days.">347</span></1></td>
         <td class="operations">
           <div class="btn-group">
-            <a href="/podcast/<%= podcast.id %>" class="btn btn-sm btn-default">Manage</a>
+            <a href="/podcast/show/<%= podcast.id %>" class="btn btn-sm btn-default">Manage</a>
             <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
               <span class="caret"></span>
               <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right" role="menu">
               <li><a href="/podcast/edit/<%= podcast.id %>">Edit podcast</a></li>
-              <li><a href="/podcast/<%= podcast.id %>">Manage media</a></li>
+              <li><a href="/podcast/show/<%= podcast.id %>">Manage media</a></li>
               <li class="divider"></li>
               <li><a href="/podcast/delete/<%= podcast.id %>">Remove podcast</a></li>
             </ul>

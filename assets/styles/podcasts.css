@@ -64,10 +64,18 @@
   padding: 20px;
 }
 
+#actions.actions-top {
+  position: relative;
+}
+
 .dash-panel-left .panel-top {
   margin-top: 20px;
 }
 
 .dash-panel-left .panel-bottom {
   margin-bottom: 0;
+}
+
+.dash-panel-right img.thumbnail-sidebar {
+  width: 100%;
 }

@@ -1,0 +1,12 @@
+<div class="dash-panel-left">
+  <h1><%= podcast.name %></h1>
+  <p><%= podcast.description %></p>
+  <p class="text-muted"><%= podcast.copyright %></p>
+</div>
+<div class="dash-panel-right">
+  <div id="actions" class="actions-top">
+    <a href="/podcast/edit/<%= podcast.id %>" class="btn btn-block btn-default">Edit Podcast</a>
+    <button type="submit" class="btn btn-block btn-primary">View Podcast</button>
+  </div>
+  <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>" alt="">
+</div>

@@ -57,8 +57,18 @@ module.exports = {
       }
       req.session.flash = {};
 
-      return res.redirect('/podcast/' + req.param('id'));
+      return res.redirect('/podcast/show/' + req.param('id'));
     })
-  }
+  },
+
+  show: function (req, res) {
+    Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
+      if (err) return next(err);
+
+      res.view({
+        podcast: podcast
+      });
+    });
+  },
 	
 };
