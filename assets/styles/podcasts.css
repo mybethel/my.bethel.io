@@ -39,6 +39,19 @@
 
 .podcast-media td.operations {
   vertical-align: middle;
+  width: 80px;
+  text-align: right;
+}
+
+.podcast-media-edit td {
+  padding: 0 !important;
+  border-top: 0 !important;
+}
+
+.podcast-media-edit td form {
+  padding: 8px;
+  padding-top: 23px;
+  display: none;
 }
 
 #dropzone {
