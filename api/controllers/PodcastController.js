@@ -65,7 +65,7 @@ module.exports = {
     Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
       if (err) return next(err);
 
-      PodcastMedia.find({podcast: podcast.id}, function foundMedia(err, media) {
+      PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
         if (err) return next(err);
 
         res.view({
