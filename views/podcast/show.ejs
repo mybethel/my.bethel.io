@@ -10,7 +10,7 @@
       <table class="table table-hover podcast-media">
         <tbody>
           <% _.each(podcastMedia, function(media) { %>
-          <tr>
+          <tr<% if (!media.name || !media.description) { %> class="warning"<% } %>>
             <td>
               <h4><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></h4>
               <small class="text-muted"><%= media.date.toDateString() %></small>
