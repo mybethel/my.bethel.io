@@ -65,8 +65,13 @@ module.exports = {
     Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
       if (err) return next(err);
 
-      res.view({
-        podcast: podcast
+      PodcastMedia.find({podcast: podcast.id}, function foundMedia(err, media) {
+        if (err) return next(err);
+
+        res.view({
+          podcast: podcast,
+          podcastMedia: media
+        });
       });
     });
   },

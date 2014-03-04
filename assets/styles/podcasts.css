@@ -29,6 +29,18 @@
   width: 120px;
 }
 
+.podcast-media {
+  margin-bottom: 0;
+}
+
+.podcast-media tr:first-child td {
+  border-top: none;
+}
+
+.podcast-media td.operations {
+  vertical-align: middle;
+}
+
 #dropzone {
   position: relative;
   border: 5px dashed #FFF;
