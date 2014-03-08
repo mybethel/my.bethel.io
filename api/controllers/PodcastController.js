@@ -81,5 +81,28 @@ module.exports = {
       });
     });
   },
+
+  feed: function (req, res) {
+    Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
+      if (err) return next(err);
+
+      Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
+        if (err) return next(err);
+
+        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
+          if (err) return next(err);
+
+          res.header('Content-Type', 'text/xml; charset=UTF-8');
+
+          res.view({
+            layout: 'rss',
+            podcast: podcast,
+            ministry: ministry,
+            podcastMedia: media
+          });
+        });
+      });
+    });
+  },
 	
 };

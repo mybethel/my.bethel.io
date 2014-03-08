@@ -1,0 +1,37 @@
+  <title><%= podcast.name %></title>
+  <link>http://www.bethel.io</link>
+  <language>en-us</language>
+  <copyright><%= podcast.copyright %></copyright>
+  <description>
+  <%= podcast.description %>
+  </description>
+  <itunes:owner>
+    <itunes:name><%= ministry.name %></itunes:name>
+    <itunes:email><%= ministry.email %></itunes:email>
+  </itunes:owner>
+  <itunes:summary>
+  <%= podcast.description %>
+  </itunes:summary>
+  <itunes:author><%= ministry.name %></itunes:author>
+  <itunes:explicit>no</itunes:explicit>
+  <itunes:image href="http://cdn.bethel.io/1400x1400/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>"/>
+  <itunes:keywords/>
+  <itunes:category text="Religion &amp; Spirituality">
+    <itunes:category text="Christianity"/>
+  </itunes:category>
+  <% _.each(podcastMedia, function(media) { %>
+  <item>
+    <title><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></title>
+    <pubDate><%= media.date.getMonth() + 1 %>-<%= media.date.getDate() %>-<%= media.date.getFullYear() %></pubDate>
+    <guid isPermaLink="false"><%= media.url %></guid>
+    <itunes:author><%= ministry.name %></itunes:author><% if (media.description) { %>
+    <description>
+      <%= media.description %>
+    </description><% } %><% if (media.duration) { %>
+    <itunes:duration><%= media.duration %></itunes:duration><% } %>
+    <enclosure url="<%= media.url %>" length="<%= media.size %>" type="audio/mp3"/>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:block>no</itunes:block>
+  </item>
+  <% }) %>
+  <atom:link href="http://my.bethel.io/podcast/feed/<%= podcast.id %>" rel="self" type="application/rss+xml"/>

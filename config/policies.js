@@ -19,7 +19,6 @@ module.exports.policies = {
   '*': ['flash', 'sessionAuth', 'completeRegistration'],
 
   user: {
-  	'*': ['flash', 'sessionAuth', 'completeRegistration'],
   	'login': 'flash',
   	'new': 'flash',
   	'create': 'flash',
@@ -27,8 +26,11 @@ module.exports.policies = {
   },
 
   session: {
-  	'*': ['flash', 'sessionAuth', 'completeRegistration'],
   	'create': 'flash'
+  },
+
+  podcast: {
+    'feed': true
   }
 
   /*
