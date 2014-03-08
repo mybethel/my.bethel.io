@@ -29,7 +29,9 @@
     "aws-sdk": "~2.0.0-rc10",
     "string": "~1.8.0",
     "cron": "~1.0.3",
-    "time": "~0.10.0"
+    "time": "~0.10.0",
+    "crypto": "0.0.3",
+    "moment": "~2.5.1"
   },
   "scripts": {
     "start": "node app.js",

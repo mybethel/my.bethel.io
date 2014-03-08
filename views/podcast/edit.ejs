@@ -1,12 +1,13 @@
-<form class="form-horizontal" role="form" action="/podcast/update/<%= podcast.id %>" method="post" accept-charset="UTF-8">
+<form class="form-horizontal sidebar-form" role="form" action="/podcast/update/<%= podcast.id %>" method="post" accept-charset="UTF-8">
   <div class="dash-panel-left">
     <h1>Edit Podcast</h1>
     <%- partial('partials/form-ui') %>
   </div>
-  <div class="dash-panel-right">
-    <%- partial('partials/form-sidebar') %>
-    <div id="actions">
-      <a href="/podcast/show/<%= podcast.id %>" class="btn btn-block btn-default">Cancel</a> <button type="submit" class="btn btn-block btn-lg btn-primary">Save Changes</button>
-    </div>
-  </div>
 </form>
+<div class="dash-panel-right">
+  <%- partial('partials/form-sidebar') %>
+  <div id="actions">
+    <a href="/podcast/show/<%= podcast.id %>" class="btn btn-block btn-default">Cancel</a>
+    <button type="submit" class="btn btn-block btn-lg btn-primary sidebar-submit">Save Changes</button>
+  </div>
+</div>

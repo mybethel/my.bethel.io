@@ -18,7 +18,10 @@ module.exports = {
   },
 
   new: function (req, res) {
-    res.view();
+    uploadForm = S3Upload.prepare('podcast/images');
+    res.view({
+      s3form: uploadForm
+    });
   },
 
   create: function (req, res) {
@@ -40,7 +43,10 @@ module.exports = {
     Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
       if (err) return next(err);
 
+      uploadForm = S3Upload.prepare('images/podcast');
+    
       res.view({
+        s3form: uploadForm,
         podcast: podcast
       });
     });

@@ -54,21 +54,28 @@
   display: none;
 }
 
-#dropzone {
+#upload-widget #dropzone {
+  text-align: center;
+}
+
+#upload-widget.dropzone #dropzone {
   position: relative;
   border: 5px dashed #FFF;
   border-radius: 20px;
   color: white;
   font-size: 30px;
   margin: 50px auto;
-  font-weight: 100;
-  text-align: center;
   width: 70%;
   height: 0;
   padding-bottom: 70%;
 }
 
 #dropzone .tag {
+  display: none;
+}
+
+#upload-widget.dropzone #dropzone .tag {
+  display: block;
   padding-top: 50%;
   margin-top: -60px;
   height: 120px;
@@ -78,6 +85,20 @@
   font-size: 100px;
   margin-bottom: -20px;
   opacity: 0.2;
+}
+
+#upload-widget #dropzone .fileinput-button {
+  margin-top: -100px;
+}
+
+#upload-widget.dropzone #dropzone .fileinput-button {
+  margin-top: 100px;
+}
+
+#upload-widget.dropzone #dropzone .progress {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 100px;
 }
 
 #actions {
