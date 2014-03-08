@@ -22,14 +22,14 @@
   <% _.each(podcastMedia, function(media) { %>
   <item>
     <title><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></title>
-    <pubDate><%= media.date.getMonth() + 1 %>-<%= media.date.getDate() %>-<%= media.date.getFullYear() %></pubDate>
-    <guid isPermaLink="false"><%= media.url %></guid>
+    <pubDate><%= media.date.toUTCString() %></pubDate>
+    <guid isPermaLink="false"><%= encodeURI(media.url) %></guid>
     <itunes:author><%= ministry.name %></itunes:author><% if (media.description) { %>
     <description>
       <%= media.description %>
     </description><% } %><% if (media.duration) { %>
     <itunes:duration><%= media.duration %></itunes:duration><% } %>
-    <enclosure url="<%= media.url %>" length="<%= media.size %>" type="audio/mp3"/>
+    <enclosure url="<%= encodeURI(media.url) %>" length="<%= media.size %>" type="audio/mp3"/>
     <itunes:explicit>no</itunes:explicit>
     <itunes:block>no</itunes:block>
   </item>
