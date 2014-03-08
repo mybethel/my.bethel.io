@@ -19,6 +19,7 @@
   <itunes:category text="Religion &amp; Spirituality">
     <itunes:category text="Christianity"/>
   </itunes:category>
+  <atom:link href="http://my.bethel.io/podcast/feed/<%= podcast.id %>" rel="self" type="application/rss+xml"/>
   <% _.each(podcastMedia, function(media) { %>
   <item>
     <title><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></title>
@@ -34,4 +35,3 @@
     <itunes:block>no</itunes:block>
   </item>
   <% }) %>
-  <atom:link href="http://my.bethel.io/podcast/feed/<%= podcast.id %>" rel="self" type="application/rss+xml"/>
