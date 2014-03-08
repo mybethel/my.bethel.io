@@ -81,6 +81,11 @@
   height: 120px;
 }
 
+#upload-widget .progress,
+#upload-widget img.thumbnail-sidebar {
+  display: none;
+}
+
 #dropzone .tag .fa {
   font-size: 100px;
   margin-bottom: -20px;

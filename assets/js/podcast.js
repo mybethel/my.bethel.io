@@ -11,8 +11,6 @@ jQuery(document).ready(function($) {
     });
   });
 
-  $('#upload-widget .progress').hide();
-  $('#upload-widget img.thumbnail-sidebar').hide();
   $('#file-upload').fileupload({
     url: $(this).attr('action'),
     type: 'POST',
