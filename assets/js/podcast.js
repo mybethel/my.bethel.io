@@ -4,12 +4,31 @@ jQuery(document).ready(function($) {
   });
 
   $('.media-edit-button').click(function() {
-    ($(this).text() == 'Edit') ? $(this).text('Cancel') : $(this).text('Edit');
+    if ($(this).text() == 'Cancel') {
+      var episodeTitle = $(this).closest('tr').find('h4');
+      episodeTitle.text(episodeTitle.attr('value'));
+      $(this).text('Edit');
+    } else {
+      $(this).text('Cancel');
+    }
     $(this).closest('tr').next().find('form').slideToggle()
     $(this).closest('tr').next().find('.episode-date').datepicker({
       format: 'm-d-yyyy',
     });
   });
+
+  var updateMediaBinding = function(element) {
+    var binding = '.' + $(this).attr('binding') + ' h4';
+
+    if ($(this).val()) {
+      $(binding).text($(this).val());
+    } else {
+      $(binding).text($(binding).attr('value'));
+    }
+  }
+
+  $('.podcast-media-edit #episodeTitle').keyup(updateMediaBinding);
+  $('.podcast-media-edit #episodeTitle').change(updateMediaBinding);
 
   $('#file-upload').fileupload({
     url: $(this).attr('action'),

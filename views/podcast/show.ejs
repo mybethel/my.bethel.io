@@ -10,9 +10,9 @@
       <table class="table table-hover podcast-media">
         <tbody>
           <% _.each(podcastMedia, function(media) { %>
-          <tr<% if (!media.name || !media.description) { %> class="warning"<% } %>>
+          <tr<% if (!media.name || !media.description) { %> class="warning <%= media.id %>"<% } %>>
             <td>
-              <h4><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></h4>
+              <h4 value="<% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %>"><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></h4>
               <small class="text-muted"><%= media.date.toDateString() %></small>
             </td>
             <td class="operations"><button class="btn btn-sm btn-default media-edit-button">Edit</button></td>
@@ -23,7 +23,7 @@
                 <div class="form-group">
                   <label for="episodeTitle" class="col-sm-3 control-label">Episode</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="name" id="episodeTitle" placeholder="Episode Title" value="<% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %>" />
+                    <input type="text" class="form-control" name="name" id="episodeTitle" binding="<%= media.id %>" placeholder="Episode Title" value="<% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %>" />
                   </div>
                 </div>
                 <div class="form-group">
