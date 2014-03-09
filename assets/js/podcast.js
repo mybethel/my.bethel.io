@@ -39,11 +39,12 @@ jQuery(document).ready(function($) {
 
       if (data.files && data.files[0]) {
         $('#upload-widget').removeClass('dropzone');
-        $('#upload-widget img.thumbnail-sidebar').attr('src', 'http://cdn.bethel.io/400x400/tmp/podcast/' + data.files[0].name);
+        $('#upload-widget img.thumbnail-sidebar').attr('src', 'http://cdn.bethel.io/400x400/podcast/tmp/' + data.files[0].name);
         $('#upload-widget img.thumbnail-sidebar').fadeIn();
         $('.fileinput-button').removeClass('btn-success')
         $('.fileinput-button').addClass('btn-default');
         $('.fileinput-button span').text('Replace existing thumbnail...');
+        $('input[name=temporaryImage]').attr('value', data.files[0].name);
       }
     }
   });

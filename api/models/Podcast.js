@@ -42,6 +42,10 @@ module.exports = {
       type: 'string'
     },
 
+    temporaryImage: {
+      type: 'string'
+    },
+
     image: {
       type: 'string'
     },
@@ -61,6 +65,26 @@ module.exports = {
 
   beforeCreate: function(values, next) {
     delete values.id;
+    next();
+  },
+
+  afterCreate: function(values, next) {
+    if (values.temporaryImage) {
+      var image = S3Upload.removeTemp('images/podcast', values.temporaryImage, values.id);
+      Podcast.update(values.id, {image: image}, function podcastUpdated(err) {
+        if (err) console.log(err);
+      });
+    }
+
+    next();
+  },
+
+  beforeUpdate: function(values, next) {
+    if (values.temporaryImage) {
+      values.image = S3Upload.removeTemp('images/podcast', values.temporaryImage, values.id);
+      delete values.temporaryImage;
+    }
+
     next();
   },
 
