@@ -1,5 +1,5 @@
-<div id="upload-widget" class="dropzone">
-  <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/DefaultPodcaster.png" />
+<div id="upload-widget"<% if (typeof podcast == 'undefined' || !podcast.image) { %> class="dropzone"<% } %>>
+  <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/<% if (typeof podcast != 'undefined' && podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>" />
   <form action="http://cloud.bethel.io.s3.amazonaws.com/" method="post" enctype="multipart/form-data" id="file_upload">
     <input type="hidden" name="key" value="<%= s3form.bucket %>/${filename}" />
     <input type="hidden" name="AWSAccessKeyId" value="<%= s3form.key %>" />
@@ -10,9 +10,9 @@
     <div id="file-upload">
       <div id="dropzone">
         <div class="tag"><i class="fa fa-cloud-upload"></i></div>
-        <span class="btn btn-success fileinput-button">
+        <span class="btn <% if (typeof podcast == 'undefined' || !podcast.image) { %>btn-success<% } else { %>btn-default<% } %> fileinput-button">
           <i class="glyphicon glyphicon-plus"></i>
-          <span>Upload thumbnail...</span>
+          <span><% if (typeof podcast == 'undefined' || !podcast.image) { %>Upload image...<% } else { %>Replace existing image...<% } %></span>
           <input id="fileupload" type="file" name="file" />
         </span>
         <div class="progress progress-striped active" style="display: none;">

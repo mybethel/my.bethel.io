@@ -43,7 +43,7 @@ jQuery(document).ready(function($) {
         $('#upload-widget img.thumbnail-sidebar').fadeIn();
         $('.fileinput-button').removeClass('btn-success')
         $('.fileinput-button').addClass('btn-default');
-        $('.fileinput-button span').text('Replace existing thumbnail...');
+        $('.fileinput-button span').text('Replace existing image...');
         $('input[name=temporaryImage]').attr('value', data.files[0].name);
       }
     }

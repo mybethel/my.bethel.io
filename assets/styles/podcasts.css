@@ -82,7 +82,7 @@
 }
 
 #upload-widget .progress,
-#upload-widget img.thumbnail-sidebar {
+#upload-widget.dropzone img.thumbnail-sidebar {
   display: none;
 }
 
