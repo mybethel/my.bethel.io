@@ -9,6 +9,18 @@ module.exports = {
 
 	attributes: {
 
+    name: {
+      type: 'string',
+      required: true
+    },
+
+    date: {
+      type: 'date',
+    },
+
+    description: {
+      type: 'text'
+    },
 
 	}
 

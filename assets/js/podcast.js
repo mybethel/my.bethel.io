@@ -11,12 +11,20 @@ jQuery(document).ready(function($) {
       $(this).closest('tr').next().find('form').slideToggle();
     } else {
       $(this).closest('tr').next().find('td').load('/podcastmedia/edit/' + $(this).data('source') + ' .ajax-loaded', function() {
-        $(this).find('form').slideToggle();
+        var podcastForm = $(this).find('form');
+        podcastForm.slideToggle();
         $(this).find('.episode-date').datepicker({
           format: 'm-d-yyyy',
         });
         $('.podcast-media-edit #episodeTitle').keyup(updateMediaBinding);
         $('.podcast-media-edit #episodeTitle').change(updateMediaBinding);
+        podcastForm.ajaxForm(function() {
+          podcastForm.slideToggle();
+          podcastForm.closest('tr').prev().find('.media-edit-button').text('Edit');
+          if ($('#episodeTitle', podcastForm).val() && $('#episodeDescription', podcastForm).val()) {
+            podcastForm.closest('tr').prev().removeClass('warning');
+          }
+        });
       });
       $(this).text('Cancel');
     }
