@@ -22,11 +22,9 @@ exports.sync = function(options) {
       do {              
         client.get('/api/v2/' + podcast.sourceKey + '/videos.json?page=' + page, function(err, req, res, obj) {
           obj.forEach(function(video) {
-            if (!video.tags) {
-              sails.log('Skipping ' + video.title + ' because no tags are listed.');
-            } else {
+            if (video.tags) {
               video.tags.split(', ').forEach(function(tag) {
-                if (podcast.sourceMeta.indexOf(tag.toLowerCase()) >= 0) {
+                if (podcast.sourceMeta.toLowerCase().indexOf(tag.toLowerCase()) >= 0) {
 
                   PodcastMedia.native(function(err, collection) {
                     collection.update(
