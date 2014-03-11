@@ -42,5 +42,11 @@ new s3Sync('0 */5 * * * *', function() {
   S3StorageSync.sync();
 }, null, true, 'America/New_York');
 
+var vimeoSync = require('cron').CronJob;
+
+new vimeoSync('0 */6 * * * *', function() {
+  VimeoStorageSync.sync();
+}, null, true, 'America/New_York');
+
 // Start server
 sails.lift(rc('sails'));
