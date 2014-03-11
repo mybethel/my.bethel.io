@@ -30,6 +30,10 @@ module.exports = {
       type: 'string'
     },
 
+    sourceMeta: {
+      type: 'string'
+    },
+
     description: {
       type: 'text'
     },

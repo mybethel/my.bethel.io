@@ -32,3 +32,9 @@
     <input type="text" class="form-control" name="sourceKey" placeholder="Vimeo username" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.sourceKey %>"<% } %> />
   </div>
 </div>
+<div class="form-group">
+  <label class="col-sm-3 control-label">Videos to Sync</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="sourceMeta" placeholder="Only videos with tags matching these will be included." <% if (typeof podcast != 'undefined') { %> value="<%= podcast.sourceMeta %>"<% } %> />
+  </div>
+</div>
