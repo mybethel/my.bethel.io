@@ -6,7 +6,7 @@ exports.sync = function(options) {
   AWS.config.update(sails.config.aws);
   var s3 = new AWS.S3();
 
-  console.log('-----> Syncing S3 storage.');
+  sails.log('Syncing S3 storage.');
 
   // Limit only to podcasts with Bethel Cloud Storage selected
   Podcast.find({source: 1}, function foundPodcasts(err, podcasts) {
@@ -36,7 +36,7 @@ exports.sync = function(options) {
         s3.listObjects({Bucket: 'cloud.bethel.io', Prefix: ministryId + '/' + podcastId + '/'}, function(err, data) {
           var storageUsed = 0;
           data['Contents'].shift();
-          console.log('       Syncing ' + data['Contents'].length + ' items in ' + ministryId + '/' + podcastId);
+          sails.log('Syncing ' + data['Contents'].length + ' items in ' + ministryId + '/' + podcastId);
 
           data['Contents'].forEach(function(item) {
               var s3media = S(item['ETag']).replaceAll('"', '').s;
@@ -74,8 +74,8 @@ exports.sync = function(options) {
 
           // @todo: Add this functionality back in when the cloud controller is completed
           // storage.update({_id: sync._id}, {$set: {storage: storageUsed}});
-          console.log('=====> Finished S3 sync.');
-          console.log('       ' + storageUsed + ' storage used.');
+          sails.log(storageUsed + ' storage used.');
+          sails.log('Finished S3 sync.');
         });
 
       });

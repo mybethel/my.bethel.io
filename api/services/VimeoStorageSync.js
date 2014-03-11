@@ -2,7 +2,7 @@ var restify = require('restify');
 
 exports.sync = function(options) {
 
-  console.log('-----> Syncing Vimeo storage.');
+  sails.log('Syncing Vimeo storage.');
 
   Podcast.find({source: 2}, function foundPodcasts(err, podcasts) {
     if (err) return next(err);
@@ -13,7 +13,10 @@ exports.sync = function(options) {
     });
 
     podcasts.forEach(function(podcast) {
-      if (!podcast.sourceKey || !podcast.sourceMeta) return;
+      if (!podcast.sourceKey || !podcast.sourceMeta) {
+        sails.log('Vimeo username or tags not defined for podcast ' + podcast.id + '.');
+        return;
+      }
 
       var page = 1;
       do {              
