@@ -1,0 +1,14 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h4 class="modal-title">Are you sure you want to do this?</h4>
+    </div>
+    <div class="modal-body">
+      <p>This action <b>cannot</b> be undone. This will permanently delete the podcast <b><%= podcast.name %></b> and any hosted media.  Media from external sources will be unaffected.</p>
+    </div>
+    <div class="modal-footer">
+      <a href="/podcast/destroy/<%= podcast.id %>" class="btn btn-danger">I understand, delete this podcast</a>
+    </div>
+  </div>
+</div>
