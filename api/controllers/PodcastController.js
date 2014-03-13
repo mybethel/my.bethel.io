@@ -78,6 +78,14 @@ module.exports = {
     });
   },
 
+  destroy: function(req, res) {
+    Podcast.destroy(req.param('id'), function deletedPodcast(err, podcast) {
+      if (err) return next(err);
+
+      res.redirect('/podcasts');
+    });
+  },
+
   show: function (req, res) {
     Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
       if (err) return next(err);
