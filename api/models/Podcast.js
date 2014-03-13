@@ -54,6 +54,10 @@ module.exports = {
       type: 'string'
     },
 
+    statistics: {
+      type: 'array'
+    },
+
     storage: {
       type: 'integer'
     },

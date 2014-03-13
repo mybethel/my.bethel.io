@@ -5,6 +5,9 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var moment = require('moment'),
+    ObjectID = require('mongodb').ObjectID;
+
 module.exports = {
 
   list: function (req, res) {
@@ -110,6 +113,20 @@ module.exports = {
 
         PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
           if (err) return next(err);
+
+          var statistics = {};
+          statistics['statistics.'+moment().week()] = 1;
+
+          Podcast.native(function(err, collection) {
+            collection.update(
+              {  _id: new ObjectID(podcast.id) },
+              { $inc: statistics }, 
+              { upsert: true },
+              function(err){
+                if (err) sails.log.error(err);
+              }
+            );
+          });
 
           res.header('Content-Type', 'text/xml; charset=UTF-8');
 
