@@ -72,8 +72,10 @@ exports.sync = function(options) {
               storageUsed += item['Size'];
           });
 
-          // @todo: Add this functionality back in when the cloud controller is completed
-          // storage.update({_id: sync._id}, {$set: {storage: storageUsed}});
+          Podcast.update(podcast.id, {storage: storageUsed}, function podcastUpdated(err) {
+            if (err) console.log(err);
+          });
+
           sails.log(storageUsed + ' storage used.');
           sails.log.info('Finished S3 sync.');
         });
