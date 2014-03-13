@@ -14,6 +14,24 @@ module.exports = {
     Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
       if (err) return next(err);
 
+      // Get the current and prior week number.
+      var weekNumber = moment().week();
+          priorWeek = (weekNumber == 1) ? 52 : weekNumber-1,
+          subscribers = 0;
+
+      podcasts.forEach(function(podcast) {
+        if (podcast.statistics) {
+          // Use last weeks stats averaged per day.
+          subscribers += Math.round(podcast.statistics[priorWeek]/7);
+          if (subscribers == 0) {
+            // If no stats are returned, there may not be enough historical data.
+            // Use this weeks stats averaged per day.
+            subscribers += Math.round(podcast.statistics[weekNumber]/moment().day());
+          }
+        }
+        podcast.subscribers = subscribers;
+      });
+
       res.view({
         podcasts: podcasts
       });

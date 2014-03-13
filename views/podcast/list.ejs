@@ -17,7 +17,7 @@
         </td>
         <td class="title"><a href="/podcast/show/<%= podcast.id %>"><%= podcast.name %></a></td>
         <td class="type"><% if (podcast.type == 1) { %>Audio<% } else { %>Video<% } %></td>
-        <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days.">347</span></1></td>
+        <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days."><%= podcast.subscribers %></span></1></td>
         <td class="operations">
           <div class="btn-group">
             <a href="/podcast/show/<%= podcast.id %>" class="btn btn-sm btn-default">Manage</a>
