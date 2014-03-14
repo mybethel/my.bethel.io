@@ -16,10 +16,10 @@ module.exports = {
 
       // Get the current and prior week number.
       var weekNumber = moment().week();
-          priorWeek = (weekNumber == 1) ? 52 : weekNumber-1,
-          subscribers = 0;
+          priorWeek = (weekNumber == 1) ? 52 : weekNumber-1;
 
       podcasts.forEach(function(podcast) {
+        var subscribers = 0;
         if (podcast.statistics) {
           // Use last weeks stats averaged per day.
           subscribers += Math.round(podcast.statistics[priorWeek]/7);
