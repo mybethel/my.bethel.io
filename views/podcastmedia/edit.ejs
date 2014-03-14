@@ -1,4 +1,5 @@
-<form class="form-horizontal" role="form" action="/podcastmedia/update/<%= media.id %>" method="post" accept-charset="UTF-8">
+<form class="form-horizontal <% if (media.type == 'cloud') { %>cloud<% } else { %>vimeo<% } %>" role="form" action="/podcastmedia/update/<%= media.id %>" method="post" accept-charset="UTF-8">
+  <% if (media.type == 'cloud') { %>
   <div class="form-group">
     <label for="episodeTitle" class="col-sm-3 control-label">Episode</label>
     <div class="col-sm-9">
@@ -28,5 +29,9 @@
       <button type="submit" class="btn btn-sm btn-primary">Save</button>
     </div>
   </div>
+  <% } else { %>
+    <p class="text-muted">You can find the URL for your video on <a href="https://vimeo.com/<%= media.uuid %>/settings/file" target="_blank">the video settings page</a>. Bethel recommends using the SD resolution for the best user experience.</p>
+    <input type="text" class="form-control" name="name" id="episodeTitle" placeholder="http://player.vimeo.com" value="<% if (media.url) { %><%= media.url %><% } %>" /><button type="submit" class="btn btn-sm btn-primary pull-right">Save</button>
+  <% } %>
   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>

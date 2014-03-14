@@ -54,6 +54,22 @@
   display: none;
 }
 
+.podcast-media-edit form.vimeo {
+  padding-bottom: 23px;
+  position: relative;
+}
+
+.podcast-media-edit form.vimeo .form-control {
+  padding-right: 65px;
+}
+
+.podcast-media-edit form.vimeo button {
+  position: absolute;
+  bottom: 27px;
+  right: 12px;
+  padding: 3px 10px;
+}
+
 #upload-widget #dropzone {
   text-align: center;
 }
