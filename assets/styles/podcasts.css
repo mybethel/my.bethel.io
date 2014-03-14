@@ -1,3 +1,7 @@
+.panel-body.podcast {
+  padding: 0;
+}
+
 .podcast-list {
   margin-top: -38px;
 }
@@ -41,6 +45,10 @@
   vertical-align: middle;
   width: 80px;
   text-align: right;
+}
+
+.podcast-media img {
+  padding-right: 10px;
 }
 
 .podcast-media-edit td {
