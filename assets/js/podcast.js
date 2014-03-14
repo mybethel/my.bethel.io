@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
         podcastForm.ajaxForm(function() {
           podcastForm.slideToggle();
           podcastForm.closest('tr').prev().find('.media-edit-button').text('Edit');
-          if ($('#episodeTitle', podcastForm).val() && $('#episodeDescription', podcastForm).val()) {
+          if (($('#episodeTitle', podcastForm).val() && $('#episodeDescription', podcastForm).val()) || $('#episodeUrl', podcastForm).val()) {
             podcastForm.closest('tr').prev().removeClass('warning');
           }
         });

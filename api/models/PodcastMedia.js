@@ -22,6 +22,10 @@ module.exports = {
       type: 'text'
     },
 
+    url: {
+      type: 'url'
+    },
+
 	}
 
 };

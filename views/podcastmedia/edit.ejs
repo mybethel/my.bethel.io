@@ -31,7 +31,7 @@
   </div>
   <% } else { %>
     <p class="text-muted">You can find the URL for your video on <a href="https://vimeo.com/<%= media.uuid %>/settings/file" target="_blank">the video settings page</a>. Bethel recommends using the SD resolution for the best user experience.</p>
-    <input type="text" class="form-control" name="name" id="episodeTitle" placeholder="http://player.vimeo.com" value="<% if (media.url) { %><%= media.url %><% } %>" /><button type="submit" class="btn btn-sm btn-primary pull-right">Save</button>
+    <input type="text" class="form-control" name="url" id="episodeUrl" placeholder="http://player.vimeo.com" value="<% if (media.url) { %><%= media.url %><% } %>" /><button type="submit" class="btn btn-sm btn-primary pull-right">Save</button>
   <% } %>
   <input type="hidden" name="_csrf" value="<%= _csrf %>" />
 </form>
