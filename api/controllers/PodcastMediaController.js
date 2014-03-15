@@ -19,7 +19,7 @@ module.exports = {
   },
 
   update: function(req, res) {
-    PodcastMedia.update(req.param('id'), req.params.all(), function podcastUpdated(err) {
+    PodcastMedia.update(req.param('id'), req.params.all(), function podcastUpdated(err, updatedMedia) {
       if (err) {
         req.session.flash = {
           err: err
@@ -29,8 +29,27 @@ module.exports = {
       }
       req.session.flash = {};
 
+      updatedMedia.forEach(function(media) {
+        PodcastMedia.publishUpdate(media.id, {
+          name: media.name,
+          date: media.date,
+          description: media.description,
+          url: media.url
+        });
+      });
+
       return res.redirect('/podcastmedia/edit/' + req.param('id'));
     })
+  },
+
+  subscribe: function(req, res) {
+    PodcastMedia.find(function foundPodcast(err, media) {
+      if (err) return next(err);
+
+      PodcastMedia.subscribe(req.socket, media);
+
+      res.send(200);
+    });
   }
 	
 };

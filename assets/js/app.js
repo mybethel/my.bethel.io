@@ -31,6 +31,23 @@
 
     });
 
+    socket.get('/podcastmedia/subscribe');
+
+    socket.on('podcastmedia', function messageReceived(message) {
+      var mediaRow = $("tr[data-id='" + message.id + "']");
+
+      if (mediaRow) {
+        $('h4', mediaRow).text(message.data.name);
+        $('small', mediaRow).text(new Date(message.data.date).toDateString());
+
+        if (message.data.name && message.data.description && message.data.url) {
+          mediaRow.removeClass('warning');
+        } else {
+          mediaRow.addClass('warning');
+        }
+      }
+    });
+
 
     ///////////////////////////////////////////////////////////
     // Here's where you'll want to add any custom logic for

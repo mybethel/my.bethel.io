@@ -31,6 +31,10 @@ module.exports.policies = {
 
   podcast: {
     'feed': true
+  },
+
+  podcastmedia: {
+    'subscribe': true
   }
 
   /*
