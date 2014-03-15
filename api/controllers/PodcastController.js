@@ -114,6 +114,10 @@ module.exports = {
       PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
         if (err) return next(err);
 
+        if (podcast.type == 1) {
+          podcast.s3form = S3Upload.prepare('podcast/' + podcast.id);
+        }
+
         res.view({
           podcast: podcast,
           podcastMedia: media

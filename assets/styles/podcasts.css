@@ -154,3 +154,22 @@
 .dash-panel-right img.thumbnail-sidebar {
   width: 100%;
 }
+
+.panel-heading {
+  position: relative;
+}
+
+.panel-heading #file_upload {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.panel-heading #file_upload .btn-sm {
+  padding: 3px 10px;
+}
+
+.panel-heading #file_upload div.progress {
+  width: 200px;
+  margin-top: 3px;
+}

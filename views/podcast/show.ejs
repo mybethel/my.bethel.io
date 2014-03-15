@@ -4,7 +4,27 @@
   <p class="text-muted"><%= podcast.copyright %></p>
   <div class="panel panel-default panel-top">
     <div class="panel-heading">
-      <h3 class="panel-title">Podcast Episodes</h3>
+      <h3 class="panel-title">Podcast Episodes</h3><% if (podcast.type == 1) { %>
+      <form action="http://cloud.bethel.io.s3.amazonaws.com/" method="post" enctype="multipart/form-data" id="file_upload">
+        <input type="hidden" name="key" value="<%= podcast.s3form.bucket %>/${filename}" />
+        <input type="hidden" name="AWSAccessKeyId" value="<%= podcast.s3form.key %>" />
+        <input type="hidden" name="acl" value="public-read" />
+        <input type="hidden" name="policy" value="<%= podcast.s3form.policy %>" />
+        <input type="hidden" name="success_action_status" value="201" />
+        <input type="hidden" name="signature" value="<%= podcast.s3form.signature %>" />
+        <div id="file-upload">
+          <div id="dropzone">
+            <span class="btn btn-sm btn-success fileinput-button">
+              <i class="glyphicon glyphicon-plus"></i>
+              <span>Upload new episode...</span>
+              <input id="fileupload" type="file" name="file" />
+            </span>
+            <div class="progress progress-striped active" style="display: none;">
+              <div class="progress-bar" role="progressbar" style="width: 100%;">Uploading...</div>
+            </div>
+          </div>
+        </div>
+      </form><% } %>
     </div>
     <div class="panel-body podcast">
       <table class="table table-hover podcast-media">
