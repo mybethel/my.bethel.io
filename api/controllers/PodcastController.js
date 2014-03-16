@@ -123,10 +123,10 @@ module.exports = {
 
           if (podcast.statistics) {
             podcastGraph = new Array();
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 7).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 14).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 21).week()]);
             podcastGraph.push(podcast.statistics[moment().subtract('days', 28).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 21).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 14).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 7).week()]);
             podcast.statisticsGraph = podcastGraph;
           }
 
