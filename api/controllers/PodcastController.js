@@ -16,7 +16,7 @@ module.exports = {
 
       // Get the current and prior week number.
       var weekNumber = moment().week(),
-          priorWeek = (weekNumber == 1) ? 52 : weekNumber-1;
+          priorWeek = moment().subtract('days', 7).week();
 
       podcasts.forEach(function(podcast) {
         var subscribers = 0;
@@ -119,6 +119,15 @@ module.exports = {
 
           if (podcast.type == 1) {
             podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
+          }
+
+          if (podcast.statistics) {
+            podcastGraph = new Array();
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 7).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 14).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 21).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('days', 28).week()]);
+            podcast.statisticsGraph = podcastGraph;
           }
 
           res.view({

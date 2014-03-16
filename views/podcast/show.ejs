@@ -48,7 +48,8 @@
     </div>
   </div>
 </div>
-<div class="dash-panel-right">
+<div class="dash-panel-right"><% if (podcast.statisticsGraph) { %>
+  <div id="podcastVisits" data-visits="<%= podcast.statisticsGraph %>"></div><% } %>
   <div id="actions" class="actions-top">
     <a href="/podcast/edit/<%= podcast.id %>" class="btn btn-block btn-default">Edit Podcast</a>
     <a href="/podcast/feed/<%= podcast.id %>" type="submit" class="btn btn-block btn-primary">View Podcast</a>

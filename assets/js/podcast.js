@@ -3,6 +3,24 @@ jQuery(document).ready(function($) {
     $('form.sidebar-form').submit();
   });
 
+  if ($('#podcastVisits').data('visits')) {
+    var podcastVisitData = JSON.parse('[' + $('#podcastVisits').data('visits') + ']');
+    $("#podcastVisits").sparkline(podcastVisitData, {
+      type: 'line',
+      width: '96%',
+      height: '50px',
+      lineColor: '#106982',
+      spotColor: '#1591b5',
+      minSpotColor: '#d2322d',
+      maxSpotColor: '#5cb85c',
+      fillColor: null,
+      highlightSpotColor: '#1591b5',
+      highlightLineColor: null,
+      lineWidth: 2,
+      spotRadius: 3
+    });
+  }
+
   $('table.podcast-media').on('click', '.media-edit-button', function() {
     if ($(this).text() == 'Cancel') {
       var episodeTitle = $(this).closest('tr').find('h4');
@@ -18,7 +36,7 @@ jQuery(document).ready(function($) {
 
         if (cloudConnectorUrl) {
           cloudConnectorUrl = cloudConnectorUrl.replace(/(\/)$/, '');
-          
+
           $(".podcast-media-edit #episodeConnection").typeahead({
             source: function(query,process) {
               return $.get(cloudConnectorUrl + '/bethel/podcaster/autocomplete/' + query, function(data) {
