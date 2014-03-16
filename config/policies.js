@@ -34,7 +34,8 @@ module.exports.policies = {
   },
 
   podcastmedia: {
-    'subscribe': true
+    'subscribe': true,
+    'related': true
   }
 
   /*

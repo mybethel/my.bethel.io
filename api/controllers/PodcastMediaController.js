@@ -67,6 +67,12 @@ module.exports = {
   refresh: function(req, res) {
     S3StorageSync.sync();
     res.send(200);
+  },
+
+  related: function(req, res) {
+    PodcastMedia.find({referenceId: req.param('id')}, function foundPodcastMedia(err, media) {
+      res.send(200, media);
+    });
   }
 	
 };

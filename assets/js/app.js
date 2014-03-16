@@ -38,7 +38,6 @@
     socket.get('/podcastmedia/subscribe');
 
     socket.on('podcastmedia', function messageReceived(message) {
-      log('New comet message received :: ', message);
 
       switch (message.verb) {
 

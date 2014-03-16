@@ -39,7 +39,11 @@ module.exports = {
     },
 
     reference: {
-      type: 'array'
+      type: 'string'
+    },
+
+    referenceId: {
+      type: 'int'
     },
 
     podcast: {
@@ -62,10 +66,8 @@ module.exports = {
 
   beforeUpdate: function(values, next) {
     if (values.connect) {
-      values.reference = {
-        value: values.connect,
-        id: values.connect.match(/.*\[id:(\d+)\]/)[1]
-      }
+      values.reference = values.connect;
+      values.referenceId = values.connect.match(/.*\[id:(\d+)\]/)[1];
     }
 
     next();
