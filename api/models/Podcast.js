@@ -66,6 +66,11 @@ module.exports = {
       model: 'ministry'
     },
 
+    media: {
+      collection: 'podcastmedia',
+      via: 'podcast'
+    },
+
     imageUrl: function(size) {
       if (this.image) {
         return 'http://cdn.bethel.io/' + size + '/' + this.image;

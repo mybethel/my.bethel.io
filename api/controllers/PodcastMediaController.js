@@ -46,9 +46,21 @@ module.exports = {
     PodcastMedia.find(function foundPodcast(err, media) {
       if (err) return next(err);
 
+      PodcastMedia.watch(req.socket);
       PodcastMedia.subscribe(req.socket, media);
 
       res.send(200);
+    });
+  },
+
+  row: function(req, res) {
+    PodcastMedia.findOne(req.param('id'), function foundPodcast(err, media) {
+      if (err) return next(err);
+    
+      res.view({
+        media: media,
+        layout: 'ajax'
+      });
     });
   }
 	

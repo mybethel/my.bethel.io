@@ -34,43 +34,10 @@ exports.sync = function(options) {
 
         // Get a list of files from the S3 bucket
         s3.listObjects({Bucket: 'cloud.bethel.io', Prefix: ministryId + '/' + podcastId + '/'}, function(err, data) {
-          var storageUsed = 0;
           data['Contents'].shift();
           sails.log('Syncing ' + data['Contents'].length + ' items in ' + ministryId + '/' + podcastId);
 
-          data['Contents'].forEach(function(item) {
-              var s3media = S(item['ETag']).replaceAll('"', '').s;
-
-              PodcastMedia.native(function(err, collection) {
-                collection.update(
-                  {
-                    uuid: s3media,
-                    podcast: podcast.id
-                  },
-                  {
-                    $set: {
-                      url: 'http://cloud.bethel.io/' + item['Key'],
-                      size: item['Size'],
-                      uuid: s3media,
-                      podcast: podcast.id,
-                      type: 'cloud'
-                    },
-                    $setOnInsert: {
-                      date: item['LastModified']
-                    }
-                  }, 
-                  {
-                    upsert:true,
-                    safe:true
-                  },
-                  function(err){
-                    if (err) return next(err);
-                  }
-                );
-              });
-
-              storageUsed += item['Size'];
-          });
+          var storageUsed = processFoundMedia(data['Contents'], podcast.id);
 
           Podcast.update(podcast.id, {storage: storageUsed}, function podcastUpdated(err) {
             if (err) console.log(err);
@@ -84,3 +51,36 @@ exports.sync = function(options) {
     });
   });
 };
+
+function processFoundMedia(media, podcastId) {
+  var storageUsed = 0;
+
+  media.forEach(function(item) {
+    var s3media = S(item['ETag']).replaceAll('"', '').s;
+
+    PodcastMedia.findOne({uuid: s3media}, function foundPodcastMedia(err, media) {
+      if (err) sails.log.error(err);
+
+      if (!media) {
+        var mediaName = item['Key'].split('/');
+        mediaName = mediaName[mediaName.length-1];
+
+        PodcastMedia.create({
+          name: mediaName,
+          date: item['LastModified'],
+          url: 'http://cloud.bethel.io/' + encodeURI(item['Key']),
+          size: item['Size'],
+          uuid: s3media,
+          podcast: podcastId,
+          type: 'cloud'
+        }, function podcastMediaCreated(err, media) {
+          if (err) sails.log.error(err);
+        });
+      }
+    });
+
+    storageUsed += item['Size'];
+  });
+
+  return storageUsed;
+}

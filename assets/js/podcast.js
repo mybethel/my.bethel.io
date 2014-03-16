@@ -3,14 +3,14 @@ jQuery(document).ready(function($) {
     $('form.sidebar-form').submit();
   });
 
-  $('.media-edit-button').click(function() {
+  $('table.podcast-media').on('click', '.media-edit-button', function() {
     if ($(this).text() == 'Cancel') {
       var episodeTitle = $(this).closest('tr').find('h4');
       episodeTitle.text(episodeTitle.attr('value'));
       $(this).text('Edit');
       $(this).closest('tr').next().find('form').slideToggle();
     } else {
-      $(this).closest('tr').next().find('td').load('/podcastmedia/edit/' + $(this).data('source') + ' .ajax-loaded', function() {
+      $(this).closest('tr').next().find('td').load('/podcastmedia/edit/' + $(this).data('source'), function() {
         var podcastForm = $(this).find('form');
         podcastForm.slideToggle();
         $(this).find('.episode-date').datepicker({

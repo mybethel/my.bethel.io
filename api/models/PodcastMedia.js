@@ -26,6 +26,34 @@ module.exports = {
       type: 'url'
     },
 
-	}
+    size: {
+      type: 'integer'
+    },
+
+    uuid: {
+      type: 'string'
+    },
+
+    type: {
+      type: 'string'
+    },
+
+    podcast: {
+      model: 'podcast'
+    }
+
+	},
+
+  afterCreate: function(values, next) {
+    sails.log('create id: '+values.id);
+    PodcastMedia.publishCreate({
+      id: values.id,
+      date: values.date,
+      name: values.name,
+      podcast: values.podcast
+    });
+
+    next();
+  },
 
 };

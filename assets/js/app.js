@@ -31,21 +31,46 @@
 
     });
 
+    // Get the current path minus any trailing slash.
+    var page = document.location.pathname;
+    page = page.replace(/(\/)$/, '');
+
     socket.get('/podcastmedia/subscribe');
 
     socket.on('podcastmedia', function messageReceived(message) {
-      var mediaRow = $("tr[data-id='" + message.id + "']");
+      log('New comet message received :: ', message);
 
-      if (mediaRow) {
-        $('h4', mediaRow).text(message.data.name);
-        $('small', mediaRow).text(new Date(message.data.date).toDateString());
+      switch (message.verb) {
 
-        if (message.data.name && message.data.description && message.data.url) {
-          mediaRow.removeClass('warning');
-        } else {
-          mediaRow.addClass('warning');
-        }
+        case 'updated':
+          var mediaRow = $("tr[data-id='" + message.id + "']");
+
+          if (mediaRow) {
+            $('h4', mediaRow).text(message.data.name);
+            $('small', mediaRow).text(new Date(message.data.date).toDateString());
+
+            if (message.data.name && message.data.description && message.data.url) {
+              mediaRow.removeClass('warning');
+            } else {
+              mediaRow.addClass('warning');
+            }
+          }
+
+          break;
+
+        case 'created':
+          var podcastMediaListing = $('table.podcast-media tbody');
+
+          if (podcastMediaListing) {
+            $.get('/podcastmedia/row/' + message.data.id, function(data) {
+              podcastMediaListing.prepend(data);
+            });
+          }
+
+          break;
+
       }
+
     });
 
 
