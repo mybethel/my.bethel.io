@@ -38,6 +38,10 @@ module.exports = {
       type: 'string'
     },
 
+    reference: {
+      type: 'array'
+    },
+
     podcast: {
       model: 'podcast'
     }
@@ -52,6 +56,17 @@ module.exports = {
       name: values.name,
       podcast: values.podcast
     });
+
+    next();
+  },
+
+  beforeUpdate: function(values, next) {
+    if (values.connect) {
+      values.reference = {
+        value: values.connect,
+        id: values.connect.match(/.*\[id:(\d+)\]/)[1]
+      }
+    }
 
     next();
   },

@@ -13,6 +13,20 @@ jQuery(document).ready(function($) {
       $(this).closest('tr').next().find('td').load('/podcastmedia/edit/' + $(this).data('source'), function() {
         var podcastForm = $(this).find('form');
         podcastForm.slideToggle();
+
+        var cloudConnectorUrl = $('table.podcast-media').data('url');
+        cloudConnectorUrl = cloudConnectorUrl.replace(/(\/)$/, '');
+        
+        if (cloudConnectorUrl) {
+          $(".podcast-media-edit #episodeConnection").typeahead({
+            source: function(query,process) {
+              return $.get(cloudConnectorUrl + '/bethel/podcaster/autocomplete/' + query, function(data) {
+                return process(data.results);
+              });
+            }
+          });
+        }
+
         $(this).find('.episode-date').datepicker({
           format: 'm-d-yyyy',
         });

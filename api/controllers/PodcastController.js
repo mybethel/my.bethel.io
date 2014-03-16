@@ -15,7 +15,7 @@ module.exports = {
       if (err) return next(err);
 
       // Get the current and prior week number.
-      var weekNumber = moment().week();
+      var weekNumber = moment().week(),
           priorWeek = (weekNumber == 1) ? 52 : weekNumber-1;
 
       podcasts.forEach(function(podcast) {
@@ -111,16 +111,21 @@ module.exports = {
     Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
       if (err) return next(err);
 
-      PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
+      Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
         if (err) return next(err);
 
-        if (podcast.type == 1) {
-          podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
-        }
+        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
+          if (err) return next(err);
 
-        res.view({
-          podcast: podcast,
-          podcastMedia: media
+          if (podcast.type == 1) {
+            podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
+          }
+
+          res.view({
+            podcast: podcast,
+            ministry: ministry,
+            podcastMedia: media
+          });
         });
       });
     });

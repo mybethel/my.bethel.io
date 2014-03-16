@@ -27,7 +27,7 @@
       </form><% } %>
     </div>
     <div class="panel-body podcast">
-      <table class="table table-hover podcast-media">
+      <table class="table table-hover podcast-media"<% if (ministry.url) { %> data-url="<%= ministry.url %>"<% } %>>
         <tbody>
           <% _.each(podcastMedia, function(media) { %>
           <tr data-id="<%= media.id %>"<% if (!media.name || !media.description || !media.url) { %> class="warning"<% } %>>
