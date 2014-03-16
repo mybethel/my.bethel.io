@@ -17,25 +17,10 @@ exports.sync = function(options) {
       Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
         if (err) return next(err);
 
-        var ministryId, podcastId;
-
-        // Support for legacy model storage
-        if (podcast.legacyId && ministry.legacyId) {
-          ministryId = ministry.legacyId;
-        } else {
-          ministryId = 'podcast/' + ministry.id;
-        }
-
-        if (podcast.legacyId) {
-          podcastId = podcast.legacyId;
-        } else {
-          podcastId = podcast.id;
-        }
-
         // Get a list of files from the S3 bucket
-        s3.listObjects({Bucket: 'cloud.bethel.io', Prefix: ministryId + '/' + podcastId + '/'}, function(err, data) {
+        s3.listObjects({Bucket: 'cloud.bethel.io', Prefix: 'podcast/' + ministry.id + '/' + podcast.id + '/'}, function(err, data) {
           data['Contents'].shift();
-          sails.log('Syncing ' + data['Contents'].length + ' items in ' + ministryId + '/' + podcastId);
+          sails.log('Syncing ' + data['Contents'].length + ' items in podcast/' + ministry.id + '/' + podcast.id);
 
           var storageUsed = processFoundMedia(data['Contents'], podcast.id);
 
