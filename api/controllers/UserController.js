@@ -44,7 +44,7 @@ module.exports = {
   },
 
   welcome: function (req, res) {
-    res.view();
+    res.view({avatar: req.session.User.avatar});
   },
 
 
