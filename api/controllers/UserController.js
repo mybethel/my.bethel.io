@@ -44,7 +44,7 @@ module.exports = {
   },
 
   update: function(req, res) {
-    User.update(req.param('id'), req.params.all(), function userUpdated(err) {
+    User.update(req.param('id'), req.params.all(), function userUpdated(err, user) {
       if (err) {
         req.session.flash = {
           err: err
@@ -54,12 +54,16 @@ module.exports = {
       }
       req.session.flash = {};
 
+      if (user[0] && user[0].id == req.session.User.id) {
+        req.session.User = user[0];
+      }
+
       return res.redirect('/');
     });
   },
 
   welcome: function (req, res) {
-    res.view({avatar: req.session.User.avatar});
+    res.view({user: req.session.User});
   },
 
 

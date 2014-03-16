@@ -63,11 +63,18 @@ module.exports = {
     }
 
     if (values.invite) {
-      // @todo: verify the invite code is actually a ministry ID.
-      values.ministry = values.invite;
-    }
+      Ministry.findOne(values.invite, function foundPodcast(err, ministry) {
+        if (err) return next(err);
 
-    next();
+        if (ministry) {
+          values.ministry = ministry.id;
+        }
+
+        next();
+      });
+    } else {
+      next();
+    }
   }
 
 };

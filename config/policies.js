@@ -22,6 +22,7 @@ module.exports.policies = {
   	'login': 'flash',
   	'new': 'flash',
   	'create': 'flash',
+    'update': ['flash', 'sessionAuth'],
   	'welcome': ['flash', 'sessionAuth']
   },
 
