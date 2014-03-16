@@ -44,6 +44,7 @@ module.exports = {
   },
 
   beforeCreate: function(values, next) {
+    delete values.id;
     require('bcrypt').hash(values.pass, 10, function passwordEncrypted(err, encryptedPassword) {
       if (err) return next(err);
       values.password = encryptedPassword;
