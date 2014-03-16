@@ -62,6 +62,11 @@ module.exports = {
         layout: 'ajax'
       });
     });
+  },
+
+  refresh: function(req, res) {
+    S3StorageSync.sync();
+    res.send(200);
   }
 	
 };

@@ -72,6 +72,8 @@ jQuery(document).ready(function($) {
           $('.fileinput-button').addClass('btn-default');
           $('.fileinput-button span').text('Replace existing image...');
           $('input[name=temporaryImage]').attr('value', data.files[0].name);
+        } else {
+          $.get('/podcastmedia/refresh');
         }
       }
     }
