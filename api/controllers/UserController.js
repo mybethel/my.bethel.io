@@ -43,6 +43,21 @@ module.exports = {
     });
   },
 
+  update: function(req, res) {
+    User.update(req.param('id'), req.params.all(), function userUpdated(err) {
+      if (err) {
+        req.session.flash = {
+          err: err
+        }
+
+        return res.redirect('/welcome');
+      }
+      req.session.flash = {};
+
+      return res.redirect('/');
+    });
+  },
+
   welcome: function (req, res) {
     res.view({avatar: req.session.User.avatar});
   },

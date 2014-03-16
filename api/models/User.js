@@ -59,6 +59,11 @@ module.exports = {
       values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'});
     }
 
+    if (values.invite) {
+      // @todo: verify the invite code is actually a ministry ID.
+      values.ministry = values.invite;
+    }
+
     next();
   }
 
