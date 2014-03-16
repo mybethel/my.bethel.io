@@ -20,10 +20,10 @@ exports.sync = function(options) {
         var ministryId, podcastId;
 
         // Support for legacy model storage
-        if (ministry.legacyId) {
+        if (podcast.legacyId && ministry.legacyId) {
           ministryId = ministry.legacyId;
         } else {
-          ministryId = ministry.id;
+          ministryId = 'podcast/' + ministry.id;
         }
 
         if (podcast.legacyId) {
