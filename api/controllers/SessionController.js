@@ -52,6 +52,8 @@ module.exports = {
 
             return res.redirect('/');
           });
+        } else {
+          return res.redirect('/welcome');
         }
       });
     })
