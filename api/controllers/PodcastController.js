@@ -16,7 +16,7 @@ module.exports = {
 
       // Get the current and prior week number.
       var weekNumber = moment().week(),
-          priorWeek = moment().subtract('days', 7).week();
+          priorWeek = moment().subtract('week', 1).week();
 
       podcasts.forEach(function(podcast) {
         var subscribers = 0;
@@ -121,12 +121,16 @@ module.exports = {
             podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
           }
 
-          if (podcast.statistics) {
+          if (podcast.statistics && Object.keys(podcast.statistics).length >= 4) {
             podcastGraph = new Array();
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 28).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 21).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 14).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('days', 7).week()]);
+            if (Object.keys(podcast.statistics).length >= 6) {
+              podcastGraph.push(podcast.statistics[moment().subtract('week', 6).week()]);
+              podcastGraph.push(podcast.statistics[moment().subtract('week', 5).week()]);
+            }
+            podcastGraph.push(podcast.statistics[moment().subtract('week', 4).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('week', 3).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('week', 2).week()]);
+            podcastGraph.push(podcast.statistics[moment().subtract('week', 1).week()]);
             podcast.statisticsGraph = podcastGraph;
           }
 
