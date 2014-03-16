@@ -15,9 +15,10 @@ jQuery(document).ready(function($) {
         podcastForm.slideToggle();
 
         var cloudConnectorUrl = $('table.podcast-media').data('url');
-        cloudConnectorUrl = cloudConnectorUrl.replace(/(\/)$/, '');
-        
+
         if (cloudConnectorUrl) {
+          cloudConnectorUrl = cloudConnectorUrl.replace(/(\/)$/, '');
+          
           $(".podcast-media-edit #episodeConnection").typeahead({
             source: function(query,process) {
               return $.get(cloudConnectorUrl + '/bethel/podcaster/autocomplete/' + query, function(data) {
