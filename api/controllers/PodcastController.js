@@ -115,7 +115,7 @@ module.exports = {
         if (err) return next(err);
 
         if (podcast.type == 1) {
-          podcast.s3form = S3Upload.prepare('podcast/' + podcast.id);
+          podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
         }
 
         res.view({
