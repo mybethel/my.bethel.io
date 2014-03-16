@@ -56,6 +56,14 @@ module.exports = {
 
       if (user[0] && user[0].id == req.session.User.id) {
         req.session.User = user[0];
+
+        Ministry.findOne(user[0].ministry, function foundMinistry(err, ministry) {
+          if (err) return next(err);
+
+          if (ministry) {
+            req.session.Ministry = ministry;
+          }
+        });
       }
 
       return res.redirect('/');
