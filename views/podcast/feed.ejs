@@ -30,7 +30,7 @@
       <%= media.description %>
     </description><% } %><% if (media.duration) { %>
     <itunes:duration><%= media.duration %></itunes:duration><% } %>
-    <enclosure url="<%= media.url %>" length="<%= media.size %>" type="audio/mp3"/>
+    <enclosure url="<%= media.url %>" length="<% if (media.size) { %><%= media.size %><% } else { %>0<% } %>" type="audio/mp3"/>
     <itunes:explicit>no</itunes:explicit>
     <itunes:block>no</itunes:block>
   </item>
