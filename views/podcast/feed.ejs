@@ -6,7 +6,7 @@
   <%= podcast.description %>
   </description>
   <itunes:owner>
-    <itunes:name><%= ministry.name %></itunes:name>
+    <itunes:name><% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></itunes:name>
     <itunes:email><%= ministry.email %></itunes:email>
   </itunes:owner>
   <itunes:summary>
