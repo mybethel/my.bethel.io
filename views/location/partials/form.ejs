@@ -23,9 +23,9 @@
   <label for="title" class="col-sm-3 control-label">Address</label>
   <div class="col-sm-9">
     <div class="input-group address-autocomplete-group">
-      <input type="text" class="form-control" name="address" title="locationAddress" id="location-autocomplete" placeholder="Location address" <% if (typeof location != 'undefined') { %> value="<%= location.address %>"<% } %>/><span class="input-group-addon"><i class="fa fa-location-arrow"></i> <span class="lat-long"><% if (typeof location != 'undefined') { %><%= location.loc[1] %>, <%= location.loc[0] %><% } %></span></span>
+      <input type="text" class="form-control" name="address" title="locationAddress" id="location-autocomplete" placeholder="Location address" <% if (typeof location != 'undefined') { %> value="<%= location.address %>"<% } %>/><span class="input-group-addon"><i class="fa fa-location-arrow"></i> <span class="lat-long"><% if (typeof location != 'undefined') { %><%= location.loc[1].toFixed(3) %>, <%= location.loc[0].toFixed(3) %><% } %></span></span>
     </div>
   </div>
-  <input type="hidden" name="latitude" value="" />
-  <input type="hidden" name="longitude" value="" />
+  <input type="hidden" name="latitude"<% if (typeof location != 'undefined') { %> value="<%= location.loc[1] %>"<% } %> />
+  <input type="hidden" name="longitude"<% if (typeof location != 'undefined') { %> value="<%= location.loc[0] %>"<% } %> />
 </div>

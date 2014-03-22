@@ -39,12 +39,23 @@ module.exports = {
 
     if (values.latitude && values.longitude) {
       values.loc = [
-        values.longitude,
-        values.latitude
+        parseFloat(values.longitude),
+        parseFloat(values.latitude)
       ];
     }
 
     next();
   },
+
+  beforeUpdate: function(values, next) {
+    if (values.latitude && values.longitude) {
+      values.loc = [
+        parseFloat(values.longitude),
+        parseFloat(values.latitude)
+      ];
+    }
+
+    next();
+  }
 
 };
