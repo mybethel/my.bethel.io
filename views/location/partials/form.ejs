@@ -1,0 +1,31 @@
+<% if (flash && flash.err) { %>
+<div class="errors">
+  <ul>
+  <% Object.keys(flash.err).forEach(function(error) { %>
+    <li><%- JSON.stringify(flash.err[error]) %></li>
+  <% }) %>
+  <ul>
+</div>
+<% } %>
+<div class="form-group">
+  <label for="title" class="col-sm-3 control-label">Name</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="name" title="locationName" placeholder="Location name" <% if (typeof location != 'undefined') { %> value="<%= location.name %>"<% } %>/>
+  </div>
+</div>
+<div class="form-group">
+  <label for="title" class="col-sm-3 control-label">Description</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="description" title="locationDescription" placeholder="A brief description of the location" <% if (typeof location != 'undefined' && location.description) { %> value="<%= location.description %>"<% } %>/>
+  </div>
+</div>
+<div class="form-group">
+  <label for="title" class="col-sm-3 control-label">Address</label>
+  <div class="col-sm-9">
+    <div class="input-group address-autocomplete-group">
+      <input type="text" class="form-control" name="address" title="locationAddress" id="location-autocomplete" placeholder="Location address" <% if (typeof location != 'undefined') { %> value="<%= location.address %>"<% } %>/><span class="input-group-addon"><i class="fa fa-location-arrow"></i> <span class="lat-long"><% if (typeof location != 'undefined') { %><%= location.loc[1] %>, <%= location.loc[0] %><% } %></span></span>
+    </div>
+  </div>
+  <input type="hidden" name="latitude" value="" />
+  <input type="hidden" name="longitude" value="" />
+</div>
