@@ -14,14 +14,17 @@ module.exports = {
       required: true
     },
 
+    description: {
+      type: 'string'
+    },
+
     address: {
       type: 'string',
       required: true
     },
 
     loc: {
-      type: 'array',
-      required: true
+      type: 'array'
     },
 
     ministry: {
@@ -29,6 +32,19 @@ module.exports = {
       required: true
     }
 
-	}
+	},
+
+  beforeCreate: function(values, next) {
+    delete values.id;
+
+    if (values.latitude && values.longitude) {
+      values.loc = [
+        values.longitude,
+        values.latitude
+      ];
+    }
+
+    next();
+  },
 
 };

@@ -23,6 +23,21 @@ module.exports = {
     });
   },
 
+  create: function (req, res) {
+    Location.create(req.params.all(), function locationCreated(err, location) {
+      if (err) {
+        req.session.flash = {
+          err: err
+        }
+
+        return res.redirect('/location/new');
+      }
+      req.session.flash = {};
+
+      return res.redirect('/locations');
+    });
+  },
+
   delete: function(req, res) {
     Location.findOne(req.param('id'), function foundLocation(err, location) {
       if (err) res.send(err, 500);

@@ -1,4 +1,4 @@
-<div class="form-horizontal" role="form">
+<form class="form-horizontal sidebar-form" role="form" action="/location/create" method="post" accept-charset="UTF-8">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -6,6 +6,15 @@
         <h4 class="modal-title">Add a ministry location</h4>
       </div>
       <div class="modal-body">
+        <% if (flash && flash.err) { %>
+        <div class="errors">
+          <ul>
+          <% Object.keys(flash.err).forEach(function(error) { %>
+            <li><%- JSON.stringify(flash.err[error]) %></li>
+          <% }) %>
+          <ul>
+        </div>
+        <% } %>
         <div class="form-group">
           <label for="title" class="col-sm-3 control-label">Name</label>
           <div class="col-sm-9">
@@ -34,9 +43,10 @@
         <button type="submit" class="btn btn-primary">Save Location</button>
       </div>
       <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      <input type="hidden" name="ministry" value="<%= session.Ministry.id %>" />
     </div>
   </div>
-</div>
+</form>
 <script language="javascript">
   jQuery(document).ready(function($) {
     var locationData = new google.maps.places.Autocomplete((document.getElementById('location-autocomplete')), { types: ['geocode'] });
