@@ -4,7 +4,7 @@ node_js:
 services:
 - mongodb
 before_script:
-- mongo --eval 'db.copyDatabase("mybethel-production", "mybethel", "baetylus.bethel.io:49156", "mybethel", process.env.MONGODB_PASSWORD)'
+- mongo --eval 'db.copyDatabase("mybethel-production", "mybethel", "baetylus.bethel.io:49156", "travisci", "readonly")'
 env:
   global:
   - secure: OUSw7HtFgEviibgyzSsU5FTtUPHZDAC56S4OUVx/TPlrF0wl12ueC4sNgbz4tGAcgLInqpPQw0wsgNt8LMhhAFMIPDCM3XsfuXMzNcUzwVGD6Yi2FWrN38S59B2kEq+ZLgAyAjKr5lTNhSI+qZ8J4+K3yaoUYED9lr4+eq3bAkg=
