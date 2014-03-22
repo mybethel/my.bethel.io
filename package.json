@@ -34,9 +34,16 @@
     "moment": "~2.5.1",
     "restify": "~2.6.3"
   },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "barrels": "~0.0.3",
+    "supervisor": "~0.5.7",
+    "supertest": "~0.10.0"
+  },
   "scripts": {
     "start": "node app.js",
-    "debug": "node debug app.js"
+    "debug": "node debug app.js",
+    "test": "NODE_ENV=test mocha -R spec -b --recursive"
   },
   "engines": {
     "node": "0.10.x",

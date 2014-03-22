@@ -3,7 +3,10 @@ node_js:
 - '0.10'
 services:
 - mongodb
+before_script:
+- mongo --eval 'db.copyDatabase("mybethel-production", "mybethel", "baetylus.bethel.io:49156", "mybethel", process.env.MONGODB_PASSWORD)'
 env:
   global:
   - secure: OUSw7HtFgEviibgyzSsU5FTtUPHZDAC56S4OUVx/TPlrF0wl12ueC4sNgbz4tGAcgLInqpPQw0wsgNt8LMhhAFMIPDCM3XsfuXMzNcUzwVGD6Yi2FWrN38S59B2kEq+ZLgAyAjKr5lTNhSI+qZ8J4+K3yaoUYED9lr4+eq3bAkg=
   - secure: fuVwGXT40ot+53EK28cC4GLlWtYD20tHMp85rh/JVi1zO6RKYkgCAgNTsUiGi2Kp9+CjBip5cW2EeVrnLas1GsM8N/UR/2K/hNPlPEXUIbea6ScBo/ScDUrhU065//MybJSe7JedgNTa/64aymckKX1TtiSdzI1H+vu99MUAnNU=
+  - secure: WyXBKJuJX6R/0YKXU0AlxDrBtYmEh05EXEbwXv+csuN/fOKVxjcTZ6bioX/7zZzqbt0jJf6jtCk832psT89fPDAoVImBGZwK+VnXjnh+KKtsjfXcwGX7sVjRjhbTMg3vSFK4GYVpH458UttbTWMig2dFZCG9N4QZfIFNy3Mmv4k=
