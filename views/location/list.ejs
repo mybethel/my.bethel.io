@@ -6,7 +6,7 @@
         <div class="thumbnail">
           <div class="btn-group">
             <button type="button" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-pencil"></span></button>
-            <button type="button" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-ban-circle"></span></button>
+            <a href="/location/delete/<%= location.id %>" type="button" class="btn btn-sm btn-danger" data-link="popover"><span class="glyphicon glyphicon-ban-circle"></span></a>
           </div>
           <img src="http://maps.googleapis.com/maps/api/staticmap?center=<%= location.loc[1] %>,<%= location.loc[0] %>&zoom=15&size=300x150&maptype=roadmap&markers=color:0x1591b5%7C<%= location.loc[1] %>,<%= location.loc[0] %>&sensor=false&key=AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg" alt="<%= location.address %>">
           <div class="caption">
