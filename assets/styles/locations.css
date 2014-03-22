@@ -16,3 +16,7 @@
   margin-top: 5px;
   margin-bottom: 5px;
 }
+
+.pac-container {
+  z-index: 1051 !important;
+}

@@ -16,5 +16,11 @@ module.exports = {
       });
     });
   },
+
+  new: function(req, res) {
+    res.view({
+      layout: req.viewData.layout
+    });
+  }
 	
 };
