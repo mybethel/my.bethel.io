@@ -4,7 +4,7 @@ var assert = require('assert'),
 
 // Global before hook
 before(function (done) {
-  this.timeout(5000);
+  this.timeout(10000);
   // Lift Sails with test database
   Sails.lift({
     log: { level: 'error' },
