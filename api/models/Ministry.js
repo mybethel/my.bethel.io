@@ -22,6 +22,11 @@ module.exports = {
     podcasts: {
       collection: 'podcast',
       via: 'ministry'
+    },
+
+    locations: {
+      collection: 'location',
+      via: 'ministry'
     }
     
   }

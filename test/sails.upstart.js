@@ -7,7 +7,7 @@ before(function (done) {
   this.timeout(5000);
   // Lift Sails with test database
   Sails.lift({
-    log: { level: 'info' },
+    log: { level: 'error' },
     connections: {
       mongo: {
         module   : 'sails-mongo',
