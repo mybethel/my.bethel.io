@@ -16,9 +16,5 @@ module.exports = function(req, res, next) {
   }
 
   // User is not allowed, redirect to the login page
-  req.session.flash = {
-    err: [{id: 'login', error: 'You must be logged in to access this page.'}]
-  }
-
   return res.redirect('/login');
 };
