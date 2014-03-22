@@ -11,10 +11,10 @@ before(function (done) {
     connections: {
       mongo: {
         module   : 'sails-mongo',
-        host     : 'localhost',
-        user     : '',
-        password : '',
-        database : 'mybethel',
+        host     : 'baetylus.bethel.io:49156',
+        user     : 'travisci',
+        password : 'travisci',
+        database : 'mybethel-dev',
         schema   : true
       }
     }
