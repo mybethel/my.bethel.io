@@ -82,5 +82,19 @@ module.exports = {
       res.redirect('/locations');
     });
   },
+
+  ministry: function(req, res) {
+    var findById = req.param('id');
+
+    if (!findById && req.session.Ministry.id) {
+      findById = req.session.Ministry.id;
+    }
+
+    Location.find({ministry: findById}, function foundLocations(err, locations) {
+      if (err) res.send(err, 500);
+
+      res.send(locations, 200);
+    })
+  }
 	
 };

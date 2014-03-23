@@ -29,3 +29,15 @@
   <input type="hidden" name="latitude"<% if (typeof location != 'undefined') { %> value="<%= location.loc[1] %>"<% } %> />
   <input type="hidden" name="longitude"<% if (typeof location != 'undefined') { %> value="<%= location.loc[0] %>"<% } %> />
 </div>
+<script language="javascript">
+  jQuery(document).ready(function($) {
+    var locationData = new google.maps.places.Autocomplete((document.getElementById('location-autocomplete')), { types: ['geocode'] });
+    google.maps.event.addListener(locationData, 'place_changed', function() {
+        var place = locationData.getPlace();
+        $('input[name="address"]').val(place.formatted_address);
+        $('.address-autocomplete-group span.lat-long').text(place.geometry.location.k.toFixed(3)+', '+place.geometry.location.A.toFixed(3));
+        $('input[name="latitude"]').val(place.geometry.location.k);
+        $('input[name="longitude"]').val(place.geometry.location.A);
+    });
+  });
+</script>

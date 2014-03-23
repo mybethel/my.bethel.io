@@ -212,6 +212,10 @@ section.page-wrap .dash-panel-left {
   width: 60%;
 }
 
+section.page-wrap .dash-panel-left.small {
+  width: 40%;
+}
+
 section.page-wrap .dash-panel-right {
   position: absolute;
   padding-top: 51px;
@@ -221,6 +225,10 @@ section.page-wrap .dash-panel-right {
   background: #2F3439;
   min-height: 100%;
   display: block;
+}
+
+section.page-wrap .dash-panel-right.large {
+  width: 60%;
 }
 
 .nav-collapsed section.page-wrap {
@@ -418,4 +426,34 @@ section.page-wrap h1 .btn {
   height: auto;
   margin: 0;
   font-size: inherit;
+}
+
+.panel-body.full {
+  padding: 0;
+}
+
+a.btn-panel {
+  padding: 3px 8px;
+  position: absolute;
+  top: 3px;
+  right: 2px;
+  color: #aaa;
+}
+
+a.btn-panel:hover {
+  color: #333;
+}
+
+.btn-primary {
+  background-color: #1591b5;
+  border-color: #106982;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
+  background-color: #137e9c;
+  border-color: #106982;
+}
+
+#locations-canvas {
+  height: 200px;
 }

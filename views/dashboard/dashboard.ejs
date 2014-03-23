@@ -1,4 +1,4 @@
-<div class="dash-panel-full">
+<div class="dash-panel-left small">
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title">Statistics</h3>
@@ -7,4 +7,60 @@
       Panel content
     </div>
   </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Locations <a href="/locations" class="btn btn-lg btn-link btn-panel"><i class="fa fa-cog"></i></a></h3>
+    </div>
+    <div class="panel-body full">
+      <div id="locations-canvas"></div>
+    </div>
+  </div>
 </div>
+<div class="dash-panel-right large">
+  
+</div>
+<script>
+  var map;
+  var markersArray = [];
+  var image = 'img/';
+  var bounds = new google.maps.LatLngBounds();
+  var loc;
+
+  function addMarker(location, name, active) {          
+      var marker = new google.maps.Marker({
+          position: location,
+          map: map,
+          title: name,
+          icon: '/images/pin.png',
+          color: 0x1591b5
+      });
+  }
+
+  jQuery(document).ready(function($) {
+    var mapOptions = {
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      panControl: false,
+      mapTypeControl: false,
+      scrollwheel: false,
+      navigationControl: false,
+      zoomControl: false,
+      draggable: false,
+      streetViewControl: false,
+      maxZoom: 15
+    };
+
+    $.getJSON('location/ministry', function(data) {
+      map =  new google.maps.Map(document.getElementById('locations-canvas'), mapOptions);
+
+      data.forEach(function(val) {
+        loc = new google.maps.LatLng(val.loc[1],val.loc[0]);
+        bounds.extend(loc);
+        addMarker(loc, val.name, 'active');
+      });
+
+      map.fitBounds(bounds);
+      map.panToBounds(bounds);
+    });
+    
+  });
+  </script>
