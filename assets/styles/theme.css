@@ -75,7 +75,7 @@ body.welcome {
   margin-left: 0;
 }
 
-ul#main-menu {
+ul.nav-main {
   padding-top: 51px;
   position: absolute;
   width: 200px;
@@ -88,21 +88,21 @@ ul#main-menu {
   transition: width .7s ease-in-out;
 }
 
-.nav-collapsed ul#main-menu {
+.nav-collapsed ul.nav-main {
   width: 58px;
 }
 
-ul#main-menu li {
+ul.nav-main li {
   margin-top: 0;
   white-space: nowrap;
   border-bottom:1px solid rgba(255,255,255,0.04);
 }
 
-ul#main-menu li:hover {
+ul.nav-main li:hover {
   background: rgba(255,255,255,0.04);
 }
 
-ul#main-menu li a {
+ul.nav-main li a {
   color: rgba(255,255,255,1);
   font-weight: 300;
   -webkit-transition: color .7s ease-in-out;
@@ -112,24 +112,25 @@ ul#main-menu li a {
   transition: color .7s ease-in-out;
 }
 
-.nav-collapsed ul#main-menu li a {
+.nav-collapsed ul.nav-main li a {
   color: rgba(255,255,255,0);
 }
 
-ul#main-menu li a {
+ul.nav-main li a {
   padding: 15px 25px 16.9px 48px; 
 }
 
-ul#main-menu li a:hover {
+ul.nav-main li.active a:hover,
+ul.nav-main li a:hover {
   background: transparent;
 }
 
-ul#main-menu li.active a {
+ul.nav-main li.active a {
   font-weight: 700;
   background: transparent;
 }
 
-ul#main-menu li.active:after {
+ul.nav-main li.active:after {
   content: " ";
   display: block;
   width: 0; 
@@ -143,7 +144,7 @@ ul#main-menu li.active:after {
   border-right:7px solid #f4f6f8; 
 }
 
-ul#main-menu li a .fa {
+ul.nav-main li a .fa {
   color: #FFF;
   position: absolute;
   left: 18px;
@@ -151,32 +152,32 @@ ul#main-menu li a .fa {
   font-size: 18px;
 }
 
-.nav-collapsed ul#main-menu li a .fa {
+.nav-collapsed ul.nav-main li a .fa {
   color: #FFF;
 }
 
-ul#main-menu li a .fa.fa-microphone {
+ul.nav-main li a .fa.fa-microphone {
   left: 20px;
 }
 
-ul#main-menu li a .fa.fa-mobile {
+ul.nav-main li a .fa.fa-mobile {
   left: 20px;
   margin-top: -2px;
   font-size: 25px;
 }
 
-ul#main-menu li a .fa.fa-users,
-ul#main-menu li a .fa.fa-video-camera,
-ul#main-menu li a .fa.fa-money {
+ul.nav-main li a .fa.fa-users,
+ul.nav-main li a .fa.fa-video-camera,
+ul.nav-main li a .fa.fa-money {
   font-size: 16px;
 }
 
-ul#main-menu li a .fa.fa-video-camera,
-ul#main-menu li a .fa.fa-money {
+ul.nav-main li a .fa.fa-video-camera,
+ul.nav-main li a .fa.fa-money {
   margin-top: 1px;
 }
 
-ul#main-menu span {
+ul.nav-main span {
   overflow: hidden;
   display: block;
   width: 100%;
@@ -184,6 +185,11 @@ ul#main-menu span {
   position: relative;
   white-space: nowrap; 
   padding: 15px 25px 16.9px 18px; 
+}
+
+ul.nav-main.nav-bottom {
+  position: absolute;
+  bottom: 0;
 }
 
 section.page-wrap {
