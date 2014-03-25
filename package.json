@@ -32,7 +32,7 @@
     "time": "~0.10.0",
     "crypto": "0.0.3",
     "moment": "~2.5.1",
-    "restify": "~2.6.3"
+    "request": "~2.34.0"
   },
   "devDependencies": {
     "mocha": "~1.17.1",

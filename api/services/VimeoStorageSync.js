@@ -1,4 +1,4 @@
-var restify = require('restify');
+var request = require('request');
 
 exports.sync = function(options) {
 
@@ -7,11 +7,6 @@ exports.sync = function(options) {
   Podcast.find({source: 2}, function foundPodcasts(err, podcasts) {
     if (err) return next(err);
 
-    var client = restify.createJsonClient({
-      url: 'https://vimeo.com',
-      version: '*'
-    });
-
     podcasts.forEach(function(podcast) {
       if (!podcast.sourceKey || !podcast.sourceMeta) {
         sails.log('Vimeo username or tags not defined for podcast ' + podcast.id + '.');
@@ -19,17 +14,22 @@ exports.sync = function(options) {
       }
 
       var page = 1;
-      do {              
-        client.get('/api/v2/' + podcast.sourceKey + '/videos.json?page=' + page, function(err, req, res, obj) {
-          obj.forEach(function(video) {
-            if (video.tags) {
-              video.tags.split(', ').forEach(function(tag) {
-                if (podcast.sourceMeta.toLowerCase().indexOf(tag.toLowerCase()) >= 0) {
-                  podcastMediaUpsert(video, podcast);
+      do {
+        request('https://vimeo.com/api/v2/' + podcast.sourceKey + '/videos.json?page=' + page, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            var obj = JSON.parse(body);
+            if (obj) {
+              obj.forEach(function(video) {
+                if (video.tags) {
+                  video.tags.split(', ').forEach(function(tag) {
+                    if (podcast.sourceMeta.toLowerCase().indexOf(tag.toLowerCase()) >= 0) {
+                      podcastMediaUpsert(video, podcast);
+                    }
+                  });
                 }
               });
             }
-          });
+          }
         });
         page++;
       } while (page <= 3);
