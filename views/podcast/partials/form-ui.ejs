@@ -26,3 +26,23 @@
 <input type="hidden" name="temporaryImage" value="" />
 <input type="hidden" name="ministry" value="<%= session.Ministry.id %>" />
 <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+<script>
+  function formStateUpdate() {
+    if ($('input[name="type"]:checked').val() === "2") {
+      $('.video-only').show();
+      if ($('input[name="source"]:checked').val() === "2") {
+        $('.vimeo-only').show();
+      } else {
+        $('.vimeo-only').hide();
+      }
+    } else {
+      $('.video-only').hide();
+      $('.vimeo-only').hide();
+    }
+  }
+
+  jQuery(document).ready(function($) {
+    formStateUpdate();
+    $('input[name="type"],input[name="source"]').change(formStateUpdate);
+  });
+</script>

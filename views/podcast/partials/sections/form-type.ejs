@@ -18,7 +18,7 @@
         Bethel Cloud Storage
       </label>
     </div>
-    <div class="radio">
+    <div class="radio video-only">
       <label>
         <input type="radio" name="source" id="optionsRadios2" value="2"<% if (typeof podcast != 'undefined' && podcast.type == 2) { %> checked<% } %>>
         Vimeo Pro
@@ -26,13 +26,13 @@
     </div>
   </div>
 </div>
-<div class="form-group">
+<div class="form-group vimeo-only">
   <label class="col-sm-3 control-label"></label>
   <div class="col-sm-9">
     <input type="text" class="form-control" name="sourceKey" placeholder="Vimeo username" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.sourceKey %>"<% } %> />
   </div>
 </div>
-<div class="form-group">
+<div class="form-group vimeo-only">
   <label class="col-sm-3 control-label">Videos to Sync</label>
   <div class="col-sm-9">
     <input type="text" class="form-control" name="sourceMeta" placeholder="Only videos with tags matching these will be included." <% if (typeof podcast != 'undefined') { %> value="<%= podcast.sourceMeta %>"<% } %> />
