@@ -48,6 +48,18 @@ module.exports = {
       type: 'int'
     },
 
+    thumbnail: {
+      type: 'url'
+    },
+
+    duration: {
+      type: 'int'
+    },
+
+    tags: {
+      type: 'array'
+    },
+
     podcast: {
       model: 'podcast'
     }
