@@ -93,6 +93,10 @@ module.exports = {
       });
     }
 
+    if (values.source == 2) {
+      VimeoStorageSync.sync();
+    }
+
     next();
   },
 
