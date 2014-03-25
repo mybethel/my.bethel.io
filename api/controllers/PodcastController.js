@@ -101,9 +101,14 @@ module.exports = {
 
   destroy: function(req, res) {
     Podcast.destroy(req.param('id'), function deletedPodcast(err, podcast) {
-      if (err) return next(err);
+      if (err) sails.log.error(err);
 
-      res.redirect('/podcasts');
+      PodcastMedia.destroy({podcast: req.param('id')}, function deletedPodcastMedia(err, podcastMedia) {
+        if (err) sails.log.error(err);
+
+        res.redirect('/podcasts');
+      });
+
     });
   },
 
