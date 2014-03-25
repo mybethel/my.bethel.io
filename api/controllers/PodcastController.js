@@ -56,7 +56,7 @@ module.exports = {
       }
       req.session.flash = {};
 
-      return res.redirect('/podcasts');
+      return res.redirect('/podcast/show/' + podcast.id);
     });
   },
 
