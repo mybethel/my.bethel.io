@@ -39,7 +39,7 @@ exports.sync = function(options) {
 };
 
 function podcastMediaUpsert(video, podcast) {
-  PodcastMedia.findOne({uuid: video.id, podcast: podcast.id}, function foundPodcastMedia(err, media) {
+  PodcastMedia.findOne({uuid: video.id.toString(), podcast: podcast.id}, function foundPodcastMedia(err, media) {
     if (err) sails.log.error(err);
 
     if (!media) {
