@@ -5,15 +5,15 @@
   </div>
 </div>
 <div class="form-group">
-  <label for="podcastKeywords" class="col-sm-3 control-label">Keywords</label>
-  <div class="col-sm-9">
-    <input type="text" class="form-control" name="tags" title="podcastKeywords" placeholder="Multiple terms separated by commas" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.tags %>"<% } %> />
-  </div>
-</div>
-<div class="form-group">
   <label for="podcastDescription" class="col-sm-3 control-label">Description</label>
   <div class="col-sm-9">
     <textarea class="form-control" name="description" rows="4" id="podcastDescription" placeholder="A few paragraphs describing your podcast that will appear in iTunes."><% if (typeof podcast != 'undefined') { %><%= podcast.description %><% } %></textarea>
+  </div>
+</div>
+<div class="form-group">
+  <label for="podcastKeywords" class="col-sm-3 control-label">Keywords</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="tags" title="podcastKeywords" placeholder="Multiple terms separated by commas" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.tags %>"<% } %> />
   </div>
 </div>
 <div class="form-group">
