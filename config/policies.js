@@ -26,6 +26,10 @@ module.exports.policies = {
   	'welcome': ['flash', 'sessionAuth']
   },
 
+  ministry: {
+    'locations': true,
+  },
+
   session: {
   	'create': 'flash'
   },
