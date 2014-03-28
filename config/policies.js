@@ -28,6 +28,7 @@ module.exports.policies = {
 
   location: {
     'ministry': true,
+    'show': true
   },
 
   session: {
