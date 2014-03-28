@@ -16,15 +16,7 @@
  */
 
 module.exports = {
-    
-  locations: function (req, res) {
-    Location.find({ministry: req.param('id')}, function foundLocations(err, locations) {
-      if (err) res.send(err, 500);
-      if (!locations) res.send(404);
 
-      res.send(200, locations);
-    });
-  },
 
   /**
    * Overrides for the settings in `config/controllers.js`
