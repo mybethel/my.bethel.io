@@ -95,6 +95,15 @@ module.exports = {
 
       res.send(locations, 200);
     })
+  },
+
+  show: function (req, res) {
+    Location.findOne(req.param('id'), function foundLocation(err, location) {
+      if (err) res.send(err, 500);
+      if (!location) res.send(404);
+    
+      res.send(200, location);
+    });
   }
 	
 };
