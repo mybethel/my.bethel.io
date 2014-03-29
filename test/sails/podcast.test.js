@@ -13,4 +13,10 @@ describe('Podcast', function() {
     });
   });
 
+  describe('GET /podcastmedia/related', function() {
+    it('should display all related podcast media', function(done) {
+      request(sails.hooks.http.server).get('/podcastmedia/related').expect(200, done);
+    });
+  });
+
 });
