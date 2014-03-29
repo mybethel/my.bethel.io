@@ -8,7 +8,7 @@
 module.exports = {
 
   list: function (req, res) {
-    Location.find({ministry: req.session.Ministry.id}, function foundLocations(err, locations) {
+    Location.find({ministry: req.session.Ministry.id}).sort('name asc').exec(function foundLocations(err, locations) {
       if (err) res.send(err, 500);
 
       res.view({
