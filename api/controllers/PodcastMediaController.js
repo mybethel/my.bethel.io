@@ -70,7 +70,7 @@ module.exports = {
   },
 
   related: function(req, res) {
-    PodcastMedia.find({referenceId: req.param('id')}, function foundPodcastMedia(err, media) {
+    PodcastMedia.find({referenceId: req.param('id')}).sort('date desc').exec(function foundPodcastMedia(err, media) {
       res.send(200, media);
     });
   }
