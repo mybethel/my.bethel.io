@@ -29,6 +29,12 @@
   <input type="hidden" name="latitude"<% if (typeof location != 'undefined') { %> value="<%= location.loc[1] %>"<% } %> />
   <input type="hidden" name="longitude"<% if (typeof location != 'undefined') { %> value="<%= location.loc[0] %>"<% } %> />
 </div>
+<div class="form-group">
+  <label for="title" class="col-sm-3 control-label">Service Times</label>
+  <div class="col-sm-9">
+    <input type="text" class="form-control" name="times" title="locationTimes" placeholder="Service times at this location" <% if (typeof location != 'undefined' && location.times) { %> value="<%= location.times %>"<% } %>/>
+  </div>
+</div>
 <script language="javascript">
   jQuery(document).ready(function($) {
     var locationData = new google.maps.places.Autocomplete((document.getElementById('location-autocomplete')), { types: ['geocode'] });

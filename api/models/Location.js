@@ -27,6 +27,10 @@ module.exports = {
       type: 'array'
     },
 
+    times: {
+      type: 'string'
+    },
+
     ministry: {
       model: 'ministry',
       required: true
