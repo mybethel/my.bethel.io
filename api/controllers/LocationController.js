@@ -83,6 +83,14 @@ module.exports = {
     });
   },
 
+  all: function(req, res) {
+    Location.find(function foundLocations(err, locations) {
+      if (err) res.send(err, 500);
+
+      res.send(locations, 200);
+    });
+  },
+
   ministry: function(req, res) {
     var findById = req.param('id');
 

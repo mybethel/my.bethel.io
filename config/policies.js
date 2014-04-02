@@ -27,6 +27,7 @@ module.exports.policies = {
   },
 
   location: {
+    'all': true,
     'ministry': true,
     'show': true
   },
