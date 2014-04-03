@@ -10,6 +10,15 @@
 
 module.exports.bootstrap = function (cb) {
 
+  // Setup the 2dsphere index on Locations collection.
+  Location.native(function(err, collection) {
+    collection.ensureIndex({
+      loc: '2dsphere'
+    }, function(err, result) {
+      return;
+    });
+  });
+
   // It's very important to trigger this callack method when you are finished 
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   cb();

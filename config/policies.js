@@ -28,6 +28,7 @@ module.exports.policies = {
 
   location: {
     'all': true,
+    'map': true,
     'ministry': true,
     'show': true
   },

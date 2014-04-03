@@ -105,6 +105,29 @@ module.exports = {
     })
   },
 
+  map: function(req, res) {
+    var lat = parseFloat(req.param('lng')),
+        lng = parseFloat(req.param('lat')),
+        rad = parseFloat(req.param('radius'));
+
+    if (!lat || !lng || !rad) {
+      return res.send(404);
+    }
+
+    Location.native(function (err, collection) {
+      sails.log.info('Searching '+lat+','+lng+' with radius of '+rad+' kilometers.');
+
+      collection.geoNear(lat, lng, {
+        maxDistance: rad / 6371,
+        distanceMultiplier: 6371,
+        spherical: true
+      }, function (mongoErr, docs) {
+        if (mongoErr) return res.send(mongoErr, 500);
+        res.send(docs.results, 200);
+      });
+    });
+  },
+
   show: function (req, res) {
     Location.findOne(req.param('id'), function foundLocation(err, location) {
       if (err) res.send(err, 500);

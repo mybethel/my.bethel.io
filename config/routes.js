@@ -54,6 +54,11 @@ module.exports.routes = {
   '/locations': {
     controller: 'location',
     action: 'list'
+  },
+
+  '/location/map/:lat/:lng/:radius': {
+    controller: 'location',
+    action: 'map'
   }
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
