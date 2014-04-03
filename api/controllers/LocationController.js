@@ -123,7 +123,7 @@ module.exports = {
         spherical: true
       }, function (mongoErr, docs) {
         if (mongoErr) return res.send(mongoErr, 500);
-        res.send(docs.results, 200);
+        res.send({locations: docs.results}, 200);
       });
     });
   },
