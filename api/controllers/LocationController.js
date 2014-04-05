@@ -136,7 +136,11 @@ module.exports = {
         Ministry.find({
           or: ministries
         }).done(function(err, foundMinistries) {
-          res.send({locations: docs.results, ministries: foundMinistries}, 200);
+          ministries = {};
+          _.each(foundMinistries, function(ministry) {
+            ministries[ministry.id] = ministry;
+          })
+          res.send({locations: docs.results, ministries: ministries}, 200);
         });
       });
     });
