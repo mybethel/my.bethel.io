@@ -14,6 +14,14 @@ module.exports = {
       type: 'string'
     },
 
+    temporaryImage: {
+      type: 'string'
+    },
+
+    image: {
+      type: 'string'
+    },
+
   	users: {
       collection: 'user',
       via: 'ministry'
@@ -29,6 +37,15 @@ module.exports = {
       via: 'ministry'
     }
     
-  }
+  },
+
+  beforeUpdate: function(values, next) {
+    if (values.temporaryImage) {
+      values.image = S3Upload.removeTemp('images/ministry', values.temporaryImage, values.id);
+      delete values.temporaryImage;
+    }
+
+    next();
+  },
 
 };

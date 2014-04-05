@@ -22,7 +22,34 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to MinistryController)
    */
-  _config: {}
+  _config: {},
 
-  
+  edit: function (req, res) {
+    Ministry.findOne(req.param('id'), function foundMinistry(err, ministry) {
+      if (err) res.send(err, 500);
+
+      uploadForm = S3Upload.prepare('images/ministry/tmp');
+    
+      return res.view({
+        ministry: ministry,
+        s3form: uploadForm
+      });
+    });
+  },
+
+  update: function(req, res) {
+    Ministry.update(req.param('id'), req.params.all(), function ministryUpdated(err) {
+      if (err) {
+        req.session.flash = {
+          err: err
+        }
+
+        return res.redirect('/ministry/edit/' + req.param('id'));
+      }
+      req.session.flash = {};
+
+      return res.redirect('/');
+    });
+  }
+
 };

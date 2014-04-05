@@ -60,6 +60,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.Ministry.name %></a>
               <ul class="dropdown-menu">
+                <li><a href="/ministry/edit/<%= session.Ministry.id %>">Settings</a></li>
                 <li><a href="/locations">Locations</a></li>
               </ul>
             </li>
@@ -168,6 +169,7 @@
     <script src="/js/bootstrap.js"></script>
     <script src="/js/podcast.js"></script>
     <script src="/js/ui.js"></script>
+    <script src="/js/uploader.js"></script>
     <script src="/js/user-validate.js"></script>
     <!--SCRIPTS END-->
   </body>
