@@ -4,6 +4,7 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var ObjectID = require('mongodb').ObjectID;
 
 module.exports = {
 
@@ -123,7 +124,20 @@ module.exports = {
         spherical: true
       }, function (mongoErr, docs) {
         if (mongoErr) return res.send(mongoErr, 500);
-        res.send({locations: docs.results}, 200);
+        var ministries = [];
+
+        _.each(docs.results, function(location) {
+          ministries.push({_id: new ObjectID(location.obj.ministry)});
+        });
+
+        if (!ministries.length)
+          return res.send({locations: docs.results}, 200);
+
+        Ministry.find({
+          or: ministries
+        }).done(function(err, foundMinistries) {
+          res.send({locations: docs.results, ministries: foundMinistries}, 200);
+        });
       });
     });
   },
