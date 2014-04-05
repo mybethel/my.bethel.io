@@ -22,6 +22,10 @@ module.exports = {
       type: 'string'
     },
 
+    color: {
+      type: 'string'
+    },
+
   	users: {
       collection: 'user',
       via: 'ministry'

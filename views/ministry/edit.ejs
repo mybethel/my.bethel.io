@@ -22,7 +22,18 @@
         <div class="form-group">
           <label for="podcastTitle" class="col-sm-3 control-label">Brand Color</label>
           <div class="col-sm-9">
-            
+            <div class="btn-toolbar" role="toolbar">
+              <div class="btn-group">
+                <div type="button" class="btn btn-default color-primary"<% if (ministry.color) { %> style="background-color: rgb(<%= ministry.color.toString() %>);"<% } %>><input type="radio" name="color" value="<% if (ministry.color) { %><%= ministry.color.toString() %><% } %>" checked /></div>
+              </div>
+              <div class="btn-group">
+                <div type="button" class="btn btn-default color-palette-1"><input type="radio" name="color" /></div>
+                <div type="button" class="btn btn-default color-palette-2"><input type="radio" name="color" /></div>
+                <div type="button" class="btn btn-default color-palette-3"><input type="radio" name="color" /></div>
+                <div type="button" class="btn btn-default color-palette-4"><input type="radio" name="color" /></div>
+                <div type="button" class="btn btn-default color-palette-5"><input type="radio" name="color" /></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -33,7 +44,7 @@
 </form>
 <div class="dash-panel-right">
   <div id="upload-widget"<% if (typeof ministry == 'undefined' || !ministry.image) { %> class="dropzone"<% } %> data-temp-location="<%= s3form.bucket %>">
-    <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/<% if (typeof ministry != 'undefined' && ministry.image) { %><%= ministry.image %><% } else { %>DefaultPodcaster.png<% } %>" />
+    <img class="thumbnail-sidebar" id="identityImage" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/<% if (typeof ministry != 'undefined' && ministry.image) { %><%= ministry.image %><% } else { %>DefaultPodcaster.png<% } %>" />
     <form action="http://cloud.bethel.io.s3.amazonaws.com/" method="post" enctype="multipart/form-data" id="file_upload">
       <input type="hidden" name="key" value="<%= s3form.bucket %>/${filename}" />
       <input type="hidden" name="AWSAccessKeyId" value="<%= s3form.key %>" />
@@ -61,3 +72,26 @@
     <button type="submit" class="btn btn-block btn-lg btn-primary sidebar-submit">Save Changes</button>
   </div>
 </div>
+<script>
+  jQuery(document).ready(function($) {
+    $(window).ready(function(){
+      var colorThief = new ColorThief();
+      var el = document.getElementById('identityImage');
+      var img = new Image();
+      img.onload = function() {
+        var primaryColor = colorThief.getColor(img);
+        var colorPalette = colorThief.getPalette(img);
+        if (!$('.color-primary input').attr('value')) {
+          $('.color-primary').attr('style', 'background-color: rgb(' + primaryColor.toString() + ');');
+          $('.color-primary input').attr('value', primaryColor.toString());
+        }
+        colorPalette.forEach(function(color, index) {
+          $('.color-palette-'+index).attr('style', 'background-color: rgb(' + color.toString() + ');');
+          $('.color-palette-'+index+' input').attr('value', color.toString());
+        });
+      };
+      img.crossOrigin = 'my.bethel.io';
+      img.src = el.getAttribute('src');
+    });
+  });
+</script>
