@@ -7,9 +7,15 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <label for="podcastTitle" class="col-sm-3 control-label">Name</label>
+          <label for="ministryName" class="col-sm-3 control-label">Name</label>
           <div class="col-sm-9">
             <input type="text" class="form-control" name="name" id="ministryName" placeholder="Ministry name"<% if (typeof ministry != 'undefined') { %> value="<%= ministry.name %>"<% } %> />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ministryAbout" class="col-sm-3 control-label">About</label>
+          <div class="col-sm-9">
+            <textarea name="description" id="ministryAbout" data-provide="markdown" class="form-control" rows="10" placeholder="Talk about your ministry here.  Supports Markdown."><% if (typeof ministry != 'undefined' && ministry.description) { %><%= ministry.description %><% } %></textarea>
           </div>
         </div>
       </div>

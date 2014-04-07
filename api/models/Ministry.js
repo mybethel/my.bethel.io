@@ -14,6 +14,10 @@ module.exports = {
       type: 'string'
     },
 
+    description: {
+      type: 'text'
+    },
+
     temporaryImage: {
       type: 'string'
     },
