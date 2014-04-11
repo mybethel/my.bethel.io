@@ -17,6 +17,14 @@ before(function (done) {
         database : 'mybethel-dev',
         schema   : true
       }
+    },
+    session: {
+      adapter    : 'mongo',
+      host       : 'baetylus.bethel.io:49156',
+      user       : 'travisci',
+      password   : 'travisci',
+      db         : 'mybethel-dev',
+      collection : 'sessions',
     }
   }, done);
 });
