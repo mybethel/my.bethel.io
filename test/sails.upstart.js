@@ -11,20 +11,14 @@ before(function (done) {
     connections: {
       mongo: {
         module   : 'sails-mongo',
-        host     : 'baetylus.bethel.io:49156',
-        user     : 'travisci',
-        password : 'travisci',
-        database : 'mybethel-dev',
+        url      : 'mongodb://travisci:travisci@baetylus.bethel.io:49156/mybethel-dev',
         schema   : true
       }
     },
     session: {
       adapter    : 'mongo',
-      host       : 'baetylus.bethel.io:49156',
-      user       : 'travisci',
-      password   : 'travisci',
-      db         : 'mybethel-dev',
       collection : 'sessions',
+      url        : 'mongodb://travisci:travisci@baetylus.bethel.io:49156/mybethel-dev'
     }
   }, done);
 });
