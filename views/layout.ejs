@@ -83,7 +83,7 @@
       <ul id="main-menu" class="nav nav-pills nav-stacked nav-main">
         <li<% if (req.url === '/') { %> class="active"<% } %>><a href="/"><i class="fa fa-tachometer"></i>Dashboard</a></li>
         <li<% if (req.url === '/podcasts' || req.url.split('/')[1] == 'podcast') { %> class="active"<% } %>><a href="/podcasts"><i class="fa fa-microphone"></i>Podcasts</a></li>
-        <li><a href="/"><i class="fa fa-mobile"></i>Mobile App</a></li>
+        <li<% if (req.url === '/mobile' || req.url.split('/')[1] == 'mobile') { %> class="active"<% } %>><a href="/mobile"><i class="fa fa-mobile"></i>Mobile App</a></li>
         <li><a href="/"><i class="fa fa-users" ></i>Volunteers</a></li>
         <li><a href="/"><i class="fa fa-video-camera"></i>Live Streaming</a></li>
         <li><a href="/"><i class="fa fa-money"></i>Giving</a></li>

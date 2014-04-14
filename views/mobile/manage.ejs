@@ -1,0 +1,74 @@
+<div class="dash-panel-left">
+  <h1>Mobile App</h1>
+  <div class="panel panel-default panel-top">
+    <div class="panel-heading" style="padding-bottom: 0;">
+      <ul class="nav nav-tabs" style="border-bottom: 0;">
+        <li class="active"><a href="#info-tiles" data-toggle="tab">Info Tiles</a></li>
+        <li><a href="#live-view" data-toggle="tab">Live View</a></li>
+        <li><a href="#push-notifications" data-toggle="tab">Push Notifications</a></li>
+      </ul>
+    </div>
+    <div class="panel-body">
+      <div class="tab-content">
+        <div class="tab-pane active" id="info-tiles">
+          <p class="text-muted text-center">Info Tiles are shown on the main screen within your church app and may contain a variety of different types of content.  Only two tiles are seen at one time with the ability to scroll through your entire collection.</p>
+          <hr>
+        </div>
+        <div class="tab-pane" id="live-view">
+          <p class="text-muted text-center">Live View is a location-aware full screen information pane shown to visitors who are at your location.  The user doesn't have to select your church as their "home church" in order to be shown this panel.</p>
+          <hr>
+          <form class="form-horizontal sidebar-form" role="form" action="/" method="post" accept-charset="UTF-8">
+            <div class="form-group">
+              <label for="podcastDescription" class="col-sm-3 control-label">Heading</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Welcome to [ministry name]" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="podcastDescription" class="col-sm-3 control-label">Sermon</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Title of the current sermon" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="podcastDescription" class="col-sm-3 control-label">Speaker</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Current Pastor or speaker" />
+              </div>
+            </div>
+            <hr>
+            <h4 class="text-center">Click on a button on the right to edit.</h4>
+          </form>
+        </div>
+        <div class="tab-pane" id="push-notifications">
+          <p class="text-muted text-center">Send a push notification to any user who has selected your church as their home church.  <strong>Please use this feature responsibly and don't overuse.</strong></p>
+          <hr>
+          <form class="form-horizontal sidebar-form" role="form" action="/" method="post" accept-charset="UTF-8">
+            <div class="form-group">
+              <label for="podcastDescription" class="col-sm-3 control-label">Title</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Welcome to [ministry name]" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="podcastDescription" class="col-sm-3 control-label">Subtitle</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="name" id="podcastTitle" placeholder="Title of the current sermon" />
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox"><label><input type="checkbox"> Send as rich notification.</label></div>
+              </div>
+            </div>
+            <hr>
+            <p class="text-muted text-center"><em>$1 per 1,000 push notifications delivered ($2 for rich notifications)</em></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="dash-panel-right text-center">
+  <img src="/images/mobile.png" width="250" style="margin-top: 50px" />
+</div>
