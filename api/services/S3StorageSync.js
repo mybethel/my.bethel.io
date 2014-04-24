@@ -3,6 +3,9 @@ var AWS = require('aws-sdk'),
 
 exports.sync = function(options) {
 
+  if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
+    return sails.log.error('Required AWS credentials not set.');
+
   AWS.config.update(sails.config.aws);
   var s3 = new AWS.S3();
 
@@ -19,6 +22,9 @@ exports.sync = function(options) {
 
         // Get a list of files from the S3 bucket
         s3.listObjects({Bucket: 'cloud.bethel.io', Prefix: 'podcast/' + ministry.id + '/' + podcast.id + '/'}, function(err, data) {
+          if (!data)
+            return sails.log.warn('No objects returned from S3 for podcast ' + podcast.id);
+
           data['Contents'].shift();
           sails.log('Syncing ' + data['Contents'].length + ' items in podcast/' + ministry.id + '/' + podcast.id);
 
