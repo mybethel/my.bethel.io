@@ -29,6 +29,7 @@ module.exports = {
             subscribers += Math.round(podcast.statistics[weekNumber]/moment().day());
           }
         }
+        if (!subscribers) subscribers = 0;
         podcast.subscribers = subscribers;
       });
 
