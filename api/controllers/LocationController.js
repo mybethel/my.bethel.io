@@ -9,7 +9,7 @@ var ObjectID = require('mongodb').ObjectID;
 module.exports = {
 
   list: function (req, res) {
-    Location.find({ministry: req.session.Ministry.id}).sort('name asc').exec(function foundLocations(err, locations) {
+    Location.find({ministry: new ObjectID(req.session.Ministry.id)}).sort('name asc').exec(function foundLocations(err, locations) {
       if (err) res.send(err, 500);
 
       res.view({
@@ -96,7 +96,7 @@ module.exports = {
     var findById = req.param('id');
 
     if (!findById && req.session.Ministry.id) {
-      findById = req.session.Ministry.id;
+      findById = new ObjectID(req.session.Ministry.id);
     }
 
     Location.find({ministry: findById}, function foundLocations(err, locations) {

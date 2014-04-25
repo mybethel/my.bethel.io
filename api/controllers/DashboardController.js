@@ -5,7 +5,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var moment = require('moment');
+var moment = require('moment'),
+    ObjectID = require('mongodb').ObjectID;
 
 module.exports = {
 	
@@ -14,7 +15,7 @@ module.exports = {
   },
 
   stats: function(req, res) {
-    Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
+    Podcast.find({ministry: new ObjectID(req.session.Ministry.id)}, function foundPodcasts(err, podcasts) {
       if (err) res.send(err, 500);
 
       var statistics = {};

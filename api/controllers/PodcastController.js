@@ -11,7 +11,7 @@ var moment = require('moment'),
 module.exports = {
 
   list: function (req, res) {
-    Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
+    Podcast.find({ministry: new ObjectID(req.session.Ministry.id)}, function foundPodcasts(err, podcasts) {
       if (err) return next(err);
 
       // Get the current and prior week number.
@@ -120,7 +120,7 @@ module.exports = {
       Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
         if (err) return next(err);
 
-        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
+        PodcastMedia.find().sort('date desc').where({podcast: new ObjectID(podcast.id)}).exec(function(err, media) {
           if (err) return next(err);
 
           if (podcast.type == 1) {
@@ -158,7 +158,7 @@ module.exports = {
       Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
         if (err) res.send(err, 500);
 
-        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
+        PodcastMedia.find().sort('date desc').where({podcast: new ObjectID(podcast.id)}).exec(function(err, media) {
           if (err) res.send(err, 500);
 
           var statistics = {};
