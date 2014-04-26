@@ -127,7 +127,7 @@ module.exports = {
         var ministries = [];
 
         _.each(docs.results, function(location) {
-          ministries.push({_id: new ObjectID(location.obj.ministry)});
+          ministries.push({_id: location.obj.ministry});
         });
 
         if (!ministries.length)
