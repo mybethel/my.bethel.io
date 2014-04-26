@@ -51,7 +51,7 @@
 <div class="dash-panel-right">
   <div id="upload-widget"<% if (typeof ministry == 'undefined' || !ministry.image) { %> class="dropzone"<% } %> data-temp-location="<%= s3form.bucket %>">
     <img class="thumbnail-sidebar" id="identityImage" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/<% if (typeof ministry != 'undefined' && ministry.image) { %><%= ministry.image %><% } else { %>DefaultPodcaster.png<% } %>" />
-    <form action="http://cloud.bethel.io.s3.amazonaws.com/" method="post" enctype="multipart/form-data" id="file_upload">
+    <form action="<%= s3form.action %>" method="post" enctype="multipart/form-data" id="file_upload">
       <input type="hidden" name="key" value="<%= s3form.bucket %>/${filename}" />
       <input type="hidden" name="AWSAccessKeyId" value="<%= s3form.key %>" />
       <input type="hidden" name="acl" value="public-read" />
