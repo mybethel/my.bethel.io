@@ -5,7 +5,7 @@
   <div class="panel panel-default panel-top">
     <div class="panel-heading">
       <h3 class="panel-title">Podcast Episodes</h3><% if (podcast.type == 1) { %>
-      <form action="http://cloud.bethel.io.s3.amazonaws.com/" method="post" enctype="multipart/form-data" id="file_upload">
+      <form action="https://s3.amazonaws.com/cloud.bethel.io" method="post" enctype="multipart/form-data" id="file_upload">
         <input type="hidden" name="key" value="<%= podcast.s3form.bucket %>/${filename}" />
         <input type="hidden" name="AWSAccessKeyId" value="<%= podcast.s3form.key %>" />
         <input type="hidden" name="acl" value="public-read" />
