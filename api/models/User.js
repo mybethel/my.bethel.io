@@ -50,7 +50,7 @@ module.exports = {
       values.password = encryptedPassword;
 
       var gravatar = require('gravatar');
-      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'});
+      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'}, true);
 
       next();
     });
@@ -59,7 +59,7 @@ module.exports = {
   beforeUpdate: function(values, next) {
     if (values.email) {
       var gravatar = require('gravatar');
-      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'});
+      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'}, true);
     }
 
     if (values.invite) {
