@@ -20,7 +20,7 @@
     <itunes:category text="Christianity"/>
   </itunes:category>
   <atom:link href="https://my.bethel.io/podcast/feed/<%= podcast.id %>" rel="self" type="application/rss+xml"/>
-  <% _.each(podcastMedia, function(media) { %>
+  <% _.each(podcastMedia, function(media) { if (media.url) { %>
   <item>
     <title><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></title>
     <pubDate><%= media.date.toUTCString() %></pubDate>
@@ -34,4 +34,4 @@
     <itunes:explicit>no</itunes:explicit>
     <itunes:block>no</itunes:block>
   </item>
-  <% }) %>
+  <% }}) %>
