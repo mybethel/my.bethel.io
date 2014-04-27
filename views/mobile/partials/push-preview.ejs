@@ -8,10 +8,22 @@
     <div class="notification-preview" style="padding: 15px;">
       <div class="app-icon" style="width: 15px; height: 15px; border-radius: 3px; background: rgb(21, 145, 181); float: left; margin-right: 5px; border: 1px solid #106982; box-shadow: rgba(255, 255, 255, 0.14902) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px;"></div>
       <div class="notification-title" style="font-size: 10px;"><b style="font-size: 110%">MyChurch </b>now</div>
-      <div class="notification-body" style="padding-left: 20px; font-size: 11px;">
+      <div class="notification-body" style="margin-top: 1px; padding-left: 20px; font-size: 11px; line-height: 11px;">
         Enter your notification message
       </div>
     </div>
   </div>
   <img src="/images/mobile.png" width="250" style="position: absolute; z-index: 1;" />
 </div>
+<script>
+  jQuery(document).ready(function($) {
+    $('#pushMessage').keyup(function() {
+      var pushMessage = $('#pushMessage').val();
+      if (pushMessage) {
+        $('div.notification-body').text(pushMessage);
+      } else {
+        $('div.notification-body').text('Enter your notification message');
+      }
+    });
+  });
+</script>
