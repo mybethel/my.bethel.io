@@ -19,7 +19,7 @@
     "grunt-contrib-cssmin": "~0.6.1",
     "grunt-contrib-less": "~0.9.0",
     "grunt-contrib-coffee": "~0.7.0",
-    "sails-mongo": "~0.10.0-rc3",
+    "sails-mongo": "~0.10.0-rc4",
     "forever": "~0.10.11",
     "newrelic": "~1.5",
     "bcrypt": "~0.7.7",
