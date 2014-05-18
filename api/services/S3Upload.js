@@ -10,7 +10,7 @@ exports.prepare = function(bucketName) {
       s = signature(p);
 
   return({
-    action: 'http://s3.amazonaws.com/cloud.bethel.io',
+    action: 'https://s3.amazonaws.com/cloud.bethel.io',
     policy: p,
     signature: s,
     key: sails.config.aws.accessKeyId,
