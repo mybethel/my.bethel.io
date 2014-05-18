@@ -12,6 +12,7 @@
           <h3><span class="change-count"></span>% <i class="fa fa-arrow-up pull-right text-success"></i><br /><small><span class="change-type">increase</span> in podcast subscribers</small></h3>
         </div>
       </div>
+      <h5 class="text-muted no-stats" style="display: none;">Check back later for statistics...</h5>
     </div>
   </div>
   <div class="panel panel-default">
@@ -85,12 +86,17 @@
         highlightSpotColor: '#1591b5',
       });
 
-      $('.podcast-row .change-count').text(data.podcastChange.toFixed(1));
+      if (data.podcastChange) {
+        $('.podcast-row .change-count').text(data.podcastChange.toFixed(1));
 
-      if (data.podcastChange < 0) {
-        $('.podcast-row .change-type').text('decrease');
-        $('.podcast-row .fa').removeClass('fa-arrow-up text-success');
-        $('.podcast-row .fa').addClass('fa-arrow-down text-danger')
+        if (data.podcastChange < 0) {
+          $('.podcast-row .change-type').text('decrease');
+          $('.podcast-row .fa').removeClass('fa-arrow-up text-success');
+          $('.podcast-row .fa').addClass('fa-arrow-down text-danger')
+        }
+      } else {
+        $('.podcast-row').hide();
+        $('.no-stats').show();
       }
     });
 
