@@ -161,6 +161,9 @@ module.exports = {
         PodcastMedia.find().sort('date desc').where({podcast: new ObjectID(podcast.id)}).exec(function(err, media) {
           if (err) res.send(err, 500);
 
+          Analytics.registerHit('podcast', req.param('id'));
+
+          // DEPRECATED: Remove and migrate old data to new storage.
           var statistics = {};
           statistics['statistics.'+moment().week()] = 1;
 
@@ -174,6 +177,7 @@ module.exports = {
               }
             );
           });
+          // END DEPRECATED.
 
           res.header('Content-Type', 'text/xml; charset=UTF-8');
 
