@@ -127,7 +127,10 @@ module.exports = {
             podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
           }
 
-          if (podcast.statistics && Object.keys(podcast.statistics).length >= 4) {
+          podcast.statisticsGraph = Analytics.generateGraphData('podcast', req.param('id'), 6);
+
+          // DEPRECATED: Remove once old data has been migrated to new storage.
+          if (!podcast.statisticsGraph && podcast.statistics && Object.keys(podcast.statistics).length >= 4) {
             podcastGraph = new Array();
             if (Object.keys(podcast.statistics).length >= 6) {
               podcastGraph.push(podcast.statistics[moment().subtract('week', 6).week()]);
@@ -139,6 +142,7 @@ module.exports = {
             podcastGraph.push(podcast.statistics[moment().subtract('week', 1).week()]);
             podcast.statisticsGraph = podcastGraph;
           }
+          // END DEPRECATED.
 
           res.view({
             podcast: podcast,
