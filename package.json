@@ -31,7 +31,9 @@
     "cron": "~1.0.3",
     "time": "~0.10.0",
     "moment": "~2.5.1",
-    "request": "~2.34.0"
+    "request": "~2.34.0",
+    "passport": "~0.2.0",
+    "passport-oauth": "~1.0.0"
   },
   "devDependencies": {
     "mocha": "~1.17.1",

@@ -22,6 +22,32 @@ module.exports.bootstrap = function (cb) {
   // Ensure all Cron jobs are scheduled to run.
   Cron.init();
 
+  // Setup Passport services.
+  var passport = require('passport')
+    , OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
+
+  for (var service in sails.config.services) {
+    passport.use(service, new OAuth2Strategy(sails.config.services[service],
+      function(accessToken, refreshToken, profile, done) {
+        Services.findOrCreate({
+          'ministry': req.session.Ministry.id,
+          'provider': service
+        }, {
+          'provider': service,
+          'ministry': req.session.Ministry.id,
+          'accessToken': accessToken,
+          'refreshToken': refreshToken,
+          'profile': profile
+        }, function(err, user) {
+          if (err)
+            sails.log.error(err);
+
+          done(null, user);
+        });
+      }
+    ));
+  }
+
   // It's very important to trigger this callack method when you are finished 
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   cb();
