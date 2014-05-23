@@ -1,0 +1,26 @@
+<div class="dash-panel-full">
+  <h1>Connected Accounts <a href="#" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> Add Account</a></h1>
+  <table class="table table-list services">
+    <thead>
+      <tr>
+        <th colspan="2"></th>
+        <th class="type text-muted">Type</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(services, function(service) { %>
+      <tr>
+        <td class="thumb">
+          <img class="image-style-thumbnail" typeof="foaf:Image" src="<%= service.picture %>" width="30" height="30" alt="<%= service.name %>">
+        </td>
+        <td class="title"><a href="<%= service.link %>" target="_blank"><%= service.name %></a></td>
+        <td class="type"><img class="image-style-thumbnail" typeof="foaf:Image" src="/images/services/<%= service.provider %>.png" width="80" alt="<%= service.provider %>"></td>
+        <td class="operations">
+          <a href="#" class="btn btn-sm btn-danger">Disconnect</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>

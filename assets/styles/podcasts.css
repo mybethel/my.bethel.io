@@ -2,34 +2,41 @@
   padding: 0;
 }
 
-.podcast-list {
+.table-list {
   margin-top: -38px;
 }
 
-.podcast-list th,
-.podcast-list td {
+.table-list th,
+.table-list td {
   text-align: center;
 }
 
-.podcast-list td {
+.table-list td {
   vertical-align: middle !important;
 }
 
-.podcast-list .thumb {
+.table-list .thumb {
   padding-left: 0;
+}
+
+.table-list.podcast .thumb {
   width: 100px;
 }
 
-.podcast-list .title {
+.table-list.services .thumb {
+  width: 30px;
+}
+
+.table-list .title {
   text-align: left;
   font-size: 20px;
 }
 
-.podcast-list .subscribers {
+.table-list .subscribers {
   width: 130px;
 }
 
-.podcast-list .operations {
+.table-list .operations {
   width: 120px;
 }
 

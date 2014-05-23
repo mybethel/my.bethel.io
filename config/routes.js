@@ -51,6 +51,11 @@ module.exports.routes = {
     action: 'list'
   },
 
+  '/accounts': {
+    controller: 'service',
+    action: 'list'
+  },
+
   '/locations': {
     controller: 'location',
     action: 'list'

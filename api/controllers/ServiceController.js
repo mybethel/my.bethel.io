@@ -7,6 +7,16 @@
 
 module.exports = {
 
+  list: function (req, res) {
+    Services.find({ministry: req.session.Ministry.id}, function foundServices(err, allServices) {
+      if (err) return next(err);
+
+      res.view({
+        services: allServices
+      });
+    });
+  },
+
   vimeo: function(req, res, next) {
     var Vimeo = require('vimeo-api').Vimeo,
         VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO),
