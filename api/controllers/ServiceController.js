@@ -31,7 +31,9 @@ module.exports = {
             'user': token.user.uri,
             'accessToken': token.access_token,
             'scope': token.scope,
-            'profile': token.user
+            'link': token.user.link,
+            'name': token.user.name,
+            'picture': token.user.pictures[0].link
           }, function(err, user) {
             if (err)
               sails.log.error(err);

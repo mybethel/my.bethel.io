@@ -10,23 +10,34 @@ module.exports = {
 	attributes: {
 
     provider: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     user: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     accessToken: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     refreshToken: {
       type: 'string'
     },
 
-    profile: {
-      type: 'array'
+    link: {
+      type: 'string'
+    },
+
+    name: {
+      type: 'string'
+    },
+
+    picture: {
+      type: 'string'
     },
 
     ministry: {
