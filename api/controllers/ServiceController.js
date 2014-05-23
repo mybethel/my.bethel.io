@@ -7,6 +7,12 @@
 
 module.exports = {
 
+  new: function(req, res) {
+    res.view({
+      layout: req.viewData.layout
+    });
+  },
+
   list: function (req, res) {
     Services.find({ministry: req.session.Ministry.id}, function foundServices(err, allServices) {
       if (err) return next(err);
@@ -48,7 +54,7 @@ module.exports = {
             if (err)
               sails.log.error(err);
 
-            res.send(200, token.access_token);
+            res.redirect('/accounts');
           });
         }
       });
