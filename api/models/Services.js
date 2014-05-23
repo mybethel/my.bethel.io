@@ -13,6 +13,10 @@ module.exports = {
       type: 'string'
     },
 
+    user: {
+      type: 'string'
+    },
+
     accessToken: {
       type: 'string'
     },
