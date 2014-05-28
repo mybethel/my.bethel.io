@@ -148,22 +148,6 @@ module.exports = {
 
           Analytics.registerHit('podcast', req.param('id'));
 
-          // DEPRECATED: Remove and migrate old data to new storage.
-          var statistics = {};
-          statistics['statistics.'+moment().week()] = 1;
-
-          Podcast.native(function(err, collection) {
-            collection.update(
-              {  _id: new ObjectID(podcast.id) },
-              { $inc: statistics }, 
-              { upsert: true },
-              function(err){
-                if (err) sails.log.error(err);
-              }
-            );
-          });
-          // END DEPRECATED.
-
           res.header('Content-Type', 'text/xml; charset=UTF-8');
 
           res.view({
