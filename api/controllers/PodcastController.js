@@ -14,25 +14,6 @@ module.exports = {
     Podcast.find({ministry: new ObjectID(req.session.Ministry.id)}, function foundPodcasts(err, podcasts) {
       if (err) return next(err);
 
-      // Get the current and prior week number.
-      var weekNumber = moment().week(),
-          priorWeek = moment().subtract('week', 1).week();
-
-      podcasts.forEach(function(podcast) {
-        var subscribers = 0;
-        if (podcast.statistics) {
-          // Use last weeks stats averaged per day.
-          subscribers += Math.round(podcast.statistics[priorWeek]/7);
-          if (subscribers == 0) {
-            // If no stats are returned, there may not be enough historical data.
-            // Use this weeks stats averaged per day.
-            subscribers += Math.round(podcast.statistics[weekNumber]/moment().day());
-          }
-        }
-        if (!subscribers) subscribers = 0;
-        podcast.subscribers = subscribers;
-      });
-
       res.view({
         podcasts: podcasts
       });
@@ -196,4 +177,16 @@ module.exports = {
     });
   },
 	
+  subscribers: function(req, res) {
+    var statsDate = Number(moment().subtract('week', 1).format('GGGGWW'));
+
+    Stats.findOne({object: req.param('id'), type: 'podcast', date: statsDate}, function foundStatsTracking(err, stat) {
+      if (err) return sails.log.error('Finding stats: ' + err);
+
+      if (!stat) return res.send(200, {subscribers: 0});
+
+      return res.send(200, {subscribers: Math.round(stat.count/7)});
+    });
+  },
+
 };
