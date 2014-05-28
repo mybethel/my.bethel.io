@@ -2,7 +2,6 @@ var moment = require('moment');
 
 exports.registerHit = function(objectType, objectId) {
   var currentDate = Number(moment().year() +''+ moment().week());
-         objectId = objectId.slice(-7);
 
   Stats.findOne({object: objectId, type: objectType, date: currentDate}, function foundStatsTracking(err, stat) {
     if (err) return sails.log.error('Finding stats: ' + err);
