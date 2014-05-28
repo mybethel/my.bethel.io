@@ -1,7 +1,7 @@
 var moment = require('moment');
 
 exports.registerHit = function(objectType, objectId) {
-  var currentDate = Number(moment().year() +''+ moment().week());
+  var currentDate = Number(moment().format('GGGGWW'));
 
   Stats.findOne({object: objectId, type: objectType, date: currentDate}, function foundStatsTracking(err, stat) {
     if (err) return sails.log.error('Finding stats: ' + err);
@@ -24,8 +24,8 @@ exports.registerHit = function(objectType, objectId) {
 }
 
 exports.generateGraphData = function(objectType, objectId, weeksBack) {
-  var startDate = Number(moment().year() +''+ moment().subtract('week', weeksBack).week()),
-        endDate = Number(moment().year() +''+ moment().week());
+  var startDate = Number(moment().subtract('week', weeksBack).format('GGGGWW')),
+        endDate = Number(moment().format('GGGGWW'));
 
   // TODO: filter only stat rows between start and end date.
   Stats.find().sort('date asc').where({object: objectId, type: objectType}, function foundStats(err, weeklyStats) {
