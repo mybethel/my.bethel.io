@@ -52,7 +52,7 @@ function podcastMediaUpsert(video, podcast) {
         duration: video.duration,
         thumbnail: video.thumbnail_small,
         uuid: video.id,
-        podcast: podcast.id
+        podcast: new ObjectID(podcast.id)
       }, function podcastMediaCreated(err, media) {
         if (err) sails.log.error(err);
       });
