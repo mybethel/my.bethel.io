@@ -121,7 +121,7 @@ module.exports = {
             podcastGraph.push(podcast.statistics[moment().subtract('week', 3).week()]);
             podcastGraph.push(podcast.statistics[moment().subtract('week', 2).week()]);
             podcastGraph.push(podcast.statistics[moment().subtract('week', 1).week()]);
-            podcast.statisticsGraph = podcastGraph;
+            podcast.statisticsGraph = podcastGraph.filter(Number);
           }
           // END DEPRECATED.
 
