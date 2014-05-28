@@ -4,7 +4,7 @@
   <p class="text-muted"><%= podcast.copyright %></p>
   <div class="panel panel-default panel-top">
     <div class="panel-heading">
-      <h3 class="panel-title">Podcast Episodes</h3><% if (podcast.type == 1 && podcast.s3form) { %>
+      <h3 class="panel-title"><%= podcastMedia.length %> Podcast Episodes</h3><% if (podcast.type == 1 && podcast.s3form) { %>
       <form action="<%= podcast.s3form.action %>" method="post" enctype="multipart/form-data" id="file_upload">
         <input type="hidden" name="key" value="<%= podcast.s3form.bucket %>/${filename}" />
         <input type="hidden" name="AWSAccessKeyId" value="<%= podcast.s3form.key %>" />
