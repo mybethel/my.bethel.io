@@ -16,7 +16,7 @@
   <itunes:author><% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></itunes:author>
   <itunes:explicit>no</itunes:explicit>
   <itunes:image href="http://cdn.bethel.io/1400x1400/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>"/>
-  <itunes:keywords/>
+  <itunes:keywords><% if (podcast.keywords) { %><%= podcast.keywords %><% } %></itunes:keywords>
   <itunes:category text="Religion &amp; Spirituality">
     <itunes:category text="Christianity"/>
   </itunes:category>
