@@ -5,6 +5,7 @@
   <description>
   <%= podcast.description %>
   </description>
+  <generator>http://getbethel.com</generator>
   <itunes:owner>
     <itunes:name><% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></itunes:name>
     <itunes:email><%= ministry.email %></itunes:email>
