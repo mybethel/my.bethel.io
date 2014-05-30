@@ -1,6 +1,8 @@
 var crypto = require('crypto'),
     moment = require('moment'),
-    AWS = require('aws-sdk');
+    request = require('request'),
+    AWS = require('aws-sdk'),
+    Uploader = require('s3-upload-stream').Uploader;
 
 exports.prepare = function(bucketName) {
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
@@ -43,6 +45,33 @@ exports.removeTemp = function(bucketName, fileName, newId) {
   });
 
   return bucketName.replace('images/', '') + '/' + newId + '.' + extension;
+};
+
+exports.transport = function(fileUrl, bucketName, key, callback) {
+  if (!fileUrl)
+    callback();
+
+  var UploadStreamObject = new Uploader(
+    {
+      accessKeyId: sails.config.aws.accessKeyId,
+      secretAccessKey: sails.config.aws.secretAccessKey,
+      region: 'us-east-1'
+    },
+    {
+      Bucket: 'cloud.bethel.io',
+      Key: bucketName + '/' + key
+    },
+    function (err, uploadStream) {
+      if (err) return callback(err);
+
+      uploadStream.on('uploaded', function (data) {
+        sails.log.info('Finished uploading ' + fileUrl + ' to ' + bucketName + '/' + key);
+        return callback();
+      });
+
+      request.get(fileUrl).pipe(uploadStream);
+    }
+  );
 };
 
 signature = function(policy) {

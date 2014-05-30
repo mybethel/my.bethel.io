@@ -6,6 +6,8 @@
  */
 
 var moment = require('moment'),
+    xml2js = require('xml2js'),
+    request = require('request'),
     ObjectID = require('mongodb').ObjectID;
 
 module.exports = {
@@ -39,6 +41,52 @@ module.exports = {
       req.session.flash = {};
 
       return res.redirect('/podcast/show/' + podcast.id);
+    });
+  },
+
+  import: function(req, res) {
+    if (!req.param('url'))
+      return res.send(403, 'no feed provided');
+
+    request(req.param('url'), function (error, response, body) {
+      if (error || response.statusCode !== 200)
+        return res.send(503, 'unable to load feed');
+
+      xml2js.parseString(body, function (err, result) {
+        // Ensure the XML feed has at least one item to import.
+        if (err || !result.rss.channel[0].item || result.rss.channel[0].item.length < 1)
+          return res.send(503, 'invalid feed');
+
+        var mediaUrl = result.rss.channel[0].item[0]['enclosure'][0]['$']['url'];
+        var podcastImage = result.rss.channel[0]['itunes:image'][0]['$']['href'];
+        var podcastImageFileName = podcastImage.split('/').slice(-1);
+        var mediaType = 2;
+
+        // Determine the type of podcast from the first enclosure URL.
+        // @todo: this needs to be more flexible
+        if (mediaUrl.indexOf('.mp3') !== -1 || mediaUrl.indexOf('.m4a') !== -1)
+          mediaType = 1;
+
+        // Upload the podcast thumbnail to S3 and create the Podcast entry.
+        S3Upload.transport(podcastImage, 'images/podcast/tmp', podcastImageFileName, function (err) {
+          if (err)
+            return res.send(503, 'unable to copy image');
+
+          Podcast.create({
+            name: result.rss.channel[0]['title'],
+            type: mediaType,
+            source: 1,
+            sourceMeta: 'importing',
+            description: result.rss.channel[0]['description'],
+            tags: result.rss.channel[0]['itunes:keywords'],
+            copyright: result.rss.channel[0]['copyright'],
+            ministry: new ObjectID(req.session.Ministry.id),
+            temporaryImage: podcastImageFileName,
+          }, function podcastCreated(err, podcast) {
+            res.send(200, podcast.id);
+          });
+        });
+      });
     });
   },
 
