@@ -1,4 +1,4 @@
-var request = require('request'),
+var moment = require('moment'),
     ObjectID = require('mongodb').ObjectID;
 
 exports.sync = function(options) {
@@ -34,11 +34,16 @@ function queryVimeoAPI(podcast, user, token, pageNumber) {
   VimeoAPI.request({
     path: user + '/videos?page=' + pageNumber,
     headers: {
-      Authorization: 'Bearer ' + token
+      'Authorization': 'Bearer ' + token,
+      'If-Modified-Since': moment().subtract('minutes', 6).toString()
     }
   }, function (error, body, status_code, headers) {
     if (error || status_code != 200) {
-      sails.log.error('Vimeo API returned status code ' + status_code + ' for podcast ' + podcast.id + '.');
+      if (status_code == 304) {
+        sails.log.info('Vimeo returned not modified for ' + podcast.id + '.');
+      } else {
+        sails.log.error('Vimeo API returned status code ' + status_code + ' for podcast ' + podcast.id + '.');
+      }
       return;
     }
 
