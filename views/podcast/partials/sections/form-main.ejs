@@ -16,9 +16,3 @@
     <input type="text" class="form-control" name="tags" title="podcastKeywords" placeholder="Multiple terms separated by commas" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.tags %>"<% } %> />
   </div>
 </div>
-<div class="form-group">
-  <label for="podcastKeywords" class="col-sm-3 control-label">Copyright</label>
-  <div class="col-sm-9">
-    <input type="text" class="form-control" name="copyright" title="podcastCopyright" placeholder="&copy; <%= session.Ministry.name %>"<% if (typeof podcast != 'undefined') { %> value="<%= podcast.copyright %>"<% } %> />
-  </div>
-</div>

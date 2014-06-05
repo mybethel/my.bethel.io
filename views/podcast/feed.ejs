@@ -1,7 +1,7 @@
   <title><%= podcast.name %></title>
   <link>http://www.bethel.io</link>
   <language>en-us</language>
-  <copyright><%= podcast.copyright %></copyright>
+  <copyright>&#169; <% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></copyright>
   <description>
   <%= podcast.description %>
   </description>

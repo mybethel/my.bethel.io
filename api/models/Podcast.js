@@ -42,10 +42,6 @@ module.exports = {
       type: 'string'
     },
 
-    copyright: {
-      type: 'string'
-    },
-
     temporaryImage: {
       type: 'string'
     },
