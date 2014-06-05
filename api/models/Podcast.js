@@ -34,6 +34,10 @@ module.exports = {
       type: 'string'
     },
 
+    service: {
+      model: 'services'
+    },
+
     description: {
       type: 'text'
     },

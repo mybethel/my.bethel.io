@@ -24,8 +24,12 @@ module.exports = {
 
   new: function (req, res) {
     uploadForm = S3Upload.prepare('images/podcast/tmp');
-    res.view({
-      s3form: uploadForm
+
+    Services.find({provider: 'vimeo', ministry: new ObjectID(req.session.Ministry.id)}, function foundServices(err, services) {
+      res.view({
+        s3form: uploadForm,
+        services: services
+      });
     });
   },
 
@@ -96,9 +100,12 @@ module.exports = {
 
       uploadForm = S3Upload.prepare('images/podcast/tmp');
     
-      res.view({
-        s3form: uploadForm,
-        podcast: podcast
+      Services.find({provider: 'vimeo', ministry: new ObjectID(req.session.Ministry.id)}, function foundServices(err, services) {
+        res.view({
+          s3form: uploadForm,
+          podcast: podcast,
+          services: services
+        });
       });
     });
   },

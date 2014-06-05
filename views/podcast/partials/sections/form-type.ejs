@@ -28,9 +28,16 @@
 </div>
 <hr class="half-rule vimeo-only">
 <div class="form-group vimeo-only">
-  <label class="col-sm-3 control-label">Username</label>
+  <label class="col-sm-3 control-label">Account</label>
   <div class="col-sm-9">
-    <input type="text" class="form-control" name="sourceKey" placeholder="Vimeo username" <% if (typeof podcast != 'undefined') { %> value="<%= podcast.sourceKey %>"<% } %> />
+    <% _.each(services, function(service) { %>
+    <div class="radio">
+      <label>
+        <input type="radio" name="service" value="<%= service.id %>"<% if (typeof podcast != 'undefined' && podcast.service == service.id) { %> checked<% } %>>
+        <%= service.name %>
+      </label>
+    </div>
+    <% }) %>
   </div>
 </div>
 <div class="form-group vimeo-only">
