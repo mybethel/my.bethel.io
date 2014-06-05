@@ -1,5 +1,6 @@
 var moment = require('moment'),
-    ObjectID = require('mongodb').ObjectID;
+    ObjectID = require('mongodb').ObjectID,
+    Vimeo = require('vimeo-api').Vimeo;
 
 exports.sync = function(options) {
 
@@ -28,8 +29,7 @@ exports.sync = function(options) {
 };
 
 function queryVimeoAPI(podcast, user, token, pageNumber) {
-  var Vimeo = require('vimeo-api').Vimeo,
-      VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO);
+  var VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO);
 
   VimeoAPI.request({
     path: user + '/videos?page=' + pageNumber,
