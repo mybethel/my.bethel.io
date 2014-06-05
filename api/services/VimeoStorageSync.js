@@ -29,7 +29,7 @@ exports.sync = function(options) {
 };
 
 function queryVimeoAPI(podcast, user, token, pageNumber) {
-  var VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO);
+  var VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba');
 
   VimeoAPI.request({
     path: user + '/videos?page=' + pageNumber,
