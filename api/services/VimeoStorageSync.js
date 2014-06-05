@@ -67,40 +67,40 @@ function queryVimeoAPI(podcast, user, token, pageNumber) {
 
 function podcastMediaUpsert(video, podcast) {
   var videoId = video.uri.toString().replace('/videos/', '');
-  PodcastMedia.findOne({uuid: videoId, podcast: new ObjectID(podcast.id)}, function foundPodcastMedia(err, media) {
+
+  if (!videoId) return;
+
+  var videoTags = [];
+  video.tags.forEach(function(tag) {
+    videoTags.push(tag.name);
+  });
+
+  var videoThumbnail = '';
+  video.pictures.forEach(function(picture) {
+    if (picture.width == 200)
+      videoThumbnail = picture.link;
+  });
+
+  var videoUrl = '';
+  video.files.forEach(function(file) {
+    if (file.quality == 'sd')
+      videoUrl = file.link_secure;
+  });
+
+  PodcastMedia.findOrCreate({
+    uuid: videoId,
+    podcast: new ObjectID(podcast.id)
+  }, {
+    name: video.name,
+    date: new Date(video.created_time),
+    description: video.description,
+    tags: videoTags,
+    duration: video.duration,
+    thumbnail: videoThumbnail,
+    url: videoUrl,
+    uuid: videoId,
+    podcast: new ObjectID(podcast.id)
+  }, function podcastMediaCreated(err, media) {
     if (err) sails.log.error(err);
-
-    if (!media) {
-      var videoTags = [];
-      video.tags.forEach(function(tag) {
-        videoTags.push(tag.name);
-      });
-
-      var videoThumbnail = '';
-      video.pictures.forEach(function(picture) {
-        if (picture.width == 200)
-          videoThumbnail = picture.link;
-      });
-
-      var videoUrl = '';
-      video.files.forEach(function(file) {
-        if (file.quality == 'sd')
-          videoUrl = file.link_secure;
-      });
-
-      PodcastMedia.create({
-        name: video.name,
-        date: new Date(video.created_time),
-        description: video.description,
-        tags: videoTags,
-        duration: video.duration,
-        thumbnail: videoThumbnail,
-        url: videoUrl,
-        uuid: videoId,
-        podcast: new ObjectID(podcast.id)
-      }, function podcastMediaCreated(err, media) {
-        if (err) sails.log.error(err);
-      });
-    }
   });
 }
