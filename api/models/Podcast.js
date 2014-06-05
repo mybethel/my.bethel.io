@@ -26,10 +26,6 @@ module.exports = {
       required: true
     },
 
-    sourceKey: {
-      type: 'string'
-    },
-
     sourceMeta: {
       type: 'string'
     },
