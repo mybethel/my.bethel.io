@@ -31,7 +31,7 @@
     "cron": "~1.0.3",
     "time": "~0.10.0",
     "moment": "~2.5.1",
-    "request": "~2.34.0",
+    "request": "~2.36.0",
     "vimeo-api": "~0.9.1",
     "xml2js": "~0.4.4",
     "s3-upload-stream": "~0.3.0"

@@ -32,7 +32,7 @@
           <% _.each(podcastMedia, function(media) { %>
           <tr data-id="<%= media.id %>"<% if (!media.name || !media.description || !media.url) { %> class="warning"<% } %>>
             <td>
-              <% if (media.thumbnail) { %><img class="media-object pull-left" src="<%= media.thumbnail %>" /><% } %><h4 value="<% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %>"><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></h4>
+              <% if (media.thumbnail) { %><img class="media-object pull-left" src="<%= media.thumbnail %>" width="100" /><% } %><h4 value="<% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %>"><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></h4>
               <small class="text-muted"><% if (media.date) { %><%= media.date.toDateString() %><% } %></small>
             </td>
             <td class="operations"><button class="btn btn-sm btn-default media-edit-button" data-source="<%= media.id %>">Edit</button></td>
