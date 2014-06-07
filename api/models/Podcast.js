@@ -67,6 +67,10 @@ module.exports = {
       via: 'podcast'
     },
 
+    import: {
+      type: 'array'
+    },
+
     imageUrl: function(size) {
       if (this.image) {
         return 'http://cdn.bethel.io/' + size + '/' + this.image;

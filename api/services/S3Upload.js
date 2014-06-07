@@ -49,7 +49,10 @@ exports.removeTemp = function(bucketName, fileName, newId) {
 
 exports.transport = function(fileUrl, bucketName, key, callback) {
   if (!fileUrl)
-    callback();
+    return callback('S3Upload:transport no fileUrl');
+
+  if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
+    return callback('S3Upload:transport no AWS credentials set');
 
   var UploadStreamObject = new Uploader(
     {

@@ -8,7 +8,8 @@
 var moment = require('moment'),
     xml2js = require('xml2js'),
     request = require('request'),
-    ObjectID = require('mongodb').ObjectID;
+    ObjectID = require('mongodb').ObjectID,
+    async = require('async');
 
 module.exports = {
 
@@ -61,33 +62,59 @@ module.exports = {
         if (err || !result.rss.channel[0].item || result.rss.channel[0].item.length < 1)
           return res.send(503, 'invalid feed');
 
-        var mediaUrl = result.rss.channel[0].item[0]['enclosure'][0]['$']['url'];
-        var podcastImage = result.rss.channel[0]['itunes:image'][0]['$']['href'];
-        var podcastImageFileName = podcastImage.split('/').slice(-1);
-        var mediaType = 2;
+        var importId = new Buffer(req.param('url')).toString('base64'),
+            feed = result.rss.channel[0];
+            podcastImage = feed['itunes:image'][0]['$']['href'],
+            podcastImageFileName = podcastImage.split('/').slice(-1),
+            media = [];
 
-        // Determine the type of podcast from the first enclosure URL.
-        // @todo: this needs to be more flexible
-        if (mediaUrl.indexOf('.mp3') !== -1 || mediaUrl.indexOf('.m4a') !== -1)
-          mediaType = 1;
+        async.each(feed.item, function (item, callback) {
+          if (!item.enclosure || !item.enclosure[0])
+            return callback();
 
-        // Upload the podcast thumbnail to S3 and create the Podcast entry.
-        S3Upload.transport(podcastImage, 'images/podcast/tmp', podcastImageFileName, function (err) {
+          media.push({
+            name: item.title[0],
+            date: item.pubDate[0],
+            description: item['itunes:summary'][0],
+            url: item.enclosure[0]['$']['url'],
+          });
+
+          callback();
+        }, function (err) {
           if (err)
-            return res.send(503, 'unable to copy image');
+            return sails.log.error(err);
 
-          Podcast.create({
-            name: result.rss.channel[0]['title'],
-            type: mediaType,
-            source: 1,
-            sourceMeta: 'importing',
-            description: result.rss.channel[0]['description'],
-            tags: result.rss.channel[0]['itunes:keywords'],
-            copyright: result.rss.channel[0]['copyright'],
-            ministry: new ObjectID(req.session.Ministry.id),
-            temporaryImage: podcastImageFileName,
-          }, function podcastCreated(err, podcast) {
-            res.send(200, podcast.id);
+          var mediaUrl = media[0].url,
+              mediaType = 2;
+
+          // Determine the type of podcast from the first enclosure URL.
+          // @todo: this needs to be more flexible
+          if (mediaUrl.indexOf('.mp3') !== -1 || mediaUrl.indexOf('.m4a') !== -1)
+            mediaType = 1;
+
+          // Upload the podcast thumbnail to S3 and create the Podcast entry.
+          S3Upload.transport(podcastImage, 'images/podcast/tmp', podcastImageFileName[0], function (err) {
+            if (err)
+              sails.log.error('Unable to transport podcast image ' + podcastImage);
+
+            Podcast.create({
+              name: feed.title[0],
+              type: mediaType,
+              source: 1,
+              import: media,
+              description: feed.description[0],
+              tags: feed['itunes:keywords'][0],
+              copyright: feed.copyright[0],
+              ministry: new ObjectID(req.session.Ministry.id),
+              temporaryImage: podcastImageFileName[0]
+            }, function podcastCreated(err, podcast) {
+              if (err)
+                return res.send(503, err);
+
+              processMediaImport(podcast.id, podcast.import, req.session.Ministry.id);
+
+              res.send(200, podcast.id);
+            });
           });
         });
       });
@@ -229,3 +256,25 @@ module.exports = {
   },
 
 };
+
+function processMediaImport(id, media, ministry) {
+  var filename = media[0].url.split('/').slice(-1);
+  sails.log.debug('Transporting ' + filename[0] + ' to s3://podcast/' + ministry + '/' + id);
+
+  S3Upload.transport(media[0].url, 'podcast/' + ministry + '/' + id, filename[0], function (err) {
+    if (err)
+      sails.log.error(err);
+
+    media.shift();
+    
+    if (media && media[0]) {
+      processMediaImport(id, media, ministry);
+    } else {
+      finishMediaImport(id, ministry);
+    }
+  });
+}
+
+function finishMediaImport(id, ministry) {
+  console.log('Finished import for podcast ' + id);
+}
