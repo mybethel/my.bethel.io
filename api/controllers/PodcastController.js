@@ -65,7 +65,7 @@ module.exports = {
         var importId = new Buffer(req.param('url')).toString('base64'),
             feed = result.rss.channel[0];
             podcastImage = feed['itunes:image'][0]['$']['href'],
-            podcastImageFileName = podcastImage.split('/').slice(-1),
+            podcastImageExtension = podcastImage.split('.').slice(-1),
             media = [];
 
         async.each(feed.item, function (item, callback) {
@@ -92,29 +92,31 @@ module.exports = {
           if (mediaUrl.indexOf('.mp3') !== -1 || mediaUrl.indexOf('.m4a') !== -1)
             mediaType = 1;
 
-          // Upload the podcast thumbnail to S3 and create the Podcast entry.
-          S3Upload.transport(podcastImage, 'images/podcast/tmp', podcastImageFileName[0], function (err) {
+          Podcast.create({
+            name: feed.title[0],
+            type: mediaType,
+            source: 1,
+            import: media,
+            description: feed.description[0],
+            tags: feed['itunes:keywords'][0],
+            copyright: feed.copyright[0],
+            ministry: new ObjectID(req.session.Ministry.id),
+          }, function podcastCreated(err, podcast) {
             if (err)
-              sails.log.error('Unable to transport podcast image ' + podcastImage);
+              return res.send(503, err);
 
-            Podcast.create({
-              name: feed.title[0],
-              type: mediaType,
-              source: 1,
-              import: media,
-              description: feed.description[0],
-              tags: feed['itunes:keywords'][0],
-              copyright: feed.copyright[0],
-              ministry: new ObjectID(req.session.Ministry.id),
-              temporaryImage: podcastImageFileName[0]
-            }, function podcastCreated(err, podcast) {
-              if (err)
-                return res.send(503, err);
+            // Upload the podcast thumbnail to S3.
+            S3Upload.transport(podcastImage, 'images/podcast', podcast.id + '.' + podcastImageExtension, function (err) {
+              if (err) {
+                sails.log.error('Unable to transport podcast image ' + podcastImage);
+              } else {
+                Podcast.update(podcast.id, {image: '/podcast' + podcast.id + '.' + podcastImageExtension});
+              }
 
               processMediaImport(podcast.id, podcast.import, req.session.Ministry.id);
-
-              res.send(200, podcast.id);
             });
+
+            res.redirect('/podcast/show/' + podcast.id);
           });
         });
       });
