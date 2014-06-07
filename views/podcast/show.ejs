@@ -1,7 +1,6 @@
 <div class="dash-panel-left">
   <h1><%= podcast.name %></h1>
   <p><%= podcast.description %></p>
-  <p class="text-muted"><%= podcast.copyright %></p>
   <div class="panel panel-default panel-top">
     <div class="panel-heading">
       <h3 class="panel-title"><%= podcastMedia.length %> Podcast Episodes</h3><% if (podcast.type == 1 && podcast.s3form) { %>
