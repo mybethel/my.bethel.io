@@ -21,22 +21,39 @@ exports.sync = function(options) {
           return;
         }
 
-        queryVimeoAPI(podcast, service.user, service.accessToken, 1);
+        queryVimeoAPI(podcast, service.user, service.accessToken, 1, true);
       });
     });
   });
 
 };
 
-function queryVimeoAPI(podcast, user, token, pageNumber) {
-  var VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba');
+exports.syncOne = function(podcast, service) {
+
+  Services.findOne(service, function foundService(err, service) {
+    if (err || !service) {
+      sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
+      return;
+    }
+
+    queryVimeoAPI(podcast, service.user, service.accessToken, 1, false);
+  });
+
+}
+
+function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
+  var VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba'),
+      queryHeaders = {
+        'Authorization': 'Bearer ' + token
+      };
+
+  if (modifiedCheck) {
+    queryHeaders['If-Modified-Since'] = moment().subtract('minutes', 6).toString();
+  }
 
   VimeoAPI.request({
     path: user + '/videos?page=' + pageNumber,
-    headers: {
-      'Authorization': 'Bearer ' + token,
-      'If-Modified-Since': moment().subtract('minutes', 6).toString()
-    }
+    headers: queryHeaders
   }, function (error, body, status_code, headers) {
     if (error || status_code != 200) {
       if (status_code == 304) {
@@ -59,7 +76,7 @@ function queryVimeoAPI(podcast, user, token, pageNumber) {
       });
 
       if (body.paging.next) {
-        queryVimeoAPI(podcast, user, token, pageNumber + 1);
+        queryVimeoAPI(podcast, user, token, pageNumber + 1, modifiedCheck);
       }
     }
   });

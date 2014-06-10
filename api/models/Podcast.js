@@ -94,7 +94,7 @@ module.exports = {
     }
 
     if (values.source == 2) {
-      VimeoStorageSync.sync();
+      VimeoStorageSync.syncOne(values.id, values.service);
     }
 
     next();
