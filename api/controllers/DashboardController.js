@@ -18,10 +18,13 @@ module.exports = {
     Podcast.find({ministry: new ObjectID(req.session.Ministry.id)}, function foundPodcasts(err, podcasts) {
       if (err) res.send(err, 500);
 
-      var allPodcasts = [];
+      var allPodcasts = [],
+          storageBytes = 0;
 
       podcasts.forEach(function(podcast) {
         allPodcasts.push({object: podcast.id});
+        if (podcast.storage > 0)
+          storageBytes += podcast.storage;
       });
 
       Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
@@ -33,15 +36,14 @@ module.exports = {
           statistics[stat.date] = statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count;
         });
 
-        console.log(statistics);
-
         var currentWeekAverage = statistics[moment().subtract('week', 1).format('GGGGWW')] / 7 || 0,
             lastWeekAverage = statistics[moment().subtract('week', 2).format('GGGGWW')] / 7 || 0,
             change = ((currentWeekAverage / lastWeekAverage) - 1) * 100;
 
         res.send({
           podcast: statistics,
-          podcastChange: change
+          podcastChange: change,
+          storage: storageBytes / 1073741824 || 0
         }, 200);
       });
     });

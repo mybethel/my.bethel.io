@@ -4,12 +4,17 @@
       <h3 class="panel-title">Statistics</h3>
     </div>
     <div class="panel-body">
-      <div class="row podcast-row">
+      <div class="row podcast-row" style="display: none;">
         <div class="col-sm-4">
           <div id="podcast-subscribers"></div>
         </div>
         <div class="col-sm-8">
           <h3><span class="change-count"></span>% <i class="fa fa-arrow-up pull-right text-success"></i><br /><small><span class="change-type">increase</span> in podcast subscribers</small></h3>
+        </div>
+      </div>
+      <div class="row storage-row" style="display: none;">
+        <div class="col-sm-8 col-sm-offset-4">
+          <h3><span class="count"></span>Gb<br /><small>total storage used</small></h3>
         </div>
       </div>
       <h5 class="text-muted no-stats" style="display: none;">Check back later for statistics...</h5>
@@ -94,9 +99,17 @@
           $('.podcast-row .fa').removeClass('fa-arrow-up text-success');
           $('.podcast-row .fa').addClass('fa-arrow-down text-danger')
         }
-      } else {
-        $('.podcast-row').hide();
-        $('.no-stats').show();
+
+        $('.podcast-row').fadeIn();
+      }
+
+      if (data.storage) {
+        $('.storage-row .count').text(data.storage.toFixed(2));
+        $('.storage-row').fadeIn();
+      }
+
+      if (!data.podcastChange && !data.storage) {
+        $('.no-stats').fadeIn();
       }
     });
 
