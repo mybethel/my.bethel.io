@@ -58,9 +58,10 @@
           break;
 
         case 'created':
-          var podcastMediaListing = $('table.podcast-media tbody');
+          var podcastMediaListing = $('table.podcast-media tbody'),
+              podcastId = $("table.podcast-media[data-podcast='" + message.data.podcast + "']");
 
-          if (podcastMediaListing) {
+          if (podcastMediaListing && podcastId) {
             $.get('/podcastmedia/row/' + message.data.id, function(data) {
               podcastMediaListing.prepend(data);
             });
