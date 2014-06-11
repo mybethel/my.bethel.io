@@ -18,24 +18,32 @@ module.exports = {
     Podcast.find({ministry: new ObjectID(req.session.Ministry.id)}, function foundPodcasts(err, podcasts) {
       if (err) res.send(err, 500);
 
-      var statistics = {};
+      var allPodcasts = [];
 
       podcasts.forEach(function(podcast) {
-        if (podcast.statistics) {
-          _.each(podcast.statistics, function(stats, week) {
-            statistics[week] = stats;
-          });
-        }
+        allPodcasts.push({object: podcast.id});
       });
 
-      var currentWeekAverage = statistics[moment().subtract('week', 1).week()] / 7 || 0;
-      var lastWeekAverage = statistics[moment().subtract('week', 2).week()] / 7 || 0;
-      var change = ((currentWeekAverage / lastWeekAverage) - 1) * 100;
+      Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
+        if (err) res.send(err, 500);
 
-      res.send({
-        podcast: statistics,
-        podcastChange: change
-      }, 200);
+        var statistics = {};
+
+        weeklyStats.forEach(function(stat) {
+          statistics[stat.date] = statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count;
+        });
+
+        console.log(statistics);
+
+        var currentWeekAverage = statistics[moment().subtract('week', 1).format('GGGGWW')] / 7 || 0,
+            lastWeekAverage = statistics[moment().subtract('week', 2).format('GGGGWW')] / 7 || 0,
+            change = ((currentWeekAverage / lastWeekAverage) - 1) * 100;
+
+        res.send({
+          podcast: statistics,
+          podcastChange: change
+        }, 200);
+      });
     });
   }
 
