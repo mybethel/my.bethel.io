@@ -30,13 +30,21 @@ exports.sync = function(options) {
 
 exports.syncOne = function(podcast, service) {
 
-  Services.findOne(service, function foundService(err, service) {
-    if (err || !service) {
-      sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
+  Podcast.findOne(podcast, function foundPodcast(err, podcastObject) {
+    if (err || !podcastObject.sourceMeta) {
+      sails.log.error('Vimeo meta tags not defined for podcast ' + podcast.id + '.');
       return;
     }
 
-    queryVimeoAPI(podcast, service.user, service.accessToken, 1, false);
+    Services.findOne(service, function foundService(err, serviceObject) {
+      if (err || !service) {
+        sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
+        return;
+      }
+
+      queryVimeoAPI(podcastObject, serviceObject.user, serviceObject.accessToken, 1, false);
+    });
+
   });
 
 }
