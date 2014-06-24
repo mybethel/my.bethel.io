@@ -47,27 +47,21 @@ function processFoundMedia(media, podcastId) {
   var storageUsed = 0;
 
   media.forEach(function(item) {
-    var s3media = S(item['ETag']).replaceAll('"', '').s;
+    var s3media = S(item['ETag']).replaceAll('"', '').s,
+        mediaName = item['Key'].split('/').pop();
 
-    PodcastMedia.findOne({uuid: s3media}, function foundPodcastMedia(err, media) {
+    PodcastMedia.findOrCreate({
+      uuid: s3media
+    }, {
+      name: mediaName,
+      date: item['LastModified'],
+      url: 'http://cloud.bethel.io/' + encodeURI(item['Key']),
+      size: item['Size'],
+      uuid: s3media,
+      podcast: podcastId,
+      type: 'cloud'
+    }, function podcastMediaCreated(err, media) {
       if (err) sails.log.error(err);
-
-      if (!media) {
-        var mediaName = item['Key'].split('/');
-        mediaName = mediaName[mediaName.length-1];
-
-        PodcastMedia.create({
-          name: mediaName,
-          date: item['LastModified'],
-          url: 'http://cloud.bethel.io/' + encodeURI(item['Key']),
-          size: item['Size'],
-          uuid: s3media,
-          podcast: podcastId,
-          type: 'cloud'
-        }, function podcastMediaCreated(err, media) {
-          if (err) sails.log.error(err);
-        });
-      }
     });
 
     storageUsed += item['Size'];
