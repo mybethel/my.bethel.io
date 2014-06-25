@@ -14,7 +14,7 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
-body.welcome {
+.welcome {
   background: url(../images/background.jpg) no-repeat center center fixed #2F3439;
   background-size: cover;
   background-position: center;
@@ -39,7 +39,7 @@ body.welcome {
   padding-left: 45px;
 }
 
-.navbar ul.dropdown-menu {
+.navbar .dropdown-menu {
   min-width: 100%;
 }
 
@@ -71,6 +71,7 @@ body.welcome {
   background-size: contain;
   width: 130px;
   overflow: hidden;
+  direction: ltr;
   text-indent: -9999px;
   margin-left: 0;
 }
@@ -136,7 +137,7 @@ ul.nav-main li.active:after {
   width: 0; 
   height: 0; 
   position: absolute;
-  right: 0px;
+  right: 0;
   top: 50%;
   margin-top: -7px;
   border-top: 7px solid transparent;
@@ -180,6 +181,7 @@ ul.nav-main li a .fa.fa-money {
 ul.nav-main span {
   overflow: hidden;
   display: block;
+  box-sizing: border-box;
   width: 100%;
   cursor: pointer;
   position: relative;
@@ -193,10 +195,8 @@ ul.nav-main.nav-bottom {
 }
 
 section.page-wrap {
-  padding-top: 51px;
-  position: absolute; 
+  padding-top: 51px; 
   height: auto;
-  background: #FFF;
   margin-left: 200px;
   width: auto;
   background: #f4f6f8;
@@ -262,10 +262,7 @@ section.page-wrap h1 .btn {
   right: 0;
   top: 0; 
   bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto;
   border-radius: 4px;
 }
 
@@ -357,10 +354,7 @@ section.page-wrap h1 .btn {
   right: 0;
   top: 0; 
   bottom: 0;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
-  margin-bottom: auto;
+  margin: auto;
   text-align: center;
 }
 
