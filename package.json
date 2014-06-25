@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "dependencies": {
-    "sails": "~0.10.0-rc7",
+    "sails": "~0.10.0-rc8",
     "sails-mongo": "~0.10.0-rc5",
-    "waterline": "~0.10.0-rc13",
+    "waterline": "~0.10.0-rc14",
     "rc": "~0.3.3",
     "ejs": "~0.8.4",
     "grunt": "0.4.2",
