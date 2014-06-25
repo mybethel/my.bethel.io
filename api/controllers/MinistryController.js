@@ -28,7 +28,7 @@ module.exports = {
     Ministry.findOne(req.param('id'), function foundMinistry(err, ministry) {
       if (err) res.send(err, 500);
 
-      uploadForm = S3Upload.prepare('images/ministry/tmp');
+      var uploadForm = S3Upload.prepare('images/ministry/tmp');
     
       return res.view({
         ministry: ministry,

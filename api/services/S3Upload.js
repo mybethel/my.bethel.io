@@ -8,7 +8,7 @@ exports.prepare = function(bucketName) {
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
     return sails.log.error('Unable to generate S3 upload form: required AWS credentials not set.');
 
-  var p = policy(bucketName);
+  var p = policy(bucketName),
       s = signature(p);
 
   return({
