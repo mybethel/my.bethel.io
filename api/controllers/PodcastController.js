@@ -11,6 +11,10 @@ var moment = require('moment'),
     ObjectID = require('mongodb').ObjectID,
     async = require('async');
 
+function finishMediaImport(id, ministry) {
+  console.log('Finished import for podcast ' + id);
+}
+
 function processMediaImport(id, media, ministry) {
   var filename = media[0].url.split('/').slice(-1);
   sails.log.debug('Transporting ' + filename[0] + ' to s3://podcast/' + ministry + '/' + id);
@@ -29,10 +33,6 @@ function processMediaImport(id, media, ministry) {
   });
 }
 
-function finishMediaImport(id, ministry) {
-  console.log('Finished import for podcast ' + id);
-}
-
 module.exports = {
 
   list: function (req, res) {
@@ -46,7 +46,7 @@ module.exports = {
   },
 
   new: function (req, res) {
-    uploadForm = S3Upload.prepare('images/podcast/tmp');
+    var uploadForm = S3Upload.prepare('images/podcast/tmp');
 
     Services.find({provider: 'vimeo', ministry: new ObjectID(req.session.Ministry.id)}, function foundServices(err, services) {
       res.view({
@@ -86,7 +86,7 @@ module.exports = {
 
         var importId = new Buffer(req.param('url')).toString('base64'),
             feed = result.rss.channel[0],
-            podcastImage = feed['itunes:image'][0]['$']['href'],
+            podcastImage = feed['itunes:image'][0].$.href,
             podcastImageExtension = podcastImage.split('.').slice(-1),
             media = [];
 
@@ -98,7 +98,7 @@ module.exports = {
             name: item.title[0],
             date: item.pubDate[0],
             description: item['itunes:summary'][0],
-            url: item.enclosure[0]['$']['url'],
+            url: item.enclosure[0].$.url,
           });
 
           callback();
