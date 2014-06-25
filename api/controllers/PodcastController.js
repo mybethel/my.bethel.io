@@ -11,6 +11,28 @@ var moment = require('moment'),
     ObjectID = require('mongodb').ObjectID,
     async = require('async');
 
+function processMediaImport(id, media, ministry) {
+  var filename = media[0].url.split('/').slice(-1);
+  sails.log.debug('Transporting ' + filename[0] + ' to s3://podcast/' + ministry + '/' + id);
+
+  S3Upload.transport(media[0].url, 'podcast/' + ministry + '/' + id, filename[0], function (err) {
+    if (err)
+      sails.log.error(err);
+
+    media.shift();
+    
+    if (media && media[0]) {
+      processMediaImport(id, media, ministry);
+    } else {
+      finishMediaImport(id, ministry);
+    }
+  });
+}
+
+function finishMediaImport(id, ministry) {
+  console.log('Finished import for podcast ' + id);
+}
+
 module.exports = {
 
   list: function (req, res) {
@@ -63,7 +85,7 @@ module.exports = {
           return res.send(503, 'invalid feed');
 
         var importId = new Buffer(req.param('url')).toString('base64'),
-            feed = result.rss.channel[0];
+            feed = result.rss.channel[0],
             podcastImage = feed['itunes:image'][0]['$']['href'],
             podcastImageExtension = podcastImage.split('.').slice(-1),
             media = [];
@@ -127,7 +149,7 @@ module.exports = {
     Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
       if (err) return next(err);
 
-      uploadForm = S3Upload.prepare('images/podcast/tmp');
+      var uploadForm = S3Upload.prepare('images/podcast/tmp');
     
       Services.find({provider: 'vimeo', ministry: new ObjectID(req.session.Ministry.id)}, function foundServices(err, services) {
         res.view({
@@ -188,7 +210,7 @@ module.exports = {
         PodcastMedia.find().sort('date desc').where({podcast: new ObjectID(podcast.id)}).exec(function(err, media) {
           if (err) return next(err);
 
-          if (podcast.type == 1) {
+          if (podcast.type === 1) {
             podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
           }
 
@@ -196,7 +218,7 @@ module.exports = {
 
           // DEPRECATED: Remove once old data has been migrated to new storage.
           if (!podcast.statisticsGraph && podcast.statistics && Object.keys(podcast.statistics).length >= 4) {
-            podcastGraph = new Array();
+            var podcastGraph = new Array();
             if (Object.keys(podcast.statistics).length >= 6) {
               podcastGraph.push(podcast.statistics[moment().subtract('week', 6).week()]);
               podcastGraph.push(podcast.statistics[moment().subtract('week', 5).week()]);
@@ -258,25 +280,3 @@ module.exports = {
   },
 
 };
-
-function processMediaImport(id, media, ministry) {
-  var filename = media[0].url.split('/').slice(-1);
-  sails.log.debug('Transporting ' + filename[0] + ' to s3://podcast/' + ministry + '/' + id);
-
-  S3Upload.transport(media[0].url, 'podcast/' + ministry + '/' + id, filename[0], function (err) {
-    if (err)
-      sails.log.error(err);
-
-    media.shift();
-    
-    if (media && media[0]) {
-      processMediaImport(id, media, ministry);
-    } else {
-      finishMediaImport(id, ministry);
-    }
-  });
-}
-
-function finishMediaImport(id, ministry) {
-  console.log('Finished import for podcast ' + id);
-}
