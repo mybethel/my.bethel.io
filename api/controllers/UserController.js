@@ -54,7 +54,7 @@ module.exports = {
       }
       req.session.flash = {};
 
-      if (user[0] && user[0].id == req.session.User.id) {
+      if (user[0] && user[0].id === req.session.User.id) {
         req.session.User = user[0];
 
         Ministry.findOne(user[0].ministry, function foundMinistry(err, ministry) {

@@ -93,7 +93,7 @@ module.exports = {
       });
     }
 
-    if (values.source == 2) {
+    if (values.source === 2) {
       VimeoStorageSync.syncOne(values.id, values.service);
     }
 

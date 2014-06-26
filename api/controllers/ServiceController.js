@@ -28,7 +28,7 @@ module.exports = {
         VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO),
         redirectUrl = 'http://my.bethel.io/service/vimeo/authorized';
 
-    if (req.param('id') != 'authorized') {
+    if (req.param('id') !== 'authorized') {
       var url = VimeoAPI.buildAuthorizationEndpoint(redirectUrl, new Array('public', 'private'), req.session.Ministry.id.toString('base64'))
       res.redirect(url);
     } else {
@@ -36,7 +36,7 @@ module.exports = {
         if (err)
           res.send(500, err);
 
-        if (req.query.state == req.session.Ministry.id.toString('base64') && token && token.access_token) {
+        if (req.query.state === req.session.Ministry.id.toString('base64') && token && token.access_token) {
           Services.findOrCreate({
             'provider': 'vimeo',
             'ministry': req.session.Ministry.id,
