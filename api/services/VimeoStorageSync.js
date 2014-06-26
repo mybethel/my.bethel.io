@@ -56,29 +56,23 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
     path: user + '/videos?page=' + pageNumber,
     headers: queryHeaders
   }, function (error, body, statusCode, headers) {
-    if (error || statusCode !== 200) {
-      if (statusCode === 304) {
-        sails.log.info('Vimeo returned not modified for ' + podcast.id + '.');
-      } else {
-        sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
-      }
+    if (error || statusCode !== 200 || (!body && !body.data)) {
+      sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
       return;
     }
 
-    if (body && body.data) {
-      body.data.forEach(function(video) {
-        if (video.tags) {
-          video.tags.forEach(function(tag) {
-            if (podcast.sourceMeta.toLowerCase().indexOf(tag.name.toLowerCase()) >= 0) {
-              podcastMediaUpsert(video, podcast);
-            }
-          });
-        }
-      });
-
-      if (body.paging.next) {
-        queryVimeoAPI(podcast, user, token, pageNumber + 1, modifiedCheck);
+    body.data.forEach(function(video) {
+      if (video.tags) {
+        video.tags.forEach(function(tag) {
+          if (podcast.sourceMeta.toLowerCase().indexOf(tag.name.toLowerCase()) >= 0) {
+            podcastMediaUpsert(video, podcast);
+          }
+        });
       }
+    });
+
+    if (body.paging.next) {
+      queryVimeoAPI(podcast, user, token, pageNumber + 1, modifiedCheck);
     }
   });
 }
