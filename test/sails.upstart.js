@@ -5,20 +5,19 @@ var assert = require('assert'),
 // Global before hook
 before(function (done) {
   this.timeout(10000);
-  // Lift Sails with test database
+  // Lift Sails with read-only database access.
   Sails.lift({
     log: { level: 'error' },
+    models: { migrate: 'safe'},
     connections: {
       mongo: {
         module   : 'sails-mongo',
-        url      : 'mongodb://travisci:travisci@baetylus.bethel.io:49156/mybethel-dev',
+        url      : process.env.MONGO,//'mongodb://travisci:Trav1sC!@candidate.12.mongolayer.com:10300/mybethel',
         schema   : true
       }
     },
     session: {
-      adapter    : 'mongo',
-      collection : 'sessions',
-      url        : 'mongodb://travisci:travisci@baetylus.bethel.io:49156/mybethel-dev'
+      module    : 'sails-disk',
     }
   }, done);
 });
