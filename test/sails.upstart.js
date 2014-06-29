@@ -8,17 +8,15 @@ before(function (done) {
   // Lift Sails with read-only database access.
   Sails.lift({
     log: { level: 'error' },
-    models: { migrate: 'safe'},
+    models: { migrate: 'safe' },
     connections: {
       mongo: {
         module   : 'sails-mongo',
-        url      : process.env.MONGO,//'mongodb://travisci:Trav1sC!@candidate.12.mongolayer.com:10300/mybethel',
+        url      : process.env.MONGO,
         schema   : true
       }
     },
-    session: {
-      module    : 'sails-disk',
-    }
+    session: {}
   }, done);
 });
 
