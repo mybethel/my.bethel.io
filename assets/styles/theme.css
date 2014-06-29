@@ -428,6 +428,10 @@ section.page-wrap h1 .btn {
   font-size: inherit;
 }
 
+.panel-body {
+  margin-right: -1px;
+}
+
 .panel-body.full {
   padding: 0;
 }
