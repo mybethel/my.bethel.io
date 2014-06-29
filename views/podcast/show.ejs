@@ -32,7 +32,7 @@
           <tr class="alert alert-info alert-dismissible" role="alert">
             <td colspan="2">
               <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              Syncing all episodes from Vimeo user <%= podcast.sourceKey %> matching keywords <%= podcast.sourceMeta %>.
+              Syncing all episodes from Vimeo matching keywords <b><%= podcast.sourceMeta %></b>.
             </td>
           </tr>
           <% } _.each(podcastMedia, function(media) { %>
