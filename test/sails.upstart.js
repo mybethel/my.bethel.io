@@ -16,7 +16,7 @@ before(function (done) {
         schema   : true
       }
     },
-    session: {}
+    session: { adapter: 'memory' }
   }, done);
 });
 
