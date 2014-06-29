@@ -15,7 +15,7 @@ body {
 }
 
 .welcome {
-  background: url(../images/background.jpg) no-repeat center center fixed #2F3439;
+  background: url(https://s3.amazonaws.com/static.bethel.io/images/background.jpg) no-repeat center center fixed #2F3439;
   background-size: cover;
   background-position: center;
 }
@@ -67,7 +67,7 @@ body {
 }
 
 .navbar .navbar-header .navbar-brand {
-  background: url(../images/logo.png) 0 13px no-repeat;
+  background: url(https://s3.amazonaws.com/static.bethel.io/images/logo.png) 0 13px no-repeat;
   background-size: contain;
   width: 130px;
   overflow: hidden;
