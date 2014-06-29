@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
           if ($('#upload-widget img.thumbnail-sidebar').length) {
             var temporaryImageLocation = $('#upload-widget').data('temp-location').replace('images/', '');
             $('#upload-widget').removeClass('dropzone');
-            $('#upload-widget img.thumbnail-sidebar').attr('src', 'http://cdn.bethel.io/400x400/' + temporaryImageLocation + '/' + data.files[0].name);
+            $('#upload-widget img.thumbnail-sidebar').attr('src', 'http://bethel.api.pixtulate.com/' + temporaryImageLocation + '/' + data.files[0].name + '?w=400&height=400');
             $('#upload-widget img.thumbnail-sidebar').fadeIn();
             $('.fileinput-button').removeClass('btn-success')
             $('.fileinput-button').addClass('btn-default');

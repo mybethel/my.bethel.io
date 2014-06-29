@@ -62,5 +62,5 @@
     <a href="/podcast/edit/<%= podcast.id %>" class="btn btn-block btn-default">Edit Podcast</a>
     <a href="/podcast/feed/<%= podcast.id %>" type="submit" class="btn btn-block btn-primary">View Podcast</a>
   </div>
-  <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://cdn.bethel.io/400x400/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>" alt="">
+  <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://bethel.api.pixtulate.com/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>?w=400&h=400" alt="">
 </div>
