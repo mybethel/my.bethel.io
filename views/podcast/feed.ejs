@@ -15,7 +15,7 @@
   </itunes:summary>
   <itunes:author><% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></itunes:author>
   <itunes:explicit>no</itunes:explicit>
-  <itunes:image href="http://bethel.api.pixtulate.com/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>?w=1400&h=1400"/>
+  <itunes:image href="http://bethel.api.pixtulate.com/<% if (podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>?w=1400&amp;h=1400"/>
   <itunes:keywords><% if (podcast.keywords) { %><%= podcast.keywords %><% } %></itunes:keywords>
   <itunes:category text="Religion &amp; Spirituality">
     <itunes:category text="Christianity"/>
