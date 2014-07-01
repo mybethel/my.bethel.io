@@ -56,7 +56,7 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
     path: user + '/videos?page=' + pageNumber,
     headers: queryHeaders
   }, function (error, body, statusCode, headers) {
-    if (error || statusCode !== 200 || (!body && !body.data)) {
+    if (error || (statusCode === 304 && modifiedCheck) || statusCode !== 200 || (!body && !body.data)) {
       sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
       return;
     }
