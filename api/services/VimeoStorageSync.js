@@ -77,7 +77,8 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
   });
 }
 
-exports.sync = function(options) {
+exports.sync = function(refreshAll) {
+  refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
 
   sails.log.info('Syncing Vimeo storage.');
 
@@ -96,7 +97,7 @@ exports.sync = function(options) {
           return;
         }
 
-        queryVimeoAPI(podcast, service.user, service.accessToken, 1, true);
+        queryVimeoAPI(podcast, service.user, service.accessToken, 1, !refreshAll);
       });
     });
   });

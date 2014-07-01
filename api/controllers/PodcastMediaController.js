@@ -66,6 +66,7 @@ module.exports = {
 
   refresh: function(req, res) {
     S3StorageSync.sync();
+    VimeoStorageSync.sync(true);
     res.send(200);
   },
 
