@@ -458,6 +458,9 @@ a.btn-panel:hover {
   border-color: #106982;
 }
 
-#locations-canvas {
+#locations-canvas,
+.angular-google-map-container,
+map {
+  display:block;
   height: 200px;
 }

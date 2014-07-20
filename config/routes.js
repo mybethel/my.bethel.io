@@ -22,8 +22,7 @@
 module.exports.routes = {
 
   '/': {
-    controller: 'dashboard',
-    action: 'dashboard'
+    view: 'homepage'
   },
 
   '/login': {

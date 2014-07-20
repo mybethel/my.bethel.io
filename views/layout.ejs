@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
   <head>
     <%- sails.config.newrelic.getBrowserTimingHeader() %>
     <title>Bethel</title>
@@ -22,9 +22,16 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <script src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg&amp;sensor=false"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js"></script>
+    <% if (!session.authenticated && req.url != '/welcome' && req.url != '/login' && req.url != '/register') { %>
+    <script language="javascript">
+      window.location.replace('/login');
+    </script>
+    <% } %>
   </head>
 
-  <body<% if (req.url === '/login' || req.url === '/register' || req.url === '/welcome') { %> class="welcome"<% } %>>
+  <body ng-controller="AppController"<% if (req.url === '/login' || req.url === '/register' || req.url === '/welcome') { %> class="welcome"<% } %>>
     <% if (session.authenticated && req.url != '/welcome') { %>
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
@@ -40,9 +47,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.Ministry.name %></a>
               <ul class="dropdown-menu">
-                <li><a href="/accounts">Connected Accounts</a></li>
-                <li><a href="/ministry/edit/<%= session.Ministry.id %>">Settings</a></li>
-                <li><a href="/locations">Locations</a></li>
+                <li ng-repeat="link in ministryLinks"><a href="{{ link.url }}">{{ link.title }}</a></li>
               </ul>
             </li>
             <% } %>
@@ -60,7 +65,12 @@
     </nav>
 
     <nav role="navigation">
-      <%- partial('partials/navigation') %>
+      <ul id="main-menu" class="nav nav-pills nav-stacked nav-main">
+        <li ng-repeat="link in navLinks"><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
+      </ul>
+      <ul class="nav nav-pills nav-stacked nav-main nav-bottom">
+        <li><a href="https://mybethel.uservoice.com/" target="_blank"><i class="fa fa-comments-o"></i>Feedback</a></li>
+      </ul>
     </nav>
 
     <section class="page-wrap">
@@ -127,7 +137,8 @@
 
     <!--SCRIPTS-->
     <script src="/js/socket.io.js"></script>
-    <script src="/js/sails.io.js"></script>
+    <script src="/js/angular-sails.io.js"></script>
+    <script src="/js/lodash.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/jquery.fileupload.js"></script>
     <script src="/js/jquery.form.js"></script>
@@ -135,12 +146,18 @@
     <script src="/js/jquery.sparkline.js"></script>
     <script src="/js/jquery.typeahead.js"></script>
     <script src="/js/jquery.validate.js"></script>
+    <script src="/js/angular-google-maps.js"></script>
     <script src="/js/bootstrap-datepicker.js"></script>
     <script src="/js/bootstrap-markdown.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/color-thief.js"></script>
+    <script src="/js/controllers/appController.js"></script>
+    <script src="/js/controllers/dashboardController.js"></script>
+    <script src="/js/controllers/teamController.js"></script>
     <script src="/js/markdown.js"></script>
+    <script src="/js/ng-map.min.js"></script>
     <script src="/js/podcast.js"></script>
+    <script src="/js/services/sailsSocket.js"></script>
     <script src="/js/to-markdown.js"></script>
     <script src="/js/ui.js"></script>
     <script src="/js/uploader.js"></script>

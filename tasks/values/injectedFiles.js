@@ -28,7 +28,8 @@ var jsFilesToInject = [
   'js/socket.io.js',
 
   // then beef it up with some convenience logic for talking to Sails.js
-  'js/sails.io.js',
+  'js/angular-sails.io.js',
+  'js/lodash.min.js',
 
   // A simpler boilerplate library for getting you up and running w/ an
   // automatic listener for incoming messages from Socket.io.
