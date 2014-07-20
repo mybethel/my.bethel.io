@@ -40,10 +40,13 @@
     var locationData = new google.maps.places.Autocomplete((document.getElementById('location-autocomplete')), { types: ['geocode'] });
     google.maps.event.addListener(locationData, 'place_changed', function() {
         var place = locationData.getPlace();
+        var lat = place.geometry.location.lat();
+        var lng = place.geometry.location.lng();
         $('input[name="address"]').val(place.formatted_address);
-        $('.address-autocomplete-group span.lat-long').text(place.geometry.location.k.toFixed(3)+', '+place.geometry.location.A.toFixed(3));
-        $('input[name="latitude"]').val(place.geometry.location.k);
-        $('input[name="longitude"]').val(place.geometry.location.A);
+
+        $('.address-autocomplete-group span.lat-long').text(lat.toFixed(3)+', '+lng.toFixed(3));
+        $('input[name="latitude"]').val(lat);
+        $('input[name="longitude"]').val(lng);
     });
   });
 </script>

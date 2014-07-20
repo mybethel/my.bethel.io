@@ -24,6 +24,7 @@
 
 module.exports.blueprints = {
 
+  autoWatch: true,
 
   /**
    * NOTE:

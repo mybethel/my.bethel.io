@@ -4,7 +4,7 @@ $(document).ready(function(){
     e.preventDefault();
   });
 
-  $('a').click(function (e) {
+  $(document).on('click', 'a', function (e) {
     if ($(this).data('link') == 'popover') {
       var url = $(this).attr('href');
       $.ajax({

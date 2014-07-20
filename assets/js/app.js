@@ -28,3 +28,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     });
 
 });
+
+function findIndexByPropertyValue(arr, property, value) {
+  var index = null;
+  for (var i in arr) {
+    if (arr[i][property] == value) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+}

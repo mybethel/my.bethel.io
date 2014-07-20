@@ -24,21 +24,6 @@ module.exports = {
     });
   },
 
-  create: function (req, res) {
-    Location.create(req.params.all(), function locationCreated(err, location) {
-      if (err) {
-        req.session.flash = {
-          err: err
-        }
-
-        return res.redirect('/location/new');
-      }
-      req.session.flash = {};
-
-      return res.redirect('/locations');
-    });
-  },
-
   edit: function (req, res) {
     Location.findOne(req.param('id'), function foundLocation(err, location) {
       if (err) res.send(err, 500);
@@ -61,26 +46,9 @@ module.exports = {
       }
       req.session.flash = {};
 
-      return res.redirect('/locations');
-    });
-  },
+      Location.publishUpdate(req.param('id'), req.params.all());
 
-  delete: function(req, res) {
-    Location.findOne(req.param('id'), function foundLocation(err, location) {
-      if (err) res.send(err, 500);
-
-      res.view({
-        location: location,
-        layout: req.viewData.layout
-      });
-    });
-  },
-
-  destroy: function(req, res) {
-    Location.destroy(req.param('id'), function deletedLocation(err, location) {
-      if (err) return next(err);
-
-      res.redirect('/locations');
+      return res.redirect('/#/dashboard/locations');
     });
   },
 
@@ -101,6 +69,8 @@ module.exports = {
 
     Location.find({ministry: findById}, function foundLocations(err, locations) {
       if (err) res.send(err, 500);
+
+      Location.watch(req.socket);
 
       res.send(locations, 200);
     })

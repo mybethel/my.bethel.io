@@ -21,7 +21,7 @@ angular.module('sails.io', [])
       url: $location.path(),
       defaultScope: $rootScope,
       eventPrefix: 'sailsSocket:',
-      eventForwards: ['connect', 'message', 'disconnect', 'error'],
+      eventForwards: ['connect', 'location', 'message', 'disconnect', 'error'],
       reconnectionAttempts: Infinity,
       reconnectionDelay: function(attempt) {
         var maxDelay = 10000;
@@ -59,7 +59,7 @@ angular.module('sails.io', [])
       }
 
       // Build to request
-      var json = angular.toJson({
+      var json = io.JSON.stringify({
         url: url,
         data: data
       });
@@ -71,7 +71,7 @@ angular.module('sails.io', [])
 
         if (result && typeof result === 'string') {
           try {
-            parsedResult = angular.fromJson(result);
+            parsedResult = io.JSON.parse(result);
           } catch (e) {
             $log.warn("Could not parse:", result, e);
             parsedResult = { error: { message: 'Bad response from server' }};
