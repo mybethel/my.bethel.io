@@ -6,7 +6,7 @@
     <table class="table table-hover">
       <tr ng-repeat="location in locations | orderBy:'name'">
         <td>
-          <h4>{{ location.name }}<br><small>{{ location.address }}</small></h4>
+          <h4>{{ location.name }}<br><small>{{ addressFormat(location.address) }}</small></h4>
         </td>
         <td style="vertical-align:middle;text-align:right;">
           <button class="btn">Edit</button>

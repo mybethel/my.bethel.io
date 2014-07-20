@@ -6,4 +6,10 @@ app.controller('LocationController', function ($scope, sailsSocket, $log, filter
     $scope.locations = response;
   });
 
+  $scope.addressFormat = function (string) {
+    var address = string.split(',');
+    address.pop();
+    return address.join(',');
+  }
+
 });
