@@ -18,12 +18,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'templates/dashboard.html',
+      templateUrl: 'templates/dashboard/dashboard.html',
       controller: 'DashboardController'
     })
     .state('dashboard.location', {
       url: '/locations',
-      templateUrl: 'templates/locations.html',
+      templateUrl: 'templates/dashboard/locations.html',
       controller: 'LocationController'
     });
 

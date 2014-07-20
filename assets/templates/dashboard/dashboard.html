@@ -18,7 +18,7 @@
             <h3><span class="count">{{ stats.storage | number : 2 }}</span>Gb<br /><small>total storage used</small></h3>
           </div>
         </div>
-        <h5 class="text-muted no-stats" style="display: none;">Check back later for statistics...</h5>
+        <h5 class="text-muted no-stats" ng-hide="'stats.storage && stats.podcastChange'">Check back later for statistics...</h5>
       </div>
     </div>
     <div class="panel panel-default">
@@ -31,6 +31,8 @@
         </google-map>
       </div>
     </div>
+    <a ui-sref=".accounts" class="btn btn-default btn-lg btn-block">Connected Accounts</a>
+    <a ui-sref=".billing" class="btn btn-default btn-lg btn-block">Subscription and Billing</a>
   </div>
   <div class="dash-panel-right large">
     <div ui-view class="content"></div>
