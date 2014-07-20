@@ -26,8 +26,8 @@
         <h3 class="panel-title">Ministry Locations <a ui-sref=".location" class="btn btn-panel">Edit</a></h3>
       </div>
       <div class="panel-body full">
-        <google-map center="map.center" zoom="map.zoom" pan="true" draggable="false" options="map.options">
-          <markers models="locations" icon="'icon'" coords="'position'" fit="true"></markers>
+        <google-map center="map.center" zoom="map.zoom" pan="true" draggable="false" options="map.options" control="map.control">
+          <markers models="markers" icon="'icon'" coords="'position'" fit="true" doRebuildAll="true"></markers>
         </google-map>
       </div>
     </div>
