@@ -39,20 +39,20 @@
           <a class="navbar-brand" href="/">Bethel</a>
         </div>
         <ul class="nav navbar-nav">
-          <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href="#"><i class="fa fa-bars"></i></a></li>
+          <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href=""><i class="fa fa-bars"></i></a></li>
         </ul>
         <% if (session.User.name) { %>
           <ul class="nav navbar-nav navbar-right">
             <% if (session.Ministry) { %>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= session.Ministry.name %></a>
+              <a href="" class="dropdown-toggle" data-toggle="dropdown"><%= session.Ministry.name %></a>
               <ul class="dropdown-menu">
                 <li ng-repeat="link in ministryLinks"><a href="{{ link.url }}">{{ link.title }}</a></li>
               </ul>
             </li>
             <% } %>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" src="<%= session.User.avatar %>" /></a>
+            <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" src="<%= session.User.avatar %>" /></a>
             <ul class="dropdown-menu">
               <li><a href="#">My Account</a></li>
               <li class="divider"></li>
