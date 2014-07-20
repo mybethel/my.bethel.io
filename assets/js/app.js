@@ -7,21 +7,24 @@
  */
 var app = angular.module('app', [
   'sails.io',
-  'ngRoute',
+  'ui.router',
   'google-maps'
 ]);
 
-app.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
-    when('/dashboard', {
+app.config(function ($stateProvider, $urlRouterProvider) {
+
+  $urlRouterProvider.otherwise('/dashboard');
+
+  $stateProvider
+    .state('dashboard', {
+      url: '/dashboard',
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController'
-    }).
-    when('/team', {
-      templateUrl: 'templates/team.html',
-      controller: 'TeamController'
-    }).
-    otherwise({
-      redirectTo: '/dashboard'
+    })
+    .state('dashboard.location', {
+      url: '/locations',
+      templateUrl: 'templates/locations.html',
+      controller: 'LocationController'
     });
-}]);
+
+});

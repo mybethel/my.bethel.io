@@ -23,7 +23,7 @@
     <script src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg&amp;sensor=false"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular-route.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
     <% if (!session.authenticated && req.url != '/welcome' && req.url != '/login' && req.url != '/register') { %>
     <script language="javascript">
       window.location.replace('/login');
@@ -153,9 +153,9 @@
     <script src="/js/color-thief.js"></script>
     <script src="/js/controllers/appController.js"></script>
     <script src="/js/controllers/dashboardController.js"></script>
+    <script src="/js/controllers/locationController.js"></script>
     <script src="/js/controllers/teamController.js"></script>
     <script src="/js/markdown.js"></script>
-    <script src="/js/ng-map.min.js"></script>
     <script src="/js/podcast.js"></script>
     <script src="/js/services/sailsSocket.js"></script>
     <script src="/js/to-markdown.js"></script>

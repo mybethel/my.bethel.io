@@ -15,7 +15,7 @@ app.controller('AppController', function ($scope, sailsSocket, $log, filterFilte
   $scope.ministryLinks = [
     { title: 'Connected Accounts', url: '/accounts' },
     { title: 'Settings', url: '/ministry/edit' },
-    { title: 'Locations', url: '/locations' }
+    { title: 'Locations', url: '/#/dashboard/locations' }
   ];
 
 });

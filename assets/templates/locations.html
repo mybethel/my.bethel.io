@@ -1,0 +1,18 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">Ministry Locations</h2>
+  </div>
+  <div class="panel-body full">
+    <table class="table table-hover">
+      <tr ng-repeat="location in locations | orderBy:'name'">
+        <td>
+          <h4>{{ location.name }}<br><small>{{ location.address }}</small></h4>
+        </td>
+        <td style="vertical-align:middle;text-align:right;">
+          <button class="btn">Edit</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<button class="btn btn-lg btn-block">Add New Location</button>
