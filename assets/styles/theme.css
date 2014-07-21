@@ -20,6 +20,10 @@ body {
   background-position: center;
 }
 
+.welcome .navbar {
+  display: none;
+}
+
 .navbar {
   background: #1591b5;
   border-color: #106982;
@@ -74,6 +78,10 @@ body {
   direction: ltr;
   text-indent: -9999px;
   margin-left: 0;
+}
+
+.welcome ul.nav-main {
+  display: none;
 }
 
 ul.nav-main {
@@ -209,6 +217,10 @@ section.page-wrap {
   transition: margin-left .7s ease-in-out;
 }
 
+.welcome section.page-wrap {
+  background: transparent;
+}
+
 section.page-wrap .dash-panel-full {
   padding: 20px;
 }
@@ -323,11 +335,10 @@ section.page-wrap h1 .btn {
   max-width: 360px;
   height: 220px;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0; 
-  bottom: 0;
-  margin: auto;
+  top: 50%;
+  left: 50%;
+  margin-left: -280px;
+  margin-top: -120px;
   border-radius: 4px;
 }
 
