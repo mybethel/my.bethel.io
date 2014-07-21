@@ -63,7 +63,7 @@ module.exports = {
   ministry: function(req, res) {
     var findById = req.param('id');
 
-    if (!findById && req.session.Ministry.id) {
+    if (!findById && req.session.Ministry) {
       findById = new ObjectID(req.session.Ministry.id);
     }
 

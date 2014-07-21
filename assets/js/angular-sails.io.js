@@ -78,6 +78,10 @@ angular.module('sails.io', [])
           }
         }
 
+        if (result.auth) {
+          $rootScope.$broadcast('event:auth-loginRequired', result);
+        }
+
         cb && cb(parsedResult);
       });
     }

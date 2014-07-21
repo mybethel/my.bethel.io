@@ -38,13 +38,13 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
     });
   }, true);
 
-  $scope.$on('sailsSocket:connect', function (ev, data) {
-    sailsSocket.get('/dashboard/stats', {}, function (response, status) {
+  sailsSocket.get('/dashboard/stats', {}, function (response, status) {
+    if (!response.error)
       $scope.stats = response;
-    });
-    sailsSocket.get('/location/ministry', {}, function (response, status) {
+  });
+  sailsSocket.get('/location/ministry', {}, function (response, status) {
+    if (!response.error)
       $scope.locations = response;
-    });
   });
 
   $scope.$on('sailsSocket:location', function (ev, data) {

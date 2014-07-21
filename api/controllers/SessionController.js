@@ -8,35 +8,20 @@
 module.exports = {
 
   create: function(req, res, next) {
-    if (!req.param('name') || !req.param('pass')) {
-      req.session.flash = {
-        err: [{id: 'login', error: 'You must provide both an e-mail address and password.'}]
-      }
-
-      return res.redirect('/login');
-    }
+    if (!req.param('name') || !req.param('pass'))
+      return res.send(401, { error: { name: true, pass: true } });
 
     User.findOneByEmail(req.param('name'), function foundUser(err, user) {
       if (err) return next(err);
 
-      if (!user) {
-        req.session.flash = {
-          err: [{id: 'login', error: 'No account was found for ' + req.param('name') + '.'}]
-        }
-
-        return res.redirect('/login');
-      }
+      if (!user)
+        return res.send(401, { error: { name: true } });
 
       require('bcrypt').compare(req.param('pass'), user.password, function(err, valid) {
         if (err) return next(err);
 
-        if (!valid) {
-          req.session.flash = {
-            err: [{id: 'login', error: 'The password you entered was incorrect.'}]
-          }
-
-          return res.redirect('/login');
-        }
+        if (!valid)
+          return res.send(401, { error: { pass: true } });
 
         req.session.authenticated = true;
         req.session.User = user;
@@ -50,7 +35,7 @@ module.exports = {
               req.session.Ministry = ministry;
             }
 
-            return res.redirect('/');
+            return res.send(200, {success:'welcome'});
           });
         } else {
           return res.redirect('/welcome');
@@ -59,10 +44,21 @@ module.exports = {
     })
   },
 
+  current: function(req, res, next) {
+    if (req.session.User && req.session.Ministry) {
+      res.send(200, {
+        user: req.session.User,
+        ministry: req.session.Ministry,
+      });
+    } else {
+      res.send(401, { error: 'Please login at http://my.bethel.io/login' });
+    }
+  },
+
   destroy: function(req, res, next) {
     req.session.destroy();
 
-    return res.redirect('/login');
+    return res.redirect('/#/login');
   }
 	
 };

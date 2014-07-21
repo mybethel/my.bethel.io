@@ -16,5 +16,5 @@ module.exports = function(req, res, next) {
   }
 
   // User is not allowed, redirect to the login page
-  return res.redirect('/login');
+  return res.send(401, {auth: 'Please login at http://my.bethel.io/#/login'});
 };

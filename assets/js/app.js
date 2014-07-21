@@ -6,6 +6,7 @@
  * @type {angular.Module}
  */
 var app = angular.module('app', [
+  'http-auth-interceptor',
   'sails.io',
   'ui.router',
   'google-maps'
@@ -16,6 +17,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/dashboard');
 
   $stateProvider
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html'
+    })
     .state('dashboard', {
       url: '/dashboard',
       templateUrl: 'templates/dashboard/dashboard.html',

@@ -24,15 +24,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
-    <% if (!session.authenticated && req.url != '/welcome' && req.url != '/login' && req.url != '/register') { %>
-    <script language="javascript">
-      window.location.replace('/login');
-    </script>
-    <% } %>
   </head>
 
-  <body ng-controller="AppController"<% if (req.url === '/login' || req.url === '/register' || req.url === '/welcome') { %> class="welcome"<% } %>>
-    <% if (session.authenticated && req.url != '/welcome') { %>
+  <body ng-controller="AppController" ng-class="{'welcome': !user.id}">
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -41,31 +35,27 @@
         <ul class="nav navbar-nav">
           <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href=""><i class="fa fa-bars"></i></a></li>
         </ul>
-        <% if (session.User.name) { %>
-          <ul class="nav navbar-nav navbar-right">
-            <% if (session.Ministry) { %>
-            <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown"><%= session.Ministry.name %></a>
-              <ul class="dropdown-menu">
-                <li ng-repeat="link in ministryLinks"><a href="{{ link.url }}">{{ link.title }}</a></li>
-              </ul>
-            </li>
-            <% } %>
-          <li class="dropdown">
-            <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" src="<%= session.User.avatar %>" /></a>
+        <ul class="nav navbar-nav navbar-right" ng-show="user.name">
+          <li class="dropdown" ng-if="ministry.name">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ ministry.name }}</a>
             <ul class="dropdown-menu">
-              <li><a href="#">My Account</a></li>
-              <li class="divider"></li>
-              <li><a href="/logout">Logout</a></li>
+              <li ng-repeat="link in ministryLinks"><a href="{{ link.url }}">{{ link.title }}</a></li>
             </ul>
           </li>
-        </ul>
-        <% } %>
+        <li class="dropdown">
+          <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" ng-src="{{ user.avatar }}" /></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">My Account</a></li>
+            <li class="divider"></li>
+            <li><a href="/logout">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
       </div>
     </nav>
 
     <nav role="navigation">
-      <ul id="main-menu" class="nav nav-pills nav-stacked nav-main">
+      <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
         <li ng-repeat="link in navLinks"><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
       </ul>
       <ul class="nav nav-pills nav-stacked nav-main nav-bottom">
@@ -74,13 +64,10 @@
     </nav>
 
     <section class="page-wrap">
-    <% } %>
 
     <%- body %>
 
-    <% if (session.authenticated && req.url != '/welcome') { %>
     </section>
-    <% } %>
 
     <div id="popover" class="modal fade">
 
@@ -151,10 +138,12 @@
     <script src="/js/bootstrap-markdown.js"></script>
     <script src="/js/bootstrap.js"></script>
     <script src="/js/color-thief.js"></script>
+    <script src="/js/common/http-auth-interceptor.js"></script>
     <script src="/js/controllers/appController.js"></script>
     <script src="/js/controllers/dashboard/accountsController.js"></script>
     <script src="/js/controllers/dashboard/dashboardController.js"></script>
     <script src="/js/controllers/dashboard/locationController.js"></script>
+    <script src="/js/controllers/loginController.js"></script>
     <script src="/js/controllers/teamController.js"></script>
     <script src="/js/markdown.js"></script>
     <script src="/js/podcast.js"></script>
