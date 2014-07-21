@@ -392,7 +392,8 @@ section.page-wrap h1 .btn {
   z-index: 1;
 }
 
-#login-signup-wrapper .user-form .form-control:focus {
+#login-signup-wrapper .user-form .form-control:focus,
+#login-signup-wrapper .user-form .has-error .form-control {
   z-index: 2;
 }
 
