@@ -29,6 +29,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     .state('dashboard.billing', {
       url: '/billing',
       templateUrl: 'templates/dashboard/billing.html'
+    })
+    .state('dashboard.accounts', {
+      url: '/accounts',
+      templateUrl: 'templates/dashboard/accounts.html',
+      controller: 'AccountsController'
     });
 
 });

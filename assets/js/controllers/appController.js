@@ -13,7 +13,7 @@ app.controller('AppController', function ($scope, sailsSocket, $log, filterFilte
 
   // Ministry dropdown menu.
   $scope.ministryLinks = [
-    { title: 'Connected Accounts', url: '/accounts' },
+    { title: 'Connected Accounts', url: '/#/dashboard/accounts' },
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];

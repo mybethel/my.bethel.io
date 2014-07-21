@@ -17,9 +17,7 @@ module.exports = {
     Services.find({ministry: req.session.Ministry.id}, function foundServices(err, allServices) {
       if (err) return next(err);
 
-      res.view({
-        services: allServices
-      });
+      res.send(200, allServices);
     });
   },
 
