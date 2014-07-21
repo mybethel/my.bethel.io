@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title">Estimated Monthly Cost <small>Based on Current Usage</small></h2>
+  </div>
+  <div class="panel-body full">
+    <table class="table table-hover">
+      <tr>
+        <td><h5>Cloud Storage<br><small>{{ $parent.stats.storage | number:2 }}Gb @ 25¢</small></h5></td>
+        <td style="vertical-align:middle;text-align:right;">${{ $parent.stats.storage * 0.25 | number:2 }}</td>
+      </tr>
+      <tr>
+        <td><h5>Cloud Archival<br><small>0.00Gb @ 5¢</small></h5></td>
+        <td style="vertical-align:middle;text-align:right;">$0.00</td>
+      </tr>
+    </table>
+  </div>
+</div>

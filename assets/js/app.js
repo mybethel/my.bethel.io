@@ -25,6 +25,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       url: '/locations',
       templateUrl: 'templates/dashboard/locations.html',
       controller: 'LocationController'
+    })
+    .state('dashboard.billing', {
+      url: '/billing',
+      templateUrl: 'templates/dashboard/billing.html'
     });
 
 });
