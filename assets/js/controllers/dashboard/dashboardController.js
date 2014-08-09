@@ -7,7 +7,7 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
     center: [30.25, -97.75],
     options: {
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoomControl: true,
+      zoomControl: false,
       panControl: false,
       mapTypeControl: false,
       scrollwheel: false,
@@ -15,13 +15,23 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
       draggable: false,
       streetViewControl: false,
       maxZoom: 15,
-    },
-    show: false
+    }
   };
 
   $scope.stats = [];
   $scope.locations = [];
   $scope.markers = [];
+
+  $scope.init = function() {
+    sailsSocket.get('/dashboard/stats', {}, function (response, status) {
+    if (!response.error)
+      $scope.stats = response;
+    });
+    sailsSocket.get('/location/ministry', {}, function (response, status) {
+      if (!response.error)
+        $scope.locations = response;
+    });
+  }
 
   // Certain data is extracted from locations to build markers.
   $scope.$watch('locations', function() {
@@ -37,19 +47,12 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
         title: location.name
       });
     });
-    if ($scope.markers.length > 0)
-      $scope.map.show = true;
   }, true);
 
+  $scope.init();
+
   $scope.$on('sailsSocket:connect', function (ev, data) {
-    sailsSocket.get('/dashboard/stats', {}, function (response, status) {
-    if (!response.error)
-      $scope.stats = response;
-    });
-    sailsSocket.get('/location/ministry', {}, function (response, status) {
-      if (!response.error)
-        $scope.locations = response;
-    });
+    $scope.init();
   });
 
   $scope.$on('sailsSocket:location', function (ev, data) {
