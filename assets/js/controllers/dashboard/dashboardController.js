@@ -15,7 +15,8 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
       draggable: false,
       streetViewControl: false,
       maxZoom: 15,
-    }
+    },
+    show: false
   };
 
   $scope.stats = [];
@@ -36,15 +37,19 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
         title: location.name
       });
     });
+    if ($scope.markers.length > 0)
+      $scope.map.show = true;
   }, true);
 
-  sailsSocket.get('/dashboard/stats', {}, function (response, status) {
+  $scope.$on('sailsSocket:connect', function (ev, data) {
+    sailsSocket.get('/dashboard/stats', {}, function (response, status) {
     if (!response.error)
       $scope.stats = response;
-  });
-  sailsSocket.get('/location/ministry', {}, function (response, status) {
-    if (!response.error)
-      $scope.locations = response;
+    });
+    sailsSocket.get('/location/ministry', {}, function (response, status) {
+      if (!response.error)
+        $scope.locations = response;
+    });
   });
 
   $scope.$on('sailsSocket:location', function (ev, data) {
