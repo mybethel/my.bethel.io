@@ -1,5 +1,4 @@
 var moment = require('moment'),
-    ObjectID = require('mongodb').ObjectID,
     Vimeo = require('vimeo-api').Vimeo;
 
 function podcastMediaUpsert(video, podcast) {
@@ -26,7 +25,7 @@ function podcastMediaUpsert(video, podcast) {
 
   PodcastMedia.findOrCreate({
     uuid: videoId,
-    podcast: new ObjectID(podcast.id)
+    podcast: podcast.id
   }, {
     name: video.name,
     date: new Date(video.created_time),
@@ -36,7 +35,7 @@ function podcastMediaUpsert(video, podcast) {
     thumbnail: videoThumbnail,
     url: videoUrl,
     uuid: videoId,
-    podcast: new ObjectID(podcast.id)
+    podcast: podcast.id
   }, function podcastMediaCreated(err, media) {
     if (err) sails.log.error(err);
   });

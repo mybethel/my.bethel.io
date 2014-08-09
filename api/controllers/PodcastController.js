@@ -8,7 +8,6 @@
 var moment = require('moment'),
     xml2js = require('xml2js'),
     request = require('request'),
-    ObjectID = require('mongodb').ObjectID,
     async = require('async');
 
 function finishMediaImport(id, ministry) {
@@ -36,7 +35,7 @@ function processMediaImport(id, media, ministry) {
 module.exports = {
 
   list: function (req, res) {
-    Podcast.find({ministry: new ObjectID(req.session.Ministry.id)}, function foundPodcasts(err, podcasts) {
+    Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
       if (err) return next(err);
 
       res.view({
@@ -48,7 +47,7 @@ module.exports = {
   new: function (req, res) {
     var uploadForm = S3Upload.prepare('images/podcast/tmp');
 
-    Services.find({provider: 'vimeo', ministry: new ObjectID(req.session.Ministry.id)}, function foundServices(err, services) {
+    Services.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
       res.view({
         s3form: uploadForm,
         services: services
@@ -122,7 +121,7 @@ module.exports = {
             description: feed.description[0],
             tags: feed['itunes:keywords'][0],
             copyright: feed.copyright[0],
-            ministry: new ObjectID(req.session.Ministry.id),
+            ministry: req.session.Ministry.id,
           }, function podcastCreated(err, podcast) {
             if (err)
               return res.send(503, err);
@@ -151,7 +150,7 @@ module.exports = {
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
     
-      Services.find({provider: 'vimeo', ministry: new ObjectID(req.session.Ministry.id)}, function foundServices(err, services) {
+      Services.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
         res.view({
           s3form: uploadForm,
           podcast: podcast,
@@ -207,7 +206,7 @@ module.exports = {
       Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
         if (err) return next(err);
 
-        PodcastMedia.find().sort('date desc').where({podcast: new ObjectID(podcast.id)}).exec(function(err, media) {
+        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
           if (err) return next(err);
 
           if (podcast.type === 1) {
@@ -249,7 +248,7 @@ module.exports = {
       Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
         if (err) res.send(err, 500);
 
-        PodcastMedia.find().sort('date desc').where({podcast: new ObjectID(podcast.id)}).exec(function(err, media) {
+        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
           if (err) res.send(err, 500);
 
           Analytics.registerHit('podcast', req.param('id'));
