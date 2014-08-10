@@ -33,6 +33,11 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
     });
   }
 
+  // Watch for notifications to update the dashboard display.
+  $scope.$on('event:update-dashboard', function() {
+    $scope.init();
+  });
+
   // Certain data is extracted from locations to build markers.
   $scope.$watch('locations', function() {
     $scope.markers = [];

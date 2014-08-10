@@ -7,50 +7,6 @@
 
 module.exports = {
 
-  list: function (req, res) {
-    Location.find({ministry: req.session.Ministry.id}).sort('name asc').exec(function foundLocations(err, locations) {
-      if (err) res.send(err, 500);
-
-      res.view({
-        locations: locations
-      });
-    });
-  },
-
-  new: function(req, res) {
-    res.view({
-      layout: req.viewData.layout
-    });
-  },
-
-  edit: function (req, res) {
-    Location.findOne(req.param('id'), function foundLocation(err, location) {
-      if (err) res.send(err, 500);
-    
-      res.view({
-        location: location,
-        layout: req.viewData.layout
-      });
-    });
-  },
-
-  update: function(req, res) {
-    Location.update(req.param('id'), req.params.all(), function locationUpdated(err) {
-      if (err) {
-        req.session.flash = {
-          err: err
-        }
-
-        return res.redirect('/location/edit/' + req.param('id'));
-      }
-      req.session.flash = {};
-
-      Location.publishUpdate(req.param('id'), req.params.all());
-
-      return res.redirect('/#/dashboard/locations');
-    });
-  },
-
   ministry: function(req, res) {
     var findById = req.param('id');
 

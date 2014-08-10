@@ -1,13 +1,13 @@
-app.controller('AppController', function ($scope, sailsSocket, $log, $state, filterFilter) {
+app.controller('AppController', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
 
   $scope.redirect = '';
-  $scope.user = {};
-  $scope.ministry = {};
+  $rootScope.user = {};
+  $rootScope.ministry = {};
 
   $scope.$on('sailsSocket:connect', function (ev, data) {
     sailsSocket.get('/session/current', {}, function (response, status) {
-      $scope.user = response.user;
-      $scope.ministry = response.ministry;
+      $rootScope.user = response.user;
+      $rootScope.ministry = response.ministry;
     });
   });
 
@@ -41,8 +41,8 @@ app.controller('AppController', function ($scope, sailsSocket, $log, $state, fil
   $scope.$on('event:auth-loginConfirmed', function() {
 
     sailsSocket.get('/session/current', {}, function (response, status) {
-      $scope.user = response.user;
-      $scope.ministry = response.ministry;
+      $rootScope.user = response.user;
+      $rootScope.ministry = response.ministry;
     });
 
     $state.go($scope.redirect !== '' ? $scope.redirect : 'dashboard');

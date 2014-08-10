@@ -31,6 +31,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
       templateUrl: 'templates/dashboard/locations.html',
       controller: 'LocationController'
     })
+    .state('dashboard.location.edit', {
+      url: '/edit/:locationId',
+      templateUrl: 'templates/dashboard/locations.form.html',
+      controller: 'LocationFormController'
+    })
+    .state('dashboard.location.new', {
+      url: '/new',
+      templateUrl: 'templates/dashboard/locations.form.html',
+      controller: 'LocationFormController'
+    })
     .state('dashboard.billing', {
       url: '/billing',
       templateUrl: 'templates/dashboard/billing.html'

@@ -14,6 +14,10 @@ module.exports = {
       required: true
     },
 
+    default: {
+      type: 'boolean'
+    },
+
     description: {
       type: 'string'
     },

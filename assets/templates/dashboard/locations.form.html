@@ -1,0 +1,51 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2 class="panel-title" ng-if="id">Edit {{ location.name }}</h2>
+    <h2 class="panel-title" ng-if="!id">New Ministry Location</h2>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" role="form" ng-submit="save()">
+      <div class="form-group">
+        <label for="title" class="col-sm-3 control-label">Name</label>
+        <div class="col-sm-9">
+          <input type="text" ng-model="location.name" class="form-control" placeholder="Location name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" ng-model="location.default"> This is the main campus or location.
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="title" class="col-sm-3 control-label">Description</label>
+        <div class="col-sm-9">
+          <input type="text" ng-model="location.description" class="form-control" placeholder="A brief description of the location" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="title" class="col-sm-3 control-label">Address</label>
+        <div class="col-sm-9">
+          <div class="input-group address-autocomplete-group">
+            <input type="text" ng-model="location.address" class="form-control" name="address" id="location-autocomplete" placeholder="Location address" /><span class="input-group-addon"><i class="fa fa-location-arrow"></i> <span class="lat-long">{{ coords }}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="title" class="col-sm-3 control-label">Service Times</label>
+        <div class="col-sm-9">
+          <input type="text" ng-model="location.times" class="form-control" placeholder="Service times at this location" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <input type="submit" class="btn btn-block" ng-if="!id" value="Create Location" />
+          <input type="submit" class="btn btn-block" ng-if="id" value="Save Changes" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
