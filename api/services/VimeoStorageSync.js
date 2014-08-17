@@ -77,14 +77,18 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
 
   // Search for Vimeo podcast media that are missing a URL.
   PodcastMedia.find({ url: '' }, function foundMedia(err, media) {
-    sails.log('Found media with missing URLs:');
-    sails.log(media);
+    sails.log('Found ' + media.length + ' media with missing URLs.');
 
     media.forEach(function (video) {
       VimeoAPI.request({
         path: '/videos/' + video.uuid,
         headers: queryHeaders
       }, function (error, body, statusCode, headers) {
+        if (!body || !body.data) {
+          sails.log.error('Vimeo API returned status code ' + statusCode + ' for video ' + video.uuid + '.');
+          return;
+        }
+
         body.data.files.forEach(function(file) {
           if (file.quality === 'sd') {
             sails.log('Updated Vimeo URL for media with UUID: ' + video.uuid);
