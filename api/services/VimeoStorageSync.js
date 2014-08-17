@@ -74,6 +74,21 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
       queryVimeoAPI(podcast, user, token, pageNumber + 1, modifiedCheck);
     }
   });
+
+  // Search for Vimeo podcast media that are missing a URL.
+  PodcastMedia.find({ url: '' }, function foundMedia(err, media) {
+    media.forEach(function (video) {
+      VimeoAPI.request({
+        path: '/videos/' + video.uuid,
+        headers: queryHeaders
+      }, function (error, body, statusCode, headers) {
+        body.files.forEach(function(file) {
+          if (file.quality === 'sd')
+            PodcastMedia.update({ uuid: video.uuid }, { url: file.link_secure });
+        });
+      })
+    });
+  })
 }
 
 exports.sync = function(refreshAll) {
