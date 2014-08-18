@@ -84,13 +84,12 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
         path: '/videos/' + video.uuid,
         headers: queryHeaders
       }, function (error, body, statusCode, headers) {
-        if (!body || !body.data) {
+        if (!body || !body.files) {
           sails.log.error('Vimeo API returned status code ' + statusCode + ' for video ' + video.uuid + '.');
-          sails.log(body);
           return;
         }
 
-        body.data.files.forEach(function(file) {
+        body.files.forEach(function(file) {
           if (file.quality === 'sd') {
             sails.log('Updated Vimeo URL for media with UUID: ' + video.uuid);
             PodcastMedia.update({ uuid: video.uuid }, { url: file.link_secure });
