@@ -91,8 +91,8 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
 
         body.files.forEach(function(file) {
           if (file.quality === 'sd') {
-            sails.log('Updated Vimeo URL for media with UUID: ' + video.uuid);
-            PodcastMedia.update({ uuid: video.uuid }, { url: file.link_secure });
+            sails.log('Updated Vimeo URL to ' + file.link_secure + ' for media: ' + video.id);
+            PodcastMedia.update(video.id, { url: file.link_secure });
           }
         });
       })
