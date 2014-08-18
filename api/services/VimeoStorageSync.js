@@ -91,8 +91,12 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
 
         body.files.forEach(function(file) {
           if (file.quality === 'sd') {
-            sails.log('Updated Vimeo URL to ' + file.link_secure + ' for media: ' + video.id);
-            PodcastMedia.update(video.id, { url: file.link_secure });
+            PodcastMedia.update(video.id, { url: file.link_secure }, function podcastUpdated(err, updatedMedia) {
+              if (err)
+                return sails.log.error(err);
+
+              sails.log('Updated Vimeo URL to ' + file.link_secure + ' for media: ' + video.id);
+            });
           }
         });
       })
