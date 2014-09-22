@@ -200,68 +200,43 @@ module.exports = {
   },
 
   show: function (req, res) {
-    Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media').exec(function (err, podcast) {
       if (err) return next(err);
 
-      Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
-        if (err) return next(err);
+      // Verify that the user has access to view this page.
+      if (podcast.ministry.id != req.session.Ministry.id)
+        return res.forbidden('You must be a member of the ministry to edit this podcast.');
 
-        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
-          if (err) return next(err);
+      // If this is an audio podcast show the upload form.
+      if (podcast.type === 1) {
+        podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
+      }
 
-          if (podcast.type === 1) {
-            podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
-          }
+      // Generate statistics data for the analytics graph.
+      podcast.statisticsGraph = Analytics.generateGraphData('podcast', req.param('id'), 6);
 
-          podcast.statisticsGraph = Analytics.generateGraphData('podcast', req.param('id'), 6);
-
-          // DEPRECATED: Remove once old data has been migrated to new storage.
-          if (!podcast.statisticsGraph && podcast.statistics && Object.keys(podcast.statistics).length >= 4) {
-            var podcastGraph = new Array();
-            if (Object.keys(podcast.statistics).length >= 6) {
-              podcastGraph.push(podcast.statistics[moment().subtract('week', 6).week()]);
-              podcastGraph.push(podcast.statistics[moment().subtract('week', 5).week()]);
-            }
-            podcastGraph.push(podcast.statistics[moment().subtract('week', 4).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('week', 3).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('week', 2).week()]);
-            podcastGraph.push(podcast.statistics[moment().subtract('week', 1).week()]);
-            podcast.statisticsGraph = podcastGraph.filter(Number);
-          }
-          // END DEPRECATED.
-
-          res.view({
-            podcast: podcast,
-            ministry: ministry,
-            podcastMedia: media
-          });
-        });
-      });
+      res.view({
+        podcast: podcast,
+        ministry: podcast.ministry,
+        podcastMedia: podcast.media
+      });      
     });
   },
 
   feed: function (req, res) {
-    Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media').exec(function (err, podcast) {
       if (err) res.send(err, 500);
       if (!podcast) res.send(404);
 
-      Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
-        if (err) res.send(err, 500);
+      Analytics.registerHit('podcast', req.param('id'));
 
-        PodcastMedia.find().sort('date desc').where({podcast: podcast.id}).exec(function(err, media) {
-          if (err) res.send(err, 500);
+      res.header('Content-Type', 'text/xml; charset=UTF-8');
 
-          Analytics.registerHit('podcast', req.param('id'));
-
-          res.header('Content-Type', 'text/xml; charset=UTF-8');
-
-          res.view({
-            layout: 'rss',
-            podcast: podcast,
-            ministry: ministry,
-            podcastMedia: media
-          });
-        });
+      res.view({
+        layout: 'rss',
+        podcast: podcast,
+        ministry: podcast.ministry,
+        podcastMedia: podcast.media
       });
     });
   },
