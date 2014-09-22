@@ -21,13 +21,15 @@ var app = angular.module('app', [
 .controller('AppController', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
 
   $scope.redirect = '';
-  $rootScope.user = {};
-  $rootScope.ministry = {};
+  $rootScope.user = null;
+  $rootScope.ministry = null;
+  $rootScope.authCheck = false;
 
   $scope.$on('sailsSocket:connect', function (ev, data) {
     sailsSocket.get('/session/current', {}, function (response, status) {
       $rootScope.user = response.user;
       $rootScope.ministry = response.ministry;
+      $rootScope.authCheck = true;
     });
   });
 
