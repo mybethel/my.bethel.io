@@ -45,18 +45,8 @@ module.exports.routes = {
     action: 'welcome'
   },
 
-  '/podcasts': {
-    controller: 'podcast',
-    action: 'list'
-  },
-
   '/accounts': {
     controller: 'service',
-    action: 'list'
-  },
-
-  '/locations': {
-    controller: 'location',
     action: 'list'
   },
 

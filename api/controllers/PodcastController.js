@@ -35,12 +35,9 @@ function processMediaImport(id, media, ministry) {
 module.exports = {
 
   list: function (req, res) {
-    Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
+    Podcast.find({ministry: req.session.Ministry.id}).exec(function (err, podcasts) {
       if (err) return next(err);
-
-      res.view({
-        podcasts: podcasts
-      });
+      res.send(200, podcasts);
     });
   },
 
@@ -249,7 +246,10 @@ module.exports = {
 
       if (!stat) return res.send(200, {subscribers: 0});
 
-      return res.send(200, {subscribers: Math.round(stat.count/7)});
+      return res.send(200, {
+        podcast: req.param('id'),
+        subscribers: Math.round(stat.count/7)
+      });
     });
   },
 

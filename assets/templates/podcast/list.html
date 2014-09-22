@@ -1,0 +1,38 @@
+<div class="dash-panel-full">
+  <h1>Podcasting <a href="/podcast/new" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> New Podcast</a></h1>
+  <table class="table table-list podcast">
+    <thead>
+      <tr>
+        <th colspan="2"></th>
+        <th class="type text-muted">Type</th>
+        <th class="subscribers text-muted">Subscribers</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="podcast in podcasts">
+        <td class="thumb">
+          <img class="image-style-thumbnail" typeof="foaf:Image" src="http://bethel.api.pixtulate.com/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?w=100&h=100" width="100" height="100" alt="">
+        </td>
+        <td class="title"><a ng-href="/podcast/show/{{ podcast.id }}">{{ podcast.name }}</a></td>
+        <td class="type"><span ng-if="podcast.type == 1">Audio</span><span ng-if="podcast.type == 2">Video</span></td>
+        <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days.">{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }}</span></h1></td>
+        <td class="operations">
+          <div class="btn-group">
+            <a ng-href="/podcast/show/{{ podcast.id }}" class="btn btn-sm btn-default">Manage</a>
+            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+              <li><a ng-href="/podcast/edit/{{ podcast.id }}">Edit podcast</a></li>
+              <li><a ng-href="/podcast/show/{{ podcast.id }}">Manage media</a></li>
+              <li class="divider"></li>
+              <li><a ng-href="/podcast/delete/{{ podcast.id }}" data-link="popover">Remove podcast</a></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

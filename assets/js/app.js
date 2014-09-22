@@ -10,6 +10,7 @@ var app = angular.module('Bethel', [
   'sails.io',
   'ui.router',
   'Bethel.dashboard',
+  'Bethel.podcast'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -36,7 +37,7 @@ var app = angular.module('Bethel', [
   // Main navigation bar links.
   $scope.navLinks = [
     { title: 'Dashboard', icon: 'tachometer', url: '/' },
-    { title: 'Podcasts', icon: 'microphone', url: '/podcasts' },
+    { title: 'Podcasting', icon: 'microphone', url: '/#/podcasts' },
     { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
     { title: 'Volunteers', icon: 'users', url: '/' },
     { title: 'Live Streaming', icon: 'video-camera', url: '/' },
