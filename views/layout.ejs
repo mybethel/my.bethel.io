@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<!--[if lt IE 7]>      <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--><html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js"><!--<![endif]-->
   <head>
+    <meta charset="utf-8" />
+    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bethel</title>
-
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/animate.css">
     <link rel="stylesheet" href="/styles/app.css">
@@ -22,7 +24,7 @@
     <!--STYLES END-->
   </head>
 
-  <body ng-controller="AppController">
+  <body>
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -115,12 +117,9 @@
 
     <!--SCRIPTS-->
     <script src="/js/app.js"></script>
-    <script src="/js/controllers/dashboard/accountsController.js"></script>
-    <script src="/js/controllers/dashboard/dashboardController.js"></script>
-    <script src="/js/controllers/dashboard/locationController.js"></script>
-    <script src="/js/controllers/dashboard/locationFormController.js"></script>
     <script src="/js/controllers/loginController.js"></script>
     <script src="/js/controllers/teamController.js"></script>
+    <script src="/js/dashboard.js"></script>
     <script src="/js/podcast.js"></script>
     <script src="/js/services/angular-sails.io.js"></script>
     <script src="/js/services/http-auth-interceptor.js"></script>

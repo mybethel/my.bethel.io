@@ -5,7 +5,7 @@
  *
  * @type {angular.Module}
  */
-var app = angular.module('app', [
+var app = angular.module('Bethel', [
   'http-auth-interceptor',
   'sails.io',
   'ui.router',
@@ -18,7 +18,7 @@ var app = angular.module('app', [
 
 })
 
-.controller('AppController', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
+.controller('AppCtrl', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
 
   $scope.redirect = '';
   $rootScope.user = null;
