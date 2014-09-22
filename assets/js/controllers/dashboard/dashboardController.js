@@ -1,4 +1,41 @@
-app.controller('DashboardController', function ($scope, sailsSocket, $log, filterFilter) {
+angular.module('Bethel.dashboard', ['ui.router', 'google-maps'])
+
+.config(function ($stateProvider, $urlRouterProvider) {
+
+  $stateProvider
+    .state('dashboard', {
+      url: '/dashboard',
+      templateUrl: 'templates/dashboard/dashboard.html',
+      controller: 'DashboardController'
+    })
+    .state('dashboard.location', {
+      url: '/locations',
+      templateUrl: 'templates/dashboard/locations.html',
+      controller: 'LocationController'
+    })
+    .state('dashboard.location.edit', {
+      url: '/edit/:locationId',
+      templateUrl: 'templates/dashboard/locations.form.html',
+      controller: 'LocationFormController'
+    })
+    .state('dashboard.location.new', {
+      url: '/new',
+      templateUrl: 'templates/dashboard/locations.form.html',
+      controller: 'LocationFormController'
+    })
+    .state('dashboard.billing', {
+      url: '/billing',
+      templateUrl: 'templates/dashboard/billing.html'
+    })
+    .state('dashboard.accounts', {
+      url: '/accounts',
+      templateUrl: 'templates/dashboard/accounts.html',
+      controller: 'AccountsController'
+    });
+
+})
+
+.controller('DashboardController', function ($scope, sailsSocket, $log, filterFilter) {
 
   $scope.map = {
     control: {},
@@ -57,6 +94,11 @@ app.controller('DashboardController', function ($scope, sailsSocket, $log, filte
   $scope.init();
 
   $scope.$on('sailsSocket:connect', function (ev, data) {
+    $scope.init();
+  });
+
+  // Notification that login was sucessful. 
+  $scope.$on('event:auth-loginConfirmed', function() {
     $scope.init();
   });
 

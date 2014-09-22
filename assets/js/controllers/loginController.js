@@ -8,10 +8,6 @@ app.controller('LoginController', function ($scope, sailsSocket, $log, $state, f
 
   $scope.error = {};
 
-  if ($scope.$parent.user.id) {
-    $state.go('dashboard');
-  } 
-
   sailsSocket.get('/csrfToken', {}, function (response, status) {
     if (!response.error)
       $scope.credentials._csrf = response._csrf;

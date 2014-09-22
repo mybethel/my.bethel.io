@@ -20,11 +20,6 @@
     <link rel="stylesheet" href="/styles/podcasts.css">
     <link rel="stylesheet" href="/styles/theme.css">
     <!--STYLES END-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg&amp;sensor=false"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
   </head>
 
   <body ng-controller="AppController">
@@ -96,58 +91,40 @@
     
     <!--TEMPLATES END-->
 
-
-    <!--
-
-      Client-side Javascript
-      ========================
-
-      You can always bring in JS files manually with `script` tags, or asynchronously
-      on the client using a solution like AMD (RequireJS).  Or, if you like, you can 
-      take advantage of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-      By default, filesin your `assets/linker/js` folder are included here
-      automatically (between SCRIPTS and SCRIPTS END).  Both JavaScript (.js) and
-      CoffeeScript (.coffee) are supported. In production, your scripts will be minified
-      and concatenated into a single file.
-      
-      To customize any part of the built-in behavior, just edit your Gruntfile.
-      For example, here are a few things you could do:
-          
-          + Change the order of your scripts
-          + Import scripts from other directories
-          + Use a different preprocessor, like TypeScript
-
-    -->
+    <!--LIBRARIES-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/lodash.min.js"></script>
+    <script src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg&amp;sensor=false"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/angular-google-maps.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap-datepicker.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap-markdown.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.fileupload.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.form.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.iframe-transport.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.sparkline.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.typeahead.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.validate.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/markdown.js"></script>
+    <script src="//s3.amazonaws.com/static.bethel.io/js/to-markdown.js"></script>
+    <!--LIBRARIES END-->
 
     <!--SCRIPTS-->
-    <script src="/js/socket.io.js"></script>
-    <script src="/js/angular-sails.io.js"></script>
-    <script src="/js/lodash.min.js"></script>
     <script src="/js/app.js"></script>
-    <script src="/js/jquery.fileupload.js"></script>
-    <script src="/js/jquery.form.js"></script>
-    <script src="/js/jquery.iframe-transport.js"></script>
-    <script src="/js/jquery.sparkline.js"></script>
-    <script src="/js/jquery.typeahead.js"></script>
-    <script src="/js/jquery.validate.js"></script>
-    <script src="/js/angular-google-maps.js"></script>
-    <script src="/js/bootstrap-datepicker.js"></script>
-    <script src="/js/bootstrap-markdown.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/color-thief.js"></script>
-    <script src="/js/common/http-auth-interceptor.js"></script>
-    <script src="/js/controllers/appController.js"></script>
     <script src="/js/controllers/dashboard/accountsController.js"></script>
     <script src="/js/controllers/dashboard/dashboardController.js"></script>
     <script src="/js/controllers/dashboard/locationController.js"></script>
     <script src="/js/controllers/dashboard/locationFormController.js"></script>
     <script src="/js/controllers/loginController.js"></script>
     <script src="/js/controllers/teamController.js"></script>
-    <script src="/js/markdown.js"></script>
     <script src="/js/podcast.js"></script>
+    <script src="/js/services/angular-sails.io.js"></script>
+    <script src="/js/services/http-auth-interceptor.js"></script>
     <script src="/js/services/sailsSocket.js"></script>
-    <script src="/js/to-markdown.js"></script>
     <script src="/js/ui.js"></script>
     <script src="/js/uploader.js"></script>
     <script src="/js/user-validate.js"></script>
