@@ -197,7 +197,7 @@ module.exports = {
   },
 
   show: function (req, res) {
-    Podcast.findOne(req.param('id')).populate('ministry').populate('media').exec(function (err, podcast) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { sort: { date: 0 } }).exec(function (err, podcast) {
       if (err) return next(err);
 
       // Verify that the user has access to view this page.
@@ -221,7 +221,7 @@ module.exports = {
   },
 
   feed: function (req, res) {
-    Podcast.findOne(req.param('id')).populate('ministry').populate('media').exec(function (err, podcast) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { sort: { date: 0 } }).exec(function (err, podcast) {
       if (err) res.send(err, 500);
       if (!podcast) res.send(404);
 
@@ -237,7 +237,7 @@ module.exports = {
       });
     });
   },
-	
+
   subscribers: function(req, res) {
     var statsDate = Number(moment().subtract('week', 1).format('GGGGWW'));
 
