@@ -37,7 +37,7 @@ module.exports = {
   list: function (req, res) {
     Podcast.find({ministry: req.session.Ministry.id}).exec(function (err, podcasts) {
       if (err) return next(err);
-      res.send(200, podcasts);
+      res.send(podcasts);
     });
   },
 
@@ -206,7 +206,7 @@ module.exports = {
 
       // If this is an audio podcast show the upload form.
       if (podcast.type === 1) {
-        podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id);
+        podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry.id + '/' + podcast.id);
       }
 
       // Generate statistics data for the analytics graph.
