@@ -1,44 +1,42 @@
-<div ng-controller="DashboardController">
-  <div class="dash-panel-left small">
-    <div id="statistics-panel" class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Statistics</h3>
-      </div>
-      <div class="panel-body">
-        <div class="row podcast-row" ng-show="stats.podcastChange">
-          <div class="col-sm-4">
-            <div id="podcast-subscribers"></div>
-          </div>
-          <div class="col-sm-8">
-            <h3><span class="change-count">{{ stats.podcastChange | number : 2 }}</span>% <i class="fa fa-arrow-up pull-right text-success"></i><br /><small><span class="change-type">increase</span> in podcast subscribers</small></h3>
-          </div>
-        </div>
-        <div class="row storage-row" ng-show="stats.storage">
-          <div class="col-sm-8 col-sm-offset-4">
-            <h3><span class="count">{{ stats.storage | number : 2 }}</span>Gb<br /><small>total storage used</small></h3>
-          </div>
-        </div>
-        <h5 class="text-muted no-stats" ng-hide="stats.storage || stats.podcastChange">Check back later for statistics...</h5>
-      </div>
+<div class="dash-panel-left small">
+  <div id="statistics-panel" class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Statistics</h3>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">Ministry Locations <a ui-sref=".location" class="btn btn-panel">Edit</a></h3>
+    <div class="panel-body">
+      <div class="row podcast-row">
+        <div class="col-sm-4">
+          <rickshaw rickshaw-options="chart.options" rickshaw-series="chart.draw"></rickshaw>
+        </div>
+        <div class="col-sm-8">
+          <h3><span class="change-count" data-ng-bind="stats.podcastChange | number : 2"></span>% <i class="fa pull-right" data-ng-show="stats.podcastChange" data-ng-class="stats.podcastChange > 0 ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i><br /><small><span class="change-type" data-ng-bind="!stats.podcastChange ? 'no change' : (stats.podcastChange > 0 ? 'increase' : 'decrease')"></span> in podcast subscribers</small></h3>
+        </div>
       </div>
-      <div class="panel-body full">
-        <google-map center="map.center" zoom="map.zoom" pan="true" draggable="false" options="map.options" control="map.control">
-          <markers models="markers" icon="'icon'" coords="'position'" fit="true" doRebuildAll="true"></markers>
-        </google-map>
+      <div class="row storage-row" data-ng-show="stats.storage">
+        <div class="col-sm-8 col-sm-offset-4">
+          <h3><span class="count">{{ stats.storage | number : 2 }}</span>Gb<br /><small>total storage used</small></h3>
+        </div>
       </div>
+      <h5 class="text-muted no-stats" data-ng-hide="stats.storage || stats.podcastChange">Check back later for statistics...</h5>
     </div>
-    <a ui-sref=".accounts" class="btn btn-default btn-lg btn-block">Connected Accounts</a>
-    <a ui-sref=".billing" class="btn btn-default btn-lg btn-block">Subscription and Billing</a>
   </div>
-  <div class="dash-panel-right large">
-    <div ui-view class="content">
-      <h1>Welcome to Bethel</h1>
-      <p>Your ongoing feedback and bug reports are appreciated as we build the first open source digital platform designed for the church. Please let us know how we can improve your experience or new features that would make your life easier!</p>
-      <a href="https://mybethel.uservoice.com/" class="btn btn-lg btn-block" target="_blank">Submit Feedback</a>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Ministry Locations <a ui-sref=".location" class="btn btn-panel">Edit</a></h3>
     </div>
+    <div class="panel-body full">
+      <google-map center="map.center" zoom="map.zoom" pan="true" draggable="false" options="map.options" control="map.control">
+        <markers models="markers" icon="'icon'" coords="'position'" fit="true" doRebuildAll="true"></markers>
+      </google-map>
+    </div>
+  </div>
+  <a ui-sref=".accounts" class="btn btn-default btn-lg btn-block">Connected Accounts</a>
+  <a ui-sref=".billing" class="btn btn-default btn-lg btn-block">Subscription and Billing</a>
+</div>
+<div class="dash-panel-right large">
+  <div ui-view class="content">
+    <h1>Welcome to Bethel</h1>
+    <p>Your ongoing feedback and bug reports are appreciated as we build the first open source digital platform designed for the church. Please let us know how we can improve your experience or new features that would make your life easier!</p>
+    <a href="https://mybethel.uservoice.com/" class="btn btn-lg btn-block" target="_blank">Submit Feedback</a>
   </div>
 </div>

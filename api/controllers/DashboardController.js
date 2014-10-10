@@ -5,8 +5,6 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var moment = require('moment');
-
 module.exports = {
 	
   dashboard: function (req, res) {
@@ -29,21 +27,21 @@ module.exports = {
       Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
         if (err) res.send(err, 500);
 
-        var statistics = {};
+        var statistics = [];
 
         weeklyStats.forEach(function(stat) {
-          statistics[stat.date] = statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count;
+          statistics.push(statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count);
         });
 
-        var currentWeekAverage = statistics[moment().subtract('week', 1).format('GGGGWW')] / 7 || 0,
-            lastWeekAverage = statistics[moment().subtract('week', 2).format('GGGGWW')] / 7 || 0,
+        var currentWeekAverage = statistics[statistics.length - 1] / 7 || 0,
+            lastWeekAverage = statistics[statistics.length - 2] / 7 || 0,
             change = ((currentWeekAverage / lastWeekAverage) - 1) * 100;
 
         res.send({
           podcast: statistics,
           podcastChange: change,
           storage: storageBytes / 1073741824 || 0
-        }, 200);
+        });
       });
     });
   }

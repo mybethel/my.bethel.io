@@ -1,4 +1,4 @@
-angular.module('Bethel.dashboard', ['ui.router', 'google-maps'])
+angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-rickshaw'])
 
 .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -59,6 +59,18 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps'])
   $scope.locations = [];
   $scope.markers = [];
 
+  $scope.chart = {
+    options: {
+      renderer: 'line',
+      width: 98,
+      height: 73
+    },
+    draw: [{
+      color: '#106982',
+      data: [{x: 0, y: 10},{x: 1, y: 15}]
+    }]
+  }
+
   $scope.init = function() {
     sailsSocket.get('/dashboard/stats', {}, function (response, status) {
     if (!response.error)
@@ -78,7 +90,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps'])
   // Certain data is extracted from locations to build markers.
   $scope.$watch('locations', function() {
     $scope.markers = [];
-    $scope.locations.forEach(function(location) {
+    $scope.locations.forEach(function (location) {
       $scope.markers.push({
         id: location.id,
         position: {
@@ -90,6 +102,23 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps'])
       });
     });
   }, true);
+
+  $scope.$watch('stats', function() {
+    if (typeof $scope.stats.podcast === 'undefined')
+      return;
+
+    var chartData = [];
+
+    $scope.stats.podcast.forEach(function (stat, i) {
+      chartData.push({x: i, y: stat});
+      i++;
+    });
+
+    $scope.chart.draw = [{
+      color: '#106982',
+      data: chartData
+    }];
+  });
 
   $scope.init();
 

@@ -1,5 +1,5 @@
 <div id="focus" ng-hide="user">
-  <div id="login-signup-wrapper" ng-show="authCheck" ng-controller="LoginController">
+  <div id="login-signup-wrapper" ng-show="authCheck == true" ng-controller="LoginController" class="ng-hide">
     <img src="https://s3.amazonaws.com/static.bethel.io/images/logo.png" class="logo" />
     <h2 class="title" id="page-title">Welcome back!</h2>
     <form class="user-form" ng-submit="login(credentials)">
