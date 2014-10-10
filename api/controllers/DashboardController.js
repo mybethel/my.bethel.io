@@ -29,7 +29,8 @@ module.exports = {
 
         var statistics = [];
 
-        weeklyStats.forEach(function(stat) {
+        // Select up to the last 12 weeks of stats for trending.
+        weeklyStats.slice(-12).forEach(function(stat) {
           statistics.push(statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count);
         });
 
