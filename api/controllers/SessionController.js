@@ -46,10 +46,13 @@ module.exports = {
 
   current: function(req, res, next) {
     if (req.session.User && req.session.Ministry) {
-      res.send(200, {
-        user: req.session.User,
-        ministry: req.session.Ministry,
-      });
+      User.findOne(req.session.User.id, function (err, user) {
+        res.send({
+          user: user,
+          ministry: req.session.Ministry,
+          isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
+        });
+      })
     } else {
       res.send(401, { error: 'Please login at http://my.bethel.io/login' });
     }

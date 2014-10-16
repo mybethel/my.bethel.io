@@ -11,7 +11,7 @@ module.exports = {
   schema: true,
 
   attributes: {
-  	
+
     name: {
       type: 'string'
     },
@@ -35,12 +35,26 @@ module.exports = {
       type: 'string'
     },
 
+    roles: {
+      type: 'array'
+    },
+
+    hasRole: function(roleName) {
+
+      if (!this.roles || this.roles.indexOf(roleName) == -1) {
+          return false;
+      }
+
+      return true;
+
+    },
+
     toJSON: function() {
       var obj = this.toObject();
       delete obj.password;
       return obj;
-    },
-    
+    }
+
   },
 
   beforeCreate: function(values, next) {

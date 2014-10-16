@@ -20,7 +20,7 @@ module.exports = {
   login: function (req, res) {
     res.view();
   },
-    
+
   new: function (req, res) {
     res.view();
   },
@@ -79,7 +79,10 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
-  _config: {}
+  _config: {
+    actions: false,
+    shortcuts: false,
+    rest: false
+  }
 
-  
 };
