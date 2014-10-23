@@ -234,6 +234,10 @@ section.page-wrap .dash-panel-left.small {
   width: 40%;
 }
 
+section.page-wrap .dash-panel-left.x-small {
+  width: 25%;
+}
+
 section.page-wrap .dash-panel-right {
   position: absolute;
   padding-top: 51px;
@@ -247,6 +251,10 @@ section.page-wrap .dash-panel-right {
 
 section.page-wrap .dash-panel-right.large {
   width: 60%;
+}
+
+section.page-wrap .dash-panel-right.x-large {
+  width: 75%;
 }
 
 section.page-wrap .dash-panel-right .content {

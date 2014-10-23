@@ -10,6 +10,7 @@ var app = angular.module('Bethel', [
   'sails.io',
   'ui.router',
   'Bethel.dashboard',
+  'Bethel.media',
   'Bethel.podcast',
   'Bethel.staff'
 ])
@@ -49,6 +50,7 @@ var app = angular.module('Bethel', [
   $scope.navLinks.push.apply($scope.navLinks, [
     { title: 'Dashboard', icon: 'tachometer', url: '/' },
     { title: 'Podcasting', icon: 'microphone', url: '/#/podcasts' },
+    { title: 'Media', icon: 'youtube-play', url: '/#/media' },
     { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
     { title: 'Volunteers', icon: 'users', url: '/' },
     { title: 'Live Streaming', icon: 'video-camera', url: '/' },
