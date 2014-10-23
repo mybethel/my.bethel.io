@@ -28,6 +28,12 @@ section.page-wrap .dash-panel-left.sidebar-files {
     }
     .fa-stack-2x {
       top: -1px;
+      &.bg {
+        background-size: cover;
+        background-position: center;
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+      }
     }
   }
   .dim {
@@ -47,7 +53,7 @@ section.page-wrap .dash-panel-right.thumbnails {
     text-align: center;
     font-size: 12px;
     padding: 0;
-    border-color: #222;
+    border: 0;
     overflow: hidden;
     span {
       line-height: 25px;
