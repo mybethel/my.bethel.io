@@ -47,6 +47,24 @@ section.page-wrap .dash-panel-left.sidebar-files {
 }
 
 section.page-wrap .dash-panel-right.thumbnails {
+  .panel-heading {
+    padding: 13px 20px;
+    a {
+      font-size: 24px;
+      color: #999;
+      &:hover {
+        text-decoration: none;
+        color: #FFF;
+      }
+    }
+    h2 {
+      font-size: 1.5em;
+      a {
+        font-size: 18px;
+        padding-right: 3px;
+      }
+    }
+  }
   .thumbnail {
     background: #222;
     color: #999;
@@ -55,11 +73,26 @@ section.page-wrap .dash-panel-right.thumbnails {
     padding: 0;
     border: 0;
     overflow: hidden;
+    opacity: 0.7;
+    font-weight: bold;
     span {
       line-height: 25px;
     }
     &:hover {
       text-decoration: none;
+      opacity: 1.0;
+    }
+    &.dropzone {
+      border: 4px dashed #999;
+      border-radius: 20px;
+      height: 118px;
+      background: none;
+      i {
+        font-size: 65px;
+        opacity: 0.2;
+        position: relative;
+        top: 25px;
+      }
     }
   }
 }
