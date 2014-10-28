@@ -8,7 +8,7 @@
  */
 module.exports = function(req, res, next) {
 
-  if (req.session.User && req.session.User.hasRole('ROLE_SUPER_ADMIN')) {
+  if (req.session.User && req.session.User.roles && req.session.isAdmin) {
     return next();
   }
 

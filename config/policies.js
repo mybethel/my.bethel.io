@@ -19,7 +19,7 @@ module.exports.policies = {
   '*': ['flash', 'sessionAuth', 'completeRegistration', 'ajaxLayout'],
 
   user: {
-    'list': ['sessionAuth', 'platformStaff'],
+    '*': ['sessionAuth', 'platformStaff'],
   	'login': 'flash',
   	'new': 'flash',
   	'create': 'flash',

@@ -1,5 +1,5 @@
 /**
- * SessionController.js 
+ * SessionController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -25,6 +25,10 @@ module.exports = {
 
         req.session.authenticated = true;
         req.session.User = user;
+
+        if (user.roles && user.roles.indexOf("ROLE_SUPER_ADMIN") > -1) {
+          req.session.isAdmin = true;
+        }
 
         var ministryId = user.ministry;
         if (ministryId) {
@@ -63,5 +67,5 @@ module.exports = {
 
     return res.redirect('/');
   }
-	
+
 };

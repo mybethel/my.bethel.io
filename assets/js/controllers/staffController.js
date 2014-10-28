@@ -27,7 +27,4 @@ angular.module('Bethel.staff', ['ui.router'])
 
   $scope.init();
 
-  // $scope.$on('sailsSocket:connect', function() { $scope.init() });
-  // $scope.$on('event:auth-loginConfirmed', function() { $scope.init() });
-
 });
