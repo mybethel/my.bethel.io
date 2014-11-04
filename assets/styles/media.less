@@ -49,19 +49,29 @@ section.page-wrap .dash-panel-left.sidebar-files {
 section.page-wrap .dash-panel-right.thumbnails {
   .panel-heading {
     padding: 14px 20px 15px;
-    a {
-      font-size: 24px;
-      color: #999;
-      &:hover {
-        text-decoration: none;
-        color: #FFF;
-      }
+    i {
+      position: absolute;
+      top: 17px;
+      right: 27px;
+      font-size: 20px;
+      color: #444;
     }
     h2 {
       font-size: 1.5em;
       a {
         font-size: 18px;
         padding-right: 3px;
+      }
+    }
+    input {
+      background: transparent;
+      border-color: #444;
+      margin-top: -3px;
+      width: 250px;
+      &:focus {
+        box-shadow: none;
+        border-color: #106982;
+        color: white;
       }
     }
   }
