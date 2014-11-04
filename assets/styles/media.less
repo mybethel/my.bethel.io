@@ -1,21 +1,21 @@
 section.page-wrap .dash-panel-left.sidebar-files {
   padding: 0;
-  font-size: 2rem;
+  font-size: 1.8rem;
   li {
     margin-top: 0;
-    small {
-      position: absolute;
-      top: 17px;
-      right: 10px;
-      color: #666;
+    border-bottom: 1px solid #EEE;
+    white-space: nowrap;
+    overflow: hidden;
+    &.button {
+      padding: 10px 10px 9px;
     }
     &.active a {
       background: #EEE;
+      border-right: 3px solid #1591B5;
     }
   }
   a {
-    padding: 11px 15px 6px;
-    border-bottom: 1px solid #EEE;
+    padding: 11px 15px 5px;
     border-radius: 0;
     span.label {
       color: #555;
@@ -48,7 +48,7 @@ section.page-wrap .dash-panel-left.sidebar-files {
 
 section.page-wrap .dash-panel-right.thumbnails {
   .panel-heading {
-    padding: 13px 20px;
+    padding: 14px 20px 15px;
     a {
       font-size: 24px;
       color: #999;
@@ -66,33 +66,34 @@ section.page-wrap .dash-panel-right.thumbnails {
     }
   }
   .thumbnail {
+    position: relative;
     background: #222;
     color: #999;
-    text-align: center;
-    font-size: 12px;
+    font-size: 13px;
     padding: 0;
     border: 0;
     overflow: hidden;
     opacity: 0.7;
     font-weight: bold;
-    span {
-      line-height: 25px;
+    border-radius: 0;
+    span.videoMeta {
+      line-height: 30px;
+      padding: 0 8px;
+    }
+    span.videoTime {
+      font-size: 11px;
+      background: black;
+      position: absolute;
+      top: 4px;
+      right: 3px;
+      padding: 0 2px;
+      opacity: 0.8;
+      color: white;
+      font-weight: normal;
     }
     &:hover {
       text-decoration: none;
       opacity: 1.0;
-    }
-    &.dropzone {
-      border: 4px dashed #999;
-      border-radius: 20px;
-      height: 118px;
-      background: none;
-      i {
-        font-size: 65px;
-        opacity: 0.2;
-        position: relative;
-        top: 25px;
-      }
     }
   }
 }

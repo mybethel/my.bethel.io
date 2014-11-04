@@ -85,7 +85,7 @@ body {
 }
 
 ul.nav-main {
-  padding-top: 51px;
+  padding-top: 52px;
   position: absolute;
   width: 200px;
   z-index: 1;
@@ -235,7 +235,7 @@ section.page-wrap .dash-panel-left.small {
 }
 
 section.page-wrap .dash-panel-left.x-small {
-  width: 25%;
+  width: 20%;
 }
 
 section.page-wrap .dash-panel-right {
@@ -254,7 +254,7 @@ section.page-wrap .dash-panel-right.large {
 }
 
 section.page-wrap .dash-panel-right.x-large {
-  width: 75%;
+  width: 80%;
 }
 
 section.page-wrap .dash-panel-right .content {
