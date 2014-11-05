@@ -11,7 +11,8 @@ var app = angular.module('Bethel', [
   'ui.router',
   'Bethel.dashboard',
   'Bethel.podcast',
-  'Bethel.staff'
+  'Bethel.staff',
+  'Bethel.userManagement'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -28,7 +29,7 @@ var app = angular.module('Bethel', [
   $rootScope.ministry = null;
   $rootScope.authCheck = false;
 
-  $scope.$on('sailsSocket:connect', function (ev, data) {
+  $scope.updateSession = function(ev, data) {
     sailsSocket.get('/session/current', {}, function (response, status) {
       $rootScope.user = response.user;
       $rootScope.ministry = response.ministry;
@@ -39,8 +40,11 @@ var app = angular.module('Bethel', [
         $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
       };
     });
+  };
 
-  });
+  // Update current session on load or login.
+  $scope.$on('sailsSocket:connect', $scope.updateSession);
+  $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
   // Main navigation bar links.
   $scope.navLinks.push.apply($scope.navLinks, [
@@ -59,16 +63,6 @@ var app = angular.module('Bethel', [
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
-
-  // Notification that login was sucessful. 
-  $scope.$on('event:auth-loginConfirmed', function() {
-
-    sailsSocket.get('/session/current', {}, function (response, status) {
-      $rootScope.user = response.user;
-      $rootScope.ministry = response.ministry;
-    });
-
-  });
 
 });
 

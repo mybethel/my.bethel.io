@@ -74,13 +74,16 @@ module.exports = {
     res.view({user: req.session.User});
   },
 
+  showUser: function (req, res) {
+    res.send(200);
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
   _config: {
-    actions: false,
+    // actions: false,
     shortcuts: false,
     // rest: false
   }

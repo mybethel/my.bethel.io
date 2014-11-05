@@ -6,12 +6,12 @@ angular.module('Bethel.staff', ['ui.router'])
     .state('staff', {
       url: '/staff',
       templateUrl: 'templates/staff/staff.html',
-      controller: 'StaffUsersController'
+      controller: 'StaffController'
     });
 
 })
 
-.controller('StaffUsersController', function ($rootScope, $scope, sailsSocket, $location) {
+.controller('StaffController', function ($rootScope, $scope, sailsSocket, $location) {
 
   $rootScope.$watch('isAdmin', function() {
     if (typeof $rootScope.isAdmin != 'undefined' && $rootScope.isAdmin == false) {
@@ -28,3 +28,5 @@ angular.module('Bethel.staff', ['ui.router'])
   $scope.init();
 
 });
+
+
