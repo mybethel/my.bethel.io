@@ -10,7 +10,9 @@ var app = angular.module('Bethel', [
   'sails.io',
   'ui.router',
   'Bethel.dashboard',
-  'Bethel.podcast'
+  'Bethel.podcast',
+  'Bethel.staff',
+  'Bethel.userManagement'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -22,20 +24,30 @@ var app = angular.module('Bethel', [
 .controller('AppCtrl', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
 
   $scope.redirect = '';
+  $scope.navLinks = [];
   $rootScope.user = null;
   $rootScope.ministry = null;
   $rootScope.authCheck = false;
 
-  $scope.$on('sailsSocket:connect', function (ev, data) {
+  $scope.updateSession = function(ev, data) {
     sailsSocket.get('/session/current', {}, function (response, status) {
       $rootScope.user = response.user;
       $rootScope.ministry = response.ministry;
+      $rootScope.isAdmin = response.isAdmin;
       $rootScope.authCheck = true;
+
+      if ($rootScope.isAdmin) {
+        $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
+      };
     });
-  });
+  };
+
+  // Update current session on load or login.
+  $scope.$on('sailsSocket:connect', $scope.updateSession);
+  $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
   // Main navigation bar links.
-  $scope.navLinks = [
+  $scope.navLinks.push.apply($scope.navLinks, [
     { title: 'Dashboard', icon: 'tachometer', url: '/' },
     { title: 'Podcasting', icon: 'microphone', url: '/#/podcasts' },
     { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
@@ -43,7 +55,7 @@ var app = angular.module('Bethel', [
     { title: 'Live Streaming', icon: 'video-camera', url: '/' },
     { title: 'Giving', icon: 'money', url: '/' },
     { title: 'Social Media', icon: 'thumbs-up', url: '/' }
-  ];
+  ]);
 
   // Ministry dropdown menu.
   $scope.ministryLinks = [
@@ -51,16 +63,6 @@ var app = angular.module('Bethel', [
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
-
-  // Notification that login was sucessful. 
-  $scope.$on('event:auth-loginConfirmed', function() {
-
-    sailsSocket.get('/session/current', {}, function (response, status) {
-      $rootScope.user = response.user;
-      $rootScope.ministry = response.ministry;
-    });
-
-  });
 
 });
 
