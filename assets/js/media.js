@@ -10,11 +10,6 @@ angular.module('Bethel.media', [
       url: '/media',
       templateUrl: 'templates/media/index.html',
       controller: 'MediaListCtrl'
-    })
-    .state('media.upload', {
-      url: '/upload',
-      templateUrl: 'templates/media/upload.html',
-      controller: 'MediaUploadCtrl'
     });
 
 })
@@ -36,15 +31,21 @@ angular.module('Bethel.media', [
     $scope.init();
   });
 
+  // Called when any media is uploaded, modified or deleted.
+  // @todo: Update only the record in the message rather than the entire scope.
   io.socket.on('media', function (msg) { $scope.init(); });
 
+  // Triggered when a file is chosen for upload.
+  // On supported browsers, multiple files may be chosen.
   $scope.onFileSelect = function ($files) {
     for (var i = 0; i < $files.length; i++) {
-      $scope.uploadFile($files[i]);
+      $scope.createMedia($files[i]);
     }
   };
 
-  $scope.uploadFile = function (file) {
+  // For each file uploaded, a Media object is first created.
+  // This ensures that each file is tracked before the file exists in S3.
+  $scope.createMedia = function (file) {
 
     var ext = file.name.split('.').pop(),
         name = file.name.replace('.' + ext, '');
@@ -55,24 +56,34 @@ angular.module('Bethel.media', [
       ministry: $rootScope.ministry.id,
       _csrf: $rootScope._csrf
     }, function (data) {
-      var mediaId = data.id;
-      $upload.upload({
-        url: $scope.upload.action,
-        method: 'POST',
-        data: {
-          key: $scope.upload.bucket + '/' + data.id + '/original.' + ext,
-          AWSAccessKeyId: $scope.upload.key, 
-          acl: 'public-read',
-          policy: $scope.upload.policy,
-          signature: $scope.upload.signature,
-        },
-        file: file,
-      }).progress(function(evt) {
-        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-      }).success(function(data, status, headers, config) {
-        console.log('success!');
-      });
+      $scope.uploadFile(data.id, file);
     });
 
   };
+
+  // The file is stored by the ID from the Media object with the Ministry folder.
+  // Each file has it's own directory to store the original, encoded versions and thumbnails.
+  $scope.uploadFile = function (mediaId, file) {
+    var fileMeta = {
+      key: $scope.upload.bucket + '/' + data.id + '/original.' + ext,
+      AWSAccessKeyId: $scope.upload.key, 
+      acl: 'public-read',
+      policy: $scope.upload.policy,
+      signature: $scope.upload.signature,
+    };
+
+    $upload.upload({
+      url: $scope.upload.action,
+      method: 'POST',
+      data: fileMeta,
+      file: file,
+    })
+    .progress(function(evt) {
+      console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+    })
+    .success(function(data, status, headers, config) {
+      console.log('success!');
+    });
+  };
+
 });
