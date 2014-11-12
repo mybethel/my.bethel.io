@@ -1,0 +1,33 @@
+<div class="dash-panel-left x-small sidebar-files">
+   <ul class="nav nav-pills nav-stacked">
+      <li class="button">
+        <button data-ng-file-select="onFileSelect($files)" multiple accept="image/*" class="btn btn-success btn-block"><i class="fa fa-upload"></i> Upload Media</button>
+      </li>
+      <li class="active"><a href="#"><span class="fa-stack">
+        <i class="fa fa-folder fa-stack-2x">&nbsp;</i>
+        <i class="fa fa-cloud fa-inverse fa-stack-1x">&nbsp;</i>
+      </span><span class="label">All Media</span></a></li>
+    </ul>
+</div>
+<div data-ui-view>
+  <div class="dash-panel-right x-large thumbnails">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <input type="text" class="form-control" placeholder="Search media" />
+        <i class="fa fa-search">&nbsp;</i>
+      </div>
+      <h2 class="panel-title">All Media</h2>
+    </div>
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-6 col-md-3" ng-repeat="file in media">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/zH3ZohGnjcg/mqdefault.jpg" alt="" />
+            <span class="videoTime">2:42</span>
+            <span class="videoMeta" data-ng-bind="file.filename">&nbsp;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
