@@ -28,7 +28,11 @@ angular.module('Bethel.media', [
   $http.get('/media/browser')
     .success(function (data, status, headers, config) {
       $scope.upload = data.upload;
-      console.log($scope.upload);
+    });
+
+  $http.get('/csrfToken')
+    .success(function (data, status) {
+      $scope._csrf = data._csrf;
     });
 
   $scope.onFileSelect = function ($files) {
@@ -38,22 +42,32 @@ angular.module('Bethel.media', [
   };
 
   $scope.uploadFile = function (file) {
-    $upload.upload({
-      url: $scope.upload.action,
-      method: 'POST',
-      data: {
-        key: $scope.upload.bucket + '/' + file.name,
-        AWSAccessKeyId: $scope.upload.key, 
-        acl: 'public-read',
-        policy: $scope.upload.policy,
-        signature: $scope.upload.signature,
-      },
-      file: file,
-    }).progress(function(evt) {
-      console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
-    }).success(function(data, status, headers, config) {
-      // file is uploaded successfully
-      console.log(data);
+
+    var ext = file.name.split('.').pop(),
+        name = file.name.replace('.' + ext, '');
+
+    $http.post('/media', {
+      filename: name,
+      extension: ext,
+      _csrf: $scope._csrf
+    }).success(function (data, status) {
+      var mediaId = data.id;
+      $upload.upload({
+        url: $scope.upload.action,
+        method: 'POST',
+        data: {
+          key: $scope.upload.bucket + '/' + data.id + '/original.' + ext,
+          AWSAccessKeyId: $scope.upload.key, 
+          acl: 'public-read',
+          policy: $scope.upload.policy,
+          signature: $scope.upload.signature,
+        },
+        file: file,
+      }).progress(function(evt) {
+        console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+      }).success(function(data, status, headers, config) {
+        console.log('success!');
+      });
     });
-  }
+  };
 });
