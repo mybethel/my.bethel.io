@@ -5,7 +5,6 @@
  */
 var app = angular.module('Bethel', [
   'http-auth-interceptor',
-  'sails.io',
   'ui.router',
   'Bethel.dashboard',
   'Bethel.media',
@@ -19,7 +18,7 @@ var app = angular.module('Bethel', [
 
 })
 
-.controller('AppCtrl', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
+.controller('AppCtrl', function ($rootScope, $scope, $log, $state, filterFilter) {
 
   $scope.redirect = '';
   $scope.navLinks = [];
@@ -28,11 +27,12 @@ var app = angular.module('Bethel', [
   $rootScope.authCheck = false;
 
   $scope.updateSession = function(ev, data) {
-    sailsSocket.get('/session/current', {}, function (response, status) {
+    io.socket.get('/session/current', function (response) {
       $rootScope.user = response.user;
       $rootScope.ministry = response.ministry;
       $rootScope.isAdmin = response.isAdmin;
       $rootScope.authCheck = true;
+      $rootScope.$apply();
 
       if ($rootScope.isAdmin) {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
@@ -43,6 +43,10 @@ var app = angular.module('Bethel', [
   // Update current session on load or login.
   $scope.$on('sailsSocket:connect', $scope.updateSession);
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
+
+  io.socket.get('/csrfToken', function (response) {
+    $rootScope._csrf = response._csrf;
+  });
 
   // Main navigation bar links.
   $scope.navLinks.push.apply($scope.navLinks, [
@@ -62,7 +66,6 @@ var app = angular.module('Bethel', [
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
-
 });
 
 function findIndexByPropertyValue(arr, property, value) {

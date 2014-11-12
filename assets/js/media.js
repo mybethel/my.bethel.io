@@ -19,21 +19,24 @@ angular.module('Bethel.media', [
 
 })
 
-.controller('MediaListCtrl', function ($scope, sailsSocket, $log, filterFilter) {
+.controller('MediaListCtrl', function ($scope, $rootScope, $upload) {
 
-})
-
-.controller('MediaUploadCtrl', function ($scope, sailsSocket, $log, $upload, $http, filterFilter) {
-
-  $http.get('/media/browser')
-    .success(function (data, status, headers, config) {
+  $scope.init = function() {
+    io.socket.get('/media/browser', function (data) {
+      $scope.media = data.media;
       $scope.upload = data.upload;
+      $scope.$apply();
     });
+  };
 
-  $http.get('/csrfToken')
-    .success(function (data, status) {
-      $scope._csrf = data._csrf;
-    });
+  $rootScope.$watch('ministry', function() {
+    if (!$rootScope.ministry || !$rootScope.ministry.id)
+      return;
+
+    $scope.init();
+  });
+
+  io.socket.on('media', function (msg) { $scope.init(); });
 
   $scope.onFileSelect = function ($files) {
     for (var i = 0; i < $files.length; i++) {
@@ -46,11 +49,12 @@ angular.module('Bethel.media', [
     var ext = file.name.split('.').pop(),
         name = file.name.replace('.' + ext, '');
 
-    $http.post('/media', {
+    io.socket.post('/media', {
       filename: name,
       extension: ext,
-      _csrf: $scope._csrf
-    }).success(function (data, status) {
+      ministry: $rootScope.ministry.id,
+      _csrf: $rootScope._csrf
+    }, function (data) {
       var mediaId = data.id;
       $upload.upload({
         url: $scope.upload.action,
@@ -69,5 +73,6 @@ angular.module('Bethel.media', [
         console.log('success!');
       });
     });
+
   };
 });

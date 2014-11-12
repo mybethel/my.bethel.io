@@ -27,8 +27,8 @@ module.exports.session = {
   
   
   adapter: 'mongo',
-  collection: 'sessions',
-  url: process.env.MONGO_HQ,
+  collection: 'sessions'
+
   //
   // username: '',
   // password: '',

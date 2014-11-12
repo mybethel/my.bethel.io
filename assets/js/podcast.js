@@ -11,23 +11,22 @@ angular.module('Bethel.podcast', ['ui.router'])
 
 })
 
-.controller('PodcastListCtrl', function ($scope, sailsSocket, $log, filterFilter) {
+.controller('PodcastListCtrl', function ($scope, $log, filterFilter) {
 
   $scope.podcasts = [];
   $scope.statistics = [];
 
   $scope.init = function() {
-    sailsSocket.get('/podcast/list', {}, function (response, status) {
-      if (!response.error)
-        $scope.podcasts = response;
+    io.socket.get('/podcast/list', function (response) {
+      $scope.podcasts = response;
     });
   };
 
   // Fetch stats for each of the podcasts.
   $scope.$watch('podcasts', function() {
     $scope.podcasts.forEach(function(podcast) {
-      sailsSocket.get('/podcast/subscribers/' + podcast.id, {}, function (response, status) {
-        if (!response.error && response.subscribers)
+      io.socket.get('/podcast/subscribers/' + podcast.id, function (response) {
+        if (response.subscribers)
           $scope.statistics[response.podcast] = response.subscribers;
       });
     });
@@ -35,8 +34,8 @@ angular.module('Bethel.podcast', ['ui.router'])
 
   $scope.init();
 
-  $scope.$on('sailsSocket:connect', function() { $scope.init() });
-  $scope.$on('event:auth-loginConfirmed', function() { $scope.init() });
+  $scope.$on('sailsSocket:connect', function() { $scope.init(); });
+  $scope.$on('event:auth-loginConfirmed', function() { $scope.init(); });
 
 });
 

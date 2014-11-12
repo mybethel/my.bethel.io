@@ -1,4 +1,4 @@
-app.controller('LoginController', function ($scope, sailsSocket, $log, $state, filterFilter, authService) {
+app.controller('LoginController', function ($scope, $log, $state, filterFilter, authService) {
 
   $scope.credentials = {
     name: '',
@@ -8,13 +8,12 @@ app.controller('LoginController', function ($scope, sailsSocket, $log, $state, f
 
   $scope.error = {};
 
-  sailsSocket.get('/csrfToken', {}, function (response, status) {
-    if (!response.error)
-      $scope.credentials._csrf = response._csrf;
+  io.socket.get('/csrfToken', function (response) {
+    $scope.credentials._csrf = response._csrf;
   });
 
   $scope.login = function (credentials) {
-    sailsSocket.post('/session/create', credentials, function (response) {
+    io.socket.post('/session/create', credentials, function (response) {
       $scope.error = response.error;
 
       if (!response.error) {
@@ -25,6 +24,6 @@ app.controller('LoginController', function ($scope, sailsSocket, $log, $state, f
         });
       }
     });
-  }
+  };
 
 });
