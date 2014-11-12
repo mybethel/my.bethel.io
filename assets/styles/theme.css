@@ -448,3 +448,17 @@ map {
   display:block;
   height: 200px;
 }
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  width: 400px;
+}
+
+.search-box i {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
