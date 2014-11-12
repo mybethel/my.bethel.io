@@ -56,16 +56,17 @@ angular.module('Bethel.media', [
       ministry: $rootScope.ministry.id,
       _csrf: $rootScope._csrf
     }, function (data) {
-      $scope.uploadFile(data.id, file);
+      var location = $scope.upload.bucket + '/' + data.id + '/original.' + ext;
+      $scope.uploadFile(data.id, location, file);
     });
 
   };
 
   // The file is stored by the ID from the Media object with the Ministry folder.
   // Each file has it's own directory to store the original, encoded versions and thumbnails.
-  $scope.uploadFile = function (mediaId, file) {
+  $scope.uploadFile = function (mediaId, location, file) {
     var fileMeta = {
-      key: $scope.upload.bucket + '/' + mediaId + '/original.' + ext,
+      key: location,
       AWSAccessKeyId: $scope.upload.key, 
       acl: 'public-read',
       policy: $scope.upload.policy,
