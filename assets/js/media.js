@@ -65,7 +65,7 @@ angular.module('Bethel.media', [
   // Each file has it's own directory to store the original, encoded versions and thumbnails.
   $scope.uploadFile = function (mediaId, file) {
     var fileMeta = {
-      key: $scope.upload.bucket + '/' + data.id + '/original.' + ext,
+      key: $scope.upload.bucket + '/' + mediaId + '/original.' + ext,
       AWSAccessKeyId: $scope.upload.key, 
       acl: 'public-read',
       policy: $scope.upload.policy,
