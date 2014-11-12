@@ -11,8 +11,7 @@ var app = angular.module('Bethel', [
   'ui.router',
   'Bethel.dashboard',
   'Bethel.podcast',
-  'Bethel.staff',
-  'Bethel.userManagement'
+  'Bethel.staff'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -38,7 +37,7 @@ var app = angular.module('Bethel', [
 
       if ($rootScope.isAdmin) {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
-      };
+      }
     });
   };
 
