@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * The main Sails Angular app module
  *

@@ -1,5 +1,8 @@
 
 exports.init = function(options) {
+
+  if (sails.config.cron && sails.config.cron.disable === true)
+    return;
   
   var s3Sync = require('cron').CronJob;
 
@@ -13,4 +16,4 @@ exports.init = function(options) {
     VimeoStorageSync.sync();
   }, null, true, 'America/New_York');
 
-}
+};

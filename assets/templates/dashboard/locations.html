@@ -5,7 +5,7 @@
   </div>
   <div class="panel-body full">
     <table class="table table-hover">
-      <tr ng-repeat="location in $parent.locations | orderBy:'name'">
+      <tr data-ng-repeat="location in $parent.locations | orderBy:'name'">
         <td>
           <h4>{{ location.name }}<br><small>{{ addressFormat(location.address) }}</small></h4>
         </td>

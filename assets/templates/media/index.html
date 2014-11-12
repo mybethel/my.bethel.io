@@ -1,6 +1,8 @@
 <div class="dash-panel-left x-small sidebar-files">
    <ul class="nav nav-pills nav-stacked">
-      <li class="button"><button type="button" class="btn btn-success btn-block"><i class="fa fa-upload"></i> Upload Media</button></li>
+      <li class="button" data-ng-controller="MediaUploadCtrl">
+        <button ng-file-select="onFileSelect($files)" class="btn btn-success btn-block"><i class="fa fa-upload"></i> Upload Media</button>
+      </li>
       <li><a href="#"><span class="fa-stack">
         <i class="fa fa-folder fa-stack-2x"></i>
         <i class="fa fa-cloud fa-inverse fa-stack-1x"></i>
@@ -21,133 +23,135 @@
       </span><span class="label">Archived Sermons</span></a></li>
     </ul>
 </div>
-<div class="dash-panel-right x-large thumbnails">
-  <div class="panel-heading">
-    <div class="pull-right">
-      <input type="text" class="form-control" placeholder="Search" />
-      <i class="fa fa-search"></i>
+<div ui-view>
+  <div class="dash-panel-right x-large thumbnails">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <input type="text" class="form-control" placeholder="Search media" />
+        <i class="fa fa-search"></i>
+      </div>
+      <h2 class="panel-title"><a class="fa fa-edit" href="#"></a> Uncovered <small>October 12-29, 2014</small></h2>
     </div>
-    <h2 class="panel-title"><a class="fa fa-edit" href="#"></a> Uncovered <small>October 12-29, 2014</small></h2>
-  </div>
-  <div class="content">
-    <div class="row">
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/zH3ZohGnjcg/mqdefault.jpg">
-          <span class="videoTime">2:42</span>
-          <span class="videoMeta">Kumru Ballad</span>
-        </a>
+    <div class="content">
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/zH3ZohGnjcg/mqdefault.jpg">
+            <span class="videoTime">2:42</span>
+            <span class="videoMeta">Kumru Ballad</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/178/010/178010767_295.jpg">
+            <span class="videoTime">60:19</span>
+            <span class="videoMeta">Kumru Orchestral</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/paG__3FBLzI/mqdefault.jpg">
+            <span class="videoTime">0:35</span>
+            <span class="videoMeta">Mesopotamia</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/OF9fneQ50Us/mqdefault.jpg">
+            <span class="videoTime">5:35</span>
+            <span class="videoMeta">Kreutzer</span>
+          </a>
+        </div>
       </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/178/010/178010767_295.jpg">
-          <span class="videoTime">60:19</span>
-          <span class="videoMeta">Kumru Orchestral</span>
-        </a>
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/1swsXJuclGM/mqdefault.jpg">
+            <span class="videoTime">60:19</span>
+            <span class="videoMeta">Bodrum</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/WQ3Gf9PLUO8/mqdefault.jpg">
+            <span class="videoTime">5:35</span>
+            <span class="videoMeta">Mesopotamia</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/326/392/32639200_295.jpg">
+            <span class="videoTime">0:35</span>
+            <span class="videoMeta">Symphony in Red</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/bYy1yKqspYs/mqdefault.jpg">
+            <span class="videoTime">60:19</span>
+            <span class="videoMeta">Paganini Jazz</span>
+          </a>
+        </div>
       </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/paG__3FBLzI/mqdefault.jpg">
-          <span class="videoTime">0:35</span>
-          <span class="videoMeta">Mesopotamia</span>
-        </a>
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/zH3ZohGnjcg/mqdefault.jpg">
+            <span class="videoTime">2:42</span>
+            <span class="videoMeta">Kumru Ballad</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/178/010/178010767_295.jpg">
+            <span class="videoTime">5:35</span>
+            <span class="videoMeta">Kumru Orchestral</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/paG__3FBLzI/mqdefault.jpg">
+            <span class="videoTime">0:35</span>
+            <span class="videoMeta">Mesopotamia</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/OF9fneQ50Us/mqdefault.jpg">
+            <span class="videoTime">60:19</span>
+            <span class="videoMeta">Kreutzer</span>
+          </a>
+        </div>
       </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/OF9fneQ50Us/mqdefault.jpg">
-          <span class="videoTime">5:35</span>
-          <span class="videoMeta">Kreutzer</span>
-        </a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/1swsXJuclGM/mqdefault.jpg">
-          <span class="videoTime">60:19</span>
-          <span class="videoMeta">Bodrum</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/WQ3Gf9PLUO8/mqdefault.jpg">
-          <span class="videoTime">5:35</span>
-          <span class="videoMeta">Mesopotamia</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/326/392/32639200_295.jpg">
-          <span class="videoTime">0:35</span>
-          <span class="videoMeta">Symphony in Red</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/bYy1yKqspYs/mqdefault.jpg">
-          <span class="videoTime">60:19</span>
-          <span class="videoMeta">Paganini Jazz</span>
-        </a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/zH3ZohGnjcg/mqdefault.jpg">
-          <span class="videoTime">2:42</span>
-          <span class="videoMeta">Kumru Ballad</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/178/010/178010767_295.jpg">
-          <span class="videoTime">5:35</span>
-          <span class="videoMeta">Kumru Orchestral</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/paG__3FBLzI/mqdefault.jpg">
-          <span class="videoTime">0:35</span>
-          <span class="videoMeta">Mesopotamia</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/OF9fneQ50Us/mqdefault.jpg">
-          <span class="videoTime">60:19</span>
-          <span class="videoMeta">Kreutzer</span>
-        </a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/1swsXJuclGM/mqdefault.jpg">
-          <span class="videoTime">2:42</span>
-          <span class="videoMeta">Bodrum</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/WQ3Gf9PLUO8/mqdefault.jpg">
-          <span class="videoTime">60:19</span>
-          <span class="videoMeta">Mesopotamia</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/326/392/32639200_295.jpg">
-          <span class="videoTime">0:35</span>
-          <span class="videoMeta">Symphony in Red</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-          <img class="videoThumb" src="http://i1.ytimg.com/vi/bYy1yKqspYs/mqdefault.jpg">
-          <span class="videoTime">5:35</span>
-          <span class="videoMeta">Paganini Jazz</span>
-        </a>
+      <div class="row">
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/1swsXJuclGM/mqdefault.jpg">
+            <span class="videoTime">2:42</span>
+            <span class="videoMeta">Bodrum</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/WQ3Gf9PLUO8/mqdefault.jpg">
+            <span class="videoTime">60:19</span>
+            <span class="videoMeta">Mesopotamia</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="https://secure-b.vimeocdn.com/ts/326/392/32639200_295.jpg">
+            <span class="videoTime">0:35</span>
+            <span class="videoMeta">Symphony in Red</span>
+          </a>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <a href="#" class="thumbnail">
+            <img class="videoThumb" src="http://i1.ytimg.com/vi/bYy1yKqspYs/mqdefault.jpg">
+            <span class="videoTime">5:35</span>
+            <span class="videoMeta">Paganini Jazz</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
