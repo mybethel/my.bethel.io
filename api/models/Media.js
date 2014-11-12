@@ -15,6 +15,10 @@ module.exports = {
 
     extension: {
       type: 'string'
+    },
+
+    ministry: {
+      model: 'ministry'
     }
 
 	}
