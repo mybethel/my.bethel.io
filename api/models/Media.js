@@ -17,6 +17,10 @@ module.exports = {
       type: 'string'
     },
 
+    status: {
+      type: 'string'
+    },
+
     ministry: {
       model: 'ministry'
     }

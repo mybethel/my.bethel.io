@@ -93,12 +93,21 @@ section.page-wrap .dash-panel-right.thumbnails {
     opacity: 0.7;
     font-weight: bold;
     border-radius: 0;
-    span.videoMeta {
+    .round-progress {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      margin-left: -40px;
+    }
+    .uploading {
+      opacity: 0;
+    }
+    .media-meta {
       line-height: 30px;
       padding: 0 8px;
       white-space: nowrap;
     }
-    span.videoTime {
+    .media-time {
       font-size: 11px;
       background: black;
       position: absolute;

@@ -1,6 +1,7 @@
 angular.module('Bethel.media', [
   'ui.router',
-  'angularFileUpload'
+  'angularFileUpload',
+  'angular-svg-round-progress'
 ])
 
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -35,6 +36,17 @@ angular.module('Bethel.media', [
   // @todo: Update only the record in the message rather than the entire scope.
   io.socket.on('media', function (msg) { $scope.init(); });
 
+  $scope.indexOfMediaWithId = function(id) {
+    if ($scope.media.length < 1)
+      return;
+
+    for (var i = 0; i < $scope.media.length; i++) {
+      if ($scope.media[i].id == id) {
+        return i;
+      }
+    }
+  };
+
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
   $scope.onFileSelect = function ($files) {
@@ -54,6 +66,7 @@ angular.module('Bethel.media', [
       filename: name,
       extension: ext,
       ministry: $rootScope.ministry.id,
+      status: 'STATUS_UPLOADING',
       _csrf: $rootScope._csrf
     }, function (data) {
       var location = $scope.upload.bucket + '/' + data.id + '/original.' + ext;
@@ -80,10 +93,17 @@ angular.module('Bethel.media', [
       file: file,
     })
     .progress(function(evt) {
-      console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+      var progress = parseInt(100.0 * evt.loaded / evt.total);
+      if (progress % 5 === 0) {
+        var i = $scope.indexOfMediaWithId(mediaId);
+        $scope.media[i].progress = progress;
+      }
     })
     .success(function(data, status, headers, config) {
-      console.log('success!');
+      io.socket.put('/media/' + mediaId, {
+        status: 'STATUS_FINISHED',
+        _csrf: $rootScope._csrf
+      });
     });
   };
 
