@@ -60,10 +60,12 @@ angular.module('Bethel.media', [
   $scope.createMedia = function (file) {
 
     var ext = file.name.split('.').pop(),
-        name = file.name.replace('.' + ext, '');
+        name = file.name.replace('.' + ext, ''),
+        type = file.type.split('/').shift();
 
     io.socket.post('/media', {
       filename: name,
+      type: type,
       extension: ext,
       ministry: $rootScope.ministry.id,
       status: 'STATUS_UPLOADING',

@@ -13,6 +13,10 @@ module.exports = {
       type: 'string'
     },
 
+    type: {
+      type: 'string'
+    },
+
     extension: {
       type: 'string'
     },
