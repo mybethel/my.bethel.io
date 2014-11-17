@@ -32,6 +32,21 @@ angular.module('Bethel.media', [
     $scope.init();
   });
 
+  $scope.$watch('media', function() {
+    for (var i = 0; i < $scope.media.length; i++) {
+
+      switch ($scope.media[i].type) {
+        case 'image':
+          $scope.media[i].thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/original.' + $scope.media[i].extension;
+          break;
+
+        default:
+          $scope.media[i].thumbnail = '/render/320x180/images/DefaultPodcaster.png';
+
+      }
+    }
+  });
+
   // Called when any media is uploaded, modified or deleted.
   // @todo: Update only the record in the message rather than the entire scope.
   io.socket.on('media', function (msg) { $scope.init(); });
