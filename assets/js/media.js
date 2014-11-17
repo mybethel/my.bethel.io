@@ -32,25 +32,6 @@ angular.module('Bethel.media', [
     $scope.init();
   });
 
-  $scope.$watch('media', function() {
-    for (var i = 0; i < $scope.media.length; i++) {
-
-      switch ($scope.media[i].type) {
-        case 'image':
-          $scope.media[i].thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/original.' + $scope.media[i].extension;
-          break;
-
-        default:
-          $scope.media[i].thumbnail = '/render/320x180/images/DefaultPodcaster.png';
-
-      }
-    }
-  });
-
-  // Called when any media is uploaded, modified or deleted.
-  // @todo: Update only the record in the message rather than the entire scope.
-  io.socket.on('media', function (msg) { $scope.init(); });
-
   $scope.indexOfMediaWithId = function(id) {
     if ($scope.media.length < 1)
       return;
@@ -61,6 +42,40 @@ angular.module('Bethel.media', [
       }
     }
   };
+
+  $scope.typeForMediaWithIndex = function(i) {
+    switch ($scope.media[i].type) {
+      case 'image':
+        thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/original.' + $scope.media[i].extension;
+        break;
+
+      default:
+        thumbnail = '/render/320x180/images/DefaultPodcaster.png';
+
+    }
+
+    return thumbnail;
+  };
+
+  $scope.$watch('media', function() {
+    if (typeof $scope.media === 'undefined')
+      return;
+
+    for (var i = 0; i < $scope.media.length; i++) {
+
+      // If the file hasn't finished uploading, render a generic thumbnail.
+      if ($scope.media[i].status == 'STATUS_UPLOADING') {
+        $scope.media[i].thumbnail = '/render/320x180/images/DefaultPodcaster.png';
+        continue;
+      }
+
+      $scope.media[i].thumbnail = $scope.typeForMediaWithIndex(i);
+    }
+  });
+
+  // Called when any media is uploaded, modified or deleted.
+  // @todo: Update only the record in the message rather than the entire scope.
+  io.socket.on('media', function (msg) { $scope.init(); });
 
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
@@ -120,6 +135,10 @@ angular.module('Bethel.media', [
       io.socket.put('/media/' + mediaId, {
         status: 'STATUS_FINISHED',
         _csrf: $rootScope._csrf
+      }, function() {
+        var i = $scope.indexOfMediaWithId(mediaId);
+        $scope.media[i].thumbnail = $scope.typeForMediaWithIndex(i);
+        $scope.$apply();
       });
     });
   };
