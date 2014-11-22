@@ -17,6 +17,32 @@ angular.module('Bethel.media', [
 
 .controller('MediaListCtrl', function ($scope, $rootScope, $upload) {
 
+  $scope.showVideo = $scope.showAudio = $scope.showImage = true;
+
+  $scope.filterByType = function(type) {
+    if (type == 'video')
+      $scope.showVideo = !$scope.showVideo;
+
+    if (type == 'audio')
+      $scope.showAudio = !$scope.showAudio;
+
+    if (type == 'image')
+      $scope.showImage = !$scope.showImage;
+  };
+
+  $scope.mediaType = function(media) {
+    if ($scope.showVideo && media.type == 'video')
+      return true;
+
+    if ($scope.showAudio && media.type == 'audio')
+      return true;
+
+    if ($scope.showImage && media.type == 'image')
+      return true;
+
+    return false;
+  };
+
   $scope.init = function() {
     io.socket.get('/media/browser', function (data) {
       $scope.media = data.media;

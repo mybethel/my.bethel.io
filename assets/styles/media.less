@@ -56,12 +56,32 @@ section.page-wrap .dash-panel-right.thumbnails {
         color: #FFF;
       }
     }
-    i {
-      position: absolute;
-      top: 17px;
-      right: 27px;
-      font-size: 20px;
-      color: #444;
+    .search-box {
+      i {
+        position: absolute;
+        top: 17px;
+        right: 27px;
+        font-size: 20px;
+        color: #444;
+      }
+    }
+    .type-filter {
+      padding-right: 10px;
+      .btn {
+        color: #444;
+        background: transparent;
+        border-color: #444;
+        margin-top: -3px;
+        text-shadow: none;
+        box-shadow: none;
+        &:hover {
+          background: rgba(255,255,255,0.05);
+        }
+        &:hover, &.active {
+          color: #888;
+          border-color: #106982;
+        }
+      }
     }
     h2 {
       font-size: 1.5em;
