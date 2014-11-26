@@ -183,12 +183,14 @@ angular.module('Bethel.media', [
   io.socket.get('/media/' + $scope.id, function (data) {
     $scope.media = data;
     $scope.media.description = $sce.trustAsHtml(data.description);
-    $scope.media.tags.forEach(function (tag) {
-      $scope.tags.push({ text: tag });
-    });
+    if (typeof $scope.media.tags !== 'undefined') {
+      $scope.media.tags.forEach(function (tag) {
+        $scope.tags.push({ text: tag });
+      });
+    }
     $scope.$apply();
 
-    var editor = new MediumEditor('.media-description');
+    new MediumEditor('.media-description');
   });
 
   $scope.updateTags = function(tag, action) {
