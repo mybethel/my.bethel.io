@@ -3,7 +3,7 @@
       <li class="button">
         <button data-ng-file-select="onFileSelect($files)" multiple accept="image/*,video/*,audio/*" class="btn btn-success btn-block"><i class="fa fa-upload"></i> Upload Media</button>
       </li>
-      <li class="active"><a href="#"><span class="fa-stack">
+      <li class="active"><a ui-sref="media"><span class="fa-stack">
         <i class="fa fa-folder fa-stack-2x">&nbsp;</i>
         <i class="fa fa-cloud fa-inverse fa-stack-1x">&nbsp;</i>
       </span><span class="label">All Media</span></a></li>
@@ -26,7 +26,7 @@
     <div class="content">
       <div class="row">
         <div class="col-xs-6 col-md-3" ng-repeat="file in media | filter:searchText | filter:mediaType">
-          <a href="#" class="thumbnail" title="{{ file.filename }}">
+          <a ui-sref=".view({ mediaId: file.id })" class="thumbnail" title="{{ file.filename }}">
             <div round-progress max="100" current="file.progress" color="#1591b5" bgcolor="#f4f6f8" radius="30" stroke="10" semi="false" data-ng-show="file.progress < 100"></div>
             <img class="media-thumb" data-ng-src="{{ file.thumbnail }}" alt="{{ file.filename }}" data-ng-class="(!file.progress || file.progress == 100) ? 'uploaded' : 'uploading'" width="320" height="180" />
             <span class="media-time" data-ng-bind="file.length" data-ng-show="file.length">2:42</span>

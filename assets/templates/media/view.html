@@ -1,0 +1,40 @@
+<div class="dash-panel-right x-large media-detail">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <img class="media-thumb" data-ng-src="{{ thumbnailForMediaWithSize(media, '604x340') }}" alt="{{ media.filename }}" />
+      <div class="panel-heading media-title">
+        <h1 class="panel-title" data-ng-bind="media.title || media.filename"></h1>
+        <p data-ng-bind="media.description"><span data-ng-if="!media.description">Enter a description for this file here.</span></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="content">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">File Details</h2>
+          </div>
+          <div class="panel-body full">
+            <table class="table table-hover">
+              <tr>
+                <td>Type</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.type"></td>
+              </tr>
+              <tr>
+                <td>Size</td>
+                <td style="vertical-align:middle;text-align:right;"></td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td style="vertical-align:middle;text-align:right;"></td>
+              </tr>
+              <tr>
+                <td>Resolution</td>
+                <td style="vertical-align:middle;text-align:right;"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

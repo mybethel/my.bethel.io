@@ -11,6 +11,11 @@ angular.module('Bethel.media', [
       url: '/media',
       templateUrl: 'templates/media/index.html',
       controller: 'MediaListCtrl'
+    })
+    .state('media.view', {
+      url: '/:mediaId',
+      templateUrl: 'templates/media/view.html',
+      controller: 'MediaViewCtrl'
     });
 
 })
@@ -169,4 +174,27 @@ angular.module('Bethel.media', [
     });
   };
 
+})
+
+.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams) {
+  $scope.id = $stateParams.mediaId;
+
+  io.socket.get('/media/' + $scope.id, function (data) {
+    $scope.media = data;
+    $scope.$apply();
+  });
+
+  $scope.thumbnailForMediaWithSize = function(media, size) {
+    switch (media.type) {
+      case 'image':
+        thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/original.' + media.extension;
+        break;
+
+      default:
+        thumbnail = '/render/' + size + '/images/DefaultPodcaster.png';
+
+    }
+
+    return thumbnail;
+  };
 });
