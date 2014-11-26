@@ -176,12 +176,22 @@ angular.module('Bethel.media', [
 
 })
 
-.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams) {
+.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce) {
   $scope.id = $stateParams.mediaId;
 
   io.socket.get('/media/' + $scope.id, function (data) {
     $scope.media = data;
+    $scope.media.description = $sce.trustAsHtml(data.description);
     $scope.$apply();
+
+    var editor = new MediumEditor('.media-description');
+  });
+
+  $('.description').on('input', function() {
+    io.socket.put('/media/' + $scope.media.id, {
+      description: $('.media-description').html(),
+      _csrf: $rootScope._csrf
+    });
   });
 
   $scope.thumbnailForMediaWithSize = function(media, size) {

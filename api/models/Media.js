@@ -9,24 +9,28 @@ module.exports = {
 
 	attributes: {
 
-    filename: {
-      type: 'string'
-    },
-
-    type: {
-      type: 'string'
+    description: {
+      type: 'text'
     },
 
     extension: {
       type: 'string'
     },
 
-    status: {
+    filename: {
       type: 'string'
     },
 
     ministry: {
       model: 'ministry'
+    },
+
+    status: {
+      type: 'string'
+    },
+
+    type: {
+      type: 'string'
     }
 
 	}

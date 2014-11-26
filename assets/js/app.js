@@ -6,6 +6,7 @@
 var app = angular.module('Bethel', [
   'http-auth-interceptor',
   'ui.router',
+  'angularMoment',
   'Bethel.dashboard',
   'Bethel.media',
   'Bethel.podcast',

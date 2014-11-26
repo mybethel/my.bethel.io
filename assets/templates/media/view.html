@@ -4,7 +4,9 @@
       <img class="media-thumb" data-ng-src="{{ thumbnailForMediaWithSize(media, '604x340') }}" alt="{{ media.filename }}" />
       <div class="panel-heading media-title">
         <h1 class="panel-title" data-ng-bind="media.title || media.filename"></h1>
-        <p data-ng-bind="media.description"><span data-ng-if="!media.description">Enter a description for this file here.</span></p>
+      </div>
+      <div class="content">
+        <p data-ng-bind-html="media.description ? media.description : 'Type here to edit the description for this file.'" class="media-description"></p>
       </div>
     </div>
     <div class="col-md-4">
@@ -15,6 +17,14 @@
           </div>
           <div class="panel-body full">
             <table class="table table-hover">
+              <tr>
+                <td>Uploaded</td>
+                <td style="vertical-align:middle;text-align:right;" data-am-time-ago="media.createdAt"></td>
+              </tr>
+              <tr>
+                <td>Changed</td>
+                <td style="vertical-align:middle;text-align:right;" data-am-time-ago="media.updatedAt"></td>
+              </tr>
               <tr>
                 <td>Type</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.type"></td>
@@ -34,6 +44,7 @@
             </table>
           </div>
         </div>
+        <button class="btn btn-block btn-lg"><i class="fa fa-download"></i> &nbsp; &nbsp; Download File</button>
       </div>
     </div>
   </div>
