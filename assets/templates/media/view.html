@@ -34,13 +34,38 @@
                 <td>Size</td>
                 <td style="vertical-align:middle;text-align:right;"></td>
               </tr>
-              <tr>
+              <tr data-ng-if="media.type == 'video' || media.type == 'audio'">
                 <td>Duration</td>
                 <td style="vertical-align:middle;text-align:right;"></td>
               </tr>
               <tr>
                 <td>Resolution</td>
                 <td style="vertical-align:middle;text-align:right;"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default" data-ng-if="media.type == 'video'">
+          <div class="panel-heading">
+            <h2 class="panel-title">Optimized Versions</h2>
+          </div>
+          <div class="panel-body full">
+            <table class="table table-hover">
+              <tr>
+                <td>Web</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+              <tr>
+                <td>iOS</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+              <tr>
+                <td>Streaming</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+              <tr>
+                <td>Audio-only</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
               </tr>
             </table>
           </div>
