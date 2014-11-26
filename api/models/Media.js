@@ -29,6 +29,10 @@ module.exports = {
       type: 'string'
     },
 
+    tags: {
+      type: 'array'
+    },
+
     type: {
       type: 'string'
     }

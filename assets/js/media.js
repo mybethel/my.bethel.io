@@ -1,6 +1,7 @@
 angular.module('Bethel.media', [
   'ui.router',
   'angularFileUpload',
+  'ngTagsInput',
   'angular-svg-round-progress'
 ])
 
@@ -182,12 +183,39 @@ angular.module('Bethel.media', [
   io.socket.get('/media/' + $scope.id, function (data) {
     $scope.media = data;
     $scope.media.description = $sce.trustAsHtml(data.description);
+    $scope.media.tags.forEach(function (tag) {
+      $scope.tags.push({ text: tag });
+    });
     $scope.$apply();
 
     var editor = new MediumEditor('.media-description');
   });
 
-  $('.description').on('input', function() {
+  $scope.updateTags = function(tag, action) {
+    switch (action) {
+      case 'added':
+        if (typeof $scope.media.tags === 'undefined') {
+          $scope.media.tags = [];
+        }
+        $scope.media.tags.push(tag.text);
+        break;
+
+      case 'removed':
+        var tagToDelete = $scope.media.tags.indexOf(tag.text);
+        if (tagToDelete > -1) {
+          $scope.media.tags.splice(tagToDelete, 1);
+        }
+        break;
+    }
+
+    io.socket.put('/media/' + $scope.media.id, {
+      tags: $scope.media.tags,
+      _csrf: $rootScope._csrf
+    });
+    console.log($scope.media.tags);
+  };
+
+  $('.media-description').on('input', function() {
     io.socket.put('/media/' + $scope.media.id, {
       description: $('.media-description').html(),
       _csrf: $rootScope._csrf
@@ -195,6 +223,9 @@ angular.module('Bethel.media', [
   });
 
   $scope.thumbnailForMediaWithSize = function(media, size) {
+    if (typeof media === 'undefined')
+      return;
+
     switch (media.type) {
       case 'image':
         thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/original.' + media.extension;

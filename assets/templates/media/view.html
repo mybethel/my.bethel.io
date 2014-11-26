@@ -6,7 +6,8 @@
         <h1 class="panel-title" data-ng-bind="media.title || media.filename"></h1>
       </div>
       <div class="content">
-        <p data-ng-bind-html="media.description ? media.description : 'Type here to edit the description for this file.'" class="media-description"></p>
+        <tags-input ng-model="tags" placeholder="Enter tags separated by commas." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+        <p data-ng-bind-html="media.description" data-placeholder="Type here to edit the description for this file." class="media-description"></p>
       </div>
     </div>
     <div class="col-md-4">

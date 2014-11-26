@@ -149,10 +149,43 @@ section.page-wrap .dash-panel-right.thumbnails {
   .media-thumb {
     width: 100%;
   }
-  .media-title .panel-title {
-    font-size: 24px;
+  .media-title {
+    border-radius: 0;
+    .panel-title {
+      font-size: 24px;
+    }
   }
   .media-description {
-    font-size: 16px;
+    font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    border: 1px solid #444;
+    padding: 5px;
+    min-height: 250px;
+    &:focus {
+      border-color: #106982;
+      outline-style: none;
+    }
+    &::after {
+      top: 5px;
+      left: 5px;
+      font-style: normal;
+      color: #999;
+      font-size: 14px;
+    }
+  }
+  tags-input .tags, .tags input {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    &:focus, &.focused {
+      box-shadow: none;
+      border-color: #106982;
+      color: white;
+    }
+  }
+  tags-input .tags {
+    border: 1px solid #444;
+  }
+  tags-input {
+    margin: -10px 0 15px 0;
   }
 }
