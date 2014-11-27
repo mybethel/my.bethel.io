@@ -21,6 +21,26 @@ angular.module('Bethel.media', [
 
 })
 
+.filter('duration', function() {
+  return function(milliseconds) {
+    milliseconds = Number(milliseconds);
+    var seconds = Math.floor(milliseconds / 1000);
+    var minutes = Math.floor(seconds / 60);
+    seconds = Math.floor(seconds % 60);
+    return minutes + ':' + seconds;
+  };
+})
+
+.filter('bytes', function() {
+  return function(bytes, precision) {
+    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
+    if (typeof precision === 'undefined') precision = 1;
+    var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
+      number = Math.floor(Math.log(bytes) / Math.log(1024));
+    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
+  };
+})
+
 .controller('MediaListCtrl', function ($scope, $rootScope, $upload) {
 
   $scope.showVideo = $scope.showAudio = $scope.showImage = true;

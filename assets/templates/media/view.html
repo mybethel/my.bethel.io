@@ -32,15 +32,19 @@
               </tr>
               <tr>
                 <td>Size</td>
-                <td style="vertical-align:middle;text-align:right;"></td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.size | bytes"></td>
               </tr>
               <tr data-ng-if="media.type == 'video' || media.type == 'audio'">
                 <td>Duration</td>
-                <td style="vertical-align:middle;text-align:right;"></td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.duration | duration"></td>
               </tr>
-              <tr>
+              <tr data-ng-if="media.type == 'video'">
                 <td>Resolution</td>
-                <td style="vertical-align:middle;text-align:right;"></td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.width + 'x' + media.height"></td>
+              </tr>
+              <tr data-ng-if="media.type == 'video'">
+                <td>Encoding</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.format + '/' + media.video_codec"></td>
               </tr>
             </table>
           </div>
