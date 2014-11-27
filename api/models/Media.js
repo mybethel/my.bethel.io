@@ -9,6 +9,18 @@ module.exports = {
 
 	attributes: {
 
+    audio_bitrate: {
+      type: 'integer'
+    },
+
+    audio_codec: {
+      type: 'string'
+    },
+
+    audio_samplerate: {
+      type: 'integer'
+    },
+
     description: {
       type: 'text'
     },
@@ -63,6 +75,10 @@ module.exports = {
 
     video_codec: {
       type: 'string'
+    },
+
+    video_frames: {
+      type: 'integer'
     },
 
     width: {

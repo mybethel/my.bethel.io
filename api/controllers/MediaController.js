@@ -38,6 +38,9 @@ module.exports = {
       if (media.type === 'video') {
         VideoEncoding.getMetadata(mediaKey, media.ministry, function (jobDetails) {
           Media.update(req.param('id'), {
+            audio_bitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
+            audio_codec: jobDetails.input_media_file.audio_codec,
+            audio_samplerate: jobDetails.input_media_file.audio_sample_rate,
             duration: jobDetails.input_media_file.duration_in_ms,
             format: jobDetails.input_media_file.format,
             framerate: jobDetails.input_media_file.frame_rate,
