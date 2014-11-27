@@ -41,6 +41,7 @@ exports.encodePreview = function(filePath, fileId, ministryId, cb) {
       "h264_profile": "high",
       "h264_level": "3.0",
       "max_frame_rate": 30,
+      "public": 1,
       "thumbnails": {
         "base_url": "s3://cloud.bethel.io/media/" + ministryId + "/" + fileId + "/thumbnails",
         "format": "jpg",
