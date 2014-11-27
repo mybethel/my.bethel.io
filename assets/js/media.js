@@ -219,9 +219,17 @@ angular.module('Bethel.media', [
         $scope.tags.push({ text: tag });
       });
     }
+    if (data.type == 'video') {
+      $scope.media.preview = $sce.trustAsResourceUrl('https://cloud.bethel.io/media/' + data.ministry.id + '/' + data.id + '/preview.mp4');
+    }
     $scope.$apply();
 
     new MediumEditor('.media-description');
+    $scope.player = videojs('media-player');
+  });
+
+  $scope.$on('$destroy', function() {
+    $scope.player.dispose();
   });
 
   $scope.updateTags = function(tag, action) {
