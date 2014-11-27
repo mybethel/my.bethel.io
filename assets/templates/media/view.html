@@ -39,19 +39,19 @@
                 <td>Size</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.size | bytes"></td>
               </tr>
-              <tr data-ng-if="media.type == 'video' || media.type == 'audio'">
+              <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.duration">
                 <td>Duration</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.duration | duration"></td>
               </tr>
-              <tr data-ng-if="media.type == 'video'">
+              <tr data-ng-if="media.type == 'video'" data-ng-show="media.width && media.height">
                 <td>Resolution</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.width + 'x' + media.height"></td>
               </tr>
-              <tr data-ng-if="media.type == 'video'">
+              <tr data-ng-if="media.type == 'video'" data-ng-show="media.video_codec">
                 <td>Video</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.video_codec.toUpperCase()"></td>
               </tr>
-              <tr data-ng-if="media.type == 'video' || media.type == 'audio'">
+              <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.audio_codec">
                 <td>Audio</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.audio_codec.toUpperCase()"></td>
               </tr>
