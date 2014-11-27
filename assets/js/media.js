@@ -184,6 +184,9 @@ angular.module('Bethel.media', [
       }
     })
     .success(function(data, status, headers, config) {
+      // Call the endpoint to generate metadata.
+      io.socket.get('/media/meta/' + mediaId);
+      // Mark the media as finished uploading.
       io.socket.put('/media/' + mediaId, {
         status: 'STATUS_FINISHED',
         _csrf: $rootScope._csrf
