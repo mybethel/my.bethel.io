@@ -36,7 +36,7 @@ module.exports = {
       var mediaKey = 'media/' + media.ministry + '/' + media.id + '/original.' + media.extension;
 
       if (media.type === 'video') {
-        VideoEncoding.getMetadata(mediaKey, media.ministry, function (jobDetails) {
+        VideoEncoding.encodePreview(mediaKey, media.id, media.ministry, function (jobDetails) {
           Media.update(req.param('id'), {
             audio_bitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
             audio_codec: jobDetails.input_media_file.audio_codec,
@@ -47,6 +47,7 @@ module.exports = {
             height: jobDetails.input_media_file.height,
             video_bitrate: jobDetails.input_media_file.video_bitrate_in_kbps,
             video_codec: jobDetails.input_media_file.video_codec,
+            video_frames: jobDetails.thumbnails.length,
             width: jobDetails.input_media_file.width
           }, function mediaUpdated(err) {
             if (err)
