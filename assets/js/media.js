@@ -101,6 +101,14 @@ angular.module('Bethel.media', [
         thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/original.' + $scope.media[i].extension;
         break;
 
+      case 'video':
+        if ($scope.media[i].video_frames > 1) {
+          thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/thumbnails/frame_0001.jpg';
+        } else {
+          thumbnail = '/render/320x180/images/DefaultPodcaster.png';
+        }
+        break;
+
       default:
         thumbnail = '/render/320x180/images/DefaultPodcaster.png';
 
@@ -254,6 +262,14 @@ angular.module('Bethel.media', [
     switch (media.type) {
       case 'image':
         thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/original.' + media.extension;
+        break;
+
+      case 'video':
+        if (media.video_frames > 1) {
+          thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/thumbnails/frame_0001.jpg';
+        } else {
+          thumbnail = '/render/' + size + '/images/DefaultPodcaster.png';
+        }
         break;
 
       default:
