@@ -41,6 +41,41 @@ angular.module('Bethel.media', [
   };
 })
 
+.filter('thumbnail', function() {
+  return function(media, size) {
+    if (typeof media === 'undefined') return '';
+
+    var ministry = (typeof media.ministry.id === 'undefined') ? media.ministry : media.ministry.id,
+        prefix = '/render/' + size + '/';
+
+    if (media.status === 'STATUS_UPLOADING') return prefix + 'images/DefaultPodcaster.png';
+
+    switch (media.type) {
+      case 'image':
+        thumbnail = prefix + 'media/' + ministry + '/' + media.id + '/original.' + media.extension;
+        break;
+
+      case 'video':
+        if (media.poster_frame) {
+          thumbnail = (media.poster_frame == 'custom') ? prefix + media.poster_frame_custom : prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_000' + (Number(media.poster_frame) - 1) + '.jpg';
+        }
+        else if (media.video_frames > 1) {
+          thumbnail = prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_0001.jpg';
+        }
+        else {
+          thumbnail = prefix + 'images/DefaultPodcaster.png';
+        }
+        break;
+
+      default:
+        thumbnail = prefix + 'images/DefaultPodcaster.png';
+
+    }
+
+    return thumbnail;
+  };
+})
+
 .controller('MediaListCtrl', function ($scope, $rootScope, $upload) {
 
   $scope.showVideo = $scope.showAudio = $scope.showImage = true;
@@ -94,44 +129,6 @@ angular.module('Bethel.media', [
       }
     }
   };
-
-  $scope.typeForMediaWithIndex = function(i) {
-    switch ($scope.media[i].type) {
-      case 'image':
-        thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/original.' + $scope.media[i].extension;
-        break;
-
-      case 'video':
-        if ($scope.media[i].video_frames > 1) {
-          thumbnail = '/render/320x180/media/' + $scope.media[i].ministry + '/' + $scope.media[i].id + '/thumbnails/frame_0001.jpg';
-        } else {
-          thumbnail = '/render/320x180/images/DefaultPodcaster.png';
-        }
-        break;
-
-      default:
-        thumbnail = '/render/320x180/images/DefaultPodcaster.png';
-
-    }
-
-    return thumbnail;
-  };
-
-  $scope.$watch('media', function() {
-    if (typeof $scope.media === 'undefined')
-      return;
-
-    for (var i = 0; i < $scope.media.length; i++) {
-
-      // If the file hasn't finished uploading, render a generic thumbnail.
-      if ($scope.media[i].status == 'STATUS_UPLOADING') {
-        $scope.media[i].thumbnail = '/render/320x180/images/DefaultPodcaster.png';
-        continue;
-      }
-
-      $scope.media[i].thumbnail = $scope.typeForMediaWithIndex(i);
-    }
-  });
 
   // Called when any media is uploaded, modified or deleted.
   // @todo: Update only the record in the message rather than the entire scope.
@@ -200,7 +197,6 @@ angular.module('Bethel.media', [
         _csrf: $rootScope._csrf
       }, function() {
         var i = $scope.indexOfMediaWithId(mediaId);
-        $scope.media[i].thumbnail = $scope.typeForMediaWithIndex(i);
         $scope.$apply();
       });
     });
@@ -276,39 +272,6 @@ angular.module('Bethel.media', [
       poster_frame: thumbnail,
       _csrf: $rootScope._csrf
     });
-  };
-
-  $scope.thumbnailForMediaWithSize = function(media, size) {
-    if (typeof media === 'undefined')
-      return;
-
-    switch (media.type) {
-      case 'image':
-        thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/original.' + media.extension;
-        break;
-
-      case 'video':
-        if (media.poster_frame) {
-          if (media.poster_frame == 'custom') {
-            thumbnail = '/render/' + size + '/' + media.poster_frame_custom;
-          } else {
-            thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/thumbnails/frame_000' + (Number(media.poster_frame) - 1) + '.jpg';
-          }
-        }
-        else if (media.video_frames > 1) {
-          thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/thumbnails/frame_0001.jpg';
-        }
-        else {
-          thumbnail = '/render/' + size + '/images/DefaultPodcaster.png';
-        }
-        break;
-
-      default:
-        thumbnail = '/render/' + size + '/images/DefaultPodcaster.png';
-
-    }
-
-    return thumbnail;
   };
 
   // Triggered when a file is chosen for upload.

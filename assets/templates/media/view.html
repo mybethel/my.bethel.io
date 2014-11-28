@@ -2,8 +2,8 @@
   <div class="row no-gutters">
     <div class="col-md-8">
       <div data-ng-if="media.type == 'video'" class="alert alert-warning" role="alert">Web player preview is limited to 15 seconds. To enable full video for playback a web-optimized version must be generated. <a href="#" class="alert-link">Click here to make one!</a></div>
-      <img data-ng-if="media.type != 'video'" class="media-thumb" data-ng-src="{{ thumbnailForMediaWithSize(media, '604x340') }}" alt="{{ media.filename }}" />
-      <video data-ng-if="media.type == 'video'" id="media-player" class="video-js vjs-sublime-skin" controls preload="none" width="auto" height="auto" poster="{{ thumbnailForMediaWithSize(media, '604x340') }}" data-setup="{}">
+      <img data-ng-if="media.type != 'video'" class="media-thumb" data-ng-src="{{ media | thumbnail:'604x340' }}" alt="{{ media.filename }}" />
+      <video data-ng-if="media.type == 'video'" id="media-player" class="video-js vjs-sublime-skin" controls preload="none" width="auto" height="auto" poster="{{ media | thumbnail:'604x340' }}" data-setup="{}">
         <source data-ng-src="{{ media.preview }}" type='video/mp4' />
         <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
       </video>
