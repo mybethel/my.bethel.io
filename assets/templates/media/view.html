@@ -7,8 +7,8 @@
         <source data-ng-src="{{ media.preview }}" type='video/mp4' />
         <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
       </video>
-      <div class="panel-heading media-title">
-        <h1 class="panel-title" data-ng-bind="media.title || media.filename"></h1>
+      <div class="panel-heading">
+        <h1 class="panel-title media-title" data-ng-bind="media.name || media.filename"></h1>
       </div>
       <div class="content">
         <tags-input ng-model="tags" placeholder="Enter tags separated by commas." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>

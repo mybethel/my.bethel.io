@@ -49,6 +49,10 @@ module.exports = {
       type: 'integer'
     },
 
+    name: {
+      type: 'string'
+    },
+
     ministry: {
       model: 'ministry'
     },
