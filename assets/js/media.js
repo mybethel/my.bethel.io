@@ -220,11 +220,11 @@ angular.module('Bethel.media', [
     }
     if (data.type == 'video') {
       $scope.media.preview = $sce.trustAsResourceUrl('https://cloud.bethel.io/media/' + data.ministry.id + '/' + data.id + '/preview.mp4');
+      $scope.player = videojs('media-player');
     }
     $scope.$apply();
 
     new MediumEditor('.media-description');
-    $scope.player = videojs('media-player');
   });
 
   io.socket.get('/media/browser', function (data) {
