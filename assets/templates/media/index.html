@@ -29,7 +29,7 @@
           <a ui-sref=".view({ mediaId: file.id })" class="thumbnail" title="{{ file.filename }}">
             <div round-progress max="100" current="file.progress" color="#1591b5" bgcolor="#f4f6f8" radius="30" stroke="10" semi="false" data-ng-show="file.status == 'STATUS_UPLOADING'"></div>
             <img class="media-thumb" data-ng-src="{{ file | thumbnail:'320x180' }}" alt="{{ file.filename }}" data-ng-class="file.status == 'STATUS_UPLOADING' ? 'uploading' : 'uploaded'" width="320" height="180" />
-            <span class="media-time" data-ng-show="file.duration"><i class="fa fa-video-camera"></i> <span data-ng-bind="file.duration | duration">2:42</span></span>
+            <span class="media-time"><i class="fa" data-ng-class="{ 'fa-video-camera': file.type == 'video', 'fa-volume-up': file.type == 'audio', 'fa-camera': file.type == 'image' }"></i><span data-ng-bind="file.duration | duration" data-ng-show="file.duration">2:42</span></span>
             <span class="media-meta" data-ng-bind="file.filename">&nbsp;</span>
           </a>
         </div>
