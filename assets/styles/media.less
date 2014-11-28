@@ -195,4 +195,24 @@ section.page-wrap .dash-panel-right.thumbnails {
   tags-input {
     margin: -10px 0 15px 0;
   }
+  .panel-thumbnails {
+    .col-md-4 img {
+      width: 100%;
+      opacity: 0.2;
+      box-sizing:border-box;
+      -moz-box-sizing:border-box;
+      -webkit-box-sizing:border-box;
+      &.selected, &:hover {
+        opacity: 1.0;
+        border: 3px solid #1591b5;
+      }
+    }
+    .poster-upload {
+      text-align: center;
+      button {
+        font-size: 24px;
+        margin-top: 12px;
+      }
+    }
+  }
 }

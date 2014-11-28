@@ -81,6 +81,14 @@ module.exports = {
       type: 'integer'
     },
 
+    poster_frame: {
+      type: 'string'
+    },
+
+    poster_frame_custom: {
+      type: 'string'
+    },
+
     width: {
       type: 'integer'
     }

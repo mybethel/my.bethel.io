@@ -208,8 +208,10 @@ angular.module('Bethel.media', [
 
 })
 
-.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce) {
+.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce, $upload) {
   $scope.id = $stateParams.mediaId;
+  $scope.thumbnailUploading = false;
+  $scope.thumbnailCustomUrl = '';
 
   io.socket.get('/media/' + $scope.id, function (data) {
     $scope.media = data;
@@ -226,6 +228,11 @@ angular.module('Bethel.media', [
 
     new MediumEditor('.media-description');
     $scope.player = videojs('media-player');
+  });
+
+  io.socket.get('/media/browser', function (data) {
+    $scope.upload = data.upload;
+    $scope.$apply();
   });
 
   $scope.$on('$destroy', function() {
@@ -263,6 +270,14 @@ angular.module('Bethel.media', [
     });
   });
 
+  $scope.setThumbnail = function(thumbnail) {
+    $scope.media.poster_frame = thumbnail;
+    io.socket.put('/media/' + $scope.media.id, {
+      poster_frame: thumbnail,
+      _csrf: $rootScope._csrf
+    });
+  };
+
   $scope.thumbnailForMediaWithSize = function(media, size) {
     if (typeof media === 'undefined')
       return;
@@ -273,9 +288,17 @@ angular.module('Bethel.media', [
         break;
 
       case 'video':
-        if (media.video_frames > 1) {
+        if (media.poster_frame) {
+          if (media.poster_frame == 'custom') {
+            thumbnail = '/render/' + size + '/' + media.poster_frame_custom;
+          } else {
+            thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/thumbnails/frame_000' + (Number(media.poster_frame) - 1) + '.jpg';
+          }
+        }
+        else if (media.video_frames > 1) {
           thumbnail = '/render/' + size + '/media/' + media.ministry.id + '/' + media.id + '/thumbnails/frame_0001.jpg';
-        } else {
+        }
+        else {
           thumbnail = '/render/' + size + '/images/DefaultPodcaster.png';
         }
         break;
@@ -287,4 +310,45 @@ angular.module('Bethel.media', [
 
     return thumbnail;
   };
+
+  // Triggered when a file is chosen for upload.
+  $scope.onFileSelect = function ($files) {
+    for (var i = 0; i < $files.length; i++) {
+      var ext = $files[i].name.split('.').pop(),
+          location = 'media/' + $scope.media.ministry.id + '/' + $scope.media.id + '/thumbnails/' + $files[i].name;
+
+      $scope.uploadFile(location, $files[i]);
+    }
+  };
+
+  $scope.uploadFile = function (location, file) {
+    var fileMeta = {
+      key: location,
+      AWSAccessKeyId: $scope.upload.key, 
+      acl: 'public-read',
+      policy: $scope.upload.policy,
+      signature: $scope.upload.signature,
+    };
+
+    $upload.upload({
+      url: $scope.upload.action,
+      method: 'POST',
+      data: fileMeta,
+      file: file,
+    })
+    .progress(function(evt) {
+      $scope.thumbnailUploading = true;
+    })
+    .success(function(data, status, headers, config) {
+      $scope.thumbnailUploading = false;
+      $scope.media.poster_frame = 'custom';
+      $scope.media.poster_frame_custom = location;
+      io.socket.put('/media/' + $scope.media.id, {
+        poster_frame: 'custom',
+        poster_frame_custom: location,
+        _csrf: $rootScope._csrf
+      });
+    });
+  };
+
 });
