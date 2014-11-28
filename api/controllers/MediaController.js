@@ -5,8 +5,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var AWS = require('aws-sdk'),
-    Zencoder = require('zencoder')(sails.config.zencoder.key);
+var AWS = require('aws-sdk');
 
 module.exports = {
 
@@ -49,6 +48,20 @@ module.exports = {
             video_codec: jobDetails.input_media_file.video_codec,
             video_frames: jobDetails.thumbnails.length,
             width: jobDetails.input_media_file.width
+          }, function mediaUpdated(err) {
+            if (err)
+              sails.log.error(err);
+          });
+        });
+      }
+      else if (media.type === 'audio') {
+        VideoEncoding.getMetadata(mediaKey, media.ministry, function (jobDetails) {
+          Media.update(req.param('id'), {
+            audio_bitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
+            audio_codec: jobDetails.input_media_file.audio_codec,
+            audio_samplerate: jobDetails.input_media_file.audio_sample_rate,
+            duration: jobDetails.input_media_file.duration_in_ms,
+            format: jobDetails.input_media_file.format
           }, function mediaUpdated(err) {
             if (err)
               sails.log.error(err);
