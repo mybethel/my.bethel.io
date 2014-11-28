@@ -14,7 +14,7 @@ exports.checkJob = function(jobId, cb) {
 
 exports.getMetadata = function(filePath, ministryId, cb) {
   Zencoder.Job.create({
-    "input": "http://cloud.bethel.io/" + filePath,
+    "input": "s3://cloud.bethel.io/" + filePath,
     "grouping": "ministry-" + ministryId,
     "output": [{
       "skip": {
@@ -31,7 +31,7 @@ exports.getMetadata = function(filePath, ministryId, cb) {
 
 exports.encodePreview = function(filePath, fileId, ministryId, cb) {
   Zencoder.Job.create({
-    "input": "http://cloud.bethel.io/" + filePath,
+    "input": "s3://cloud.bethel.io/" + filePath,
     "grouping": "ministry-" + ministryId,
     "output": [{
       "audio_bitrate": 256,
