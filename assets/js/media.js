@@ -197,6 +197,7 @@ angular.module('Bethel.media', [
         _csrf: $rootScope._csrf
       }, function() {
         var i = $scope.indexOfMediaWithId(mediaId);
+        $scope.media[i].status = 'STATUS_FINISHED';
         $scope.$apply();
       });
     });
