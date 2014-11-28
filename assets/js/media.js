@@ -43,7 +43,7 @@ angular.module('Bethel.media', [
 
 .filter('thumbnail', function() {
   return function(media, size) {
-    if (typeof media === 'undefined') return '';
+    if (typeof media === 'undefined' || typeof media.ministry === 'undefined') return '';
 
     var ministry = (typeof media.ministry.id === 'undefined') ? media.ministry : media.ministry.id,
         prefix = '/render/' + size + '/';
