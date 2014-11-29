@@ -1,0 +1,26 @@
+<div class="dash-panel-right x-large thumbnails">
+  <div class="panel-heading">
+    <div class="pull-right search-box">
+      <input type="text" class="form-control" data-ng-model="searchText" placeholder="{{ selectedCollection.name ? 'Search \'' + selectedCollection.name + '\'' : 'Search media' }}" />
+      <i class="fa fa-search">&nbsp;</i>
+    </div>
+    <div class="btn-group pull-right type-filter" role="group">
+      <button type="button" class="btn btn-default" data-ng-class="showVideo ? 'active' : ''" data-ng-click="filterByType('video')"><i class="fa fa-video-camera"></i></button>
+      <button type="button" class="btn btn-default" data-ng-class="showAudio ? 'active' : ''" data-ng-click="filterByType('audio')"><i class="fa fa-volume-up"></i></button>
+      <button type="button" class="btn btn-default" data-ng-class="showImage ? 'active' : ''" data-ng-click="filterByType('image')"><i class="fa fa-camera"></i></button>
+    </div>
+    <h2 class="panel-title" data-ng-bind="filterByCollection == 'all' ? 'All Media' : selectedCollection.name"></h2>
+  </div>
+  <div class="content">
+    <div class="row">
+      <div class="col-xs-6 col-md-3" ng-repeat="file in media | filter:searchText | filter:mediaType | orderBy:'createdAt':true">
+        <a ui-sref="media.view({ mediaId: file.id })" class="thumbnail" title="{{ file.filename }}">
+          <div round-progress max="100" current="file.progress" color="#1591b5" bgcolor="#f4f6f8" radius="30" stroke="10" semi="false" data-ng-show="file.status == 'STATUS_UPLOADING'"></div>
+          <img class="media-thumb" data-ng-src="{{ file | thumbnail:'320x180' }}" alt="{{ file.filename }}" data-ng-class="file.status == 'STATUS_UPLOADING' ? 'uploading' : 'uploaded'" width="320" height="180" />
+          <span class="media-time"><i class="fa" data-ng-class="{ 'fa-video-camera': file.type == 'video', 'fa-volume-up': file.type == 'audio', 'fa-camera': file.type == 'image' }"></i><span data-ng-bind="file.duration | duration" data-ng-show="file.duration">2:42</span></span>
+          <span class="media-meta" data-ng-bind="file.name || file.filename">&nbsp;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
