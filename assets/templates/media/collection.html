@@ -12,6 +12,15 @@
     <h2 class="panel-title" data-ng-bind="filterByCollection == 'all' ? 'All Media' : selectedCollection.name"></h2>
   </div>
   <div class="content">
+    <div data-ng-if="media.length < 1" class="info-well">
+      <h1>Getting Started with Media Cloud</h1>
+      <p>Collections organize your media and affect how they are shown to visitors. Typically, a single collection is created for each sermon series or event. A collection can automatically encode videos into Web or iOS compatible versions or create an audio file for podcasting!</p>
+      <button class="btn" data-ng-bind="filterByCollection == 'all' ? 'Add Collection &#xffeb;' : 'Configure Collection &#xffeb;'">Add Collection &#xffeb;</button>
+      <p>You can upload new files to this collection by clicking <b>Upload Media</b> in the upper left corner. <em>Already have media uploaded?</em> Simply tag it with the name of this collection and it'll appear here.</p>
+      <button class="btn">Find Media to Tag &#xffeb;</button>
+      <p><b>Uploading a large amount of files?</b><br />Send us a hard drive and we'll take care of the rest.</p>
+      <button class="btn">Learn More &#xffeb;</button>
+    </div>
     <div class="row">
       <div class="col-xs-6 col-md-3" ng-repeat="file in media | filter:searchText | filter:mediaType | orderBy:'createdAt':true">
         <a ui-sref="media.view({ mediaId: file.id })" class="thumbnail" title="{{ file.filename }}">
