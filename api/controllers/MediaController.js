@@ -39,6 +39,19 @@ module.exports = {
     });
   },
 
+  collections: function (req, res) {
+    if (!req.session.Ministry)
+      return res.forbidden('Your account is not associated with a ministry.');
+
+    Media.find().where({ ministry: req.session.Ministry.id, type: 'collection', name : {'contains' : req.param('id')} }).exec(function (err, results) {
+      var collections = [];
+      results.forEach(function (result) {
+        collections.push({ id: result.id, text: result.name });
+      });
+      return res.send(collections);
+    });
+  },
+
   meta: function (req, res) {
     if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
       return res.serverError('Required AWS credentials not set.');

@@ -268,17 +268,25 @@ angular.module('Bethel.media', [
 
 })
 
-.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce, $upload) {
+.controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce, $upload, $http) {
   $scope.id = $stateParams.mediaId;
   $scope.thumbnailUploading = false;
   $scope.thumbnailCustomUrl = '';
+  $scope.$parent.selectedCollection = '';
 
   io.socket.get('/media/' + $scope.id, function (data) {
     $scope.media = data;
     $scope.media.description = $sce.trustAsHtml(data.description);
     if (typeof $scope.media.tags !== 'undefined') {
       $scope.media.tags.forEach(function (tag) {
-        $scope.tags.push({ text: tag });
+        if (tag.match(/^[0-9a-fA-F]{24}$/)) {
+          io.socket.get('/media/' + tag, function (collection) {
+            $scope.tags.push({ id: tag, text: collection.name });
+            $scope.$apply();
+          });
+        } else {
+          $scope.tags.push({ text: tag });
+        }
       });
     }
     if (data.type == 'video') {
@@ -300,17 +308,25 @@ angular.module('Bethel.media', [
     if ($scope.player) $scope.player.dispose();
   });
 
+  $scope.loadTags = function(query) {
+    return $http.get('/media/collections/' + query);
+  };
+
   $scope.updateTags = function(tag, action) {
     switch (action) {
       case 'added':
         if (typeof $scope.media.tags === 'undefined') {
           $scope.media.tags = [];
         }
-        $scope.media.tags.push(tag.text);
+        if (typeof tag.id !== 'undefined') {
+          $scope.media.tags.push(tag.id);
+        } else {
+          $scope.media.tags.push(tag.text);
+        }
         break;
 
       case 'removed':
-        var tagToDelete = $scope.media.tags.indexOf(tag.text);
+        var tagToDelete = (typeof tag.id !== 'undefined') ? $scope.media.tags.indexOf(tag.id) : $scope.media.tags.indexOf(tag.text);
         if (tagToDelete > -1) {
           $scope.media.tags.splice(tagToDelete, 1);
         }
