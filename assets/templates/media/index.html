@@ -10,41 +10,41 @@
           </div>
         </div>
       </li>
-      <li class="active"><a ui-sref="media"><span class="fa-stack">
+      <li data-ng-class="{ 'active': filterByCollection == 'all' }"><a ui-sref="media"><span class="fa-stack">
         <i class="fa fa-folder fa-stack-2x">&nbsp;</i>
         <i class="fa fa-cloud fa-inverse fa-stack-1x">&nbsp;</i>
       </span><span class="label">All Media</span></a></li>
-      <li data-ng-repeat="collection in collections"><a ui-sref="media"><span class="fa-stack">
+      <li data-ng-repeat="collection in collections" data-ng-class="{ 'active': filterByCollection == collection.id }"><a ui-sref="media-collection({ collectionId: collection.id })"><span class="fa-stack">
         <i class="fa fa-folder fa-stack-2x">&nbsp;</i>
         <i class="fa fa-play-circle-o fa-inverse fa-stack-1x">&nbsp;</i>
-      </span><span class="label collection-label" data-collection-id="{{ collection.id }}" data-ng-bind="collection.name"></span></a></li>
+      </span><span class="label" data-collection-id="{{ collection.id }}" data-ng-bind="collection.name"></span></a></li>
     </ul>
 </div>
 <div data-ui-view>
   <div class="dash-panel-right x-large thumbnails">
-    <div class="panel-heading">
-      <div class="pull-right search-box">
-        <input type="text" class="form-control" data-ng-model="searchText" placeholder="Search media" />
-        <i class="fa fa-search">&nbsp;</i>
-      </div>
-      <div class="btn-group pull-right type-filter" role="group">
-        <button type="button" class="btn btn-default" data-ng-class="showVideo ? 'active' : ''" data-ng-click="filterByType('video')"><i class="fa fa-video-camera"></i></button>
-        <button type="button" class="btn btn-default" data-ng-class="showAudio ? 'active' : ''" data-ng-click="filterByType('audio')"><i class="fa fa-volume-up"></i></button>
-        <button type="button" class="btn btn-default" data-ng-class="showImage ? 'active' : ''" data-ng-click="filterByType('image')"><i class="fa fa-camera"></i></button>
-      </div>
-      <h2 class="panel-title">All Media</h2>
+  <div class="panel-heading">
+    <div class="pull-right search-box">
+      <input type="text" class="form-control" data-ng-model="searchText" placeholder="{{ selectedCollection.name ? 'Search \'' + selectedCollection.name + '\'' : 'Search media' }}" />
+      <i class="fa fa-search">&nbsp;</i>
     </div>
-    <div class="content">
-      <div class="row">
-        <div class="col-xs-6 col-md-3" ng-repeat="file in media | filter:searchText | filter:mediaType | orderBy:'createdAt':true">
-          <a ui-sref=".view({ mediaId: file.id })" class="thumbnail" title="{{ file.filename }}">
-            <div round-progress max="100" current="file.progress" color="#1591b5" bgcolor="#f4f6f8" radius="30" stroke="10" semi="false" data-ng-show="file.status == 'STATUS_UPLOADING'"></div>
-            <img class="media-thumb" data-ng-src="{{ file | thumbnail:'320x180' }}" alt="{{ file.filename }}" data-ng-class="file.status == 'STATUS_UPLOADING' ? 'uploading' : 'uploaded'" width="320" height="180" />
-            <span class="media-time"><i class="fa" data-ng-class="{ 'fa-video-camera': file.type == 'video', 'fa-volume-up': file.type == 'audio', 'fa-camera': file.type == 'image' }"></i><span data-ng-bind="file.duration | duration" data-ng-show="file.duration">2:42</span></span>
-            <span class="media-meta" data-ng-bind="file.name || file.filename">&nbsp;</span>
-          </a>
-        </div>
+    <div class="btn-group pull-right type-filter" role="group">
+      <button type="button" class="btn btn-default" data-ng-class="showVideo ? 'active' : ''" data-ng-click="filterByType('video')"><i class="fa fa-video-camera"></i></button>
+      <button type="button" class="btn btn-default" data-ng-class="showAudio ? 'active' : ''" data-ng-click="filterByType('audio')"><i class="fa fa-volume-up"></i></button>
+      <button type="button" class="btn btn-default" data-ng-class="showImage ? 'active' : ''" data-ng-click="filterByType('image')"><i class="fa fa-camera"></i></button>
+    </div>
+    <h2 class="panel-title" data-ng-bind="selectedCollection.name ? selectedCollection.name : 'All Media'"></h2>
+  </div>
+  <div class="content">
+    <div class="row">
+      <div class="col-xs-6 col-md-3" ng-repeat="file in media | filter:searchText | filter:mediaType | orderBy:'createdAt':true">
+        <a ui-sref=".view({ mediaId: file.id })" class="thumbnail" title="{{ file.filename }}">
+          <div round-progress max="100" current="file.progress" color="#1591b5" bgcolor="#f4f6f8" radius="30" stroke="10" semi="false" data-ng-show="file.status == 'STATUS_UPLOADING'"></div>
+          <img class="media-thumb" data-ng-src="{{ file | thumbnail:'320x180' }}" alt="{{ file.filename }}" data-ng-class="file.status == 'STATUS_UPLOADING' ? 'uploading' : 'uploaded'" width="320" height="180" />
+          <span class="media-time"><i class="fa" data-ng-class="{ 'fa-video-camera': file.type == 'video', 'fa-volume-up': file.type == 'audio', 'fa-camera': file.type == 'image' }"></i><span data-ng-bind="file.duration | duration" data-ng-show="file.duration">2:42</span></span>
+          <span class="media-meta" data-ng-bind="file.name || file.filename">&nbsp;</span>
+        </a>
       </div>
     </div>
   </div>
+</div>
 </div>

@@ -13,8 +13,13 @@ angular.module('Bethel.media', [
       templateUrl: 'templates/media/index.html',
       controller: 'MediaListCtrl'
     })
+    .state('media-collection', {
+      url: '/media/collection/:collectionId',
+      templateUrl: 'templates/media/index.html',
+      controller: 'MediaListCtrl'
+    })
     .state('media.view', {
-      url: '/:mediaId',
+      url: '/view/:mediaId',
       templateUrl: 'templates/media/view.html',
       controller: 'MediaViewCtrl'
     });
@@ -76,9 +81,10 @@ angular.module('Bethel.media', [
   };
 })
 
-.controller('MediaListCtrl', function ($scope, $rootScope, $upload) {
+.controller('MediaListCtrl', function ($scope, $rootScope, $state, $stateParams, $upload) {
 
   $scope.showVideo = $scope.showAudio = $scope.showImage = true;
+  $scope.filterByCollection = $stateParams.collectionId || 'all';
 
   $scope.filterByType = function(type) {
     if (type == 'video')
@@ -105,9 +111,10 @@ angular.module('Bethel.media', [
   };
 
   $scope.init = function() {
-    io.socket.get('/media/browser', function (data) {
+    io.socket.get('/media/browser/' + $scope.filterByCollection, function (data) {
       $scope.media = data.media;
       $scope.collections = data.collections;
+      $scope.selectedCollection = data.selectedCollection;
       $scope.upload = data.upload;
       $scope.$apply();
 
@@ -220,6 +227,8 @@ angular.module('Bethel.media', [
       type: 'collection',
       ministry: $rootScope.ministry.id,
       _csrf: $rootScope._csrf
+    }, function(data) {
+      $state.go('media-collection', { collectionId: data.id });
     });
   };
 

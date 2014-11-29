@@ -13,11 +13,18 @@ module.exports = {
     if (!req.session.Ministry)
       return res.forbidden('Your account is not associated with a ministry.');
 
-    Media.find().where({ ministry: req.session.Ministry.id }).exec(function (err, results) {
-      var collections = [];
+    var criteria = { ministry: req.session.Ministry.id };
+    if (req.param('id') !== 'all') criteria.or = [{ tags: req.param('id')}, { type: 'collection'}];
+
+    Media.find().where(criteria).exec(function (err, results) {
+      var collections = [],
+          selectedCollection = {};
       results = results.filter(function (result) {
         if (result.type == 'collection') {
           collections.push(result);
+          if (req.param('id') !== 'all' && result.id == req.param('id')) {
+            selectedCollection = result;
+          } 
           return false;
         }
         return true;
@@ -25,6 +32,7 @@ module.exports = {
       return res.send({
         media: results,
         collections: collections,
+        selectedCollection: selectedCollection,
         upload: S3Upload.prepare('media/' + req.session.Ministry.id)
       });
 
