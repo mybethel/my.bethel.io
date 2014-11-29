@@ -107,8 +107,19 @@ angular.module('Bethel.media', [
   $scope.init = function() {
     io.socket.get('/media/browser', function (data) {
       $scope.media = data.media;
+      $scope.collections = data.collections;
       $scope.upload = data.upload;
       $scope.$apply();
+
+      var elements = document.querySelectorAll('.collection-label'),
+      editor = new MediumEditor(elements, { disableToolbar: true, disableReturn: true });
+
+      $('.collection-label').on('input', function() {
+        io.socket.put('/media/' + $(this).data('collection-id'), {
+          name: $(this).text(),
+          _csrf: $rootScope._csrf
+        });
+      });
     });
   };
 
@@ -203,6 +214,15 @@ angular.module('Bethel.media', [
     });
   };
 
+  $scope.createFolder = function() {
+    io.socket.post('/media', {
+      name: 'New Collection',
+      type: 'collection',
+      ministry: $rootScope.ministry.id,
+      _csrf: $rootScope._csrf
+    });
+  };
+
 })
 
 .controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce, $upload) {
@@ -223,7 +243,7 @@ angular.module('Bethel.media', [
     }
     $scope.$apply();
 
-    new MediumEditor('.media-title', { disableToolbar: true });
+    new MediumEditor('.media-title', { disableToolbar: true, disableReturn: true });
     new MediumEditor('.media-description');
     if (data.type == 'video') $scope.player = videojs('media-player');
   });
@@ -258,7 +278,6 @@ angular.module('Bethel.media', [
       tags: $scope.media.tags,
       _csrf: $rootScope._csrf
     });
-    console.log($scope.media.tags);
   };
 
   $('.media-title').on('input', function() {

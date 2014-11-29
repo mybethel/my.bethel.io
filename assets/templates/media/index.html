@@ -1,12 +1,23 @@
 <div class="dash-panel-left x-small sidebar-files">
    <ul class="nav nav-pills nav-stacked">
       <li class="button">
-        <button data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,image/*,video/*,video/mp4" class="btn btn-success btn-block"><i class="fa fa-upload"></i> Upload Media</button>
+        <div class="row no-gutters">
+          <div class="col-xs-10">
+            <button data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,image/*,video/*,video/mp4" class="btn btn-block btn-success"><i class="fa fa-upload"></i> Upload Media</button>
+          </div>
+          <div class="col-xs-2">
+            <button class="btn btn-default btn-block" data-ng-click="createFolder()"><i class="fa fa-folder"></i></button>
+          </div>
+        </div>
       </li>
       <li class="active"><a ui-sref="media"><span class="fa-stack">
         <i class="fa fa-folder fa-stack-2x">&nbsp;</i>
         <i class="fa fa-cloud fa-inverse fa-stack-1x">&nbsp;</i>
       </span><span class="label">All Media</span></a></li>
+      <li data-ng-repeat="collection in collections"><a ui-sref="media"><span class="fa-stack">
+        <i class="fa fa-folder fa-stack-2x">&nbsp;</i>
+        <i class="fa fa-play-circle-o fa-inverse fa-stack-1x">&nbsp;</i>
+      </span><span class="label collection-label" data-collection-id="{{ collection.id }}" data-ng-bind="collection.name"></span></a></li>
     </ul>
 </div>
 <div data-ui-view>

@@ -13,10 +13,18 @@ module.exports = {
     if (!req.session.Ministry)
       return res.forbidden('Your account is not associated with a ministry.');
 
-    Media.find({ministry: req.session.Ministry.id}).exec(function (err, results) {
-
+    Media.find().where({ ministry: req.session.Ministry.id }).exec(function (err, results) {
+      var collections = [];
+      results = results.filter(function (result) {
+        if (result.type == 'collection') {
+          collections.push(result);
+          return false;
+        }
+        return true;
+      });
       return res.send({
         media: results,
+        collections: collections,
         upload: S3Upload.prepare('media/' + req.session.Ministry.id)
       });
 

@@ -4,7 +4,7 @@
       <h3 class="panel-title">Statistics</h3>
     </div>
     <div class="panel-body">
-      <div class="row podcast-row">
+      <div class="row podcast-row" data-ng-show="stats.podcastChange">
         <div class="col-sm-4">
           <rickshaw rickshaw-options="chart.options" rickshaw-series="chart.draw"></rickshaw>
         </div>
@@ -20,7 +20,7 @@
       <h5 class="text-muted no-stats" data-ng-hide="stats.storage || stats.podcastChange">Check back later for statistics...</h5>
     </div>
   </div>
-  <div class="panel panel-default">
+  <div class="panel panel-default" data-ng-show="map.markers">
     <div class="panel-heading">
       <h3 class="panel-title">Ministry Locations <a ui-sref=".location" class="btn btn-panel">Edit</a></h3>
     </div>

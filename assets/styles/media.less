@@ -1,6 +1,9 @@
 section.page-wrap .dash-panel-left.sidebar-files {
   padding: 0;
   font-size: 1.8rem;
+  .button .col-xs-10 {
+    padding-right: 5px;
+  }
   li {
     margin-top: 0;
     border-bottom: 1px solid #EEE;
@@ -12,6 +15,13 @@ section.page-wrap .dash-panel-left.sidebar-files {
     &.active a {
       background: #EEE;
       border-right: 3px solid #1591B5;
+    }
+  }
+  .label.collection-label {
+    margin-left: .6em;
+    padding-left: 0;
+    p {
+      display: inline;
     }
   }
   a {
@@ -34,14 +44,6 @@ section.page-wrap .dash-panel-left.sidebar-files {
         -webkit-background-clip:text;
         -webkit-text-fill-color:transparent;
       }
-    }
-  }
-  .dim {
-    span.label {
-      color: #777;
-    }
-    span.fa-stack {
-      color: #BBB;
     }
   }
 }
@@ -80,6 +82,9 @@ section.page-wrap .dash-panel-right.thumbnails {
         &:hover, &.active {
           color: #888;
           border-color: #106982;
+        }
+        &.active {
+          color: #106982;
         }
       }
     }
