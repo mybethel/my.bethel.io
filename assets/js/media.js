@@ -200,7 +200,7 @@ angular.module('Bethel.media', [
       ministry: $rootScope.ministry.id,
       _csrf: $rootScope._csrf
     }, function(data) {
-      $state.go('media.collection', { collectionId: data.id });
+      $state.go('media.collection.edit', { collectionId: data.id });
     });
   };
 })
