@@ -318,8 +318,8 @@ section.page-wrap .dash-panel-right table tr:first-child td {
   border: 0;
 }
 
-section.page-wrap .dash-panel-right table tr:hover td {
-  background-color: rgba(255,255,255,0.04);
+section.page-wrap .dash-panel-right table tr:hover {
+  background-color: rgba(255,255,255,0.04) !important;
 }
 
 .nav-collapsed section.page-wrap {

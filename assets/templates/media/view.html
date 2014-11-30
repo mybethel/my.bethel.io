@@ -1,6 +1,7 @@
 <div class="dash-panel-right x-large media-detail">
   <div class="row no-gutters">
     <div class="col-md-8">
+      <div data-ng-if="!media.public" class="alert alert-success" role="alert">This is a private file and is not visible to the public. <a href="" data-ng-click="togglePublic()" class="alert-link">Click here to make public.</a></div>
       <div data-ng-if="media.type == 'video'" class="alert alert-warning" role="alert">Web player preview is limited to 15 seconds. To enable full video for playback a web-optimized version must be generated. <a href="#" class="alert-link">Click here to make one!</a></div>
       <img data-ng-if="media.type != 'video'" class="media-thumb" data-ng-src="{{ media | thumbnail:'604':'340' }}" alt="{{ media.filename }}" />
       <video data-ng-if="media.type == 'video'" id="media-player" class="video-js vjs-sublime-skin" controls preload="none" width="auto" height="auto" poster="{{ media | thumbnail:'604':'340' }}" data-setup="{}">
@@ -56,6 +57,19 @@
               <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.audio_codec">
                 <td>Audio</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.audio_codec.toUpperCase()"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">Settings</h2>
+          </div>
+          <div class="panel-body full">
+            <table class="table table-hover">
+              <tr>
+                <td>Privacy</td>
+                <td style="vertical-align:middle;text-align:right;"><button class="btn btn-xs" data-ng-click="togglePublic()"><i class="fa" data-ng-class="media.public ? 'fa-eye' : 'fa-eye-slash'"></i> &nbsp;<span data-ng-bind="media.public ? 'Public' : 'Private'">Public</span></button></td>
               </tr>
             </table>
           </div>

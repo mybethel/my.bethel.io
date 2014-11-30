@@ -57,6 +57,11 @@ module.exports = {
       model: 'ministry'
     },
 
+    public: {
+      type: 'boolean',
+      defaultsTo: true
+    },
+
     status: {
       type: 'string'
     },

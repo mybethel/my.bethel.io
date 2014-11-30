@@ -437,6 +437,14 @@ angular.module('Bethel.media', [
     });
   }));
 
+  $scope.togglePublic = function() {
+    $scope.media.public = !$scope.media.public;
+    io.socket.put('/media/' + $scope.media.id, {
+      public: $scope.media.public,
+      _csrf: $rootScope._csrf
+    });
+  };
+
   $scope.setThumbnail = function(thumbnail) {
     $scope.media.poster_frame = thumbnail;
     io.socket.put('/media/' + $scope.media.id, {
