@@ -1,15 +1,17 @@
 <div class="dash-panel-right x-large thumbnails">
-  <div class="panel-heading">
-    <div class="pull-right search-box">
-      <input type="text" class="form-control" data-ng-model="searchText" placeholder="{{ selectedCollection.name ? 'Search \'' + selectedCollection.name + '\'' : 'Search media' }}" />
-      <i class="fa fa-search">&nbsp;</i>
+  <div data-ui-view>
+    <div class="panel-heading">
+      <div class="pull-right search-box">
+        <input type="text" class="form-control" data-ng-model="searchText" placeholder="{{ selectedCollection.name ? 'Search \'' + selectedCollection.name + '\'' : 'Search media' }}" />
+        <i class="fa fa-search">&nbsp;</i>
+      </div>
+      <div class="btn-group pull-right type-filter" role="group">
+        <button type="button" class="btn btn-default" data-ng-class="showVideo ? 'active' : ''" data-ng-click="filterByType('video')"><i class="fa fa-video-camera"></i></button>
+        <button type="button" class="btn btn-default" data-ng-class="showAudio ? 'active' : ''" data-ng-click="filterByType('audio')"><i class="fa fa-volume-up"></i></button>
+        <button type="button" class="btn btn-default" data-ng-class="showImage ? 'active' : ''" data-ng-click="filterByType('image')"><i class="fa fa-camera"></i></button>
+      </div>
+      <h2 class="panel-title"><a class="fa fa-edit" ui-sref=".edit" data-ng-show="filterByCollection != 'all'"></a><span data-ng-bind="filterByCollection == 'all' ? 'All Media' : selectedCollection.name"></span></h2>
     </div>
-    <div class="btn-group pull-right type-filter" role="group">
-      <button type="button" class="btn btn-default" data-ng-class="showVideo ? 'active' : ''" data-ng-click="filterByType('video')"><i class="fa fa-video-camera"></i></button>
-      <button type="button" class="btn btn-default" data-ng-class="showAudio ? 'active' : ''" data-ng-click="filterByType('audio')"><i class="fa fa-volume-up"></i></button>
-      <button type="button" class="btn btn-default" data-ng-class="showImage ? 'active' : ''" data-ng-click="filterByType('image')"><i class="fa fa-camera"></i></button>
-    </div>
-    <h2 class="panel-title" data-ng-bind="filterByCollection == 'all' ? 'All Media' : selectedCollection.name"></h2>
   </div>
   <div class="content">
     <div data-ng-if="media.length < 1" class="info-well">

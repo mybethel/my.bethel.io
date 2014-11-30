@@ -101,16 +101,6 @@ angular.module('Bethel.media', [
       $scope.collections = data.collections;
       $scope.upload = data.upload;
       $scope.$apply();
-
-      var elements = document.querySelectorAll('.collection-label'),
-      editor = new MediumEditor(elements, { disableToolbar: true, disableReturn: true });
-
-      $('.collection-label').on('input', function() {
-        io.socket.put('/media/' + $(this).data('collection-id'), {
-          name: $(this).text(),
-          _csrf: $rootScope._csrf
-        });
-      });
     });
   };
 
@@ -244,6 +234,7 @@ angular.module('Bethel.media', [
   };
 
   $scope.init = function() {
+    $scope.$parent.init();
     io.socket.get('/media/browser/' + $scope.filterByCollection, function (data) {
       $scope.media = data.media;
       $scope.upload = data.upload;
@@ -276,8 +267,42 @@ angular.module('Bethel.media', [
 
 })
 
-.controller('MediaCollectionEditCtrl', function ($scope, $rootScope, $state, $stateParams, $upload) {
+.controller('MediaCollectionEditCtrl', function ($scope, $rootScope, $state, $stateParams, $upload, $sce) {
+  $scope.init = function() {
+    io.socket.get('/media/' + $stateParams.collectionId, function (data) {
+      $scope.collection = data;
+      $scope.collection.description = $sce.trustAsHtml(data.description);
+      $scope.$apply();
 
+      new MediumEditor('.collection-title', { disableToolbar: true, disableReturn: true });
+      new MediumEditor('.collection-description');
+    });
+  };
+
+  $('.collection-title').on('input', $.debounce(250, function() {
+    console.log('updated');
+    io.socket.put('/media/' + $scope.collection.id, {
+      name: $('.collection-title').text(),
+      _csrf: $rootScope._csrf
+    }, function () {
+      // Trigger a refresh since socket doesn't emit to the same browser that broadcasts.
+      $scope.$parent.init();
+    });
+  }));
+
+  $('.collection-description').on('input', $.debounce(250, function() {
+    io.socket.put('/media/' + $scope.collection.id, {
+      description: $('.collection-description').html(),
+      _csrf: $rootScope._csrf
+    });
+  }));
+
+  $rootScope.$watch('ministry', function() {
+    if (!$rootScope.ministry || !$rootScope.ministry.id)
+      return;
+
+    $scope.init();
+  });
 })
 
 .controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce, $upload, $http) {
@@ -351,19 +376,19 @@ angular.module('Bethel.media', [
     });
   };
 
-  $('.media-title').on('input', function() {
+  $('.media-title').on('input', $.debounce(250, function() {
     io.socket.put('/media/' + $scope.media.id, {
       name: $('.media-title').text(),
       _csrf: $rootScope._csrf
     });
-  });
+  }));
 
-  $('.media-description').on('input', function() {
+  $('.media-description').on('input', $.debounce(250, function() {
     io.socket.put('/media/' + $scope.media.id, {
       description: $('.media-description').html(),
       _csrf: $rootScope._csrf
     });
-  });
+  }));
 
   $scope.setThumbnail = function(thumbnail) {
     $scope.media.poster_frame = thumbnail;
