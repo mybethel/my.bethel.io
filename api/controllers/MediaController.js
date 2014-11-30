@@ -19,6 +19,10 @@ module.exports = {
     Media.find().where(criteria).exec(function (err, results) {
       var collections = [],
           selectedCollection = {};
+
+      Media.watch(req.socket);
+      Media.subscribe(req.socket, results);
+
       results = results.filter(function (result) {
         if (result.type == 'collection') {
           collections.push(result);
@@ -45,6 +49,10 @@ module.exports = {
 
     Media.find().where({ ministry: req.session.Ministry.id, type: 'collection', name : {'contains' : req.param('id')} }).exec(function (err, results) {
       var collections = [];
+
+      Media.watch(req.socket);
+      Media.subscribe(req.socket, results);
+
       results.forEach(function (result) {
         collections.push({ id: result.id, text: result.name });
       });
