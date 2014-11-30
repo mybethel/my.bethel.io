@@ -78,6 +78,15 @@ angular.module('Bethel.media', [
         }
         break;
 
+      case 'collection':
+        if (media.poster_frame == 'custom') {
+          thumbnail = prefix + media.poster_frame_custom;
+        }
+        else {
+          thumbnail = prefix + 'images/DefaultPodcaster.png';
+        }
+        break;
+
       default:
         thumbnail = prefix + 'images/DefaultPodcaster.png';
 
@@ -230,7 +239,6 @@ angular.module('Bethel.media', [
     if (!$state.is('media')) {
       $state.go('media', { collectionId: 'me'});
     }
-    console.log('hello');
   };
 
   $scope.init = function() {
@@ -280,7 +288,6 @@ angular.module('Bethel.media', [
   };
 
   $('.collection-title').on('input', $.debounce(250, function() {
-    console.log('updated');
     io.socket.put('/media/' + $scope.collection.id, {
       name: $('.collection-title').text(),
       _csrf: $rootScope._csrf
@@ -303,6 +310,46 @@ angular.module('Bethel.media', [
 
     $scope.init();
   });
+
+  // Triggered when a file is chosen for upload.
+  $scope.onFileSelect = function ($files) {
+    for (var i = 0; i < $files.length; i++) {
+      var ext = $files[i].name.split('.').pop(),
+          location = 'media/' + $scope.collection.ministry.id + '/' + $scope.collection.id + '/' + $files[i].name;
+
+      $scope.uploadFile(location, $files[i]);
+    }
+  };
+
+  $scope.uploadFile = function (location, file) {
+    var fileMeta = {
+      key: location,
+      AWSAccessKeyId: $scope.upload.key, 
+      acl: 'public-read',
+      policy: $scope.upload.policy,
+      signature: $scope.upload.signature,
+    };
+
+    $upload.upload({
+      url: $scope.upload.action,
+      method: 'POST',
+      data: fileMeta,
+      file: file,
+    })
+    .progress(function(evt) {
+      $scope.thumbnailUploading = true;
+    })
+    .success(function(data, status, headers, config) {
+      $scope.thumbnailUploading = false;
+      $scope.collection.poster_frame = 'custom';
+      $scope.collection.poster_frame_custom = location;
+      io.socket.put('/media/' + $scope.collection.id, {
+        poster_frame: 'custom',
+        poster_frame_custom: location,
+        _csrf: $rootScope._csrf
+      });
+    });
+  };
 })
 
 .controller('MediaViewCtrl', function ($scope, $rootScope, $stateParams, $sce, $upload, $http) {
