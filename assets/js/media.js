@@ -18,6 +18,11 @@ angular.module('Bethel.media', [
       templateUrl: 'templates/media/collection.html',
       controller: 'MediaCollectionCtrl'
     })
+    .state('media.collection.edit', {
+      url: '/edit',
+      templateUrl: 'templates/media/collection.edit.html',
+      controller: 'MediaCollectionEditCtrl'
+    })
     .state('media.view', {
       url: '/view/:mediaId',
       templateUrl: 'templates/media/view.html',
@@ -47,13 +52,14 @@ angular.module('Bethel.media', [
 })
 
 .filter('thumbnail', function() {
-  return function(media, size) {
+  return function(media, width, height) {
     if (typeof media === 'undefined' || typeof media.ministry === 'undefined') return '';
 
     var ministry = (typeof media.ministry.id === 'undefined') ? media.ministry : media.ministry.id,
-        prefix = '/render/' + size + '/';
+        prefix = 'https://images.bethel.io/',
+        postfix = '?crop=faces&fit=crop&w=' + width + '&h=' + height;
 
-    if (media.status === 'STATUS_UPLOADING') return prefix + 'images/DefaultPodcaster.png';
+    if (media.status === 'STATUS_UPLOADING') return prefix + 'images/DefaultPodcaster.png' + postfix;
 
     switch (media.type) {
       case 'image':
@@ -76,6 +82,8 @@ angular.module('Bethel.media', [
         thumbnail = prefix + 'images/DefaultPodcaster.png';
 
     }
+
+    thumbnail += postfix;
 
     return thumbnail;
   };
@@ -265,6 +273,10 @@ angular.module('Bethel.media', [
   // Called when any media is uploaded, modified or deleted.
   // @todo: Update only the record in the message rather than the entire scope.
   io.socket.on('media', function (msg) { $scope.init(); });
+
+})
+
+.controller('MediaCollectionEditCtrl', function ($scope, $rootScope, $state, $stateParams, $upload) {
 
 })
 

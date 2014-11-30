@@ -58,11 +58,6 @@ module.exports.routes = {
   '/mobile': {
     controller: 'mobile',
     action: 'manage'
-  },
-
-  '/render/*': {
-    controller: 'image',
-    action: 'render'
   }
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
