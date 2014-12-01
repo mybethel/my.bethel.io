@@ -24,24 +24,32 @@ module.exports = {
           storageBytes += podcast.storage;
       });
 
-      Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
-        if (err) res.send(err, 500);
+      Media.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, media) {
 
-        var statistics = [];
-
-        // Select up to the last 12 weeks of stats for trending.
-        weeklyStats.slice(-12).forEach(function(stat) {
-          statistics.push(statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count);
+        media.forEach(function(media) {
+          if (media.size > 0)
+            storageBytes += media.size;
         });
 
-        var currentWeekAverage = statistics[statistics.length - 1] / 7 || 0,
-            lastWeekAverage = statistics[statistics.length - 2] / 7 || 0,
-            change = ((currentWeekAverage / lastWeekAverage) - 1) * 100;
+        Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
+          if (err) res.send(err, 500);
 
-        res.send({
-          podcast: statistics,
-          podcastChange: change,
-          storage: storageBytes / 1073741824 || 0
+          var statistics = [];
+
+          // Select up to the last 12 weeks of stats for trending.
+          weeklyStats.slice(-12).forEach(function(stat) {
+            statistics.push(statistics[stat.date] ? statistics[stat.date] + stat.count : stat.count);
+          });
+
+          var currentWeekAverage = statistics[statistics.length - 1] / 7 || 0,
+              lastWeekAverage = statistics[statistics.length - 2] / 7 || 0,
+              change = ((currentWeekAverage / lastWeekAverage) - 1) * 100;
+
+          res.send({
+            podcast: statistics,
+            podcastChange: change,
+            storage: storageBytes / 1073741824 || 0
+          });
         });
       });
     });
