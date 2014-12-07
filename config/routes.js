@@ -58,6 +58,11 @@ module.exports.routes = {
   '/mobile': {
     controller: 'mobile',
     action: 'manage'
+  },
+
+  '/media/transcode/:id/:profile': {
+    controller: 'media',
+    action: 'transcode'
   }
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 

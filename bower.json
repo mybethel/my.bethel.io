@@ -1,0 +1,15 @@
+{
+  "name": "mybethel",
+  "version": "0.0.1",
+  "homepage": "https://github.com/mybethel/my.bethel.io",
+  "authors": [
+    "Albert Martin <albertmartin@mac.com>"
+  ],
+  "private": true,
+  "dependencies": {
+    "foundation-apps": "~1.0.0",
+    "jquery": "~2.1.1",
+    "angular-http-auth": "~1.2.2",
+    "angular-google-maps": "~2.0.11"
+  }
+}
