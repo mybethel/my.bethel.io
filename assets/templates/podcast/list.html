@@ -12,7 +12,7 @@
     <tbody>
       <tr data-ng-repeat="podcast in podcasts">
         <td class="thumb">
-          <img class="image-style-thumbnail" typeof="foaf:Image" data-ng-src="http://bethel.api.pixtulate.com/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?w=100&h=100" width="100" height="100" alt="">
+          <img class="image-style-thumbnail" typeof="foaf:Image" data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&fit=crop&w=100&h=100" width="100" height="100" alt="">
         </td>
         <td class="title"><a data-ng-href="/podcast/show/{{ podcast.id }}">{{ podcast.name }}</a></td>
         <td class="type" data-ng-bind="podcast.type == 1 ? 'Audio' : 'Video'"></td>

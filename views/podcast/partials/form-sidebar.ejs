@@ -1,6 +1,6 @@
 <% if (s3form) { %>
 <div id="upload-widget"<% if (typeof podcast == 'undefined' || !podcast.image) { %> class="dropzone"<% } %> data-temp-location="<%= s3form.bucket %>">
-  <img class="thumbnail-sidebar" typeof="foaf:Image" src="http://bethel.api.pixtulate.com/<% if (typeof podcast != 'undefined' && podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>?w=400&h=400" />
+  <img class="thumbnail-sidebar" typeof="foaf:Image" src="https://images.bethel.io/images/<% if (typeof podcast != 'undefined' && podcast.image) { %><%= podcast.image %><% } else { %>DefaultPodcaster.png<% } %>?crop=faces&amp;fit=crop&amp;w=400&h=400" />
   <form action="<%= s3form.action %>" method="post" enctype="multipart/form-data" id="file_upload">
     <input type="hidden" name="key" value="<%= s3form.bucket %>/${filename}" />
     <input type="hidden" name="AWSAccessKeyId" value="<%= s3form.key %>" />
