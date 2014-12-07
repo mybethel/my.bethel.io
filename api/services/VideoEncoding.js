@@ -1,5 +1,40 @@
 var Zencoder = require('zencoder')(sails.config.zencoder.key);
 
+exports.transcode = function(media) {
+  var mediaKey = 'media/' + media.ministry + '/' + media.id + '/original.' + media.extension;
+
+  this.originalMedia = media;
+  this.profile = {
+    'input': 's3://cloud.bethel.io/' + mediaKey,
+    'grouping': 'ministry-' + media.ministry,
+  };
+
+  return this;
+};
+
+exports.usingProfile = function(profile) {
+
+  var storageLocation = 's3://cloud.bethel.io/media/' + this.originalMedia.ministry + '/' + this.originalMedia.id + '/';
+
+  switch (profile) {
+
+    case 'audio':
+      this.profile.output = [{
+        'skip_video': true,
+        'format': 'm4a',
+        'audio_codec': 'aac',
+        'url': storageLocation + 'audio.m4a'
+      }];
+
+  }
+  
+  return this;
+};
+
+exports.exec = function(cb) {
+  Zencoder.Job.create(this.profile, cb);
+};
+
 exports.checkJob = function(jobId, cb) {
   Zencoder.Job.details(jobId, function (err, details) {
     if (!details || !details.job.finished_at) {

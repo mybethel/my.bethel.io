@@ -90,6 +90,10 @@ module.exports = {
       type: 'integer'
     },
 
+    video_t_audio: {
+      type: 'string'
+    },
+
     poster_frame: {
       type: 'string'
     },

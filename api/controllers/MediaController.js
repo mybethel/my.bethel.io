@@ -60,6 +60,25 @@ module.exports = {
     });
   },
 
+  transcode: function(req, res) {
+    if (!req.param('id') || !req.param('profile'))
+      return res.serverError('A valid media ID and transcoding profile is required.');
+
+    Media.findOne(req.param('id')).exec(function (err, media) {
+      if (req.session.Ministry.id !== media.ministry)
+        return res.forbidden('Media transcoding can only be requested by the clip owner.');
+
+      VideoEncoding.transcode(media).usingProfile(req.param('profile')).exec(function (err, createdJob) {
+        var transcodingProgress = {};
+        transcodingProgress['video_t_' + req.param('profile')] = 'TRANSCODE_IN_PROGRESS:' + createdJob.id;
+
+        Media.update(req.param('id'), transcodingProgress, function (err) {
+          return res.send(createdJob);
+        });
+      });
+    });
+  },
+
   meta: function (req, res) {
     if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
       return res.serverError('Required AWS credentials not set.');
