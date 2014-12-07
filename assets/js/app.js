@@ -51,7 +51,7 @@ var app = angular.module('Bethel', [
 
   // Main navigation bar links.
   $scope.navLinks.push.apply($scope.navLinks, [
-    { title: 'Dashboard', icon: 'tachometer', url: '/' },
+    { title: 'Dashboard', icon: 'tachometer', url: '/#/dashboard' },
     { title: 'Podcasting', icon: 'microphone', url: '/#/podcasts' },
     { title: 'Media', icon: 'youtube-play', url: '/#/media' },
     { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
