@@ -107,9 +107,10 @@ angular.module('Bethel.media', [
 
   $scope.init = function() {
     io.socket.get('/media/browser/' + $scope.filterByCollection, function (data) {
-      $scope.collections = data.collections;
-      $scope.upload = data.upload;
-      $scope.$apply();
+      $scope.$apply(function() {
+        $scope.collections = data.collections;
+        $scope.upload = data.upload;
+      });
     });
   };
 
