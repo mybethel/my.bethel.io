@@ -41,7 +41,8 @@
     "vimeo-api": "~0.9.1",
     "waterline": "~0.10.9",
     "xml2js": "~0.4.4",
-    "zencoder": "~1.0.0"
+    "zencoder": "~1.0.0",
+    "grunt-bower-install-simple": "~1.1.0"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
