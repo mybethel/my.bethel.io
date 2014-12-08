@@ -46,11 +46,4 @@ module.exports.session = {
   username: 'mybethel-prod',
   password: process.env.MONOGO_PASS
 
-  //
-  // username: '',
-  // password: '',
-  // auto_reconnect: false,
-  // ssl: false,
-  // stringify: true
-
 };

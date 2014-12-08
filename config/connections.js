@@ -22,7 +22,18 @@ module.exports.connections = {
 
   mongo: {
     adapter: 'sails-mongo',
-    url: process.env.MONGO_HQ
+    replSet: {
+      servers: [
+        {
+          host: 'candidate.12.mongolayer.com',
+          port: '10300'
+        },
+        {
+          host: 'candidate.13.mongolayer.com',
+          port: '10300'
+        }
+      ]
+    }
   },
 
   // More adapters:
