@@ -44,7 +44,3 @@ module.exports.connections = {
   // https://github.com/balderdashy/sails
 
 };
-
-
-
-
