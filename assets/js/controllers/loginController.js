@@ -19,7 +19,7 @@ app.controller('LoginController', function ($scope, $log, $state, filterFilter, 
       if (!response.error) {
         authService.loginConfirmed();
       } else {
-        $('#login-signup-wrapper').removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+        $('#login-signup').removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
           $(this).removeClass();
         });
       }

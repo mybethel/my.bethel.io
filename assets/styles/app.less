@@ -1,111 +1,27 @@
-// @todo: Structure all theme files better, example:
-// http://www.helloerik.com/bootstrap-3-less-workflow-tutorial
+@import "_variables.less";
 
 @import "bootstrap/less/bootstrap.less";
 @import "bootstrap/less/theme.less";
 
 @import "libraries/medium-editor.less";
 
-@import "utils/_variables.less";
-
-@import "ui/buttons.less";
-@import "ui/forms.less";
+@import "_structure.less";
+@import "_theme.less";
 
 @import "features/media.less";
 
-.ng-hide { display:none!important }
-
 #focus {
-  background-color: #232a2f;
+  background-color: #106982;
+  background-image: -webkit-radial-gradient(0% bottom,rgba(21,145,181,0.7) 0,rgba(21,145,181,0) 60%),-webkit-radial-gradient(50% top,rgba(21,145,181,0.6) 0,rgba(21,145,181,0) 75%);
+  background-image: radial-gradient(0% bottom,rgba(21,145,181,0.7) 0,rgba(21,145,181,0) 60%),radial-gradient(50% top,rgba(21,145,181,0.6) 0,rgba(21,145,181,0) 75%);
+  background-size: auto,auto,100% 1000px,100% 1000px;
+  background-repeat: no-repeat;
   left: -200px;
   right: 0px;
   top: 0px;
   bottom: 0px;
   position: absolute;
   z-index: 99;
-}
-
-#login-signup-wrapper {
-  background: #FFF;
-  padding: 20px;
-  width: 95%;
-  max-width: 360px;
-  height: 220px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -180px;
-  margin-top: -100px;
-  border-radius: 4px;
-
-  .logo {
-    position: absolute;
-    width: 120px;
-    margin-top: -65px;
-    left: 50%;
-    margin-left: -60px
-  }
-  h2 {
-    margin-top: 0;
-    font-weight: 300;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  .user-form {
-    padding-top: 0;
-
-    .form-control {
-      padding: 10px;
-      font-size: 16px;
-      height: auto;
-      position: relative;
-      padding-left: 35px;
-      z-index: 1;
-    }
-    .form-item {
-      position: relative;
-
-      span.help-block {
-        position: absolute;
-        left: 100%;
-        width: 120px;
-        background: #a94442;
-        color: white;
-        font-size: 12px;
-        padding: 5px;
-        padding-left: 10px;
-        margin-left: -5px;
-        border-radius: 0 4px 4px 0;
-        top: 0;
-        line-height: 14px;
-        &.valid {
-          display: none !important;
-        }
-      }
-    }
-    i {
-      position: absolute;
-      z-index: 3;
-      pointer-events: none;
-      padding: 14px;
-      color: #555;
-    }
-    input[type="text"], input[type="email"] {
-      margin-bottom: -1px;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    input[type="password"] {
-      margin-bottom: 10px;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-  }
-}
-
-#login-signup-wrapper .user-form .form-control:focus,
-#login-signup-wrapper .user-form .has-error .form-control {
-  z-index: 2;
 }
 
 .dash-panel-right {
@@ -118,14 +34,4 @@
       margin-bottom: -15px;
     }
   }
-}
-
-.row.no-gutters {
-  margin-right: 0;
-  margin-left: 0;
-}
-.row.no-gutters [class^="col-"],
-.row.no-gutters [class*=" col-"]{
-  padding-right: 0;
-  padding-left: 0;
 }
