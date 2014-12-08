@@ -22,6 +22,9 @@ module.exports.connections = {
 
   mongo: {
     adapter: 'sails-mongo',
+    database: 'mybethel',
+    user: 'mybethel-prod',
+    password: process.env.MONOGO_PASS,
     replSet: {
       servers: [
         {
