@@ -28,6 +28,7 @@ var jsFilesToInject = [
 
   // Global libraries
   'components/lodash/dist/lodash.min.js',
+  'components/moment/min/moment.min.js',
 
   // Angular dependencies
   'components/angular/angular.min.js',
@@ -37,6 +38,19 @@ var jsFilesToInject = [
 
   // jQuery
   'components/jquery/dist/jquery.min.js',
+  'components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js',
+
+  // User interface
+  'components/angular-moment/angular-moment.min.js',
+  'components/angular-rickshaw/rickshaw.js',
+  'components/angular-svg-round-progressbar/roundProgress.min.js',
+  'components/bootstrap/dist/js/bootstrap.min.js',
+  'components/d3/d3.min.js',
+  'components/medium-editor/dist/js/medium-editor.min.js',
+  'components/ng-file-upload/angular-file-upload.min.js',
+  'components/ng-file-upload/angular-file-upload-shim.min.js',
+  'components/ng-tags-input/ng-tags-input.min.js',
+  'components/rickshaw/rickshaw.min.js',
 
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
