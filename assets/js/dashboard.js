@@ -1,6 +1,6 @@
 angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-rickshaw'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
 
   $stateProvider
     .state('dashboard', {
@@ -33,27 +33,35 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
       controller: 'AccountsController'
     });
 
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg',
+    v: '3.17',
+    libraries: 'places'
+  });
+
 })
 
-.controller('DashboardController', function ($rootScope, $scope, $log, filterFilter) {
+.controller('DashboardController', function ($rootScope, $scope, $log, uiGmapGoogleMapApi) {
 
-  $scope.map = {
-    control: {},
-    zoom: 10,
-    bounds: new google.maps.LatLngBounds(),
-    center: [30.25, -97.75],
-    options: {
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoomControl: false,
-      panControl: false,
-      mapTypeControl: false,
-      scrollwheel: false,
-      navigationControl: false,
-      draggable: false,
-      streetViewControl: false,
-      maxZoom: 15,
-    }
-  };
+  uiGmapGoogleMapApi.then(function(maps) {
+    $scope.map = {
+      control: {},
+      zoom: 10,
+      bounds: new google.maps.LatLngBounds(),
+      center: [30.25, -97.75],
+      options: {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: false,
+        panControl: false,
+        mapTypeControl: false,
+        scrollwheel: false,
+        navigationControl: false,
+        draggable: false,
+        streetViewControl: false,
+        maxZoom: 15,
+      }
+    };
+  });
 
   $scope.stats = [];
   $scope.locations = [];
