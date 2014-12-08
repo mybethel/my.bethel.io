@@ -1,1 +1,1 @@
-web: forever sails lift
+web: forever app.js
