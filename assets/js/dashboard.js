@@ -35,7 +35,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
 
 })
 
-.controller('DashboardController', function ($scope, $log, filterFilter) {
+.controller('DashboardController', function ($rootScope, $scope, $log, filterFilter) {
 
   $scope.map = {
     control: {},
@@ -73,15 +73,26 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
 
   $scope.init = function() {
     io.socket.get('/dashboard/stats', function (response) {
-      $scope.stats = response;
+      $scope.$apply(function() {
+        $scope.stats = response;
+      });
     });
     io.socket.get('/location/ministry', function (response) {
-      $scope.locations = response;
+      $scope.$apply(function() {
+        $scope.locations = response;
+      });
     });
   };
 
   // Watch for notifications to update the dashboard display.
   $scope.$on('event:update-dashboard', function() {
+    $scope.init();
+  });
+
+  $rootScope.$watch('ministry', function() {
+    if (!$rootScope.ministry || !$rootScope.ministry.id)
+      return;
+
     $scope.init();
   });
 
