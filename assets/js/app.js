@@ -29,19 +29,21 @@ var app = angular.module('Bethel', [
 
   $scope.updateSession = function(ev, data) {
     io.socket.get('/session/current', function (response) {
-      $rootScope.user = response.user;
-      $rootScope.ministry = response.ministry;
-      $rootScope.isAdmin = response.isAdmin;
-      $rootScope.authCheck = true;
-      $rootScope.$apply();
+      $rootScope.$apply(function() {
+        $rootScope.user = response.user;
+        $rootScope.ministry = response.ministry;
+        $rootScope.isAdmin = response.isAdmin;
+        $rootScope.authCheck = true;
 
-      if ($rootScope.isAdmin) {
-        $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
-      }
+        if (response.isAdmin) {
+          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
+        }
+      });
     });
   };
 
   // Update current session on load or login.
+  $scope.updateSession();
   $scope.$on('sailsSocket:connect', $scope.updateSession);
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
