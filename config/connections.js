@@ -20,6 +20,12 @@
 
 module.exports.connections = {
 
+  local: {
+    module   : 'sails-mongo',
+    url      : 'mongodb://mybethel@localhost/mybethel',
+    schema   : true
+  },
+
   mongo: {
     adapter: 'sails-mongo',
     database: 'mybethel',
