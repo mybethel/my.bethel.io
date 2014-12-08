@@ -33,11 +33,11 @@ module.exports.session = {
     name: 'mybethel',
     servers: [
       {
-        host: 'candidate.13.mongolayer.com',
+        host: 'candidate.12.mongolayer.com',
         port: '10300'
       },
       {
-        host: 'candidate.12.mongolayer.com',
+        host: 'candidate.13.mongolayer.com',
         port: '10300'
       }
     ]
