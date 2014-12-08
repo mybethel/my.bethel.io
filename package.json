@@ -7,6 +7,7 @@
     "async": "~0.9.0",
     "aws-sdk": "~2.0.0-rc.19",
     "bcrypt": "~0.7.7",
+    "bower": "~1.3.12",
     "bson": "~0.2.4",
     "connect-mongostore": "~0.1.4",
     "cron": "~1.0.3",
@@ -40,8 +41,7 @@
     "vimeo-api": "~0.9.1",
     "waterline": "~0.10.9",
     "xml2js": "~0.4.4",
-    "zencoder": "~1.0.0",
-    "grunt-bower-install-simple": "~1.1.0"
+    "zencoder": "~1.0.0"
   },
   "devDependencies": {
     "mocha": "~1.17.1",
@@ -52,7 +52,8 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
-    "test": "NODE_ENV=test mocha -R spec -b --recursive"
+    "test": "NODE_ENV=test mocha -R spec -b --recursive",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "engines": {
     "node": "0.10.x",
