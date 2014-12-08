@@ -31,7 +31,7 @@ var jsFilesToInject = [
 
   // Angular dependencies
   'components/angular/angular.min.js',
-  'components/ui-router/release/angular-ui-router.min.js',
+  'components/angular-ui-router/release/angular-ui-router.min.js',
   'components/angular-http-auth/src/http-auth-interceptor.js',
   'components/angular-google-maps/dist/angular-google-maps.min.js',
 
