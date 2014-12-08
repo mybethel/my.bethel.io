@@ -26,7 +26,7 @@ module.exports.connections = {
     host: 'candidate.12.mongolayer.com',
     port: '10300',
     user: 'mybethel-prod',
-    password: process.env.MONOGO_PASS,
+    password: process.env.MONGO_PASS,
     replSet: {
       servers: [
         {
