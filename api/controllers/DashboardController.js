@@ -12,24 +12,31 @@ module.exports = {
   },
 
   stats: function(req, res) {
+    if (!req.session.Ministry)
+      return res.forbidden('Your account is not associated with a ministry.');
+
     Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
       if (err) res.send(err, 500);
 
       var allPodcasts = [],
           storageBytes = 0;
 
-      podcasts.forEach(function(podcast) {
-        allPodcasts.push({object: podcast.id});
-        if (podcast.storage > 0)
-          storageBytes += podcast.storage;
-      });
+      if (podcasts && podcasts.length > 0) {
+        podcasts.forEach(function(podcast) {
+          allPodcasts.push({object: podcast.id});
+          if (podcast.storage > 0)
+            storageBytes += podcast.storage;
+        });
+      }
 
       Media.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, media) {
 
-        media.forEach(function(media) {
-          if (media.size > 0)
-            storageBytes += media.size;
-        });
+        if (media && media.length > 0) {
+          media.forEach(function(media) {
+            if (media.size > 0)
+              storageBytes += media.size;
+          });
+        }
 
         Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
           if (err) res.send(err, 500);
