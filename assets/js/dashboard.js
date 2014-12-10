@@ -5,7 +5,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
   $stateProvider
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'templates/dashboard/dashboard.html',
+      templateUrl: 'templates/dashboard/index.html',
       controller: 'DashboardController'
     })
     .state('dashboard.location', {
@@ -184,7 +184,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
   $scope.accounts = [];
 
   io.socket.get('/service/list', {}, function (response, status) {
-    $scope.accounts = response;
+    $scope.$apply(function() { $scope.accounts = response; });
   });
 
 })

@@ -205,66 +205,6 @@ section.page-wrap .dash-panel-left.x-small {
   width: 20%;
 }
 
-section.page-wrap .dash-panel-right .panel-default {
-  border-color: #222;
-  background: #222;
-}
-
-section.page-wrap .dash-panel-right .panel-heading {
-  background: #222;
-  border-color: #222;
-  color: white;
-}
-
-section.page-wrap .dash-panel-right .panel-body {
-  background: #2F3439;
-  margin-right: 0;
-}
-
-section.page-wrap .dash-panel-right .content .btn {
-  background: #222;
-  color: white;
-  opacity: 0.5;
-  -webkit-transition: opacity .3s ease-in-out;
-  -moz-transition: opacity .3s ease-in-out;
-  -o-transition: opacity .3s ease-in-out;
-  -ms-transition: opacity .3s ease-in-out;
-  transition: opacity .3s ease-in-out;
-}
-
-section.page-wrap .dash-panel-right .content .btn:hover {
-  opacity: 1;
-}
-
-section.page-wrap .dash-panel-right table {
-  margin-bottom: 0;
-}
-
-section.page-wrap .dash-panel-right table td {
-  border-color: rgba(255,255,255,0.04);
-  background-color: transparent;
-  -webkit-transition: background-color .3s ease-in-out;
-  -moz-transition: background-color .3s ease-in-out;
-  -o-transition: background-color .3s ease-in-out;
-  -ms-transition: background-color .3s ease-in-out;
-  transition: background-color .3s ease-in-out;
-}
-
-section.page-wrap .dash-panel-right table tr td:first-child {
-  padding-left: 15px;
-}
-section.page-wrap .dash-panel-right table tr td:last-child {
-  padding-right: 15px;
-}
-
-section.page-wrap .dash-panel-right table tr:first-child td {
-  border: 0;
-}
-
-section.page-wrap .dash-panel-right table tr:hover {
-  background-color: rgba(255,255,255,0.04) !important;
-}
-
 .nav-collapsed section.page-wrap {
   margin-left: 58px;
 }

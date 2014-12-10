@@ -36,6 +36,23 @@ html, body, .ui.viewport {
     .content {
       padding: 20px;
     }
+    &.dark {
+      .panel-body {
+        margin-right: 0;
+      }
+      table {
+        margin-bottom: 0;
+
+        td {
+          &:first-child {
+            padding-left: 15px;
+          }
+          &:last-child {
+            padding-right: 15px;
+          }
+        }
+      }
+    }
   }
 }
 
