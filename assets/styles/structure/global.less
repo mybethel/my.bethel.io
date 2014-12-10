@@ -3,6 +3,42 @@
 .margin-bottom-md { margin-bottom: @line-height-computed;}
 .margin-bottom-lg { margin-bottom: ceil(@line-height-computed * 2); }  
 
+body {
+  background: @dark-color-medium;
+}
+
+html, body, .ui.viewport {
+  height: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+.ui {
+  &.viewport {
+    border: 0;
+    display: table;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    &.primary {
+      padding-top: 52px;
+    }
+  }
+  &.horizontal {
+    height: 100%;
+    display: table-row;
+  }
+  &.column {
+    display: table-cell;
+    vertical-align: top;
+    &.navigation {
+      width: 200px;
+    }
+    .content {
+      padding: 20px;
+    }
+  }
+}
+
 #focus {
   left: -200px;
   right: 0px;

@@ -60,17 +60,21 @@
     </div>
   </nav>
 
-  <nav role="navigation">
-    <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
-      <li ng-repeat="link in navLinks"><a data-ng-href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
-    </ul>
-  </nav>
+  <div class="ui viewport primary">
+    <div class="ui horizontal">
 
-  <section class="page-wrap">
+      <nav class="ui column navigation" role="navigation">
+        <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
+          <li ng-repeat="link in navLinks"><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
+        </ul>
+      </nav>
 
-    <%- body %>
+      <section class="ui column page-wrap">
+        <%- body %>
+      </section>
 
-  </section>
+    </div>
+  </div>
 
   <div id="popover" class="modal fade"></div>
 
