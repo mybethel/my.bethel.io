@@ -5,7 +5,9 @@ angular.module('Bethel.media', [
   'angular-svg-round-progress'
 ])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $translatePartialLoaderProvider) {
+
+  $translatePartialLoaderProvider.addPart('media');
 
   $stateProvider
     .state('media', {

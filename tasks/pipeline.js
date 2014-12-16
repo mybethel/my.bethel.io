@@ -36,6 +36,8 @@ var jsFilesToInject = [
   'components/angular-ui-router/release/angular-ui-router.min.js',
   'components/angular-http-auth/src/http-auth-interceptor.js',
   'components/angular-google-maps/dist/angular-google-maps.min.js',
+  'components/angular-translate/angular-translate.min.js',
+  'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
 
   // jQuery
   'components/jquery/dist/jquery.min.js',

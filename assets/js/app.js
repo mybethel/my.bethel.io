@@ -7,17 +7,25 @@ var app = angular.module('Bethel', [
   'http-auth-interceptor',
   'ui.router',
   'angularMoment',
+  'pascalprecht.translate',
   'Bethel.dashboard',
   'Bethel.media',
   'Bethel.podcast',
   'Bethel.staff'
 ])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($urlRouterProvider, $translateProvider) {
+
+  $translateProvider.preferredLanguage('en');
+  $translateProvider.useLoader('$translatePartialLoader', {
+    urlTemplate: '/i18n/{part}/{lang}.json'
+  });
 
   $urlRouterProvider.otherwise('/dashboard');
 
 })
+
+.filter('trustAsHtml', function($sce) { return $sce.trustAsHtml; })
 
 .controller('AppCtrl', function ($rootScope, $scope, $log, $state, filterFilter) {
 
