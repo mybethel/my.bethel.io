@@ -31,8 +31,8 @@
   </div>
   <div class="dash-panel-right">
     <div class="actions top">
-      <a ui-sref="podcastsubmit" class="btn btn-block btn-default">Submit to iTunes</a>
-      <a data-ng-href="/podcast/feed/{{ podcast.id }}" type="submit" class="btn btn-block btn-primary">Podcast Feed</a>
+      <a ui-sref="podcastsubmit" class="btn btn-block btn-lg btn-dark">Submit to iTunes</a>
+      <a data-ng-href="/podcast/feed/{{ podcast.id }}" class="btn btn-block btn-lg btn-dark">Podcast Feed</a>
     </div>
     <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=400&amp;h=400" width="400" height="400" alt="{{ podcast.name }}" />
   </div>
