@@ -1,0 +1,26 @@
+<div class="dash-panel-full">
+  <h1>Podcasting <a href="/podcast/new" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> New Podcast</a></h1>
+  <table class="table table-list podcast">
+    <thead>
+      <tr>
+        <th colspan="2"></th>
+        <th class="type text-muted">Type</th>
+        <th class="subscribers text-muted">Subscribers</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-ng-repeat="podcast in podcasts">
+        <td class="thumb">
+          <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=100&amp;h=100" width="100" height="100" alt="{{ podcast.name }}" />
+        </td>
+        <td class="title"><a ui-sref="podcastview({ podcastId: podcast.id })">{{ podcast.name }}</a></td>
+        <td class="type" data-ng-bind="podcast.type == 1 ? 'Audio' : 'Video'"></td>
+        <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days.">{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }}</span></h1></td>
+        <td class="operations">
+          <a ui-sref="podcastview({ podcastId: podcast.id })" class="btn btn-sm btn-default">Manage</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -4,14 +4,19 @@ angular.module('Bethel.podcast', ['ui.router'])
 
   $stateProvider
     .state('podcast', {
-      url: '/podcasts',
-      templateUrl: 'templates/podcast/list.html',
+      url: '/podcast',
+      templateUrl: 'templates/podcast/index.html',
       controller: 'PodcastListCtrl'
+    })
+    .state('podcastview', {
+      url: '/podcast/:podcastId',
+      templateUrl: 'templates/podcast/view.html',
+      controller: 'PodcastViewCtrl'
     });
 
 })
 
-.controller('PodcastListCtrl', function ($rootScope, $scope, $log, filterFilter) {
+.controller('PodcastListCtrl', function ($rootScope, $scope) {
 
   $scope.podcasts = [];
   $scope.statistics = [];
@@ -42,6 +47,18 @@ angular.module('Bethel.podcast', ['ui.router'])
   });
 
   io.socket.on('podcast', function (msg) { $scope.init(); });
+
+})
+
+.controller('PodcastViewCtrl', function ($rootScope, $scope, $stateParams) {
+
+  $scope.id = $stateParams.podcastId;
+
+  io.socket.get('/podcast/' + $scope.id, function (data) {
+    $scope.$apply(function() {
+      $scope.podcast = data;
+    });
+  });
 
 });
 
