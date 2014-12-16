@@ -1,14 +1,56 @@
 .podcast.list {
+  .table-list {
+    margin-top: -38px;
 
+    .thumb {
+      padding-left: 0;
+      width: 100px;
+    }
+    .subscribers {
+      width: 130px;
+    }
+    .operations {
+      width: 120px;
+    }
+  }
 }
 .podcast.view {
+  .panel-top {
+    margin-top: 20px;
+  }
   .panel-heading {
     button {
+      margin-right: -11px;
       margin-top: -6px;
-      margin-right: -11px
+    }
+  }
+  .panel-body {
+    padding: 0;
+
+    table {
+      margin-bottom: 0;
+
+      img {
+        padding-right: 10px;
+      }
     }
   }
   .progress {
     margin: 20px;
+  }
+  .dash-panel-right {
+    img {
+      width: 100%;
+    }
+    .actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      padding: 20px;
+      &.top {
+        position: relative;
+      }
+    }
   }
 }
