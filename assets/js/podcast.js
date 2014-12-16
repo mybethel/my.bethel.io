@@ -50,9 +50,10 @@ angular.module('Bethel.podcast', ['ui.router'])
 
 })
 
-.controller('PodcastViewCtrl', function ($rootScope, $scope, $stateParams) {
+.controller('PodcastViewCtrl', function ($rootScope, $scope, $state, $stateParams, $upload) {
 
   $scope.id = $stateParams.podcastId;
+  $scope.uploadProgress = 0;
 
   io.socket.get('/podcast/' + $scope.id, function (data) {
     $scope.$apply(function() {
@@ -60,31 +61,50 @@ angular.module('Bethel.podcast', ['ui.router'])
     });
   });
 
+  io.socket.get('/podcast/edit/' + $scope.id, function (data) {
+    $scope.$apply(function() {
+      $scope.uploadEpisode = data.uploadEpisode;
+    });
+  });
+
+  // Triggered when a file is chosen for upload.
+  // On supported browsers, multiple files may be chosen.
+  $scope.onFileSelect = function ($files) {
+    for (var i = 0; i < $files.length; i++) {
+      $scope.createPodcastMedia($files[i]);
+    }
+  };
+
+  $scope.createPodcastMedia = function (file) {
+
+    var fileMeta = {
+      key: $scope.uploadEpisode.bucket + '/' + file.name,
+      AWSAccessKeyId: $scope.uploadEpisode.key,
+      acl: 'public-read',
+      policy: $scope.uploadEpisode.policy,
+      signature: $scope.uploadEpisode.signature,
+    };
+
+    $upload.upload({
+      url: $scope.uploadEpisode.action,
+      method: 'POST',
+      data: fileMeta,
+      file: file,
+    })
+    .progress(function(evt) {
+      $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+    })
+    .success(function(data, status, headers, config) {
+      io.socket.get('/podcastmedia/refresh', function() {
+        $state.go($state.$current, null, { reload: true });
+      });
+    });
+  };
+
 });
 
 
 jQuery(document).ready(function($) {
-  $('button.sidebar-submit').click(function() {
-    $('form.sidebar-form').submit();
-  });
-
-  if ($('#podcastVisits').data('visits')) {
-    var podcastVisitData = JSON.parse('[' + $('#podcastVisits').data('visits') + ']');
-    $("#podcastVisits").sparkline(podcastVisitData, {
-      type: 'line',
-      width: '96%',
-      height: '50px',
-      lineColor: '#106982',
-      spotColor: '#1591b5',
-      minSpotColor: '#d2322d',
-      maxSpotColor: '#5cb85c',
-      fillColor: null,
-      highlightSpotColor: '#1591b5',
-      highlightLineColor: null,
-      lineWidth: 2,
-      spotRadius: 3
-    });
-  }
 
   $('table.podcast-media').on('click', '.media-edit-button', function() {
     if ($(this).text() == 'Cancel') {

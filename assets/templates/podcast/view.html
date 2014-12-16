@@ -3,15 +3,17 @@
   <p data-ng-bind="podcast.description"></p>
   <div class="panel panel-default panel-top">
     <div class="panel-heading">
-      <button data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-sm btn-success pull-right"><i class="fa fa-upload"></i> Upload new episode...</button>
+      <button data-ng-if="podcast.source == 1" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-sm btn-success pull-right"><i class="fa fa-upload"></i> Upload new episode...</button>
       <h3 class="panel-title"><span data-ng-bind="podcast.media.length"></span> Podcast Episodes</h3>
     </div>
     <div class="panel-body podcast">
+      <div class="progress" data-ng-if="uploadProgress >= 1 && uploadProgress < 100">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
+      </div>
       <table class="table table-hover podcast-media" data-podcast="{{ podcast.id }}" data-url="{{ podcast.ministry.url }}">
         <tbody>
           <tr class="alert alert-info alert-dismissible" role="alert" data-ng-if="podcast.source == 2">
             <td colspan="2">
-              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
               Syncing all episodes from Vimeo matching keywords <b data-ng-bind="podcast.sourceMeta"></b>.
             </td>
           </tr>

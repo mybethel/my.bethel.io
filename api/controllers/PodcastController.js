@@ -148,8 +148,9 @@ module.exports = {
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
     
       Services.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
-        res.view({
+        res.send({
           s3form: uploadForm,
+          uploadEpisode: S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id),
           podcast: podcast,
           services: services
         });
@@ -162,7 +163,7 @@ module.exports = {
       if (err) {
         req.session.flash = {
           err: err
-        }
+        };
 
         return res.redirect('/podcast/edit/' + req.param('id'));
       }

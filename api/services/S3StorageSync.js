@@ -25,7 +25,6 @@ exports.sync = function(options) {
           if (!data)
             return sails.log.warn('No objects returned from S3 for podcast ' + podcast.id);
 
-          data.Contents.shift();
           sails.log('Syncing ' + data.Contents.length + ' items in podcast/' + ministry.id + '/' + podcast.id);
 
           var storageUsed = processFoundMedia(data.Contents, podcast.id);
