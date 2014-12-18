@@ -32,15 +32,13 @@ var jsFilesToInject = [
   'components/moment/min/moment.min.js',
 
   // Angular dependencies
-  'components/angular/angular.min.js',
   'components/angular-ui-router/release/angular-ui-router.min.js',
   'components/angular-http-auth/src/http-auth-interceptor.js',
   'components/angular-google-maps/dist/angular-google-maps.min.js',
   'components/angular-translate/angular-translate.min.js',
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
 
-  // jQuery
-  'components/jquery/dist/jquery.min.js',
+  // jQuery dependencies
   'components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js',
 
   // User interface
@@ -54,9 +52,6 @@ var jsFilesToInject = [
   'components/ng-file-upload/angular-file-upload-shim.min.js',
   'components/ng-tags-input/ng-tags-input.min.js',
   'components/rickshaw/rickshaw.min.js',
-
-  // Dependencies like jQuery, or Angular are brought in here
-  'js/dependencies/**/*.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
