@@ -1,7 +1,8 @@
 <div class="podcast view">
   <div class="dash-panel-left">
     <h1 data-ng-bind="podcast.name"></h1>
-    <p data-ng-bind="podcast.description"></p>
+    <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
+    <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
     <div class="panel panel-default panel-top">
       <div class="panel-heading">
         <button data-ng-if="podcast.source == 1" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-sm btn-success pull-right"><i class="fa fa-upload"></i> Upload new episode...</button>

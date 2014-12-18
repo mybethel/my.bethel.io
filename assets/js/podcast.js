@@ -1,6 +1,6 @@
-angular.module('Bethel.podcast', ['ui.router'])
+angular.module('Bethel.podcast', [])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider) {
 
   $stateProvider
     .state('podcast', {
@@ -59,6 +59,7 @@ angular.module('Bethel.podcast', ['ui.router'])
     $scope.$apply(function() {
       $scope.podcast = data;
     });
+    new MediumEditor('.editable.description');
   });
 
   io.socket.get('/podcast/edit/' + $scope.id, function (data) {
