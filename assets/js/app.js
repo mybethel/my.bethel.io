@@ -6,6 +6,8 @@
 var app = angular.module('Bethel', [
   'http-auth-interceptor',
   'ui.router',
+  'angulartics',
+  'angulartics.google.analytics',
   'angularMoment',
   'pascalprecht.translate',
   'Bethel.dashboard',
