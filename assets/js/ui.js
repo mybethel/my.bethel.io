@@ -9,7 +9,7 @@ $(document).ready(function(){
   });
 
   $(document).on('click', 'a', function (e) {
-    if ($(this).data('link') == 'popover') {
+    if ($(this).data('link') !== 'popover') {
       var url = $(this).attr('href');
       $.ajax({
         type: 'GET',

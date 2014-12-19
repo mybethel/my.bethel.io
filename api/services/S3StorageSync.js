@@ -1,6 +1,33 @@
 var AWS = require('aws-sdk'),
     S = require('string');
 
+function processFoundMedia(media, podcastId) {
+  var storageUsed = 0;
+
+  media.forEach(function(item) {
+    var s3media = S(item.ETag).replaceAll('"', '').s,
+        mediaName = item.Key.split('/').pop();
+
+    PodcastMedia.findOrCreate({
+      uuid: s3media
+    }, {
+      name: mediaName,
+      date: item.LastModified,
+      url: 'http://cloud.bethel.io/' + encodeURI(item.Key),
+      size: item.Size,
+      uuid: s3media,
+      podcast: podcastId,
+      type: 'cloud'
+    }, function podcastMediaCreated(err, media) {
+      if (err) sails.log.error(err);
+    });
+
+    storageUsed += item.Size;
+  });
+
+  return storageUsed;
+}
+
 exports.sync = function(options) {
 
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
@@ -41,30 +68,3 @@ exports.sync = function(options) {
     });
   });
 };
-
-function processFoundMedia(media, podcastId) {
-  var storageUsed = 0;
-
-  media.forEach(function(item) {
-    var s3media = S(item.ETag).replaceAll('"', '').s,
-        mediaName = item.Key.split('/').pop();
-
-    PodcastMedia.findOrCreate({
-      uuid: s3media
-    }, {
-      name: mediaName,
-      date: item.LastModified,
-      url: 'http://cloud.bethel.io/' + encodeURI(item.Key),
-      size: item.Size,
-      uuid: s3media,
-      podcast: podcastId,
-      type: 'cloud'
-    }, function podcastMediaCreated(err, media) {
-      if (err) sails.log.error(err);
-    });
-
-    storageUsed += item.Size;
-  });
-
-  return storageUsed;
-}

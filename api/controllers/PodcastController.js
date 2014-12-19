@@ -80,8 +80,7 @@ module.exports = {
         if (err || !result.rss.channel[0].item || result.rss.channel[0].item.length < 1)
           return res.send(503, 'invalid feed');
 
-        var importId = new Buffer(req.param('url')).toString('base64'),
-            feed = result.rss.channel[0],
+        var feed = result.rss.channel[0],
             podcastImage = feed['itunes:image'][0].$.href,
             podcastImageExtension = podcastImage.split('.').slice(-1),
             media = [];
@@ -202,7 +201,7 @@ module.exports = {
       if (err) return next(err);
 
       // Verify that the user has access to view this page.
-      if (podcast.ministry.id != req.session.Ministry.id)
+      if (podcast.ministry.id !== req.session.Ministry.id)
         return res.forbidden('You must be a member of the ministry to edit this podcast.');
 
       // If this is an audio podcast show the upload form.

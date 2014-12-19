@@ -26,7 +26,7 @@ module.exports = {
         req.session.authenticated = true;
         req.session.User = user;
 
-        if (user.roles && user.roles.indexOf("ROLE_SUPER_ADMIN") > -1) {
+        if (user.roles && user.roles.indexOf('ROLE_SUPER_ADMIN') > -1) {
           req.session.isAdmin = true;
         }
 
