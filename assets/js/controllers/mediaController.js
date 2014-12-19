@@ -33,73 +33,6 @@ angular.module('Bethel.media', [
 
 })
 
-.filter('duration', function() {
-  return function(milliseconds) {
-    milliseconds = Number(milliseconds);
-    var seconds = Math.floor(milliseconds / 1000);
-    var minutes = Math.floor(seconds / 60);
-    seconds = Math.floor(seconds % 60);
-    return minutes + ':' + seconds;
-  };
-})
-
-.filter('bytes', function() {
-  return function(bytes, precision) {
-    if (isNaN(parseFloat(bytes)) || !isFinite(bytes)) return '-';
-    if (typeof precision === 'undefined') precision = 1;
-    var units = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'],
-      number = Math.floor(Math.log(bytes) / Math.log(1024));
-    return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
-  };
-})
-
-.filter('thumbnail', function() {
-  return function(media, width, height) {
-    if (typeof media === 'undefined' || typeof media.ministry === 'undefined') return '';
-
-    var ministry = (typeof media.ministry.id === 'undefined') ? media.ministry : media.ministry.id,
-        prefix = 'https://images.bethel.io/',
-        postfix = '?crop=faces&fit=crop&w=' + width + '&h=' + height;
-
-    if (media.status === 'STATUS_UPLOADING') return prefix + 'images/DefaultPodcaster.png' + postfix;
-
-    switch (media.type) {
-      case 'image':
-        thumbnail = prefix + 'media/' + ministry + '/' + media.id + '/original.' + media.extension;
-        break;
-
-      case 'video':
-        if (media.posterFrame) {
-          thumbnail = (media.posterFrame == 'custom') ? prefix + media.posterFrameCustom : prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_000' + (Number(media.posterFrame) - 1) + '.jpg';
-        }
-        else if (media.videoFrames > 1) {
-          thumbnail = prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_0001.jpg';
-        }
-        else {
-          thumbnail = prefix + 'images/DefaultPodcaster.png';
-        }
-        break;
-
-      case 'collection':
-        if (media.posterFrame == 'custom') {
-          thumbnail = prefix + media.posterFrameCustom;
-        }
-        else {
-          thumbnail = prefix + 'images/DefaultPodcaster.png';
-        }
-        break;
-
-      default:
-        thumbnail = prefix + 'images/DefaultPodcaster.png';
-
-    }
-
-    thumbnail += postfix;
-
-    return thumbnail;
-  };
-})
-
 .controller('MediaListCtrl', function ($scope, $rootScope, $state, $stateParams, $upload) {
 
   // Show the "All Media" collection by default.
@@ -226,13 +159,13 @@ angular.module('Bethel.media', [
   };
 
   $scope.mediaType = function(media) {
-    if ($scope.showVideo && media.type == 'video')
+    if ($scope.showVideo && media.type === 'video')
       return true;
 
-    if ($scope.showAudio && media.type == 'audio')
+    if ($scope.showAudio && media.type === 'audio')
       return true;
 
-    if ($scope.showImage && media.type == 'image')
+    if ($scope.showImage && media.type === 'image')
       return true;
 
     return false;
@@ -266,7 +199,7 @@ angular.module('Bethel.media', [
       return;
 
     for (var i = 0; i < $scope.media.length; i++) {
-      if ($scope.media[i].id == id) {
+      if ($scope.media[i].id === id) {
         return i;
       }
     }
@@ -317,10 +250,7 @@ angular.module('Bethel.media', [
   // Triggered when a file is chosen for upload.
   $scope.onFileSelect = function ($files) {
     for (var i = 0; i < $files.length; i++) {
-      var ext = $files[i].name.split('.').pop(),
-          location = 'media/' + $scope.collection.ministry.id + '/' + $scope.collection.id + '/' + $files[i].name;
-
-      $scope.uploadFile(location, $files[i]);
+      $scope.uploadFile('media/' + $scope.collection.ministry.id + '/' + $scope.collection.id + '/' + $files[i].name, $files[i]);
     }
   };
 
@@ -376,7 +306,7 @@ angular.module('Bethel.media', [
         }
       });
     }
-    if (data.type == 'video') {
+    if (data.type === 'video') {
       $scope.media.preview = $sce.trustAsResourceUrl('https://cloud.bethel.io/media/' + data.ministry.id + '/' + data.id + '/preview.mp4');
     }
     $scope.$apply();
@@ -459,10 +389,7 @@ angular.module('Bethel.media', [
   // Triggered when a file is chosen for upload.
   $scope.onFileSelect = function ($files) {
     for (var i = 0; i < $files.length; i++) {
-      var ext = $files[i].name.split('.').pop(),
-          location = 'media/' + $scope.media.ministry.id + '/' + $scope.media.id + '/thumbnails/' + $files[i].name;
-
-      $scope.uploadFile(location, $files[i]);
+      $scope.uploadFile('media/' + $scope.media.ministry.id + '/' + $scope.media.id + '/thumbnails/' + $files[i].name, $files[i]);
     }
   };
 
