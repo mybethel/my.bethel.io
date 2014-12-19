@@ -9,15 +9,15 @@ module.exports = {
 
 	attributes: {
 
-    audio_bitrate: {
+    audioBitrate: {
       type: 'integer'
     },
 
-    audio_codec: {
+    audioCodec: {
       type: 'string'
     },
 
-    audio_samplerate: {
+    audioSampleRate: {
       type: 'integer'
     },
 
@@ -41,7 +41,7 @@ module.exports = {
       type: 'string'
     },
 
-    framerate: {
+    frameRate: {
       type: 'float'
     },
 
@@ -78,27 +78,27 @@ module.exports = {
       type: 'string'
     },
 
-    video_bitrate: {
+    videoBitrate: {
       type: 'integer'
     },
 
-    video_codec: {
+    videoCodec: {
       type: 'string'
     },
 
-    video_frames: {
+    videoFrames: {
       type: 'integer'
     },
 
-    video_t_audio: {
+    posterFrame: {
       type: 'string'
     },
 
-    poster_frame: {
+    posterFrameCustom: {
       type: 'string'
     },
 
-    poster_frame_custom: {
+    transcodeAudio: {
       type: 'string'
     },
 

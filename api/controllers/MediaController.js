@@ -70,7 +70,8 @@ module.exports = {
 
       VideoEncoding.transcode(media).usingProfile(req.param('profile')).exec(function (err, createdJob) {
         var transcodingProgress = {};
-        transcodingProgress['video_t_' + req.param('profile')] = 'TRANSCODE_IN_PROGRESS:' + createdJob.id;
+        var profile = req.param('profile').charAt(0).toUpperCase() + req.param('profile').slice(1);
+        transcodingProgress['transcode' + profile] = 'TRANSCODE_IN_PROGRESS:' + createdJob.id;
 
         Media.update(req.param('id'), transcodingProgress, function (err) {
           return res.send(createdJob);
@@ -93,16 +94,16 @@ module.exports = {
       if (media.type === 'video') {
         VideoEncoding.encodePreview(mediaKey, media.id, media.ministry, function (jobDetails) {
           Media.update(req.param('id'), {
-            audio_bitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
-            audio_codec: jobDetails.input_media_file.audio_codec,
-            audio_samplerate: jobDetails.input_media_file.audio_sample_rate,
+            audioBitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
+            audioCodec: jobDetails.input_media_file.audio_codec,
+            audioSampleRate: jobDetails.input_media_file.audio_sample_rate,
             duration: jobDetails.input_media_file.duration_in_ms,
             format: jobDetails.input_media_file.format,
-            framerate: jobDetails.input_media_file.frame_rate,
+            frameRate: jobDetails.input_media_file.frame_rate,
             height: jobDetails.input_media_file.height,
-            video_bitrate: jobDetails.input_media_file.video_bitrate_in_kbps,
-            video_codec: jobDetails.input_media_file.video_codec,
-            video_frames: jobDetails.thumbnails.length,
+            videoBitrate: jobDetails.input_media_file.video_bitrate_in_kbps,
+            videoCodec: jobDetails.input_media_file.video_codec,
+            videoFrames: jobDetails.thumbnails.length,
             width: jobDetails.input_media_file.width
           }, function mediaUpdated(err) {
             if (err)
@@ -113,9 +114,9 @@ module.exports = {
       else if (media.type === 'audio') {
         VideoEncoding.getMetadata(mediaKey, media.ministry, function (jobDetails) {
           Media.update(req.param('id'), {
-            audio_bitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
-            audio_codec: jobDetails.input_media_file.audio_codec,
-            audio_samplerate: jobDetails.input_media_file.audio_sample_rate,
+            audioBitrate: jobDetails.input_media_file.audio_bitrate_in_kbps,
+            audioCodec: jobDetails.input_media_file.audio_codec,
+            audioSampleRate: jobDetails.input_media_file.audio_sample_rate,
             duration: jobDetails.input_media_file.duration_in_ms,
             format: jobDetails.input_media_file.format
           }, function mediaUpdated(err) {

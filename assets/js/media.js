@@ -69,10 +69,10 @@ angular.module('Bethel.media', [
         break;
 
       case 'video':
-        if (media.poster_frame) {
-          thumbnail = (media.poster_frame == 'custom') ? prefix + media.poster_frame_custom : prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_000' + (Number(media.poster_frame) - 1) + '.jpg';
+        if (media.posterFrame) {
+          thumbnail = (media.posterFrame == 'custom') ? prefix + media.posterFrameCustom : prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_000' + (Number(media.posterFrame) - 1) + '.jpg';
         }
-        else if (media.video_frames > 1) {
+        else if (media.videoFrames > 1) {
           thumbnail = prefix + 'media/' + ministry + '/' + media.id + '/thumbnails/frame_0001.jpg';
         }
         else {
@@ -81,8 +81,8 @@ angular.module('Bethel.media', [
         break;
 
       case 'collection':
-        if (media.poster_frame == 'custom') {
-          thumbnail = prefix + media.poster_frame_custom;
+        if (media.posterFrame == 'custom') {
+          thumbnail = prefix + media.posterFrameCustom;
         }
         else {
           thumbnail = prefix + 'images/DefaultPodcaster.png';
@@ -215,13 +215,13 @@ angular.module('Bethel.media', [
   $scope.$parent.selectedCollection = $scope.filterByCollection;
 
   $scope.filterByType = function(type) {
-    if (type == 'video')
+    if (type === 'video')
       $scope.showVideo = !$scope.showVideo;
 
-    if (type == 'audio')
+    if (type === 'audio')
       $scope.showAudio = !$scope.showAudio;
 
-    if (type == 'image')
+    if (type === 'image')
       $scope.showImage = !$scope.showImage;
   };
 
@@ -344,11 +344,11 @@ angular.module('Bethel.media', [
     })
     .success(function(data, status, headers, config) {
       $scope.thumbnailUploading = false;
-      $scope.collection.poster_frame = 'custom';
-      $scope.collection.poster_frame_custom = location;
+      $scope.collection.posterFrame = 'custom';
+      $scope.collection.posterFrameCustom = location;
       io.socket.put('/media/' + $scope.collection.id, {
-        poster_frame: 'custom',
-        poster_frame_custom: location,
+        posterFrame: 'custom',
+        posterFrameCustom: location,
         _csrf: $rootScope._csrf
       });
     });
@@ -383,7 +383,7 @@ angular.module('Bethel.media', [
 
     new MediumEditor('.media-title', { disableToolbar: true, disableReturn: true });
     new MediumEditor('.media-description');
-    if (data.type == 'video') $scope.player = videojs('media-player');
+    if (data.type === 'video') $scope.player = videojs('media-player');
   });
 
   io.socket.get('/media/browser', function (data) {
@@ -449,9 +449,9 @@ angular.module('Bethel.media', [
   };
 
   $scope.setThumbnail = function(thumbnail) {
-    $scope.media.poster_frame = thumbnail;
+    $scope.media.posterFrame = thumbnail;
     io.socket.put('/media/' + $scope.media.id, {
-      poster_frame: thumbnail,
+      posterFrame: thumbnail,
       _csrf: $rootScope._csrf
     });
   };
@@ -486,11 +486,11 @@ angular.module('Bethel.media', [
     })
     .success(function(data, status, headers, config) {
       $scope.thumbnailUploading = false;
-      $scope.media.poster_frame = 'custom';
-      $scope.media.poster_frame_custom = location;
+      $scope.media.posterFrame = 'custom';
+      $scope.media.posterFrameCustom = location;
       io.socket.put('/media/' + $scope.media.id, {
-        poster_frame: 'custom',
-        poster_frame_custom: location,
+        posterFrame: 'custom',
+        posterFrameCustom: location,
         _csrf: $rootScope._csrf
       });
     });

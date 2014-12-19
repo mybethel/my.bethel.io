@@ -50,13 +50,13 @@
                 <td>Resolution</td>
                 <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.width + 'x' + media.height"></td>
               </tr>
-              <tr data-ng-if="media.type == 'video'" data-ng-show="media.video_codec">
+              <tr data-ng-if="media.type == 'video'" data-ng-show="media.videoCodec">
                 <td>Video</td>
-                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.video_codec.toUpperCase()"></td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.videoCodec.toUpperCase()"></td>
               </tr>
-              <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.audio_codec">
+              <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.audioCodec">
                 <td>Audio</td>
-                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.audio_codec.toUpperCase()"></td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.audioCodec.toUpperCase()"></td>
               </tr>
             </table>
           </div>
@@ -99,28 +99,28 @@
             </table>
           </div>
         </div>
-        <div class="panel panel-default panel-thumbnails" data-ng-if="media.type == 'video' && (media.poster_frame_custom || media.video_frames)">
+        <div class="panel panel-default panel-thumbnails" data-ng-if="media.type == 'video' && (media.posterFrameCustom || media.videoFrames)">
           <div class="panel-heading">
             <h2 class="panel-title">Thumbnails</h2>
           </div>
           <div class="panel-body full">
             <div class="row no-gutters">
               <div class="col-md-4">
-                <a href="" data-ng-click="setThumbnail('1')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0000.jpg?crop=faces&fit=crop&w=80&h=80" data-ng-class="{ 'selected': media.poster_frame == '1' }" width="80" height="80" /></a>
+                <a href="" data-ng-click="setThumbnail('1')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0000.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '1' }" width="80" height="80" /></a>
               </div>
               <div class="col-md-4">
-                <a href=""  data-ng-click="setThumbnail('2')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0001.jpg?crop=faces&fit=crop&w=80&h=80" data-ng-class="{ 'selected': media.poster_frame == '2' }" width="80" height="80" /></a>
+                <a href=""  data-ng-click="setThumbnail('2')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0001.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '2' }" width="80" height="80" /></a>
               </div>
               <div class="col-md-4">
-                <a href=""  data-ng-click="setThumbnail('3')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0002.jpg?crop=faces&fit=crop&w=80&h=80" data-ng-class="{ 'selected': media.poster_frame == '3' }" width="80" height="80" /></a>
+                <a href=""  data-ng-click="setThumbnail('3')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0002.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '3' }" width="80" height="80" /></a>
               </div>
               <div class="col-md-4">
-                <a href=""  data-ng-click="setThumbnail('4')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0003.jpg?crop=faces&fit=crop&w=80&h=80" data-ng-class="{ 'selected': media.poster_frame == '4' }" width="80" height="80" /></a>
+                <a href=""  data-ng-click="setThumbnail('4')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0003.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '4' }" width="80" height="80" /></a>
               </div>
-              <div class="col-md-4" data-ng-if="media.poster_frame_custom">
-                <a href=""  data-ng-click="setThumbnail('custom')"><img data-ng-src="//images.bethel.io/{{ media.poster_frame_custom }}?crop=faces&fit=crop&w=80&h=80" data-ng-class="{ 'selected': media.poster_frame == 'custom' }" width="80" height="80" /></a>
+              <div class="col-md-4" data-ng-if="media.posterFrameCustom">
+                <a href=""  data-ng-click="setThumbnail('custom')"><img data-ng-src="//images.bethel.io/{{ media.posterFrameCustom }}?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == 'custom' }" width="80" height="80" /></a>
               </div>
-              <div class="poster-upload" data-ng-class="media.poster_frame_custom ? 'col-md-4' : 'col-md-8'">
+              <div class="poster-upload" data-ng-class="media.posterFrameCustom ? 'col-md-4' : 'col-md-8'">
                 <button data-ng-file-select="onFileSelect($files)" accept="image/*" class="btn"><i class="fa" data-ng-class="(thumbnailUploading) ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i></button>
               </div>
             </div>
