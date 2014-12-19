@@ -1,4 +1,4 @@
-<div class="dash-panel-right x-large thumbnails">
+<div class="dash-panel-right panel x-large thumbnails">
   <div data-ui-view></div>
   <div class="panel-heading">
     <div class="pull-right search-box">
@@ -12,7 +12,7 @@
     </div>
     <h2 class="panel-title"><a class="fa fa-edit" ui-sref=".edit" data-ng-show="filterByCollection != 'all'"></a><span data-ng-bind="filterByCollection == 'all' ? 'All Media' : selectedCollection.name"></span></h2>
   </div>
-  <div class="content">
+  <div class="content container-fluid">
     <div data-ng-if="media.length < 1" class="info-well">
       <h1 data-ng-bind="'MEDIA.GETTING_STARTED' | translate"></h1>
       <p data-ng-bind="'MEDIA.HELP_COLLECTIONS' | translate"></p>

@@ -1,12 +1,12 @@
 <div class="dash-panel-left x-small sidebar-files">
    <ul class="nav nav-pills nav-stacked">
-      <li class="button">
+      <li class="button container-fluid">
         <div class="row no-gutters">
           <div class="col-xs-10">
-            <button data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,image/*,video/*,video/mp4" class="btn btn-block btn-success"><i class="fa fa-upload"></i> Upload Media</button>
+            <button type="button" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,image/*,video/*,video/mp4" class="btn btn-block btn-success"><i class="fa fa-upload"></i> Upload Media</button>
           </div>
           <div class="col-xs-2">
-            <button class="btn btn-default btn-block" data-ng-click="createFolder()"><i class="fa fa-folder"></i></button>
+            <button type="button" class="btn btn-default btn-block" data-ng-click="createFolder()"><i class="fa fa-folder"></i></button>
           </div>
         </div>
       </li>
