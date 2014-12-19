@@ -3,13 +3,14 @@
  *
  * @type {angular.Module}
  */
-var app = angular.module('Bethel', [
+angular.module('Bethel', [
   'http-auth-interceptor',
   'ui.router',
   'angulartics',
   'angulartics.google.analytics',
   'angularMoment',
   'pascalprecht.translate',
+  'Bethel.user',
   'Bethel.dashboard',
   'Bethel.media',
   'Bethel.podcast',
@@ -63,9 +64,9 @@ var app = angular.module('Bethel', [
 
   // Main navigation bar links.
   $scope.navLinks.push.apply($scope.navLinks, [
-    { title: 'Dashboard', icon: 'tachometer', url: '/#/dashboard' },
-    { title: 'Podcasting', icon: 'microphone', url: '/#/podcast' },
-    { title: 'Media', icon: 'youtube-play', url: '/#/media' },
+    { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
+    { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
+    { title: 'Media', icon: 'youtube-play', url: '#/media' },
     { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
     { title: 'Volunteers', icon: 'users', url: '/' },
     { title: 'Live Streaming', icon: 'video-camera', url: '/' },

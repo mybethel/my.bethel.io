@@ -1,4 +1,6 @@
-app.controller('LoginController', function ($scope, $log, $state, filterFilter, authService) {
+angular.module('Bethel.user', [])
+
+.controller('LoginController', function ($scope, $log, $state, filterFilter, authService) {
 
   $scope.credentials = {
     name: '',

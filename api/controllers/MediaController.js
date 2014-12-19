@@ -24,9 +24,9 @@ module.exports = {
       Media.subscribe(req.socket, results);
 
       results = results.filter(function (result) {
-        if (result.type == 'collection') {
+        if (result.type === 'collection') {
           collections.push(result);
-          if (req.param('id') !== 'all' && result.id == req.param('id')) {
+          if (req.param('id') !== 'all' && result.id === req.param('id')) {
             selectedCollection = result;
           } 
           return false;
