@@ -4,8 +4,6 @@
  * To start the server, run: `node app.js`.
  */
 
-require('newrelic');
-
 var sails, rc;
 try {
 	sails = require('sails');
