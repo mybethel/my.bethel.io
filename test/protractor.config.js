@@ -10,6 +10,6 @@ exports.config = {
     enableTimeouts: false
   },
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'firefox'
   }
 };
