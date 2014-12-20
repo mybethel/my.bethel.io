@@ -40,12 +40,12 @@ exports.sync = function(options) {
 
   // Limit only to podcasts with Bethel Cloud Storage selected
   Podcast.find({source: 1}, function foundPodcasts(err, podcasts) {
-    if (err) return next(err);
+    if (err) return console.error(err);
 
     podcasts.forEach(function(podcast) {
 
       Ministry.findOne(podcast.ministry, function foundMinistry(err, ministry) {
-        if (err) return next(err);
+        if (err) return console.error(err);
 
         // Get a list of files from the S3 bucket
         s3.listObjects({Bucket: 'cloud.bethel.io', Prefix: 'podcast/' + ministry.id + '/' + podcast.id + '/'}, function(err, data) {
