@@ -42,14 +42,14 @@
         <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href=""><i class="fa fa-bars"></i></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-show="user.name">
-        <li class="dropdown" ng-if="ministry.name">
-          <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ ministry.name }}</a>
+        <li class="dropdown" data-ng-show="ministry.name">
+          <a href="" class="dropdown-toggle ministry" data-toggle="dropdown" data-ng-bind="ministry.name"></a>
           <ul class="dropdown-menu">
-            <li ng-repeat="link in ministryLinks"><a href="{{ link.url }}">{{ link.title }}</a></li>
+            <li ng-repeat="link in ministryLinks"><a data-ng-href="{{ link.url }}" data-ng-bind="link.title"></a></li>
           </ul>
         </li>
         <li class="dropdown">
-          <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" ng-src="{{ user.avatar }}" /></a>
+          <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" ng-src="{{ user.avatar }}" alt="{{ user.name }}" /></a>
           <ul class="dropdown-menu">
             <li><a href="#">My Account</a></li>
             <li class="divider"></li>
@@ -62,7 +62,7 @@
 
   <nav role="navigation">
     <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
-      <li ng-repeat="link in navLinks"><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
+      <li ng-repeat="link in navLinks"><a data-ng-href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
     </ul>
   </nav>
 

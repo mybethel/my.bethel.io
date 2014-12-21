@@ -1,15 +1,16 @@
 exports.config = {
-  specs: [
-    'bootstrap.test.js',
-    'e2e/*.js'
-  ],
+  capabilities: {
+    'browserName': 'firefox'
+  },
   framework: 'mocha',
   mochaOpts: {
     reporter: 'spec',
     slow: 3000,
     enableTimeouts: false
   },
-  capabilities: {
-    'browserName': 'firefox'
-  }
+  rootElement: 'html',
+  specs: [
+    'bootstrap.test.js',
+    'e2e/*.js'
+  ]
 };

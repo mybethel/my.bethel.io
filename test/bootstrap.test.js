@@ -1,6 +1,6 @@
 var Sails = require('sails'), sails;
 
-before(function (done) {
+before(function() {
   protractor.promise.controlFlow().execute(function() {
 
     var deferred = new protractor.promise.Deferred();
@@ -8,15 +8,19 @@ before(function (done) {
 
     Sails.lift({
       connections: {
-        disk: { adapter: 'sails-disk' }
+        mongo: {
+          adapter: 'sails-mongo',
+          url: 'mongodb://localhost:27017'
+        }
       },
+      models: { connection: 'mongo' },
       environment: 'production',
-      //log: { level: 'error' },
+      log: { level: 'info' },
       session: { adapter: 'memory' }
     }, function (err, server) {
       sails = server;
       if (err) return done(err);
-      // Fixture loading.
+      
       deferred.fulfill(true);
     });
 
@@ -24,6 +28,12 @@ before(function (done) {
   });
 });
 
-after(function (done) {
-  sails.lower(done);
+after(function() {
+  protractor.promise.controlFlow().execute(function() {
+    var deferred = new protractor.promise.Deferred();
+    sails.lower(function() {
+      deferred.fulfill(true);
+    });
+    return deferred.promise;
+  });
 });

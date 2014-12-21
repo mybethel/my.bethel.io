@@ -5,6 +5,7 @@ before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - ./node_modules/protractor/bin/webdriver-manager update
+- sleep 5
 env:
   global:
   - secure: BIz7SQaL5YBUj1SQsYPrlQpBkbovU3cd/QavHn+gap/EBi8LslxdJRfD7Rag1DjSoI9nCMTf4sFFHsijlI1/px9SvYGLw1jeqwbtv5woNOPoIeBeyp9Tk30n1u6RYLdNfjPQW9cUrVfiAAcwuS2FJEEJrvMIxiQqtvpkpxjscSA=
@@ -12,3 +13,5 @@ env:
 cache:
   directories:
   - node_modules
+services:
+  - mongodb
