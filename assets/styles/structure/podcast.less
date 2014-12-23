@@ -15,6 +15,9 @@
   }
 }
 .podcast.view {
+  h1 {
+    margin-bottom: 0;
+  }
   .panel-top {
     margin-top: 20px;
   }
@@ -38,10 +41,29 @@
   .progress {
     margin: 20px;
   }
-  .dash-panel-right {
-    img {
-      width: 100%;
+  table.episodes {
+    h4 {
+      margin-bottom: 0;
+      margin-top: 0;
+      overflow: hidden;
+      white-space: nowrap;
     }
+    .media {
+      .operations {
+        width: 50px;
+      }
+    }
+    &.video .media td {
+      padding-bottom: 0;
+      padding-left: 0;
+      padding-top: 0;
+
+      h4 {
+        margin-top: 15px;
+      }
+    }
+  }
+  .dash-panel-right {
     .actions {
       position: absolute;
       bottom: 0;
