@@ -24,6 +24,11 @@ angular.module('Bethel.media')
     if (data.type === 'video') {
       $scope.media.preview = $sce.trustAsResourceUrl('https://cloud.bethel.io/media/' + data.ministry.id + '/' + data.id + '/preview.mp4');
     }
+    if (data.source === 2) {
+      io.socket.get('/service/list', {}, function (response, status) {
+        $scope.accounts = response;
+      });
+    }
     $scope.$apply();
 
     new MediumEditor('.media-title', { disableToolbar: true, disableReturn: true });
