@@ -1,56 +1,6 @@
-angular.module('Bethel.podcast', [])
+angular.module('Bethel.podcast')
 
-.config(function ($stateProvider) {
-
-  $stateProvider
-    .state('podcast', {
-      url: '/podcast',
-      templateUrl: 'templates/podcast/index.html',
-      controller: 'PodcastListCtrl'
-    })
-    .state('podcastview', {
-      url: '/podcast/:podcastId',
-      templateUrl: 'templates/podcast/view.html',
-      controller: 'PodcastViewCtrl'
-    });
-
-})
-
-.controller('PodcastListCtrl', function ($rootScope, $scope) {
-
-  $scope.podcasts = [];
-  $scope.statistics = [];
-
-  $scope.init = function() {
-    io.socket.get('/podcast/list', function (response) {
-      $scope.$apply(function() {
-        $scope.podcasts = response;
-      });
-    });
-  };
-
-  // Fetch stats for each of the podcasts.
-  $scope.$watch('podcasts', function() {
-    $scope.podcasts.forEach(function(podcast) {
-      io.socket.get('/podcast/subscribers/' + podcast.id, function (response) {
-        if (response.subscribers)
-          $scope.statistics[response.podcast] = response.subscribers;
-      });
-    });
-  }, true);
-
-  $rootScope.$watch('ministry', function() {
-    if (!$rootScope.ministry || !$rootScope.ministry.id)
-      return;
-
-    $scope.init();
-  });
-
-  io.socket.on('podcast', function (msg) { $scope.init(); });
-
-})
-
-.controller('PodcastViewCtrl', function ($rootScope, $scope, $state, $stateParams, $upload) {
+.controller('PodcastViewController', function ($rootScope, $scope, $state, $stateParams, $upload) {
 
   $scope.id = $stateParams.podcastId;
   $scope.uploadProgress = 0;
