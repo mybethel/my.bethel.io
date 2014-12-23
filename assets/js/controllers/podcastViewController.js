@@ -10,7 +10,12 @@ angular.module('Bethel.podcast')
       $scope.podcast = data;
     });
     new MediumEditor('.editable.title', { disableToolbar: true, disableReturn: true });
-    new MediumEditor('.editable.description');
+    new MediumEditor('.editable.description', { disableToolbar: true });
+  });
+
+  io.socket.get('/podcast/subscribers/' + $scope.id, function (response) {
+    if (typeof response.subscribers !== 'undefined')
+      $scope.subscribers = response.subscribers;
   });
 
   io.socket.get('/podcast/edit/' + $scope.id, function (data) {
@@ -26,6 +31,14 @@ angular.module('Bethel.podcast')
       _csrf: $rootScope._csrf
     });
   };
+
+  $scope.$watch('podcast', function() {
+    if (typeof $scope.podcast === 'undefined') return;
+
+    if (typeof $scope.podcast.sourceMeta === 'string') {
+      $scope.podcast.sourceMeta = $scope.podcast.sourceMeta.split(',');
+    }
+  });
 
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
