@@ -19,6 +19,14 @@ angular.module('Bethel.podcast')
     });
   });
 
+  $scope.setType = function (type) {
+    $scope.podcast.type = (type === 'audio') ? 1 : 2;
+    io.socket.put('/podcast/' + $scope.podcast.id, {
+      type: $scope.podcast.type,
+      _csrf: $rootScope._csrf
+    });
+  };
+
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
   $scope.onFileSelect = function ($files) {

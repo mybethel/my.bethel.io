@@ -1,15 +1,17 @@
 <div class="podcast view">
   <div class="dash-panel-left">
-    <div class="row margin-bottom-md">
+    <div class="row no-gutters margin-bottom-md">
       <div class="col-md-3">
         <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ podcast.name }}" />
       </div>
-      <div class="col-md-7">
+      <div class="col-md-8">
         <h1 class="editable title" data-placeholder="Podcast title" data-ng-bind="podcast.name"></h1>
       </div>
-      <div class="col-md-2 type">
-        <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': podcast.type == 1 }"><i class="fa fa-microphone"></i></a>
-        <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': podcast.type == 2 }"><i class="fa fa-film"></i></a>
+      <div class="col-md-1 text-right type">
+        <div class="btn-group-vertical" role="group">
+          <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': podcast.type == 1 }" data-ng-click="setType('audio')"><i class="fa fa-microphone"></i></a>
+          <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': podcast.type == 2 }" data-ng-click="setType('video')"><i class="fa fa-film"></i></a>
+        </div>
       </div>
     </div>
     <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
