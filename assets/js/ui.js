@@ -3,11 +3,6 @@ String.prototype.capitalize = function() {
 };
 
 $(document).ready(function(){
-  $('#nav-toggle').click(function (e){
-    $('body').toggleClass('nav-collapsed');
-    e.preventDefault();
-  });
-
   $(document).on('click', 'a', function (e) {
     if ($(this).data('link') === 'popover') {
       var url = $(this).attr('href');

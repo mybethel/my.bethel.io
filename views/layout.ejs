@@ -32,14 +32,14 @@
   </script>
 </head>
 
-<body>
+<body data-ng-class="{ 'nav-collapsed': collapseNav }">
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Bethel</a>
       </div>
       <ul class="nav navbar-nav">
-        <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href=""><i class="fa fa-bars"></i></a></li>
+        <li id="menu-icon"><a class="menu-icon" data-ng-click="toggleNav()" href=""><i class="fa fa-bars"></i></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-show="user.name">
         <li class="dropdown" data-ng-show="ministry.name">

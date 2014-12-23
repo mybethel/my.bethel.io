@@ -37,6 +37,7 @@ angular.module('Bethel', [
   $rootScope.user = null;
   $rootScope.ministry = null;
   $rootScope.authCheck = false;
+  $scope.collapseNav = false;
 
   $scope.updateSession = function(ev, data) {
     io.socket.get('/session/current', function (response) {
@@ -73,6 +74,10 @@ angular.module('Bethel', [
     { title: 'Giving', icon: 'money', url: '/' },
     { title: 'Social Media', icon: 'thumbs-up', url: '/' }
   ]);
+
+  $scope.toggleNav = function() {
+    $scope.collapseNav = !$scope.collapseNav;
+  }
 
   // Ministry dropdown menu.
   $scope.ministryLinks = [
