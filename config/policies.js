@@ -27,10 +27,6 @@ module.exports.policies = {
   	'welcome': ['flash', 'sessionAuth']
   },
 
-  image: {
-    '*': true
-  },
-
   location: {
     'all': true,
     'map': true,
