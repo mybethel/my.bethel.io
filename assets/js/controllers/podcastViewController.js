@@ -12,6 +12,8 @@ angular.module('Bethel.podcast')
       $scope.podcast = data;
     });
     new MediumEditor('.editable.description', { disableToolbar: true });
+
+    // On initial page load, the title is not editable.
     titleEditor = new MediumEditor('.title', { disableToolbar: true, disableReturn: true });
     titleEditor.deactivate();
   });
