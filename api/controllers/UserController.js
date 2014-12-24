@@ -27,13 +27,7 @@ module.exports = {
 
   create: function (req, res) {
     User.create(req.params.all(), function userCreated (err, user) {
-      if (err) {
-        req.session.flash = {
-          err: err
-        }
-
-        return res.redirect('/register');
-      }
+      if (err) return next(err);
 
       req.session.authenticated = true;
       req.session.User = user;
@@ -45,14 +39,7 @@ module.exports = {
 
   update: function(req, res) {
     User.update(req.param('id'), req.params.all(), function userUpdated(err, user) {
-      if (err) {
-        req.session.flash = {
-          err: err
-        }
-
-        return res.redirect('/welcome');
-      }
-      req.session.flash = {};
+      if (err) return next(err);
 
       if (user[0] && user[0].id === req.session.User.id) {
         req.session.User = user[0];
@@ -63,19 +50,11 @@ module.exports = {
           if (ministry) {
             req.session.Ministry = ministry;
           }
+
+          return res.send(user);
         });
       }
-
-      return res.redirect('/');
     });
-  },
-
-  welcome: function (req, res) {
-    res.view({user: req.session.User});
-  },
-
-  showUser: function (req, res) {
-    res.send(200);
   },
 
   /**
