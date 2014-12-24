@@ -40,11 +40,6 @@ module.exports.routes = {
     action: 'destroy'
   },
 
-  '/welcome': {
-    controller: 'user',
-    action: 'welcome'
-  },
-
   '/accounts': {
     controller: 'service',
     action: 'list'

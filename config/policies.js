@@ -16,15 +16,15 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access)
-  '*': ['flash', 'sessionAuth', 'completeRegistration', 'ajaxLayout'],
+  '*': ['sessionAuth'],
 
   user: {
     '*': ['sessionAuth', 'platformStaff'],
-  	'login': 'flash',
-  	'new': 'flash',
-  	'create': 'flash',
-    'update': ['flash', 'sessionAuth'],
-  	'welcome': ['flash', 'sessionAuth']
+  	'login': true,
+  	'new': true,
+  	'create': true,
+    'update': 'sessionAuth',
+  	'welcome': 'sessionAuth'
   },
 
   location: {
@@ -35,7 +35,7 @@ module.exports.policies = {
   },
 
   session: {
-  	'create': 'flash'
+  	'create': true
   },
 
   podcast: {
