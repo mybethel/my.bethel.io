@@ -5,17 +5,16 @@
         <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ podcast.name }}" />
       </div>
       <div class="col-md-8">
-        <h1 class="editable title" data-placeholder="Podcast title" data-ng-bind="podcast.name"></h1>
+        <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="Podcast title" data-ng-bind="podcast.name"></h1>
       </div>
-      <div class="col-md-1 text-right type">
-        <div class="btn-group-vertical" role="group">
-          <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': podcast.type == 1 }" data-ng-click="setType('audio')"><i class="fa fa-microphone"></i></a>
-          <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': podcast.type == 2 }" data-ng-click="setType('video')"><i class="fa fa-film"></i></a>
-        </div>
+      <div class="col-md-1 text-right operations">
+        <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa fa-edit"></i></a>
       </div>
     </div>
-    <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
-    <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
+    <div data-ng-show="editing">
+      <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+      <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
+    </div>
     <hr />
     <h3 data-ng-if="podcast.source === 2">New podcast episodes sync with Vimeo.</h3>
     <div class="row no-gutters" data-ng-if="podcast.source == 2">

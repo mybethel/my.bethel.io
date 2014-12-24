@@ -2,15 +2,18 @@ angular.module('Bethel.podcast')
 
 .controller('PodcastViewController', function ($rootScope, $scope, $state, $stateParams, $upload) {
 
+  var titleEditor;
   $scope.id = $stateParams.podcastId;
   $scope.uploadProgress = 0;
+  $scope.editing = false;
 
   io.socket.get('/podcast/' + $scope.id, function (data) {
     $scope.$apply(function() {
       $scope.podcast = data;
     });
-    new MediumEditor('.editable.title', { disableToolbar: true, disableReturn: true });
     new MediumEditor('.editable.description', { disableToolbar: true });
+    titleEditor = new MediumEditor('.title', { disableToolbar: true, disableReturn: true });
+    titleEditor.deactivate();
   });
 
   io.socket.get('/podcast/subscribers/' + $scope.id, function (response) {
@@ -24,13 +27,20 @@ angular.module('Bethel.podcast')
     });
   });
 
-  $scope.setType = function (type) {
-    $scope.podcast.type = (type === 'audio') ? 1 : 2;
-    io.socket.put('/podcast/' + $scope.podcast.id, {
-      type: $scope.podcast.type,
-      _csrf: $rootScope._csrf
-    });
+  $scope.toggleEditing = function() {
+    $scope.editing = !$scope.editing;
   };
+
+  $scope.$watch('editing', function() {
+    if (typeof titleEditor === 'undefined')
+      return;
+
+    if ($scope.editing === true) {
+      titleEditor.activate();
+    } else {
+      titleEditor.deactivate();
+    }
+  });
 
   $scope.$watch('podcast', function() {
     if (typeof $scope.podcast === 'undefined') return;
