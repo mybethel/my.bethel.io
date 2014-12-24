@@ -31,36 +31,33 @@ module.exports = {
           req.session.isAdmin = true;
         }
 
-        var ministryId = user.ministry;
-        if (ministryId) {
-          Ministry.findOneById(ministryId, function foundMinistry(err, ministry) {
-            if (err) return next(err);
-
-            if (ministry) {
-              req.session.Ministry = ministry;
-            }
-
-            return res.send({ success: 'welcome' });
-          });
-        } else {
+        if (!user.ministry)
           return res.send({ success: 'welcome' });
-        }
+        
+        Ministry.findOneById(user.ministry, function foundMinistry(err, ministry) {
+          if (err) return next(err);
+
+          if (ministry) {
+            req.session.Ministry = ministry;
+          }
+
+          return res.send({ success: 'welcome' });
+        });
       });
     });
   },
 
   current: function(req, res, next) {
-    if (req.session.User) {
-      User.findOne(req.session.User.id, function (err, user) {
-        res.send({
-          user: user,
-          ministry: req.session.Ministry,
-          isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
-        });
+    if (!req.session.User)
+      return res.forbidden({ error: 'Please login at http://my.bethel.io' });
+
+    User.findOne(req.session.User.id, function (err, user) {
+      res.send({
+        user: user,
+        ministry: req.session.Ministry,
+        isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
       });
-    } else {
-      res.forbidden({ error: 'Please login at http://my.bethel.io' });
-    }
+    });
   },
 
   destroy: function(req, res, next) {
