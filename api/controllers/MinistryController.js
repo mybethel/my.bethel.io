@@ -37,19 +37,4 @@ module.exports = {
     });
   },
 
-  update: function(req, res) {
-    Ministry.update(req.param('id'), req.params.all(), function ministryUpdated(err) {
-      if (err) {
-        req.session.flash = {
-          err: err
-        }
-
-        return res.redirect('/ministry/edit/' + req.param('id'));
-      }
-      req.session.flash = {};
-
-      return res.redirect('/');
-    });
-  }
-
 };
