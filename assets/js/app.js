@@ -1,54 +1,73 @@
-'use strict';
-
 /**
  * The main Sails Angular app module
  *
  * @type {angular.Module}
  */
-var app = angular.module('Bethel', [
+angular.module('Bethel', [
   'http-auth-interceptor',
-  'sails.io',
   'ui.router',
+  'angulartics',
+  'angulartics.google.analytics',
+  'angularMoment',
+  'pascalprecht.translate',
+  'Bethel.user',
   'Bethel.dashboard',
+  'Bethel.media',
   'Bethel.podcast',
   'Bethel.staff'
 ])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($urlRouterProvider, $translateProvider) {
+
+  $translateProvider.preferredLanguage('en');
+  $translateProvider.useLoader('$translatePartialLoader', {
+    urlTemplate: '/i18n/{part}/{lang}.json'
+  });
 
   $urlRouterProvider.otherwise('/dashboard');
 
 })
 
-.controller('AppCtrl', function ($rootScope, $scope, sailsSocket, $log, $state, filterFilter) {
+.filter('trustAsHtml', function($sce) { return $sce.trustAsHtml; })
+
+.controller('AppCtrl', function ($rootScope, $scope, $log, $state, filterFilter) {
 
   $scope.redirect = '';
   $scope.navLinks = [];
   $rootScope.user = null;
   $rootScope.ministry = null;
   $rootScope.authCheck = false;
+  $scope.collapseNav = false;
 
   $scope.updateSession = function(ev, data) {
-    sailsSocket.get('/session/current', {}, function (response, status) {
-      $rootScope.user = response.user;
-      $rootScope.ministry = response.ministry;
-      $rootScope.isAdmin = response.isAdmin;
-      $rootScope.authCheck = true;
+    io.socket.get('/session/current', function (response) {
+      $rootScope.$apply(function() {
+        $rootScope.user = response.user;
+        $rootScope.ministry = response.ministry;
+        $rootScope.isAdmin = response.isAdmin;
+        $rootScope.authCheck = true;
 
-      if ($rootScope.isAdmin) {
-        $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
-      }
+        if (response.isAdmin) {
+          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
+        }
+      });
     });
   };
 
   // Update current session on load or login.
+  $scope.updateSession();
   $scope.$on('sailsSocket:connect', $scope.updateSession);
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
+  io.socket.get('/csrfToken', function (response) {
+    $rootScope._csrf = response._csrf;
+  });
+
   // Main navigation bar links.
   $scope.navLinks.push.apply($scope.navLinks, [
-    { title: 'Dashboard', icon: 'tachometer', url: '/' },
-    { title: 'Podcasting', icon: 'microphone', url: '/#/podcasts' },
+    { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
+    { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
+    { title: 'Media', icon: 'youtube-play', url: '#/media' },
     { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
     { title: 'Volunteers', icon: 'users', url: '/' },
     { title: 'Live Streaming', icon: 'video-camera', url: '/' },
@@ -56,13 +75,16 @@ var app = angular.module('Bethel', [
     { title: 'Social Media', icon: 'thumbs-up', url: '/' }
   ]);
 
+  $scope.toggleNav = function() {
+    $scope.collapseNav = !$scope.collapseNav;
+  }
+
   // Ministry dropdown menu.
   $scope.ministryLinks = [
     { title: 'Connected Accounts', url: '/#/dashboard/accounts' },
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
-
 });
 
 function findIndexByPropertyValue(arr, property, value) {

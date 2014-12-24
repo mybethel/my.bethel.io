@@ -3,46 +3,53 @@
 <!--[if IE 7]>         <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--><html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js"><!--<![endif]-->
-  <head>
-    <meta charset="utf-8" />
-    <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bethel</title>
-    <!--STYLES-->
-    <link rel="stylesheet" href="/styles/animate.css">
-    <link rel="stylesheet" href="/styles/app.css">
-    <link rel="stylesheet" href="/styles/bootstrap-markdown.min.css">
-    <link rel="stylesheet" href="/styles/bootstrap-theme.css">
-    <link rel="stylesheet" href="/styles/bootstrap.css">
-    <link rel="stylesheet" href="/styles/dashboard.css">
-    <link rel="stylesheet" href="/styles/datepicker.css">
-    <link rel="stylesheet" href="/styles/font-awesome.css">
-    <link rel="stylesheet" href="/styles/jquery.fileupload.css">
-    <link rel="stylesheet" href="/styles/locations.css">
-    <link rel="stylesheet" href="/styles/podcasts.css">
-    <link rel="stylesheet" href="/styles/theme.css">
-    <!--STYLES END-->
-    <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/rickshaw.min.css">
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bethel</title>
+  <!--STYLES-->
+  <link rel="stylesheet" href="/components/animate.css/animate.min.css">
+  <link rel="stylesheet" href="/styles/app.css">
+  <link rel="stylesheet" href="/styles/bootstrap-markdown.min.css">
+  <link rel="stylesheet" href="/styles/datepicker.css">
+  <link rel="stylesheet" href="/styles/jquery.fileupload.css">
+  <link rel="stylesheet" href="/styles/theme.css">
+  <!--STYLES END-->
+  <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/font-awesome.min.css">
+  <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/rickshaw.min.css">
+  <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/medium-editor/medium-editor.min.css">
+  <script src="https://static.bethel.io/libraries/video-js/video.js"></script>
+  <script>
+    videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
+  </script>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-45872811-1', { 'cookieDomain': 'none' });
+  </script>
+</head>
 
-  <body>
-    <nav class="navbar navbar-inverse" role="navigation">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">Bethel</a>
-        </div>
-        <ul class="nav navbar-nav">
-          <li id="menu-icon"><a id="nav-toggle" class="menu-icon" href=""><i class="fa fa-bars"></i></a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right" ng-show="user.name">
-          <li class="dropdown" ng-if="ministry.name">
-            <a href="" class="dropdown-toggle" data-toggle="dropdown">{{ ministry.name }}</a>
-            <ul class="dropdown-menu">
-              <li ng-repeat="link in ministryLinks"><a href="{{ link.url }}">{{ link.title }}</a></li>
-            </ul>
-          </li>
+<body data-ng-class="{ 'nav-collapsed': collapseNav }">
+  <nav class="navbar navbar-inverse" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">Bethel</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li id="menu-icon"><a class="menu-icon" data-ng-click="toggleNav()" href=""><i class="fa fa-bars"></i></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right" ng-show="user.name">
+        <li class="dropdown" data-ng-show="ministry.name">
+          <a href="" class="dropdown-toggle ministry" data-toggle="dropdown" data-ng-bind="ministry.name"></a>
+          <ul class="dropdown-menu">
+            <li ng-repeat="link in ministryLinks"><a data-ng-href="{{ link.url }}" data-ng-bind="link.title"></a></li>
+          </ul>
+        </li>
         <li class="dropdown">
-          <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" ng-src="{{ user.avatar }}" /></a>
+          <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" ng-src="{{ user.avatar }}" alt="{{ user.name }}" /></a>
           <ul class="dropdown-menu">
             <li><a href="#">My Account</a></li>
             <li class="divider"></li>
@@ -50,87 +57,78 @@
           </ul>
         </li>
       </ul>
-      </div>
-    </nav>
+    </div>
+  </nav>
 
-    <nav role="navigation">
-      <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
-        <li ng-repeat="link in navLinks"><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
-      </ul>
-    </nav>
+  <nav role="navigation">
+    <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
+      <li ng-repeat="link in navLinks"><a data-ng-href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
+    </ul>
+  </nav>
 
-    <section class="page-wrap">
+  <section class="page-wrap">
 
     <%- body %>
 
-    </section>
+  </section>
 
-    <div id="popover" class="modal fade">
+  <div id="popover" class="modal fade"></div>
 
-    </div>
+  <!--TEMPLATES-->
+  
+  <!--TEMPLATES END-->
 
-    <!--
-        Client-side Templates
-        ========================
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-        HTML templates are important prerequisites of modern, rich client applications.
-        To work their magic, frameworks like Backbone, Angular, Ember, and Knockout require
-        that you load these templates client-side.
+  <!--SCRIPTS-->
+  <script src="/js/dependencies/sails.io.js"></script>
+  <script src="/components/lodash/dist/lodash.min.js"></script>
+  <script src="/components/moment/min/moment.min.js"></script>
+  <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="/components/angulartics/dist/angulartics.min.js"></script>
+  <script src="/components/angulartics/dist/angulartics-ga.min.js"></script>
+  <script src="/components/angular-http-auth/src/http-auth-interceptor.js"></script>
+  <script src="/components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+  <script src="/components/angular-translate/angular-translate.min.js"></script>
+  <script src="/components/angular-translate-loader-partial/angular-translate-loader-partial.min.js"></script>
+  <script src="/components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js"></script>
+  <script src="/components/angular-moment/angular-moment.min.js"></script>
+  <script src="/components/angular-rickshaw/rickshaw.js"></script>
+  <script src="/components/angular-svg-round-progressbar/roundProgress.min.js"></script>
+  <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/components/d3/d3.min.js"></script>
+  <script src="/components/medium-editor/dist/js/medium-editor.min.js"></script>
+  <script src="/components/ng-file-upload/angular-file-upload.min.js"></script>
+  <script src="/components/ng-file-upload/angular-file-upload-shim.min.js"></script>
+  <script src="/components/ng-tags-input/ng-tags-input.min.js"></script>
+  <script src="/components/rickshaw/rickshaw.min.js"></script>
+  <script src="/js/configuration/mediaConfig.js"></script>
+  <script src="/js/configuration/podcastConfig.js"></script>
+  <script src="/js/controllers/loginController.js"></script>
+  <script src="/js/controllers/mediaCollectionController.js"></script>
+  <script src="/js/controllers/mediaCollectionEditController.js"></script>
+  <script src="/js/controllers/mediaListController.js"></script>
+  <script src="/js/controllers/mediaViewController.js"></script>
+  <script src="/js/controllers/podcastListController.js"></script>
+  <script src="/js/controllers/podcastViewController.js"></script>
+  <script src="/js/controllers/staffController.js"></script>
+  <script src="/js/controllers/teamController.js"></script>
+  <script src="/js/filters/bytesFilter.js"></script>
+  <script src="/js/filters/durationFilter.js"></script>
+  <script src="/js/filters/thumbnailFilter.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script src="/js/ui.js"></script>
+  <!--SCRIPTS END-->
 
-        By default, your Gruntfile is configured to automatically load and precompile
-        client-side JST templates in your `assets/linker/templates` folder, then
-        include them here automatically (between TEMPLATES and TEMPLATES END).
-        
-        To customize this behavior to fit your needs, just edit your Gruntfile.
-        For example, here are a few things you could do:
-
-            + Import templates from other directories
-            + Use a different template engine (handlebars, jade, dust, etc.)
-            + Internationalize your client-side templates using a server-side
-              stringfile before they're served.
-    -->
-
-    <!--TEMPLATES-->
-    
-    <!--TEMPLATES END-->
-
-    <!--LIBRARIES-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/lodash.min.js"></script>
-    <script src="//maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg&amp;sensor=false"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/socket.io.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/angular-google-maps.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap-datepicker.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap-markdown.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.fileupload.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.form.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.iframe-transport.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.typeahead.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.validate.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/markdown.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/to-markdown.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/d3.min.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/rickshaw.min.js"></script>
-    <script src="//s3.amazonaws.com/static.bethel.io/js/rickshaw.angular.min.js"></script>
-    <!--LIBRARIES END-->
-
-    <!--SCRIPTS-->
-    <script src="/js/app.js"></script>
-    <script src="/js/controllers/loginController.js"></script>
-    <script src="/js/controllers/staffController.js"></script>
-    <script src="/js/controllers/teamController.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/podcast.js"></script>
-    <script src="/js/services/angular-sails.io.js"></script>
-    <script src="/js/services/http-auth-interceptor.js"></script>
-    <script src="/js/services/sailsSocket.js"></script>
-    <script src="/js/ui.js"></script>
-    <script src="/js/uploader.js"></script>
-    <script src="/js/user-validate.js"></script>
-    <!--SCRIPTS END-->
+  <!--LIBRARIES-->
+  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> 
+  <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap-datepicker.js"></script>
+  <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.form.js"></script>
+  <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.typeahead.js"></script>
+  <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.validate.js"></script>
+  <!--LIBRARIES END-->
   </body>
+
 </html>

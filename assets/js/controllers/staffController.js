@@ -24,7 +24,7 @@ angular.module('Bethel.staff', ['ui.router'])
 .controller('StaffController', function ($rootScope, $scope, sailsSocket, $location) {
 
   $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin != 'undefined' && $rootScope.isAdmin === false) {
+    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
       $location.path('/').replace();
     }
   });
@@ -47,7 +47,7 @@ angular.module('Bethel.staff', ['ui.router'])
   $scope.user = {};
 
   $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin != 'undefined' && $rootScope.isAdmin == false) {
+    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
       $location.path('/').replace();
     }
   });
@@ -68,7 +68,7 @@ angular.module('Bethel.staff', ['ui.router'])
   $scope.ministry = {};
 
   $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin != 'undefined' && $rootScope.isAdmin === false) {
+    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
       $location.path('/').replace();
     }
   });

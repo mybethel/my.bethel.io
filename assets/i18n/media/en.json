@@ -1,0 +1,13 @@
+{
+  "MEDIA": {
+    "ALL_MEDIA": "All Media",
+    "GETTING_STARTED": "Getting Started with Media Cloud",
+    "BUTTON_COLLECTION_ADD": "Add Collection",
+    "BUTTON_COLLECTION_EDIT": "Configure Collection",
+    "BUTTON_MEDIA_FIND": "Find Media to Tag",
+    "BUTTON_LEARN_MORE": "Learn More",
+    "HELP_COLLECTIONS": "Collections organize your media and affect how they are shown to visitors. Typically, a single collection is created for each sermon series or event. A collection can automatically encode videos into Web or iOS compatible versions or create an audio file for podcasting!",
+    "HELP_TAGS": "You can upload new files to this collection by clicking <b>Upload Media</b> in the upper left corner. <em>Already have media uploaded?</em> Simply tag it with the name of this collection and it'll appear here.",
+    "HELP_BULK": "<b>Uploading a large amount of files?</b><br />Send us a hard drive and we'll take care of the rest."
+  }
+}

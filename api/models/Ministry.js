@@ -35,6 +35,11 @@ module.exports = {
       via: 'ministry'
     },
 
+    media: {
+      collection: 'media',
+      via: 'ministry'
+    },
+
     podcasts: {
       collection: 'podcast',
       via: 'ministry'

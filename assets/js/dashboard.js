@@ -1,6 +1,6 @@
-angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-rickshaw'])
+angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-rickshaw'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
 
   $stateProvider
     .state('dashboard', {
@@ -33,27 +33,35 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
       controller: 'AccountsController'
     });
 
+  uiGmapGoogleMapApiProvider.configure({
+    key: 'AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg',
+    v: '3.17',
+    libraries: 'places'
+  });
+
 })
 
-.controller('DashboardController', function ($scope, sailsSocket, $log, filterFilter) {
+.controller('DashboardController', function ($rootScope, $scope, $log, uiGmapGoogleMapApi) {
 
-  $scope.map = {
-    control: {},
-    zoom: 10,
-    bounds: new google.maps.LatLngBounds(),
-    center: [30.25, -97.75],
-    options: {
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      zoomControl: false,
-      panControl: false,
-      mapTypeControl: false,
-      scrollwheel: false,
-      navigationControl: false,
-      draggable: false,
-      streetViewControl: false,
-      maxZoom: 15,
-    }
-  };
+  uiGmapGoogleMapApi.then(function(maps) {
+    $scope.map = {
+      control: {},
+      zoom: 10,
+      bounds: new google.maps.LatLngBounds(),
+      center: [30.25, -97.75],
+      options: {
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        zoomControl: false,
+        panControl: false,
+        mapTypeControl: false,
+        scrollwheel: false,
+        navigationControl: false,
+        draggable: false,
+        streetViewControl: false,
+        maxZoom: 15,
+      }
+    };
+  });
 
   $scope.stats = [];
   $scope.locations = [];
@@ -69,21 +77,30 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
       color: '#106982',
       data: [{x: 0, y: 10},{x: 1, y: 15}]
     }]
-  }
+  };
 
   $scope.init = function() {
-    sailsSocket.get('/dashboard/stats', {}, function (response, status) {
-    if (!response.error)
-      $scope.stats = response;
+    io.socket.get('/dashboard/stats', function (response) {
+      $scope.$apply(function() {
+        $scope.stats = response;
+      });
     });
-    sailsSocket.get('/location/ministry', {}, function (response, status) {
-      if (!response.error)
+    io.socket.get('/location/ministry', function (response) {
+      $scope.$apply(function() {
         $scope.locations = response;
+      });
     });
-  }
+  };
 
   // Watch for notifications to update the dashboard display.
   $scope.$on('event:update-dashboard', function() {
+    $scope.init();
+  });
+
+  $rootScope.$watch('ministry', function() {
+    if (!$rootScope.ministry || !$rootScope.ministry.id)
+      return;
+
     $scope.init();
   });
 
@@ -162,27 +179,27 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
 
 })
 
-.controller('AccountsController', function ($scope, sailsSocket, $log, filterFilter) {
+.controller('AccountsController', function ($scope, $log, filterFilter) {
 
   $scope.accounts = [];
 
-  sailsSocket.get('/service/list', {}, function (response, status) {
+  io.socket.get('/service/list', {}, function (response, status) {
     $scope.accounts = response;
   });
 
 })
 
-.controller('LocationController', function ($scope, sailsSocket, $log, filterFilter) {
+.controller('LocationController', function ($scope, $log, filterFilter) {
 
   $scope.addressFormat = function (string) {
     var address = string.split(',');
     address.pop();
     return address.join(',');
-  }
+  };
 
 })
 
-.controller('LocationFormController', function ($rootScope, $scope, sailsSocket, $state, $stateParams) {
+.controller('LocationFormController', function ($rootScope, $scope, $state, $stateParams) {
 
   $scope.id = $stateParams.locationId;
   $scope.location = {};
@@ -191,17 +208,17 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
   // Generic save functionality for both new and existing locations.
   $scope.save = function () {
     if ($scope.id) {
-      sailsSocket.put('/location/' + $scope.id, $scope.location, function (response) {
+      io.socket.put('/location/' + $scope.id, $scope.location, function (response) {
         $rootScope.$broadcast('event:update-dashboard');
         $state.go('dashboard.location');
       });
     } else {
-      sailsSocket.post('/location/create', $scope.location, function (response) {
+      io.socket.post('/location/create', $scope.location, function (response) {
         $rootScope.$broadcast('event:update-dashboard');
         $state.go('dashboard.location');
       });
     }
-  }
+  };
 
   // Google Places autocomplete functionality and geocoding.
   var locationData = new google.maps.places.Autocomplete((document.getElementById('location-autocomplete')), { types: ['geocode'] });
@@ -218,10 +235,8 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
 
   if (!$scope.id) {
     // Get the CSRF token for validation.
-    sailsSocket.get('/csrfToken', {}, function (response, status) {
-      if (!response.error)
-        $scope.location._csrf = response._csrf;
-      console.log($scope.location);
+    io.socket.get('/csrfToken', function (response) {
+      $scope.location._csrf = response._csrf;
     });
     $scope.location.ministry = $rootScope.ministry.id;
 
@@ -229,10 +244,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
   }
 
   // Query the location to display in the edit form.
-  sailsSocket.get('/location/' + $scope.id, {}, function (response, status) {
-    if (response.error)
-      return;
-
+  io.socket.get('/location/' + $scope.id, function (response) {
     $scope.location = response;
     delete $scope.location.ministry;
 
@@ -240,9 +252,8 @@ angular.module('Bethel.dashboard', ['ui.router', 'google-maps', 'angular-ricksha
       $scope.coords = $scope.location.loc[0].toFixed(2) + ', ' + $scope.location.loc[1].toFixed(2);
 
     // Get the CSRF token for validation.
-    sailsSocket.get('/csrfToken', {}, function (response, status) {
-      if (!response.error)
-        $scope.location._csrf = response._csrf;
+    io.socket.get('/csrfToken', function (response) {
+      $scope.location._csrf = response._csrf;
     });
   });
 

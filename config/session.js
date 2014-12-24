@@ -26,14 +26,24 @@ module.exports.session = {
   // }
   
   
-  adapter: 'mongo',
+  adapter: 'connect-mongostore',
   collection: 'sessions',
-  url: process.env.MONGO_HQ,
-  //
-  // username: '',
-  // password: '',
-  // auto_reconnect: false,
-  // ssl: false,
-  // stringify: true
+
+  db: {
+    name: 'mybethel',
+    servers: [
+      {
+        host: 'candidate.12.mongolayer.com',
+        port: '10300'
+      },
+      {
+        host: 'candidate.13.mongolayer.com',
+        port: '10300'
+      }
+    ]
+  },
+  
+  username: 'mybethel-prod',
+  password: process.env.MONGO_PASS
 
 };

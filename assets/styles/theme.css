@@ -1,5 +1,3 @@
-@import url(https://fonts.googleapis.com/css?family=Lato:700,300,100);
-
 html, body {
   height:100%;
   width: 100%;
@@ -11,7 +9,6 @@ body {
   padding: 0;
   background: #2F3439;
   position: fixed;
-  font-family: 'Lato', sans-serif;
 }
 
 .welcome {
@@ -85,7 +82,7 @@ body {
 }
 
 ul.nav-main {
-  padding-top: 51px;
+  padding-top: 52px;
   position: absolute;
   width: 200px;
   z-index: 1;
@@ -234,6 +231,10 @@ section.page-wrap .dash-panel-left.small {
   width: 40%;
 }
 
+section.page-wrap .dash-panel-left.x-small {
+  width: 20%;
+}
+
 section.page-wrap .dash-panel-right {
   position: absolute;
   padding-top: 51px;
@@ -247,6 +248,10 @@ section.page-wrap .dash-panel-right {
 
 section.page-wrap .dash-panel-right.large {
   width: 60%;
+}
+
+section.page-wrap .dash-panel-right.x-large {
+  width: 80%;
 }
 
 section.page-wrap .dash-panel-right .content {
@@ -310,8 +315,8 @@ section.page-wrap .dash-panel-right table tr:first-child td {
   border: 0;
 }
 
-section.page-wrap .dash-panel-right table tr:hover td {
-  background-color: rgba(255,255,255,0.04);
+section.page-wrap .dash-panel-right table tr:hover {
+  background-color: rgba(255,255,255,0.04) !important;
 }
 
 .nav-collapsed section.page-wrap {

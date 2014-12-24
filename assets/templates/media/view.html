@@ -1,0 +1,133 @@
+<div class="dash-panel-right x-large media-detail">
+  <div class="row no-gutters">
+    <div class="col-md-8">
+      <div data-ng-if="!media.public" class="alert alert-success" role="alert">This is a private file and is not visible to the public. <a href="" data-ng-click="togglePublic()" class="alert-link">Click here to make public.</a></div>
+      <div data-ng-if="media.type == 'video'" class="alert alert-warning" role="alert">Web player preview is limited to 15 seconds. To enable full video for playback a web-optimized version must be generated. <a href="#" class="alert-link">Click here to make one!</a></div>
+      <img data-ng-if="media.type != 'video'" class="media-thumb" data-ng-src="{{ media | thumbnail:'604':'340' }}" alt="{{ media.filename }}" />
+      <video data-ng-if="media.type == 'video'" id="media-player" class="video-js vjs-sublime-skin" controls preload="none" width="auto" height="auto" poster="{{ media | thumbnail:'604':'340' }}" data-setup="{}">
+        <source data-ng-src="{{ media.preview }}" type='video/mp4' />
+        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+      </video>
+      <div class="panel-heading">
+        <h1 class="panel-title media-title" data-ng-bind="media.name || media.filename"></h1>
+      </div>
+      <div class="content">
+        <tags-input ng-model="tags" placeholder="Enter tags or collection names." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')">
+          <auto-complete source="loadTags($query)"></auto-complete>
+        </tags-input>
+        <p data-ng-bind-html="media.description" data-placeholder="Type here to edit the description for this file." class="media-description"></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="content">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">Original File Details</h2>
+          </div>
+          <div class="panel-body full">
+            <table class="table table-hover">
+              <tr>
+                <td>Uploaded</td>
+                <td style="vertical-align:middle;text-align:right;" data-am-time-ago="media.createdAt"></td>
+              </tr>
+              <tr>
+                <td>Changed</td>
+                <td style="vertical-align:middle;text-align:right;" data-am-time-ago="media.updatedAt"></td>
+              </tr>
+              <tr>
+                <td>Type</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.type.capitalize()"></td>
+              </tr>
+              <tr>
+                <td>Size</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.size | bytes"></td>
+              </tr>
+              <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.duration">
+                <td>Duration</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.duration | duration"></td>
+              </tr>
+              <tr data-ng-if="media.type == 'video'" data-ng-show="media.width && media.height">
+                <td>Resolution</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.width + 'x' + media.height"></td>
+              </tr>
+              <tr data-ng-if="media.type == 'video'" data-ng-show="media.videoCodec">
+                <td>Video</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.videoCodec.toUpperCase()"></td>
+              </tr>
+              <tr data-ng-if="media.type == 'video' || media.type == 'audio'" data-ng-show="media.audioCodec">
+                <td>Audio</td>
+                <td style="vertical-align:middle;text-align:right;" data-ng-bind="media.audioCodec.toUpperCase()"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h2 class="panel-title">Settings</h2>
+          </div>
+          <div class="panel-body full">
+            <table class="table table-hover">
+              <tr>
+                <td>Privacy</td>
+                <td style="vertical-align:middle;text-align:right;"><button class="btn btn-xs" data-ng-click="togglePublic()"><i class="fa" data-ng-class="media.public ? 'fa-eye' : 'fa-eye-slash'"></i> &nbsp;<span data-ng-bind="media.public ? 'Public' : 'Private'">Public</span></button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default" data-ng-if="media.type == 'video'">
+          <div class="panel-heading">
+            <h2 class="panel-title">Optimized Versions</h2>
+          </div>
+          <div class="panel-body full">
+            <table class="table table-hover">
+              <tr>
+                <td>Web</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+              <tr>
+                <td>iOS</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+              <tr>
+                <td>Streaming</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+              <tr>
+                <td>Audio-only</td>
+                <td style="text-align:right;"><button class="btn btn-xs">Generate</button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="panel panel-default panel-thumbnails" data-ng-if="media.type == 'video' && (media.posterFrameCustom || media.videoFrames)">
+          <div class="panel-heading">
+            <h2 class="panel-title">Thumbnails</h2>
+          </div>
+          <div class="panel-body full">
+            <div class="row no-gutters">
+              <div class="col-md-4">
+                <a href="" data-ng-click="setThumbnail('1')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0000.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '1' }" width="80" height="80" /></a>
+              </div>
+              <div class="col-md-4">
+                <a href=""  data-ng-click="setThumbnail('2')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0001.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '2' }" width="80" height="80" /></a>
+              </div>
+              <div class="col-md-4">
+                <a href=""  data-ng-click="setThumbnail('3')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0002.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '3' }" width="80" height="80" /></a>
+              </div>
+              <div class="col-md-4">
+                <a href=""  data-ng-click="setThumbnail('4')"><img data-ng-src="//images.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/thumbnails/frame_0003.jpg?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == '4' }" width="80" height="80" /></a>
+              </div>
+              <div class="col-md-4" data-ng-if="media.posterFrameCustom">
+                <a href=""  data-ng-click="setThumbnail('custom')"><img data-ng-src="//images.bethel.io/{{ media.posterFrameCustom }}?crop=faces&amp;fit=crop&amp;w=80&amp;h=80" data-ng-class="{ 'selected': media.posterFrame == 'custom' }" width="80" height="80" /></a>
+              </div>
+              <div class="poster-upload" data-ng-class="media.posterFrameCustom ? 'col-md-4' : 'col-md-8'">
+                <button data-ng-file-select="onFileSelect($files)" accept="image/*" class="btn"><i class="fa" data-ng-class="(thumbnailUploading) ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a class="btn btn-block btn-lg" data-ng-href="http://cloud.bethel.io/media/{{ media.ministry.id }}/{{ media.id }}/original.{{ media.extension }}"><i class="fa fa-download"></i> &nbsp; Download Original</a>
+      </div>
+    </div>
+  </div>
+</div>

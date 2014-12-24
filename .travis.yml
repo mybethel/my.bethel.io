@@ -1,11 +1,17 @@
 language: node_js
 node_js:
 - '0.10'
+before_script:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- ./node_modules/protractor/bin/webdriver-manager update
+- sleep 5
 env:
   global:
-  - secure: OUSw7HtFgEviibgyzSsU5FTtUPHZDAC56S4OUVx/TPlrF0wl12ueC4sNgbz4tGAcgLInqpPQw0wsgNt8LMhhAFMIPDCM3XsfuXMzNcUzwVGD6Yi2FWrN38S59B2kEq+ZLgAyAjKr5lTNhSI+qZ8J4+K3yaoUYED9lr4+eq3bAkg=
-  - secure: fuVwGXT40ot+53EK28cC4GLlWtYD20tHMp85rh/JVi1zO6RKYkgCAgNTsUiGi2Kp9+CjBip5cW2EeVrnLas1GsM8N/UR/2K/hNPlPEXUIbea6ScBo/ScDUrhU065//MybJSe7JedgNTa/64aymckKX1TtiSdzI1H+vu99MUAnNU=
-  - secure: "e2G6T4NNzpY0JXn9ycpEcJiPCuCJnYAwCV3ruzwkZKDT/h1FMlAFlBw/GfAkZb/r5QLm9hpJWMdWr4injJrA8gyuMvIHutRAR259TN2jZC9I9Wb6lkmP0FIBf0Dj2+JkLJttR7eAD0wOLgcbDOkMOwiyG7+y/xLnFSk1jLbKqp8="
+  - secure: BIz7SQaL5YBUj1SQsYPrlQpBkbovU3cd/QavHn+gap/EBi8LslxdJRfD7Rag1DjSoI9nCMTf4sFFHsijlI1/px9SvYGLw1jeqwbtv5woNOPoIeBeyp9Tk30n1u6RYLdNfjPQW9cUrVfiAAcwuS2FJEEJrvMIxiQqtvpkpxjscSA=
+  - secure: SWZQ7qD+YB92SUSqx1lyZ83m3MrMtV3Ef6ruaXh3/O0ajM3gU6qtMq5gv3UxvpibMpVAXvtlQ9kVHqkgMrGqqan6Mt/+eE1p1UlLZpUDcpWbHUGOfCnAXYc7rsDw/fzwnLZDXoam+FQIhcONTCdnQDchrc6PpGTsFSwsDfQJJxE=
 cache:
   directories:
-    - node_modules
+  - node_modules
+services:
+  - mongodb

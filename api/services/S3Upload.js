@@ -87,7 +87,6 @@ policy = function(bucketName) {
     conditions: [
       { bucket: 'cloud.bethel.io' },
       { acl: 'public-read' },
-      { success_action_status: '201' },
       ['starts-with', '$key', bucketName],
     ]
   };

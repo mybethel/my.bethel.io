@@ -20,16 +20,34 @@
 
 module.exports.connections = {
 
+  local: {
+    module   : 'sails-mongo',
+    url      : 'mongodb://mybethel@localhost/mybethel',
+    schema   : true
+  },
+
   mongo: {
     adapter: 'sails-mongo',
-    url: process.env.MONGO_HQ
+    database: 'mybethel',
+    host: 'candidate.12.mongolayer.com',
+    port: '10300',
+    user: 'mybethel-prod',
+    password: process.env.MONGO_PASS,
+    replSet: {
+      servers: [
+        {
+          host: 'candidate.12.mongolayer.com',
+          port: '10300'
+        },
+        {
+          host: 'candidate.13.mongolayer.com',
+          port: '10300'
+        }
+      ]
+    }
   },
 
   // More adapters:
   // https://github.com/balderdashy/sails
 
 };
-
-
-
-

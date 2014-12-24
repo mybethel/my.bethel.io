@@ -7,11 +7,13 @@
     "async": "~0.9.0",
     "aws-sdk": "~2.0.0-rc.19",
     "bcrypt": "~0.7.7",
+    "bower": "~1.3.12",
     "bson": "~0.2.4",
-    "connect-mongo": "^0.4.1",
+    "connect-mongostore": "~0.1.4",
     "cron": "~1.0.3",
     "ejs": "~0.8.4",
     "forever": "~0.10.11",
+    "gm": "~1.17.0",
     "gravatar": "~1.0.6",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.4.1",
@@ -26,7 +28,6 @@
     "grunt-sails-linker": "~0.9.5",
     "grunt-sync": "~0.0.4",
     "moment": "~2.5.1",
-    "mongodb": "~1.3.23",
     "newrelic": "~1.5",
     "qs": "~0.6.6",
     "rc": "~0.3.3",
@@ -38,18 +39,19 @@
     "time": "~0.10.0",
     "vimeo-api": "~0.9.1",
     "waterline": "~0.10.9",
-    "xml2js": "~0.4.4"
+    "xml2js": "~0.4.4",
+    "zencoder": "~1.0.0"
   },
   "devDependencies": {
-    "mocha": "~1.17.1",
-    "barrels": "~0.0.3",
-    "supervisor": "~0.5.7",
-    "supertest": "~0.10.0"
+    "mocha": "~2.0.1",
+    "protractor": "~1.5.0",
+    "expect.js": "~0.3.1"
   },
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
-    "test": "NODE_ENV=test mocha -R spec -b --recursive"
+    "test": "protractor test/protractor.config.js",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "engines": {
     "node": "0.10.x",
@@ -57,6 +59,9 @@
   },
   "main": "app.js",
   "repository": "",
-  "author": "",
+  "authors": [
+    "Albert Martin <albert@bethel.io>",
+    "Josh Gillespie <josh@bethel.io>"
+  ],
   "license": ""
 }
