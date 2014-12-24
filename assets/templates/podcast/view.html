@@ -1,48 +1,50 @@
-<div class="podcast view">
-  <div class="dash-panel-left">
-    <div class="row no-gutters margin-bottom-md">
-      <div class="col-md-3">
-        <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ podcast.name }}" />
-      </div>
-      <div class="col-md-8">
-        <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="Podcast title" data-ng-bind="podcast.name"></h1>
-      </div>
-      <div class="col-md-1 text-right operations">
-        <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa fa-edit"></i></a>
-      </div>
-    </div>
-    <div data-ng-show="editing">
-      <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
-      <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
-    </div>
-    <hr />
-    <h3 data-ng-if="podcast.source === 2">New podcast episodes sync with Vimeo.</h3>
-    <div class="row no-gutters" data-ng-if="podcast.source == 2">
-      <div class="col-md-3 margin-bottom-sm">
-        <div class="dropdown">
-          <button class="btn btn-block btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            <span data-ng-bind="podcast.sourceKey"></span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li role="presentation" data-ng-repeat="account in accounts"><a href="" data-ng-bind="account.name"></a></li>
-            <li role="presentation"><a href="">Connect new Vimeo account...</a></li>
-          </ul>
+<div class="podcast view ui horizontal">
+  <div class="ui column large">
+    <div class="content">
+      <div class="row no-gutters margin-bottom-md">
+        <div class="col-md-3">
+          <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ podcast.name }}" />
+        </div>
+        <div class="col-md-8">
+          <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="Podcast title" data-ng-bind="podcast.name"></h1>
+        </div>
+        <div class="col-md-1 text-right operations">
+          <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa fa-edit"></i></a>
         </div>
       </div>
-      <div class="col-md-9 margin-bottom-sm">
-        <tags-input class="source" data-ng-model="podcast.sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+      <div data-ng-show="editing">
+        <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+        <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
       </div>
+      <hr />
+      <h3 data-ng-if="podcast.source === 2">New podcast episodes sync with Vimeo.</h3>
+      <div class="row no-gutters" data-ng-if="podcast.source == 2">
+        <div class="col-md-3 margin-bottom-sm">
+          <div class="dropdown">
+            <button class="btn btn-block btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+              <span data-ng-bind="podcast.sourceKey"></span>
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li role="presentation" data-ng-repeat="account in accounts"><a href="" data-ng-bind="account.name"></a></li>
+              <li role="presentation"><a href="">Connect new Vimeo account...</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-9 margin-bottom-sm">
+          <tags-input class="source" data-ng-model="podcast.sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+        </div>
+      </div>
+      <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> Upload new episode...</button>
+      <div class="progress" data-ng-if="uploadProgress >= 1 && uploadProgress < 100">
+        <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
+      </div>
+      <hr />
+      <h3 class="subscribers"><a ui-sref="podcastsubmit" class="btn btn-sm btn-primary pull-right disabled">Submit to iTunes</a><ng-pluralize count="subscribers" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
+      <p>Detailed statistics coming soon, stay tuned!</p>
     </div>
-    <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> Upload new episode...</button>
-    <div class="progress" data-ng-if="uploadProgress >= 1 && uploadProgress < 100">
-      <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
-    </div>
-    <hr />
-    <h3 class="subscribers"><a ui-sref="podcastsubmit" class="btn btn-sm btn-primary pull-right disabled">Submit to iTunes</a><ng-pluralize count="subscribers" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
-    <p>Detailed statistics coming soon, stay tuned!</p>
   </div>
-  <div class="dash-panel-right">
+  <div class="ui column dark">
     <div class="content">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -51,15 +53,13 @@
         <div class="panel-body">
           <table class="table table-hover episodes" data-ng-class="{ 'video': podcast.type == 2, 'audio': podcast.type == 1 }" data-podcast="{{ podcast.id }}" data-url="{{ podcast.ministry.url }}">
             <tbody>
-              <span data-ng-repeat="media in podcast.media | orderBy:'date':true">
-                <tr class="media">
-                  <td>
-                    <img data-ng-if="media.thumbnail" class="media-object pull-left" data-ng-src="{{ media.thumbnail }}" width="100" /><h4 data-ng-bind="media.name ? media.name : media.url.split('/').pop()"></h4>
-                    <small class="text-muted" data-am-time-ago="media.date"></small>
-                  </td>
-                  <td class="operations" data-ng-if="podcast.source != 2"><button class="btn media-edit-button">Edit</button></td>
-                </tr>
-                <tr data-ng-show="editing == media.id">
+              <tr class="media" data-ng-repeat="media in podcast.media | orderBy:'date':true">
+                <td>
+                  <img data-ng-if="media.thumbnail" class="media-object pull-left" data-ng-src="{{ media.thumbnail }}" width="100" /><h4 data-ng-bind="media.name ? media.name : media.url.split('/').pop()"></h4>
+                  <small class="text-muted" data-am-time-ago="media.date"></small>
+                </td>
+                <td class="operations" data-ng-if="podcast.source != 2"><button class="btn media-edit-button">Edit</button></td>
+                <div data-ng-show="media.editing">
                   <div class="form-group">
                     <label class="col-sm-3 control-label">Episode</label>
                     <div class="col-sm-9">
@@ -95,8 +95,8 @@
                       <button type="submit" class="btn btn-sm btn-primary">Save</button>
                     </div>
                   </div>
-                </tr>
-              </span>
+                </div>
+              </tr>
             </tbody>
           </table>
         </div>
