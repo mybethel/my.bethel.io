@@ -28,22 +28,22 @@ angular.module('Bethel', [
 
 })
 
-.controller('AppCtrl', function ($rootScope, $scope, $log, $state, filterFilter) {
+.controller('AppCtrl', ['$rootScope', function ($scope) {
 
   $scope.redirect = '';
   $scope.navLinks = [];
-  $rootScope.user = null;
-  $rootScope.ministry = null;
-  $rootScope.authCheck = false;
+  $scope.user = null;
+  $scope.ministry = null;
+  $scope.authCheck = false;
   $scope.collapseNav = false;
 
   $scope.updateSession = function(ev, data) {
     io.socket.get('/session/current', function (response) {
-      $rootScope.$apply(function() {
-        $rootScope.user = response.user;
-        $rootScope.ministry = response.ministry;
-        $rootScope.isAdmin = response.isAdmin;
-        $rootScope.authCheck = true;
+      $scope.$apply(function() {
+        $scope.user = response.user;
+        $scope.ministry = response.ministry;
+        $scope.isAdmin = response.isAdmin;
+        $scope.authCheck = true;
 
         if (response.isAdmin) {
           $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
@@ -57,7 +57,7 @@ angular.module('Bethel', [
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
   io.socket.get('/csrfToken', function (response) {
-    $rootScope._csrf = response._csrf;
+    $scope._csrf = response._csrf;
   });
 
   // Main navigation bar links.
@@ -82,7 +82,7 @@ angular.module('Bethel', [
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
-});
+}]);
 
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
