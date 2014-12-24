@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "homepage": "https://github.com/mybethel/my.bethel.io",
   "authors": [
-    "Albert Martin <albertmartin@mac.com>"
+    "Albert Martin <albert@bethel.io>",
+    "Josh Gillespie <josh@bethel.io>"
   ],
   "private": true,
   "dependencies": {

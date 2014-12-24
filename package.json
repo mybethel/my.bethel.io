@@ -59,6 +59,9 @@
   },
   "main": "app.js",
   "repository": "",
-  "author": "",
+  "authors": [
+    "Albert Martin <albert@bethel.io>",
+    "Josh Gillespie <josh@bethel.io>"
+  ],
   "license": ""
 }
