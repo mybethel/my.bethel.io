@@ -28,8 +28,6 @@ angular.module('Bethel', [
 
 })
 
-.filter('trustAsHtml', function($sce) { return $sce.trustAsHtml; })
-
 .controller('AppCtrl', function ($rootScope, $scope, $log, $state, filterFilter) {
 
   $scope.redirect = '';
@@ -56,7 +54,6 @@ angular.module('Bethel', [
 
   // Update current session on load or login.
   $scope.updateSession();
-  $scope.$on('sailsSocket:connect', $scope.updateSession);
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
   io.socket.get('/csrfToken', function (response) {
@@ -77,7 +74,7 @@ angular.module('Bethel', [
 
   $scope.toggleNav = function() {
     $scope.collapseNav = !$scope.collapseNav;
-  }
+  };
 
   // Ministry dropdown menu.
   $scope.ministryLinks = [
@@ -86,6 +83,10 @@ angular.module('Bethel', [
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
 });
+
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 function findIndexByPropertyValue(arr, property, value) {
   var index = null;

@@ -1,7 +1,3 @@
-String.prototype.capitalize = function() {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
-
 $(document).ready(function(){
   $(document).on('click', 'a', function (e) {
     if ($(this).data('link') === 'popover') {
