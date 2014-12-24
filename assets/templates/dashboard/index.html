@@ -23,7 +23,7 @@
     </div>
     <div class="panel panel-default" data-ng-show="markers">
       <div class="panel-heading">
-        <h3 class="panel-title">Ministry Locations <a ui-sref=".location" class="btn btn-panel">Edit</a></h3>
+        <h3 class="panel-title">Ministry Locations</h3>
       </div>
       <div class="panel-body full">
         <ui-gmap-google-map center="map.center" zoom="map.zoom" pan="true" draggable="false" options="map.options" control="map.control">
@@ -31,6 +31,7 @@
         </ui-gmap-google-map>
       </div>
     </div>
+    <a ui-sref=".location" class="btn btn-default btn-lg btn-block">Ministry Locations</a>
     <a ui-sref=".accounts" class="btn btn-default btn-lg btn-block">Connected Accounts</a>
     <a ui-sref=".billing" class="btn btn-default btn-lg btn-block">Subscription and Billing</a>
   </div>
