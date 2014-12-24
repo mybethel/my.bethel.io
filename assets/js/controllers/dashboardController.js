@@ -1,6 +1,6 @@
 angular.module('Bethel.dashboard')
 
-.controller('DashboardController', function ($rootScope, $scope, $log, uiGmapGoogleMapApi) {
+.controller('DashboardController', function ($rootScope, $scope, uiGmapGoogleMapApi) {
 
   uiGmapGoogleMapApi.then(function(maps) {
     $scope.map = {

@@ -1,6 +1,6 @@
 angular.module('Bethel.media')
 
-.controller('MediaListController', function ($scope, $rootScope, $state, $stateParams, $upload) {
+.controller('MediaListController', function ($scope, $rootScope, $state, $upload) {
 
   // Show the "All Media" collection by default.
   if ($state.is('media')) {

@@ -1,6 +1,6 @@
 angular.module('Bethel.media')
 
-.controller('MediaCollectionEditController', function ($scope, $rootScope, $state, $stateParams, $upload, $sce) {
+.controller('MediaCollectionEditController', function ($scope, $rootScope, $stateParams, $upload, $sce) {
   $scope.init = function() {
     io.socket.get('/media/' + $stateParams.collectionId, function (data) {
       $scope.collection = data;

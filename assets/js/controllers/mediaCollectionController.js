@@ -1,6 +1,6 @@
 angular.module('Bethel.media')
 
-.controller('MediaCollectionController', function ($scope, $rootScope, $state, $stateParams, $upload) {
+.controller('MediaCollectionController', function ($scope, $rootScope, $state, $stateParams) {
 
   $scope.showVideo = $scope.showAudio = $scope.showImage = true;
   $scope.filterByCollection = $stateParams.collectionId || 'all';

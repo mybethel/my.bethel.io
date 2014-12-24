@@ -1,6 +1,6 @@
 angular.module('Bethel.dashboard')
 
-.controller('ServicesController', function ($scope, $log, filterFilter) {
+.controller('ServicesController', function ($scope) {
 
   $scope.accounts = [];
 
