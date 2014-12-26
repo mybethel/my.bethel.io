@@ -52,6 +52,22 @@ angular.module('Bethel.podcast')
     }
   });
 
+  // Save action for podcast title.
+  $('h1.title').on('input', $.debounce(250, function() {
+    io.socket.put('/podcast/' + $scope.id, {
+      name: $('h1.title').text(),
+      _csrf: $rootScope._csrf
+    });
+  }));
+
+  // Save action for podcast description.
+  $('.editable.description').on('input', $.debounce(250, function() {
+    io.socket.put('/podcast/' + $scope.id, {
+      description: $('.editable.description').text(),
+      _csrf: $rootScope._csrf
+    });
+  }));
+
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
   $scope.onFileSelect = function ($files) {
