@@ -8,8 +8,8 @@ angular.module('Bethel.podcast', ['ngSailsBind'])
       templateUrl: 'templates/podcast/index.html',
       controller: 'PodcastListController'
     })
-    .state('podcastview', {
-      url: '/podcast/:podcastId',
+    .state('podcast.view', {
+      url: '/:podcastId',
       templateUrl: 'templates/podcast/view.html',
       controller: 'PodcastViewController'
     });

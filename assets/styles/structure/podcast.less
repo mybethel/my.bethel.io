@@ -1,85 +1,87 @@
-.podcast.list {
-  .table-list {
-    margin-top: -38px;
+.podcast {
+  .list {
+    .table-list {
+      margin-top: -38px;
 
-    .thumb {
-      padding-left: 0;
-      width: 100px;
+      .thumb {
+        padding-left: 0;
+        width: 100px;
+      }
+      .subscribers {
+        width: 130px;
+      }
+      .operations {
+        width: 120px;
+      }
+    }
+  }
+  .view {
+    h1 {
+      margin: 0 15px;
+    }
+    .panel-top {
+      margin-top: 20px;
+    }
+    .panel-heading {
+      button {
+        margin-right: -11px;
+        margin-top: -6px;
+      }
+    }
+    .panel-body {
+      padding: 0;
+
+      table {
+        margin-bottom: 0;
+
+        img {
+          padding-right: 10px;
+        }
+      }
+    }
+    .progress {
+      margin: 20px;
+    }
+    table.episodes {
+      h4 {
+        margin-bottom: 0;
+        margin-top: 0;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+      .media {
+        .operations {
+          width: 50px;
+        }
+      }
+      &.video .media td {
+        padding-bottom: 0;
+        padding-left: 0;
+        padding-top: 0;
+
+        h4 {
+          margin-top: 15px;
+        }
+      }
+    }
+    .dropdown {
+      z-index: 1;
     }
     .subscribers {
-      width: 130px;
-    }
-    .operations {
-      width: 120px;
-    }
-  }
-}
-.podcast.view {
-  h1 {
-    margin: 0 15px;
-  }
-  .panel-top {
-    margin-top: 20px;
-  }
-  .panel-heading {
-    button {
-      margin-right: -11px;
-      margin-top: -6px;
-    }
-  }
-  .panel-body {
-    padding: 0;
-
-    table {
-      margin-bottom: 0;
-
-      img {
-        padding-right: 10px;
+      a {
+        margin-top: -4px;
       }
     }
-  }
-  .progress {
-    margin: 20px;
-  }
-  table.episodes {
-    h4 {
-      margin-bottom: 0;
-      margin-top: 0;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-    .media {
-      .operations {
-        width: 50px;
-      }
-    }
-    &.video .media td {
-      padding-bottom: 0;
-      padding-left: 0;
-      padding-top: 0;
-
-      h4 {
-        margin-top: 15px;
-      }
-    }
-  }
-  .dropdown {
-    z-index: 1;
-  }
-  .subscribers {
-    a {
-      margin-top: -4px;
-    }
-  }
-  .dash-panel-right {
-    .actions {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 100%;
-      padding: 20px;
-      &.top {
-        position: relative;
+    .dash-panel-right {
+      .actions {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        padding: 20px;
+        &.top {
+          position: relative;
+        }
       }
     }
   }
