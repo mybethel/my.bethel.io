@@ -39,6 +39,7 @@ var jsFilesToInject = [
   'components/angular-google-maps/dist/angular-google-maps.min.js',
   'components/angular-translate/angular-translate.min.js',
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+  'components/angular-sails-bind/dist/angular-sails-bind.min.js',
 
   // jQuery dependencies
   'components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js',

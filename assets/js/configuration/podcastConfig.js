@@ -1,4 +1,4 @@
-angular.module('Bethel.podcast', [])
+angular.module('Bethel.podcast', ['ngSailsBind'])
 
 .config(function ($stateProvider) {
 

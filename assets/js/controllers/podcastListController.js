@@ -1,35 +1,26 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastListController', function ($rootScope, $scope) {
+.controller('PodcastListController', function ($rootScope, $scope, $sailsBind) {
 
-  $scope.podcasts = [];
-  $scope.statistics = [];
+  // Bind the podcast list over socket.io for this ministry.
+  $rootScope.$watch('ministry', function() {
+    if (!$rootScope.ministry || !$rootScope.ministry.id)
+      return;
 
-  $scope.init = function() {
-    io.socket.get('/podcast/list', function (response) {
-      $scope.$apply(function() {
-        $scope.podcasts = response;
-      });
-    });
-  };
+    $sailsBind.bind('podcast', $scope, { 'ministry': $rootScope.ministry.id });
+  });
 
   // Fetch stats for each of the podcasts.
   $scope.$watch('podcasts', function() {
+    if (typeof $scope.podcasts === 'undefined')
+      return;
+
     $scope.podcasts.forEach(function(podcast) {
       io.socket.get('/podcast/subscribers/' + podcast.id, function (response) {
         if (response.subscribers)
           $scope.statistics[response.podcast] = response.subscribers;
       });
     });
-  }, true);
-
-  $rootScope.$watch('ministry', function() {
-    if (!$rootScope.ministry || !$rootScope.ministry.id)
-      return;
-
-    $scope.init();
   });
-
-  io.socket.on('podcast', function (msg) { $scope.init(); });
 
 });
