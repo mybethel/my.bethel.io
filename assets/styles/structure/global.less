@@ -12,6 +12,34 @@ html, body, .ui.viewport {
   font-family: 'Lato', sans-serif;
 }
 
+.navbar {
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+
+  .navbar-brand {
+    width: 130px;
+    overflow: hidden;
+    text-indent: -9999px;
+    margin-left: 0px !important;
+  }
+  a.dropdown-toggle {
+    height: 51px;
+    &.avatar {
+      padding-left: 45px;
+    }
+  }
+  .dropdown-menu {
+    min-width: 100%;
+  }
+  img.avatar {
+    width: 30px;
+    position: absolute;
+    top: 11px;
+    left: 15px;
+  }
+}
+
 .ui {
   &.viewport {
     border: 0;
