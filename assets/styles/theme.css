@@ -313,16 +313,6 @@ a.btn-panel:hover {
   color: #333;
 }
 
-.btn-primary {
-  background-color: #1591b5;
-  border-color: #106982;
-}
-
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {
-  background-color: #137e9c;
-  border-color: #106982;
-}
-
 #locations-canvas,
 .angular-google-map-container,
 map {
