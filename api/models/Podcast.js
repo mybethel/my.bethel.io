@@ -39,7 +39,7 @@ module.exports = {
     },
 
     tags: {
-      type: 'string'
+      type: 'array'
     },
 
     temporaryImage: {
