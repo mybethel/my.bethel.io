@@ -27,7 +27,7 @@ module.exports = {
     },
 
     sourceMeta: {
-      type: 'string'
+      type: 'array'
     },
 
     service: {

@@ -11,9 +11,15 @@ angular.module('Bethel.podcast')
     $scope.$apply(function() {
       $scope.podcast = data;
       $scope.tags = [];
-      if (typeof data.tags !== 'undefined' && data.tags.length) {
+      if (typeof data.tags !== 'undefined' && typeof data.tags !== 'string') {
         data.tags.forEach(function (tag) {
           $scope.tags.push({ text: tag });
+        });
+      }
+      $scope.sourceMeta = [];
+      if (typeof data.sourceMeta !== 'undefined' && typeof data.sourceMeta !== 'string') {
+        data.sourceMeta.forEach(function (tag) {
+          $scope.sourceMeta.push({ text: tag });
         });
       }
     });
@@ -46,13 +52,8 @@ angular.module('Bethel.podcast')
   });
 
   $scope.$watch('podcast', function() {
-    if (typeof $scope.podcast === 'undefined') return;
-
-    if (typeof $scope.podcast.sourceMeta === 'string') {
-      $scope.podcast.sourceMeta = $scope.podcast.sourceMeta.split(',');
-    }
-
-    if (typeof $scope.podcasts === 'undefined') return;
+    if (typeof $scope.podcast === 'undefined' || typeof $scope.podcasts === 'undefined')
+      return;
 
     var i = findIndexByPropertyValue($scope.podcasts, 'id', $scope.id);
     $scope.podcasts[i] = $scope.podcast;
@@ -95,6 +96,29 @@ angular.module('Bethel.podcast')
 
     io.socket.put('/podcast/' + $scope.id, {
       tags: $scope.podcast.tags,
+      _csrf: $rootScope._csrf
+    });
+  };
+
+  $scope.updateSource = function(tag, action) {
+    switch (action) {
+      case 'added':
+        if (typeof $scope.podcast.sourceMeta === 'undefined') {
+          $scope.podcast.sourceMeta = [];
+        }
+        $scope.podcast.sourceMeta.push(tag.text);
+        break;
+
+      case 'removed':
+        var tagToDelete = $scope.podcast.sourceMeta.indexOf(tag.text);
+        if (tagToDelete > -1) {
+          $scope.podcast.sourceMeta.splice(tagToDelete, 1);
+        }
+        break;
+    }
+
+    io.socket.put('/podcast/' + $scope.id, {
+      sourceMeta: $scope.podcast.sourceMeta,
       _csrf: $rootScope._csrf
     });
   };

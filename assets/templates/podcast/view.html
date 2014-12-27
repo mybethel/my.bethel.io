@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="col-md-9 margin-bottom-sm">
-        <tags-input class="source" data-ng-model="podcast.sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+        <tags-input class="source" data-ng-model="sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateSource($tag, 'added')" on-tag-removed="updateSource($tag, 'removed')"></tags-input>
       </div>
     </div>
     <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> Upload new episode...</button>
