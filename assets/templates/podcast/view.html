@@ -16,7 +16,7 @@
       <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
     </div>
     <hr />
-    <h3 data-ng-if="podcast.source === 2">New podcast episodes sync with Vimeo.</h3>
+    <h3>New podcast episodes <span data-ng-if="podcast.source === 2">sync with Vimeo</span><span data-ng-if="podcast.source === 1">are uploaded manually</span>.</h3>
     <div class="row no-gutters" data-ng-if="podcast.source == 2">
       <div class="col-md-3 margin-bottom-sm">
         <div class="dropdown">
