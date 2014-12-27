@@ -18,11 +18,6 @@ angular.module('Bethel.podcast')
     titleEditor.deactivate();
   });
 
-  io.socket.get('/podcast/subscribers/' + $scope.id, function (response) {
-    if (typeof response.subscribers !== 'undefined')
-      $scope.subscribers = response.subscribers;
-  });
-
   io.socket.get('/podcast/edit/' + $scope.id, function (data) {
     $scope.$apply(function() {
       $scope.uploadEpisode = data.uploadEpisode;
@@ -50,20 +45,27 @@ angular.module('Bethel.podcast')
     if (typeof $scope.podcast.sourceMeta === 'string') {
       $scope.podcast.sourceMeta = $scope.podcast.sourceMeta.split(',');
     }
-  });
+
+    if (typeof $scope.podcasts === 'undefined') return;
+
+    var i = findIndexByPropertyValue($scope.podcasts, 'id', $scope.id);
+    $scope.podcasts[i] = $scope.podcast;
+  }, true);
 
   // Save action for podcast title.
   $('h1.title').on('input', $.debounce(250, function() {
+    $scope.podcast.name = $('h1.title').text();
     io.socket.put('/podcast/' + $scope.id, {
-      name: $('h1.title').text(),
+      name: $scope.podcast.name,
       _csrf: $rootScope._csrf
     });
   }));
 
   // Save action for podcast description.
   $('.editable.description').on('input', $.debounce(250, function() {
+    $scope.podcast.description = $('.editable.description').text();
     io.socket.put('/podcast/' + $scope.id, {
-      description: $('.editable.description').text(),
+      description: $scope.podcast.description,
       _csrf: $rootScope._csrf
     });
   }));
