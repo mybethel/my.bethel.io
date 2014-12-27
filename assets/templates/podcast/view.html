@@ -18,19 +18,19 @@
     <hr />
     <h3>New podcast episodes <span data-ng-if="podcast.source === 2">sync with Vimeo</span><span data-ng-if="podcast.source === 1">are uploaded manually</span>.</h3>
     <div class="row no-gutters" data-ng-if="podcast.source == 2">
-      <div class="col-md-3 margin-bottom-sm">
+      <div class="col-md-4 margin-bottom-sm">
         <div class="dropdown">
           <button class="btn btn-block btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            <span data-ng-bind="podcast.sourceKey"></span>
+            <span data-ng-bind="podcast.service.name"></span>
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
-            <li role="presentation" data-ng-repeat="account in accounts"><a href="" data-ng-bind="account.name"></a></li>
-            <li role="presentation"><a href="">Connect new Vimeo account...</a></li>
+            <li role="presentation" data-ng-repeat="account in accounts"><a data-ng-click="setSource(account)" data-ng-bind="account.name"></a></li>
+            <li role="presentation"><a data-ui-sref="dashboard.accounts">Connect new Vimeo account...</a></li>
           </ul>
         </div>
       </div>
-      <div class="col-md-9 margin-bottom-sm">
+      <div class="col-md-8 margin-bottom-sm">
         <tags-input class="source" data-ng-model="sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateSource($tag, 'added')" on-tag-removed="updateSource($tag, 'removed')"></tags-input>
       </div>
     </div>

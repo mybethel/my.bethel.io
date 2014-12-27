@@ -36,6 +36,10 @@ angular.module('Bethel.podcast')
     });
   });
 
+  io.socket.get('/service/list', {}, function (response, status) {
+    $scope.$apply(function() { $scope.accounts = response; });
+  });
+
   $scope.toggleEditing = function() {
     $scope.editing = !$scope.editing;
   };
@@ -76,6 +80,20 @@ angular.module('Bethel.podcast')
       _csrf: $rootScope._csrf
     });
   }));
+
+  $scope.setSource = function(source) {
+    if (typeof source.id === 'undefined')
+      return;
+
+    io.socket.put('/podcast/' + $scope.id, {
+      service: source.id,
+      _csrf: $rootScope._csrf
+    }, function (updated) {
+      $scope.$apply(function () {
+        $scope.podcast.service = updated.service;
+      });
+    });
+  };
 
   $scope.updateTags = function(tag, action) {
     switch (action) {
