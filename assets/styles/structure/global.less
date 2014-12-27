@@ -32,6 +32,11 @@ html, body, .ui.viewport {
     vertical-align: top;
     &.navigation {
       width: 200px;
+      -webkit-transition: all .7s ease-in-out;
+      -moz-transition: all .7s ease-in-out;
+      -o-transition: all .7s ease-in-out;
+      -ms-transition: all .7s ease-in-out;
+      transition: all .7s ease-in-out;
     }
     .content {
       padding: 20px;
@@ -56,6 +61,11 @@ html, body, .ui.viewport {
         }
       }
     }
+  }
+}
+.nav-collapsed {
+  .ui.navigation {
+    width: 58px;
   }
 }
 

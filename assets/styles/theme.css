@@ -1,13 +1,3 @@
-.welcome {
-  background: url(https://s3.amazonaws.com/static.bethel.io/images/background.jpg) no-repeat center center fixed #2F3439;
-  background-size: cover;
-  background-position: center;
-}
-
-.welcome .navbar {
-  display: none;
-}
-
 .navbar {
   background: #1591b5;
   border-color: #106982;
@@ -81,11 +71,11 @@ ul.nav-main li:hover {
 ul.nav-main li a {
   color: rgba(255,255,255,1);
   font-weight: 300;
-  -webkit-transition: color .7s ease-in-out;
-  -moz-transition: color .7s ease-in-out;
-  -o-transition: color .7s ease-in-out;
-  -ms-transition: color .7s ease-in-out;
-  transition: color .7s ease-in-out;
+  -webkit-transition: all .7s ease-in-out;
+  -moz-transition: all .7s ease-in-out;
+  -o-transition: all .7s ease-in-out;
+  -ms-transition: all .7s ease-in-out;
+  transition: all .7s ease-in-out;
 }
 
 ul.nav-main li a:focus {
