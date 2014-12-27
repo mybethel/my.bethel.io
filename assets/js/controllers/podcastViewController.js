@@ -80,7 +80,7 @@ angular.module('Bethel.podcast')
   $scope.updateTags = function(tag, action) {
     switch (action) {
       case 'added':
-        if (typeof $scope.podcast.tags === 'undefined') {
+        if (typeof $scope.podcast.tags === 'undefined' || typeof $scope.podcast.tags === 'string') {
           $scope.podcast.tags = [];
         }
         $scope.podcast.tags.push(tag.text);
@@ -103,7 +103,7 @@ angular.module('Bethel.podcast')
   $scope.updateSource = function(tag, action) {
     switch (action) {
       case 'added':
-        if (typeof $scope.podcast.sourceMeta === 'undefined') {
+        if (typeof $scope.podcast.sourceMeta === 'undefined' || typeof $scope.podcast.sourceMeta === 'string') {
           $scope.podcast.sourceMeta = [];
         }
         $scope.podcast.sourceMeta.push(tag.text);
