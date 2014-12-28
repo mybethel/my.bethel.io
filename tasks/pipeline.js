@@ -56,6 +56,9 @@ var jsFilesToInject = [
   'components/ng-tags-input/ng-tags-input.min.js',
   'components/rickshaw/rickshaw.min.js',
 
+  // Media player elements
+  'components/video.js/dist/video-js/video.js',
+
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
   'js/configuration/*.js',

@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title" data-ng-bind="media.name"></h3>
 </div>
+<audio id="media-player" class="video-js vjs-sublime-skin vjs-podcast-skin" data-ng-src="{{ media.url }}"></audio>
 <div class="modal-body form-horizontal">
   <div class="form-group">
     <label class="col-sm-3 control-label">Episode Title</label>
