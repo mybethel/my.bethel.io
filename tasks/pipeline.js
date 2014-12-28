@@ -33,6 +33,7 @@ var jsFilesToInject = [
 
   // Angular dependencies
   'components/angular-ui-router/release/angular-ui-router.min.js',
+  'components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'components/angulartics/dist/angulartics.min.js',
   'components/angulartics/dist/angulartics-ga.min.js',
   'components/angular-http-auth/src/http-auth-interceptor.js',
@@ -48,7 +49,6 @@ var jsFilesToInject = [
   'components/angular-moment/angular-moment.min.js',
   'components/angular-rickshaw/rickshaw.js',
   'components/angular-svg-round-progressbar/roundProgress.min.js',
-  'components/bootstrap/dist/js/bootstrap.min.js',
   'components/d3/d3.min.js',
   'components/medium-editor/dist/js/medium-editor.min.js',
   'components/ng-file-upload/angular-file-upload.min.js',

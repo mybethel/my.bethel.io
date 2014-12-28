@@ -6,6 +6,7 @@
 angular.module('Bethel', [
   'http-auth-interceptor',
   'ui.router',
+  'ui.bootstrap',
   'angulartics',
   'angulartics.google.analytics',
   'angularMoment',

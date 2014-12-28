@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastViewController', function ($rootScope, $scope, $state, $stateParams, $upload) {
+.controller('PodcastViewController', function ($rootScope, $scope, $state, $stateParams, $upload, $modal) {
 
   var titleEditor;
   $scope.id = $stateParams.podcastId;
@@ -172,6 +172,25 @@ angular.module('Bethel.podcast')
       io.socket.get('/podcastmedia/refresh', function() {
         $state.go($state.$current, null, { reload: true });
       });
+    });
+  };
+
+  $scope.editMedia = function (id) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'templates/podcast/media.html',
+      controller: 'PodcastMediaController',
+      resolve: {
+        mediaId: function() {
+          return id;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      console.log('Modal dismissed at: ' + new Date());
     });
   };
 
