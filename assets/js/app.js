@@ -66,11 +66,11 @@ angular.module('Bethel', [
     { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
     { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
     { title: 'Media', icon: 'youtube-play', url: '#/media' },
-    { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
-    { title: 'Volunteers', icon: 'users', url: '/' },
-    { title: 'Live Streaming', icon: 'video-camera', url: '/' },
-    { title: 'Giving', icon: 'money', url: '/' },
-    { title: 'Social Media', icon: 'thumbs-up', url: '/' }
+    { title: 'Mobile App', icon: 'mobile', url: '#/beta' },
+    { title: 'Volunteers', icon: 'users', url: '#/beta' },
+    { title: 'Live Streaming', icon: 'video-camera', url: '#/beta' },
+    { title: 'Giving', icon: 'money', url: '#/beta' },
+    { title: 'Social Media', icon: 'thumbs-up', url: '#/beta' }
   ]);
 
   $scope.toggleNav = function() {

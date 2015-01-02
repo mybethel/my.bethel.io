@@ -3,6 +3,10 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
 .config(function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
 
   $stateProvider
+    .state('beta', {
+      url: '/beta',
+      templateUrl: 'templates/dashboard/beta.html'
+    })
     .state('dashboard', {
       url: '/dashboard',
       templateUrl: 'templates/dashboard/index.html',
