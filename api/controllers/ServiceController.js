@@ -7,17 +7,11 @@
 
 module.exports = {
 
-  new: function(req, res) {
-    res.view({
-      layout: req.viewData.layout
-    });
-  },
-
   list: function (req, res) {
     Services.find({ministry: req.session.Ministry.id}, function foundServices(err, allServices) {
       if (err) return next(err);
 
-      res.send(200, allServices);
+      res.send(allServices);
     });
   },
 
