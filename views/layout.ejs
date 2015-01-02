@@ -35,7 +35,7 @@
         <a class="navbar-brand" href="/">Bethel</a>
       </div>
       <ul class="nav navbar-nav">
-        <li id="menu-icon"><a class="menu-icon" data-ng-click="toggleNav()" href=""><i class="fa fa-bars"></i></a></li>
+        <li><a data-ng-click="toggleNav()"><i class="fa fa-bars"></i></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" ng-show="user.name">
         <li class="dropdown" data-ng-show="ministry.name">
@@ -44,14 +44,8 @@
             <li ng-repeat="link in ministryLinks"><a data-ng-href="{{ link.url }}" data-ng-bind="link.title"></a></li>
           </ul>
         </li>
-        <li class="dropdown">
-          <a href="" class="dropdown-toggle avatar" data-toggle="dropdown"><img class="avatar" ng-src="{{ user.avatar }}" alt="{{ user.name }}" /></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">My Account</a></li>
-            <li class="divider"></li>
-            <li><a href="/logout">Logout</a></li>
-          </ul>
-        </li>
+        <li class="dropdown"><a class="avatar"><img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" /></a></li>
+        <li><a href="logout" title="Log out"><i class="fa fa-sign-out"></i></a></li>
       </ul>
     </div>
   </nav>
