@@ -19,7 +19,7 @@
           <td class="type" data-ng-bind="podcast.type == 1 ? 'Audio' : 'Video'"></td>
           <td class="subscribers"><h1><span data-toggle="tooltip" data-placement="bottom" title="The average number of daily subscribers over the past 7 days.">{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }}</span></h1></td>
           <td class="operations">
-            <a ui-sref="podcastview({ podcastId: podcast.id })" class="btn btn-sm btn-default">Manage</a>
+            <a ui-sref=".view({ podcastId: podcast.id })" class="btn btn-sm btn-default">Manage</a>
           </td>
         </tr>
       </tbody>

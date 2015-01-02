@@ -29,7 +29,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-r
     })
     .state('dashboard.accounts', {
       url: '/accounts',
-      templateUrl: 'templates/dashboard/accounts.html',
+      templateUrl: 'templates/dashboard/services.html',
       controller: 'ServicesController'
     });
 

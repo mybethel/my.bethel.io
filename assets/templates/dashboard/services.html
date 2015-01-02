@@ -9,13 +9,13 @@
           <img ng-src="{{ account.picture }}" />
         </td>
         <td style="vertical-align:middle;">
-          <h5>{{ account.name }} &nbsp;<small>{{ account.provider | uppercase }}</small></h5>
+          <h5>{{ account.name }} &nbsp;<small data-ng-bind="account.provider | uppercase"></small></h5>
         </td>
         <td style="vertical-align:middle;text-align:right;">
-          <a href="" class="btn btn-sm" data-link="popover">Disconnect</button>
+          <a href="" class="btn btn-sm">Disconnect</button>
         </td>
       </tr>
     </table>
   </div>
 </div>
-<a href="/service/new" class="btn btn-lg btn-block" data-link="popover">Connect New Account</a>
+<a class="btn btn-lg btn-block" data-ng-click="serviceConnect()">Connect New Account</a>
