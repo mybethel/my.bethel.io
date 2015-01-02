@@ -14,7 +14,7 @@ angular.module('Bethel.podcast')
         autoplay: false,
         loop: false,
         width: '100%',
-        height: 50,
+        height: 70,
       });
     });
   });
@@ -34,5 +34,9 @@ angular.module('Bethel.podcast')
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
+
+  $scope.$on('$destroy', function() {
+    if ($scope.player) $scope.player.dispose();
+  });
 
 });
