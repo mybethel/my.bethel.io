@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastMediaController', function ($scope, $modalInstance, mediaId, $sce) {
+.controller('PodcastMediaController', function ($scope, $rootScope, $modalInstance, mediaId, $sce) {
 
   io.socket.get('/podcastmedia/' + mediaId, function (data) {
     $scope.$apply(function() {
@@ -20,7 +20,15 @@ angular.module('Bethel.podcast')
   });
 
   $scope.save = function() {
-    console.log($scope.media);
+    io.socket.put('/podcastmedia/' + mediaId, {
+      name: $scope.media.name,
+      date: $scope.media.date,
+      description: $scope.media.description,
+      reference: $scope.media.reference,
+      _csrf: $rootScope._csrf
+    }, function() {
+      $modalInstance.dismiss($scope.media);
+    });
   };
 
   $scope.cancel = function() {

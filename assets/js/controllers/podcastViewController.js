@@ -189,8 +189,12 @@ angular.module('Bethel.podcast')
 
     modalInstance.result.then(function (selectedItem) {
       $scope.selected = selectedItem;
-    }, function () {
-      console.log('Modal dismissed at: ' + new Date());
+    }, function (result) {
+      if (result === 'cancel')
+        return;
+      
+      // @todo: Update the media array without reload.
+      $state.go($state.$current, null, { reload: true });
     });
   };
 
