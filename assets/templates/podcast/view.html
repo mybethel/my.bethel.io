@@ -5,18 +5,18 @@
         <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ podcast.name }}" />
       </div>
       <div class="col-md-8">
-        <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="Podcast title" data-ng-bind="podcast.name"></h1>
+        <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="{{ 'PODCAST.TITLE' | translate }}" data-ng-bind="podcast.name"></h1>
       </div>
       <div class="col-md-1 text-right operations">
         <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa fa-edit"></i></a>
       </div>
     </div>
     <div data-ng-show="editing">
-      <tags-input ng-model="tags" placeholder="Enter tags to help visitors find your podcast on iTunes." on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
-      <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="Type here to edit the description for this podcast."></p>
+      <tags-input ng-model="tags" data-placeholder="{{ 'PODCAST.TAGS' | translate }}" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
+      <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="{{ 'PODCAST.DESCRIPTION' | translate }}"></p>
     </div>
     <hr />
-    <h3>New podcast episodes <span data-ng-if="podcast.source === 2">sync with Vimeo</span><span data-ng-if="podcast.source === 1">are uploaded manually</span>.</h3>
+    <h3><span data-ng-bind="'PODCAST.NEW_EPISODES' | translate"></span> <span data-ng-bind="podcast.source === 2 && 'PODCAST.NEW_EPISODES_VIMEO' || 'PODCAST.NEW_EPISODES_UPLOAD' | translate"></span>.</h3>
     <div class="row no-gutters" data-ng-if="podcast.source == 2">
       <div class="col-md-4 margin-bottom-sm">
         <div class="dropdown" dropdown>
@@ -26,7 +26,7 @@
           </button>
           <ul class="dropdown-menu" role="menu">
             <li role="presentation" data-ng-repeat="account in accounts"><a data-ng-click="setSource(account)" data-ng-bind="account.name"></a></li>
-            <li role="presentation"><a data-ui-sref="dashboard.accounts">Connect new Vimeo account...</a></li>
+            <li role="presentation"><a data-ui-sref="dashboard.accounts" data-ng-bind="'PODCAST.VIMEO_CONNECT' | translate"></a></li>
           </ul>
         </div>
       </div>
@@ -34,12 +34,12 @@
         <tags-input class="source" data-ng-model="sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateSource($tag, 'added')" on-tag-removed="updateSource($tag, 'removed')"></tags-input>
       </div>
     </div>
-    <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> Upload new episode...</button>
+    <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
     <div class="progress" data-ng-if="uploadProgress >= 1 && uploadProgress < 100">
       <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
     </div>
     <hr />
-    <h3 class="subscribers"><a ui-sref="podcastsubmit" class="btn btn-sm btn-primary pull-right disabled">Submit to iTunes</a><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
+    <h3 class="subscribers"><a ui-sref="podcastsubmit" class="btn btn-sm btn-primary pull-right disabled" data-ng-bind="'PODCAST.ITUNES_SUBMIT' | translate"></a><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
     <p>Detailed statistics coming soon, stay tuned!</p>
   </div>
 </div>

@@ -1,6 +1,8 @@
 angular.module('Bethel.podcast', ['ngSailsBind'])
 
-.config(function ($stateProvider) {
+.config(function ($stateProvider, $translatePartialLoaderProvider) {
+
+  $translatePartialLoaderProvider.addPart('podcast');
 
   $stateProvider
     .state('podcast', {

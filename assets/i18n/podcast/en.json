@@ -1,0 +1,25 @@
+{
+  "PODCAST": {
+    "DESCRIPTION": "Type here to edit the description for this podcast.",
+    "ITUNES_SUBMIT": "Submit to iTunes",
+    "MANAGE": "Manage",
+    "MEDIA": {
+        "DESCRIPTION": "Description",
+        "DESCRIPTION_HELP": "A few sentences describing your podcast episode that will appear in iTunes.",
+        "PLAYER": "Media player",
+        "PLAYER_HELP": "Media player category",
+        "TITLE": "Episode title"
+    },
+    "NEW": "New Podcast",
+    "NEW_EPISODES": "New podcast episodes",
+    "NEW_EPISODES_VIMEO": "sync with Vimeo",
+    "NEW_EPISODES_UPLOAD": "are uploaded manually",
+    "SUBSCRIBERS": "Subscribers",
+    "LIST_TITLE": "Podcasting",
+    "TAGS": "Enter tags to help visitors find your podcast on iTunes.",
+    "TITLE": "Podcast title",
+    "TYPE": "Type",
+    "UPLOAD": "Upload new episode...",
+    "VIMEO_CONNECT": "Connect new Vimeo account..."
+  }
+}

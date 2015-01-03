@@ -9,16 +9,16 @@
     </div>
     <div class="col-sm-6">
       <div class="form-group">
-        <label>Episode title</label>
-        <input type="text" class="form-control" placeholder="Episode Title" data-ng-model="media.name" />
+        <label data-ng-bind="'PODCAST.MEDIA.TITLE' | translate"></label>
+        <input type="text" class="form-control" placeholder="{{ 'PODCAST.MEDIA.TITLE' | translate }}" data-ng-model="media.name" />
       </div>
       <div class="form-group">
-        <label><small>Description</small></label>
-        <textarea class="form-control" rows="3" placeholder="A few sentences describing your podcast episode that will appear in iTunes." data-ng-model="media.description"></textarea>
+        <label><small data-ng-bind="'PODCAST.MEDIA.DESCRIPTION' | translate"></small></label>
+        <textarea class="form-control" rows="3" placeholder="{{ 'PODCAST.MEDIA.DESCRIPTION_HELP' | translate }}" data-ng-model="media.description"></textarea>
       </div>
       <div class="form-group">
-        <label><small>Media Player</small></label>
-        <input type="text" class="form-control" placeholder="Media player category" data-ng-model="media.reference" />
+        <label><small data-ng-bind="'PODCAST.MEDIA.PLAYER' | translate"></small></label>
+        <input type="text" class="form-control" placeholder="{{ 'PODCAST.MEDIA.PLAYER_HELP' | translate }}" data-ng-model="media.reference" />
       </div>
     </div>
   </div>
