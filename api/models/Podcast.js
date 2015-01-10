@@ -27,7 +27,7 @@ module.exports = {
     },
 
     sourceMeta: {
-      type: 'string'
+      type: 'array'
     },
 
     service: {
@@ -39,7 +39,7 @@ module.exports = {
     },
 
     tags: {
-      type: 'string'
+      type: 'array'
     },
 
     temporaryImage: {

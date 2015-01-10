@@ -3,12 +3,108 @@
 .margin-bottom-md { margin-bottom: @line-height-computed;}
 .margin-bottom-lg { margin-bottom: ceil(@line-height-computed * 2); }  
 
-#focus {
-  left: -200px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
+.margin-top-xs { margin-top: ceil(@line-height-computed / 4); }  
+.margin-top-sm { margin-top: ceil(@line-height-computed / 2); } 
+.margin-top-md { margin-top: @line-height-computed;}
+.margin-top-lg { margin-top: ceil(@line-height-computed * 2); }  
+
+body {
+  background: @dark-color-medium;
+}
+
+html, body, .ui.viewport {
+  height: 100%;
+}
+
+.navbar {
   position: absolute;
+  width: 100%;
+  z-index: 5;
+
+  .navbar-brand {
+    width: 130px;
+    overflow: hidden;
+    text-indent: -9999px;
+    margin-left: 0px !important;
+  }
+  a.dropdown-toggle {
+    height: 51px;
+    &.avatar {
+      padding-left: 45px;
+    }
+  }
+  .dropdown-menu {
+    min-width: 100%;
+  }
+  img.avatar {
+    width: 30px;
+    margin: -5px -10px;
+  }
+}
+
+.ui {
+  &.viewport {
+    border: 0;
+    display: table;
+    width: 100%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    &.primary {
+      padding-top: 52px;
+    }
+  }
+  &.horizontal {
+    height: 100%;
+    display: table-row;
+  }
+  &.column {
+    display: table-cell;
+    vertical-align: top;
+    &.navigation {
+      width: 200px;
+      -webkit-transition: all .7s ease-in-out;
+      -moz-transition: all .7s ease-in-out;
+      -o-transition: all .7s ease-in-out;
+      -ms-transition: all .7s ease-in-out;
+      transition: all .7s ease-in-out;
+    }
+    .content {
+      padding: 20px;
+    }
+    &.large {
+      width: 66%;
+    }
+    &.dark {
+      .panel-body {
+        margin-right: 0;
+      }
+      table {
+        margin-bottom: 0;
+
+        td {
+          &:first-child {
+            padding-left: 15px;
+          }
+          &:last-child {
+            padding-right: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+.nav-collapsed {
+  .ui.navigation {
+    width: 58px;
+  }
+}
+
+#focus {
+  bottom: 0px;
+  left: -200px;
+  position: absolute;
+  right: 0;
+  top: -52px;
   z-index: 99;
 }
 

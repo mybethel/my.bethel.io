@@ -25,14 +25,10 @@ describe('Dashboard', function() {
 
       var deferred = new protractor.promise.Deferred();
 
-      Ministry.findOrCreate({
-        name: 'Public Relations'
-      },{
+      Ministry.create({
         name: 'Public Relations'
       }, function (err, ministry) {
-        User.findOrCreate({
-          email: 'test@bethel.io'
-        },{
+        User.create({
           name: 'Jayne Cobb',
           email: 'test@bethel.io',
           password: 'v3ra',

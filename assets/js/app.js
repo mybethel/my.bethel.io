@@ -6,6 +6,7 @@
 angular.module('Bethel', [
   'http-auth-interceptor',
   'ui.router',
+  'ui.bootstrap',
   'angulartics',
   'angulartics.google.analytics',
   'angularMoment',
@@ -28,24 +29,22 @@ angular.module('Bethel', [
 
 })
 
-.filter('trustAsHtml', function($sce) { return $sce.trustAsHtml; })
-
-.controller('AppCtrl', function ($rootScope, $scope, $log, $state, filterFilter) {
+.controller('AppCtrl', ['$rootScope', function ($scope) {
 
   $scope.redirect = '';
   $scope.navLinks = [];
-  $rootScope.user = null;
-  $rootScope.ministry = null;
-  $rootScope.authCheck = false;
+  $scope.user = null;
+  $scope.ministry = null;
+  $scope.authCheck = false;
   $scope.collapseNav = false;
 
   $scope.updateSession = function(ev, data) {
     io.socket.get('/session/current', function (response) {
-      $rootScope.$apply(function() {
-        $rootScope.user = response.user;
-        $rootScope.ministry = response.ministry;
-        $rootScope.isAdmin = response.isAdmin;
-        $rootScope.authCheck = true;
+      $scope.$apply(function() {
+        $scope.user = response.user;
+        $scope.ministry = response.ministry;
+        $scope.isAdmin = response.isAdmin;
+        $scope.authCheck = true;
 
         if (response.isAdmin) {
           $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
@@ -56,11 +55,10 @@ angular.module('Bethel', [
 
   // Update current session on load or login.
   $scope.updateSession();
-  $scope.$on('sailsSocket:connect', $scope.updateSession);
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
 
   io.socket.get('/csrfToken', function (response) {
-    $rootScope._csrf = response._csrf;
+    $scope._csrf = response._csrf;
   });
 
   // Main navigation bar links.
@@ -68,16 +66,16 @@ angular.module('Bethel', [
     { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
     { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
     { title: 'Media', icon: 'youtube-play', url: '#/media' },
-    { title: 'Mobile App', icon: 'mobile', url: '/mobile' },
-    { title: 'Volunteers', icon: 'users', url: '/' },
-    { title: 'Live Streaming', icon: 'video-camera', url: '/' },
-    { title: 'Giving', icon: 'money', url: '/' },
-    { title: 'Social Media', icon: 'thumbs-up', url: '/' }
+    { title: 'Mobile App', icon: 'mobile', url: '#/beta' },
+    { title: 'Volunteers', icon: 'users', url: '#/beta' },
+    { title: 'Live Streaming', icon: 'video-camera', url: '#/beta' },
+    { title: 'Giving', icon: 'money', url: '#/beta' },
+    { title: 'Social Media', icon: 'thumbs-up', url: '#/beta' }
   ]);
 
   $scope.toggleNav = function() {
     $scope.collapseNav = !$scope.collapseNav;
-  }
+  };
 
   // Ministry dropdown menu.
   $scope.ministryLinks = [
@@ -85,7 +83,11 @@ angular.module('Bethel', [
     { title: 'Settings', url: '/ministry/edit' },
     { title: 'Locations', url: '/#/dashboard/locations' }
   ];
-});
+}]);
+
+String.prototype.capitalize = function() {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 function findIndexByPropertyValue(arr, property, value) {
   var index = null;

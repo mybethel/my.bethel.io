@@ -63,7 +63,7 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
     body.data.forEach(function(video) {
       if (video.tags) {
         video.tags.forEach(function(tag) {
-          if (podcast.sourceMeta.toLowerCase().indexOf(tag.name.toLowerCase()) >= 0) {
+          if (podcast.sourceMeta.toString().toLowerCase().indexOf(tag.name.toLowerCase()) >= 0) {
             podcastMediaUpsert(video, podcast);
           }
         });

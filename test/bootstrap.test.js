@@ -7,15 +7,16 @@ before(function() {
     browser.baseUrl = 'http://localhost:1337';
 
     Sails.lift({
+      environment: 'production',
       connections: {
         mongo: {
           adapter: 'sails-mongo',
           url: 'mongodb://localhost:27017'
         }
       },
-      models: { connection: 'mongo' },
-      environment: 'production',
       log: { level: 'info' },
+      migrate: 'drop',
+      models: { connection: 'mongo' },
       session: { adapter: 'memory' }
     }, function (err, server) {
       sails = server;

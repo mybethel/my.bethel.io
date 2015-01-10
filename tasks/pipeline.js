@@ -33,12 +33,14 @@ var jsFilesToInject = [
 
   // Angular dependencies
   'components/angular-ui-router/release/angular-ui-router.min.js',
+  'components/angular-bootstrap/ui-bootstrap-tpls.min.js',
   'components/angulartics/dist/angulartics.min.js',
   'components/angulartics/dist/angulartics-ga.min.js',
   'components/angular-http-auth/src/http-auth-interceptor.js',
   'components/angular-google-maps/dist/angular-google-maps.min.js',
   'components/angular-translate/angular-translate.min.js',
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+  'components/angular-sails-bind/dist/angular-sails-bind.min.js',
 
   // jQuery dependencies
   'components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js',
@@ -47,13 +49,15 @@ var jsFilesToInject = [
   'components/angular-moment/angular-moment.min.js',
   'components/angular-rickshaw/rickshaw.js',
   'components/angular-svg-round-progressbar/roundProgress.min.js',
-  'components/bootstrap/dist/js/bootstrap.min.js',
   'components/d3/d3.min.js',
   'components/medium-editor/dist/js/medium-editor.min.js',
   'components/ng-file-upload/angular-file-upload.min.js',
   'components/ng-file-upload/angular-file-upload-shim.min.js',
   'components/ng-tags-input/ng-tags-input.min.js',
   'components/rickshaw/rickshaw.min.js',
+
+  // Media player elements
+  'components/video.js/dist/video-js/video.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
