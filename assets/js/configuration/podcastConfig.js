@@ -1,4 +1,4 @@
-angular.module('Bethel.podcast', ['ngSailsBind'])
+angular.module('Bethel.podcast', ['ngSailsBind', 'mgo-angular-wizard'])
 
 .config(function ($stateProvider, $translatePartialLoaderProvider) {
 

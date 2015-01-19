@@ -1,6 +1,106 @@
 <div class="ui horizontal podcast" ui-view>
-  <div class="content list">
-    <h1><span data-ng-bind="'PODCAST.LIST_TITLE' | translate"></span> <a href="/podcast/new" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> <span data-ng-bind="'PODCAST.NEW' | translate"></span></a></h1>
+  <div class="panel panel-default wizard" data-ng-show="createWizard">
+    <div class="panel-body">
+      <wizard on-finish="createPodcast()" hide-indicators="true"> 
+        <wz-step title="Name">
+          <h1 class="text-center">Create a new podcast</h1>
+          <h4 class="text-center">We'll walk you through everything. Let's go!</h4>
+          <hr />
+          <input type="text" data-ng-model="newPodcast.name" class="form-control" placeholder="Name your podcast" />
+          <div class="panel-footer text-right">
+            <a href="#" class="pull-left help">Need Help?</a>
+            <a class="btn btn-default" data-ng-click="cancelWizard()">Cancel</a>
+            <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.name" wz-next value="Continue" />
+          </div>
+        </wz-step>
+        <wz-step title="Type">
+          <h1 class="text-center">What type of podcast?</h1>
+          <h4 class="text-center">It's best to have separate podcasts for your audio and video episodes.</h4>
+          <hr />
+          <div class="row">
+            <div class="col-md-3 col-md-offset-3 text-center">
+              <a data-ng-click="selectType(1)" class="btn btn-lg" data-ng-class="(newPodcast.type == '1') ? 'btn-success' : 'btn-default'"><i class="fa fa-volume-up"></i> Audio</a>
+            </div>
+            <div class="col-md-3 text-center">
+              <a data-ng-click="selectType(2)" class="btn btn-lg" data-ng-class="(newPodcast.type == '2') ? 'btn-success' : 'btn-default'"><i class="fa fa-film"></i> Video</a>
+            </div>
+          </div>
+          <div class="panel-footer text-right">
+            <a href="#" class="pull-left help">Need Help?</a>
+            <a class="btn btn-default" wz-previous>Back</a>
+            <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.type" wz-next value="Continue" />
+          </div>
+        </wz-step>
+        <wz-step title="Storage">
+          <h1 class="text-center">Choose episode storage</h1>
+          <h4 class="text-center">How would you like to upload new episodes?</h4>
+          <hr />
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <h3>Bethel Cloud<br /><small>Drag and drop uploading</small></h3>
+              <p><a data-ng-click="selectSource(1)" class="btn" data-ng-class="(newPodcast.source == '1') ? 'btn-success' : 'btn-default'">Use This</a></p>
+              <p><span data-ng-bind="(newPodcast.type == '1') ? 'Audio' : 'Video'"></span>: 10¢ per episode/month</p>
+            </div>
+            <div class="col-md-6 text-center">
+              <h3>Vimeo Pro<br /><small>Automatic sync with Vimeo</small></h3>
+              <p><a data-ng-click="selectSource(2)" class="btn" data-ng-class="(newPodcast.source == '2') ? 'btn-success' : 'btn-default'">Use This</a></p>
+              <p><span data-ng-show="newPodcast.type == 1">Audio: 10¢ per episode/month<br />Conversion: 10¢ per minute</span><span data-ng-show="newPodcast.type == 2">Video: Always <strong>FREE</strong></span></p>
+            </div>
+          </div>
+          <div class="panel-footer text-right">
+            <a href="#" class="pull-left help">Need Help?</a>
+            <a class="btn btn-default" wz-previous>Back</a>
+            <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.source" wz-next value="Continue" />
+          </div>
+        </wz-step>
+        <wz-step title="Image">
+          <h1 class="text-center">Upload your podcast image</h1>
+          <h4 class="text-center">Subscribers will see this image in iTunes</h4>
+          <hr />
+          <div class="row">
+            <div class="col-md-3 col-md-offset-1">
+              <img data-ng-src="https://images.bethel.io/images/{{ newPodcast.image ? newPodcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" width="200" alt="{{ newPodcast.name }}" />
+            </div>
+            <div class="col-md-7">
+              <ul>
+                <li>Save your image as a <strong>PNG</strong> or <strong>JPEG</strong> file.</li>
+                <li>Your image should measure 1,400 pixels square.</li>
+                <li>Remember, your image may be small on some devices.</li>
+                <li><em>You can skip this step for now if you wish.</em></li>
+              </ul>
+              <div class="text-center">
+                <button data-ng-file-select="onFileSelect($files)" accept="image/png,image/jpg,image/jpeg" class="btn btn-default"><i class="fa" data-ng-class="(thumbnailUploading) ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i> Choose an image...</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer text-right">
+            <a href="#" class="pull-left help">Need Help?</a>
+            <a class="btn btn-default" wz-previous>Back</a>
+            <input type="submit" class="btn btn-primary" wz-next value="Continue" />
+          </div>
+        </wz-step>
+        <wz-step title="Final">
+          <h1 class="text-center">Just about done!</h1>
+          <h4 class="text-center">This is how your podcast will appear in iTunes search results</h4>
+          <hr />
+          <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+              <img data-ng-src="https://images.bethel.io/images/{{ newPodcast.image ? newPodcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=150&amp;h=150" width="150" height="150" alt="{{ newPodcast.name }}" />
+              <p><span data-ng-bind="newPodcast.name"></span><br /><small data-ng-bind="ministry.name" class="text-muted"></small></p>
+            </div>
+          </div>
+          <div class="panel-footer text-right">
+            <a href="#" class="pull-left help">Need Help?</a>
+            <a class="btn btn-default" wz-previous>Back</a>
+            <input type="submit" class="btn btn-primary" wz-next value="Create My Podcast!" />
+          </div>
+        </wz-step>
+      </wizard>
+    </div>
+  </div>
+
+  <div class="content list" data-ng-hide="createWizard">
+    <h1><span data-ng-bind="'PODCAST.LIST_TITLE' | translate"></span> <a data-ng-click="showWizard()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> <span data-ng-bind="'PODCAST.NEW' | translate"></span></a></h1>
     <table class="table table-list">
       <thead>
         <tr>

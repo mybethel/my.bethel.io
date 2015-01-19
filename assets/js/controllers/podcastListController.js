@@ -1,7 +1,9 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastListController', function ($rootScope, $scope, $sailsBind) {
+.controller('PodcastListController', function ($rootScope, $scope, $sailsBind, WizardHandler) {
 
+  $scope.createWizard = false;
+  $scope.newPodcast = {};
   $scope.statistics = {};
 
   // Bind the podcast list over socket.io for this ministry.
@@ -27,5 +29,24 @@ angular.module('Bethel.podcast')
 
     $scope.podcasts.forEach(getSubscriberCount);
   });
+
+  $scope.cancelWizard = function() {
+    $scope.newPodcast = {};
+    $scope.createWizard = false;
+  };
+
+  $scope.showWizard = function() {
+    $scope.createWizard = true;
+  };
+
+  $scope.selectType = function(type) {
+    $scope.newPodcast.type = type;
+    WizardHandler.wizard().next();
+  };
+
+  $scope.selectSource = function(source) {
+    $scope.newPodcast.source = source;
+    WizardHandler.wizard().next();
+  };
 
 });
