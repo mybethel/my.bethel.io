@@ -1,7 +1,7 @@
 
 exports.init = function(options) {
 
-  if (sails.config.cron && sails.config.cron.disable === true)
+  if (sails.config.cron && sails.config.cron.disabled === true)
     return;
   
   var s3Sync = require('cron').CronJob;
