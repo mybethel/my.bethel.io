@@ -47,10 +47,23 @@
               <p><span data-ng-show="newPodcast.type == 1">Audio: 10¢ per episode/month<br />Conversion: 10¢ per minute</span><span data-ng-show="newPodcast.type == 2">Video: Always <strong>FREE</strong></span></p>
             </div>
           </div>
+          <div data-ng-show="newPodcast.source == 2" class="source text-center">
+            <hr />
+            <h3 data-ng-show="services">Use videos uploaded to this Vimeo account...</h3>
+            <h3 data-ng-hide="services" class="text-muted">Before continuing, you must connect a Vimeo account</h3>
+            <ul class="nav nav-pills nav-stacked">
+              <li data-ng-repeat="service in services" data-ng-class="{ 'active': newPodcast.service == service.id }"><a href="" data-ng-click="selectAccount(service.id)" data-ng-bind="service.name"></a></li>
+              <li><a href="/services/vimeo" target="_blank" data-ng-bind="'PODCAST.VIMEO_CONNECT' | translate"></a></li>
+            </ul>
+            <div data-ng-show="services">
+              <h4>Only videos tagged with these keywords will be included...</h4>
+              <input type="text" data-ng-model="newPodcast.sourceMeta" class="form-control" placeholder="One or more tags separated by commas" />
+            </div>
+          </div>
           <div class="panel-footer text-right">
             <a href="#" class="pull-left help">Need Help?</a>
             <a class="btn btn-default" wz-previous>Back</a>
-            <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.source" wz-next value="Continue" />
+            <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.source || (newPodcast.source == 2 && (!newPodcast.service || !newPodcast.sourceMeta))" wz-next value="Continue" />
           </div>
         </wz-step>
         <wz-step title="Image">
