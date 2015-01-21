@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastListController', function ($rootScope, $scope, $sailsBind, WizardHandler) {
+.controller('PodcastListController', function ($rootScope, $scope, $sailsBind, $location, WizardHandler) {
 
   $scope.createWizard = false;
   $scope.newPodcast = {};
@@ -59,6 +59,18 @@ angular.module('Bethel.podcast')
 
   $scope.selectAccount = function(account) {
     $scope.newPodcast.service = account;
+  };
+
+  $scope.createPodcast = function() {
+    $scope.newPodcast._csrf = $rootScope._csrf;
+    $scope.newPodcast.ministry = $rootScope.ministry;
+
+    io.socket.post('/podcast', $scope.newPodcast, function (response) {
+      $scope.$apply(function() {
+        $scope.cancelWizard();
+        $location.path('/podcast/' + response.id).replace();
+      });
+    });
   };
 
 });
