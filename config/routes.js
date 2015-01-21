@@ -40,11 +40,6 @@ module.exports.routes = {
     action: 'destroy'
   },
 
-  '/accounts': {
-    controller: 'service',
-    action: 'list'
-  },
-
   '/location/map/:lat/:lng/:radius': {
     controller: 'location',
     action: 'map'
