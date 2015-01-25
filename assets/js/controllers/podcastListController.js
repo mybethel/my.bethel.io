@@ -60,10 +60,11 @@ angular.module('Bethel.podcast')
     $scope.newPodcast._csrf = $rootScope._csrf;
     $scope.newPodcast.ministry = $rootScope.ministry;
 
-    io.socket.post('/podcast', $scope.newPodcast, function (response) {
+    io.socket.post('/podcast', $scope.newPodcast, function (podcastObject) {
       $scope.$apply(function() {
+        $scope.podcasts.push(podcastObject);
         $scope.cancelWizard();
-        $location.path('/podcast/' + response.id).replace();
+        $location.path('/podcast/' + podcastObject.id).replace();
       });
     });
   };
