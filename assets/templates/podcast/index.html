@@ -114,6 +114,13 @@
 
   <div class="content list" data-ng-hide="createWizard">
     <h1><span data-ng-bind="'PODCAST.LIST_TITLE' | translate"></span> <a data-ng-click="showWizard()" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus"></span> <span data-ng-bind="'PODCAST.NEW' | translate"></span></a></h1>
+    <div class="info-well" data-ng-if="podcasts.length < 1">
+      <h1 data-ng-bind="'PODCAST.HELP.TITLE' | translate"></h1>
+      <p data-ng-bind="'PODCAST.HELP.CREATE' | translate"></p>
+      <button class="btn btn-default" data-ng-click="showWizard()" data-ng-bind="('PODCAST.HELP.CREATE_BUTTON' | translate) + ' &#xffeb;'"></button>
+      <p data-ng-bind="'PODCAST.HELP.MIGRATE' | translate"></p>
+      <button class="btn btn-default" data-ng-bind="('PODCAST.HELP.MIGRATE_BUTTON' | translate) + ' &#xffeb;'"></button>
+    </div>
     <table class="table table-list">
       <thead>
         <tr>

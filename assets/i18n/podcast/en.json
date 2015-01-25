@@ -1,6 +1,13 @@
 {
   "PODCAST": {
     "DESCRIPTION": "Type here to edit the description for this podcast.",
+    "HELP": {
+        "CREATE": "Creating a podcast is easy! Answer a few questions and you'll be ready to upload your first episode in a matter of minutes.",
+        "CREATE_BUTTON": "New Podcast",
+        "TITLE": "Getting Started with Podcasting",
+        "MIGRATE": "Already have an existing podcast you'd like to move to Bethel? We'll take care of everything including forwarding your old podcast URL. Your subscribers won't miss a thing!",
+        "MIGRATE_BUTTON": "Contact Us"
+    },
     "ITUNES_SUBMIT": "Submit to iTunes",
     "MANAGE": "Manage",
     "MEDIA": {
