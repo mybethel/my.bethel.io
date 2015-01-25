@@ -1,5 +1,5 @@
 /**
- * ServicesController.js 
+ * ServiceController.js 
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -10,7 +10,7 @@ module.exports = {
   vimeo: function(req, res, next) {
     var Vimeo = require('vimeo-api').Vimeo,
         VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO),
-        redirectUrl = 'http://my.bethel.io/services/vimeo/authorized';
+        redirectUrl = 'http://my.bethel.io/service/vimeo/authorized';
 
     // If this is not a response from Vimeo, redirect the user to request permission.
     if (req.param('id') !== 'authorized') {
@@ -25,7 +25,7 @@ module.exports = {
       if (req.query.state !== req.session.Ministry.id.toString('base64') || typeof token.access_token === 'undefined')
         return res.forbidden('Invalid access token response from Vimeo.');
 
-      Services.findOrCreate({
+      Service.findOrCreate({
         'provider': 'vimeo',
         'ministry': req.session.Ministry.id,
         'user': token.user.uri

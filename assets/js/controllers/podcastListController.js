@@ -12,7 +12,7 @@ angular.module('Bethel.podcast')
       return;
 
     $sailsBind.bind('podcast', $scope, { 'ministry': $rootScope.ministry.id });
-    $sailsBind.bind('services', $scope, { 'ministry': $rootScope.ministry.id });
+    $sailsBind.bind('service', $scope, { 'ministry': $rootScope.ministry.id });
   });
 
   var getSubscriberCount = function(podcast) {
@@ -22,11 +22,6 @@ angular.module('Bethel.podcast')
       });
     });
   };
-
-  // UGGGGHHHHHH!
-  $scope.$watchCollection('servicess', function() {
-    $scope.services = $scope.servicess;
-  });
 
   // Fetch stats for each of the podcasts.
   $scope.$watchCollection('podcasts', function() {

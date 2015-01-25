@@ -31,7 +31,7 @@ module.exports = {
     },
 
     service: {
-      model: 'services'
+      model: 'service'
     },
 
     description: {

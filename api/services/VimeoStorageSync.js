@@ -118,7 +118,7 @@ exports.sync = function(refreshAll) {
         return;
       }
 
-      Services.findOne(podcast.service, function foundService(err, service) {
+      Service.findOne(podcast.service, function foundService(err, service) {
         if (err || !service) {
           sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
           return;
@@ -139,7 +139,7 @@ exports.syncOne = function(podcast, service) {
       return;
     }
 
-    Services.findOne(service, function foundService(err, serviceObject) {
+    Service.findOne(service, function foundService(err, serviceObject) {
       if (err || !service) {
         sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
         return;
@@ -150,4 +150,4 @@ exports.syncOne = function(podcast, service) {
 
   });
 
-}
+};

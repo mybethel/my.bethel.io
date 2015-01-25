@@ -44,7 +44,7 @@ module.exports = {
   new: function (req, res) {
     var uploadForm = S3Upload.prepare('images/podcast/tmp');
 
-    Services.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
+    Service.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
       res.view({
         s3form: uploadForm,
         services: services
@@ -131,7 +131,7 @@ module.exports = {
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
     
-      Services.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
+      Service.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
         res.send({
           s3form: uploadForm,
           uploadEpisode: S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id),
