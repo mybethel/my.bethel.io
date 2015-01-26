@@ -42,14 +42,7 @@ module.exports = {
   },
 
   new: function (req, res) {
-    var uploadForm = S3Upload.prepare('images/podcast/tmp');
-
-    Service.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
-      res.view({
-        s3form: uploadForm,
-        services: services
-      });
-    });
+    res.send(S3Upload.prepare('images/podcast/tmp'));
   },
 
   import: function(req, res) {

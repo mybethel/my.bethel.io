@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastListController', function ($rootScope, $scope, $sailsBind, $location, WizardHandler) {
+.controller('PodcastListController', function ($rootScope, $scope, $sailsBind, $location, WizardHandler, $upload) {
 
   $scope.createWizard = false;
   $scope.newPodcast = {};
@@ -54,6 +54,29 @@ angular.module('Bethel.podcast')
 
   $scope.selectAccount = function(account) {
     $scope.newPodcast.service = account;
+  };
+
+  $scope.uploadThumbnail = function ($files) {
+    $scope.thumbnailUploading = true;
+    io.socket.get('/podcast/new', function (response) {
+      var fileMeta = {
+        key: response.bucket + '/' + $files[0].name,
+        AWSAccessKeyId: response.key, 
+        acl: 'public-read',
+        policy: response.policy,
+        signature: response.signature,
+      };
+      $upload.upload({
+        url: response.action,
+        method: 'POST',
+        data: fileMeta,
+        file: $files[0],
+      })
+      .success(function (data, status, headers, config) {
+        $scope.newPodcast.temporaryImage = $files[0].name;
+        $scope.thumbnailUploading = false;
+      });
+    });
   };
 
   $scope.createPodcast = function() {
