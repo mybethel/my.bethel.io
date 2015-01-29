@@ -4,7 +4,7 @@
     <h2 class="title">Welcome back!</h2>
     <form class="user-form" ng-submit="login(credentials)">
       <div class="form-item form-type-textfield form-item-name" ng-class="{'has-error': error.name === true}">
-        <i class="glyphicon glyphicon-user"></i><input autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="autofocus" class="form-control form-text" placeholder="Username" type="email" ng-model="credentials.name" required="true">
+        <i class="glyphicon glyphicon-user"></i><input autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="autofocus" class="form-control form-text" placeholder="E-mail" type="email" ng-model="credentials.name" required="true">
       </div>
       <div class="form-item form-type-password form-item-pass" ng-class="{'has-error': error.pass === true}">
         <i class="glyphicon glyphicon-lock"></i><input class="form-control form-text" placeholder="Password" type="password" ng-model="credentials.pass" required="true">
