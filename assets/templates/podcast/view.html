@@ -8,7 +8,7 @@
         <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="{{ 'PODCAST.TITLE' | translate }}" data-ng-bind="podcast.name"></h1>
       </div>
       <div class="col-md-1 text-right operations">
-        <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa fa-edit"></i></a>
+        <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa" data-ng-class="editing ? 'fa-check-square-o' : 'fa-edit'"></i></a>
       </div>
     </div>
     <div data-ng-show="editing">
