@@ -40,7 +40,8 @@
     "vimeo-api": "~0.9.1",
     "waterline": "~0.10.9",
     "xml2js": "~0.4.4",
-    "zencoder": "~1.0.0"
+    "zencoder": "~1.0.0",
+    "q": "~1.1.2"
   },
   "devDependencies": {
     "mocha": "~2.0.1",

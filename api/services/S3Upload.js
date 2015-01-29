@@ -2,7 +2,8 @@ var crypto = require('crypto'),
     moment = require('moment'),
     request = require('request'),
     AWS = require('aws-sdk'),
-    Uploader = require('s3-upload-stream').Uploader;
+    Uploader = require('s3-upload-stream').Uploader,
+    Q = require('q');
 
 exports.prepare = function(bucketName) {
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
@@ -30,10 +31,13 @@ exports.removeTemp = function(bucketName, fileName, newId) {
     CopySource: 'cloud.bethel.io/' + bucketName + '/tmp/' + fileName,
     Key: bucketName + '/' + newId + '.' + extension
   };
-  console.log(params);
+
+  var deferred = Q.defer();
+
   s3.copyObject(params, function(err, data) {
-    if (err) console.log(err, err.stack);
-    else {
+    if (err) {
+      deferred.reject(new Error(err));
+    } else {        
       var params = {
         Bucket: 'cloud.bethel.io',
         Key: bucketName + '/tmp/' + fileName
@@ -41,10 +45,12 @@ exports.removeTemp = function(bucketName, fileName, newId) {
       s3.deleteObject(params, function(err, data) {
         if (err) console.log(err, err.stack);
       });
+
+      deferred.resolve(bucketName.replace('images/', '') + '/' + newId + '.' + extension);
     }
   });
 
-  return bucketName.replace('images/', '') + '/' + newId + '.' + extension;
+  return deferred.promise;
 };
 
 exports.transport = function(fileUrl, bucketName, key, callback) {

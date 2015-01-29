@@ -87,9 +87,11 @@ module.exports = {
 
   afterCreate: function(values, next) {
     if (values.temporaryImage) {
-      var image = S3Upload.removeTemp('images/podcast', values.temporaryImage, values.id);
-      Podcast.update(values.id, {image: image}, function podcastUpdated(err) {
-        if (err) console.log(err);
+      S3Upload.removeTemp('images/podcast', values.temporaryImage, values.id).then(function (result) {
+        Podcast.update(values.id, { image: result }, function (err) {
+          if (err) console.log(err);
+          Podcast.publishUpdate(values.id);
+        });
       });
     }
 

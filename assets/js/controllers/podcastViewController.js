@@ -7,28 +7,32 @@ angular.module('Bethel.podcast')
   $scope.uploadProgress = 0;
   $scope.editing = false;
 
-  io.socket.get('/podcast/' + $scope.id, function (data) {
-    $scope.$apply(function() {
-      $scope.podcast = data;
-      $scope.tags = [];
-      if (typeof data.tags !== 'undefined' && typeof data.tags !== 'string') {
-        data.tags.forEach(function (tag) {
-          $scope.tags.push({ text: tag });
-        });
-      }
-      $scope.sourceMeta = [];
-      if (typeof data.sourceMeta !== 'undefined' && typeof data.sourceMeta !== 'string') {
-        data.sourceMeta.forEach(function (tag) {
-          $scope.sourceMeta.push({ text: tag });
-        });
-      }
-    });
-    new MediumEditor('.editable.description', { disableToolbar: true });
+  $scope.init = function() {
+    io.socket.get('/podcast/' + $scope.id, function (data) {
+      $scope.$apply(function() {
+        $scope.podcast = data;
+        $scope.tags = [];
+        if (typeof data.tags !== 'undefined' && typeof data.tags !== 'string') {
+          data.tags.forEach(function (tag) {
+            $scope.tags.push({ text: tag });
+          });
+        }
+        $scope.sourceMeta = [];
+        if (typeof data.sourceMeta !== 'undefined' && typeof data.sourceMeta !== 'string') {
+          data.sourceMeta.forEach(function (tag) {
+            $scope.sourceMeta.push({ text: tag });
+          });
+        }
+      });
+      new MediumEditor('.editable.description', { disableToolbar: true });
 
-    // On initial page load, the title is not editable.
-    titleEditor = new MediumEditor('.title', { disableToolbar: true, disableReturn: true });
-    titleEditor.deactivate();
-  });
+      // On initial page load, the title is not editable.
+      titleEditor = new MediumEditor('.title', { disableToolbar: true, disableReturn: true });
+      titleEditor.deactivate();
+    });
+  };
+
+  $scope.init();
 
   io.socket.get('/podcast/edit/' + $scope.id, function (data) {
     $scope.$apply(function() {
@@ -38,6 +42,12 @@ angular.module('Bethel.podcast')
 
   io.socket.get('/service/list', {}, function (response, status) {
     $scope.$apply(function() { $scope.accounts = response; });
+  });
+
+  io.socket.on('podcast', function (message) {
+    if (message.verb === 'updated' && message.id === $scope.podcast.id) {
+      $scope.init();
+    }
   });
 
   $scope.toggleEditing = function() {
