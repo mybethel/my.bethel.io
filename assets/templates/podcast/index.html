@@ -2,7 +2,7 @@
   <div class="panel panel-default wizard" data-ng-show="createWizard">
     <div class="panel-body">
       <wizard on-finish="createPodcast()" hide-indicators="true"> 
-        <wz-step title="Name">
+        <wz-step>
           <h1 class="text-center">Create a new podcast</h1>
           <h4 class="text-center">We'll walk you through everything. Let's go!</h4>
           <hr />
@@ -13,7 +13,7 @@
             <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.name" wz-next value="Continue" />
           </div>
         </wz-step>
-        <wz-step title="Type">
+        <wz-step>
           <h1 class="text-center">What type of podcast?</h1>
           <h4 class="text-center">It's best to have separate podcasts for your audio and video episodes.</h4>
           <hr />
@@ -31,7 +31,7 @@
             <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.type" wz-next value="Continue" />
           </div>
         </wz-step>
-        <wz-step title="Storage">
+        <wz-step>
           <h1 class="text-center">Choose episode storage</h1>
           <h4 class="text-center">How would you like to upload new episodes?</h4>
           <hr />
@@ -53,7 +53,7 @@
             <h3 data-ng-hide="services" class="text-muted">Before continuing, you must connect a Vimeo account</h3>
             <ul class="nav nav-pills nav-stacked">
               <li data-ng-repeat="service in services" data-ng-class="{ 'active': newPodcast.service == service.id }"><a href="" data-ng-click="selectAccount(service.id)" data-ng-bind="service.name"></a></li>
-              <li><a href="/services/vimeo" target="_blank" data-ng-bind="'PODCAST.VIMEO_CONNECT' | translate"></a></li>
+              <li><a href="/service/vimeo" target="_blank" data-ng-bind="'PODCAST.VIMEO_CONNECT' | translate"></a></li>
             </ul>
             <div data-ng-show="services">
               <h4>Only videos tagged with these keywords will be included...</h4>
@@ -66,7 +66,7 @@
             <input type="submit" class="btn btn-primary" data-ng-disabled="!newPodcast.source || (newPodcast.source == 2 && (!newPodcast.service || !newPodcast.sourceMeta))" wz-next value="Continue" />
           </div>
         </wz-step>
-        <wz-step title="Image">
+        <wz-step>
           <h1 class="text-center">Upload your podcast image</h1>
           <h4 class="text-center">Subscribers will see this image in iTunes</h4>
           <hr />
@@ -92,7 +92,7 @@
             <input type="submit" class="btn btn-primary" wz-next value="Continue" />
           </div>
         </wz-step>
-        <wz-step title="Final">
+        <wz-step>
           <h1 class="text-center">Just about done!</h1>
           <h4 class="text-center">This is how your podcast will appear in iTunes search results</h4>
           <hr />
