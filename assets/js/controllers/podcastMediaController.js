@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastMediaController', function ($scope, $rootScope, $modalInstance, mediaId, $sce) {
+.controller('PodcastMediaController', function ($scope, $rootScope, $modalInstance, mediaId, $sce, $http) {
 
   io.socket.get('/podcastmedia/' + mediaId, function (data) {
     $scope.$apply(function() {
@@ -18,6 +18,17 @@ angular.module('Bethel.podcast')
       });
     });
   });
+
+  // Autocomplete for ministries using the Bethel web platform.
+  $scope.getSeries = function(query) {
+    if (typeof $rootScope.ministry.url === 'undefined')
+      return;
+
+    return $http.get($rootScope.ministry.url + '/bethel/podcaster/autocomplete/' + query)
+      .then(function (response){
+        return response.data.results;
+      });
+  };
 
   $scope.save = function() {
     io.socket.put('/podcastmedia/' + mediaId, {
