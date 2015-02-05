@@ -16,7 +16,7 @@
       <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="{{ 'PODCAST.DESCRIPTION' | translate }}"></p>
     </div>
     <hr />
-    <h3><span data-ng-bind="'PODCAST.NEW_EPISODES' | translate"></span> <span data-ng-bind="podcast.source === 2 && 'PODCAST.NEW_EPISODES_VIMEO' || 'PODCAST.NEW_EPISODES_UPLOAD' | translate"></span>.</h3>
+    <h3 data-ng-hide="uploadProgress >= 1 && uploadProgress < 100"><span data-ng-bind="'PODCAST.NEW_EPISODES' | translate"></span> <span data-ng-bind="podcast.source === 2 && 'PODCAST.NEW_EPISODES_VIMEO' || 'PODCAST.NEW_EPISODES_UPLOAD' | translate"></span>.</h3>
     <div class="row no-gutters" data-ng-if="podcast.source == 2">
       <div class="col-md-4 margin-bottom-sm">
         <div class="dropdown" dropdown>
