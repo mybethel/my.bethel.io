@@ -161,6 +161,9 @@ angular.module('Bethel.podcast')
 
   $scope.createPodcastMedia = function (file) {
 
+    var fileExt = file.name.split('.').pop(),
+        fileName = file.name.replace('.' + fileExt, '');
+
     var fileMeta = {
       key: $scope.uploadEpisode.bucket + '/' + file.name,
       AWSAccessKeyId: $scope.uploadEpisode.key,
@@ -179,9 +182,19 @@ angular.module('Bethel.podcast')
       $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
     })
     .success(function(data, status, headers, config) {
-      io.socket.get('/podcastmedia/refresh', function() {
-        $state.go($state.$current, null, { reload: true });
+
+      io.socket.post('/podcastmedia', {
+        name: fileName,
+        date: file.lastModifiedDate,
+        url: 'http://cloud.bethel.io/' + encodeURI(fileMeta.key),
+        size: file.size,
+        podcast: $scope.id,
+        type: 'cloud',
+        _csrf: $rootScope._csrf
+      }, function() {
+        $scope.init();
       });
+
     });
   };
 
@@ -202,9 +215,8 @@ angular.module('Bethel.podcast')
     }, function (result) {
       if (result === 'cancel')
         return;
-      
-      // @todo: Update the media array without reload.
-      $state.go($state.$current, null, { reload: true });
+
+      $scope.init();
     });
   };
 
