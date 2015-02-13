@@ -11,12 +11,11 @@
         <a class="btn btn-block btn-default btn-lg" data-ng-class="{ 'active btn-success': editing }" data-ng-click="toggleEditing()"><i class="fa" data-ng-class="editing ? 'fa-check-square-o' : 'fa-edit'"></i></a>
       </div>
     </div>
-    <div data-ng-show="editing">
-      <tags-input ng-model="tags" data-placeholder="{{ 'PODCAST.TAGS' | translate }}" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')"></tags-input>
-      <p data-ng-bind="podcast.description" class="editable description md" data-placeholder="{{ 'PODCAST.DESCRIPTION' | translate }}"></p>
-    </div>
+    <tags-input ng-model="tags" data-placeholder="{{ 'PODCAST.TAGS' | translate }}" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')" data-ng-show="editing"></tags-input>
+    <p data-ng-bind="podcast.description" data-ng-show="podcast.description || editing" class="description md" data-ng-class="{ 'editable': editing }" data-placeholder="{{ 'PODCAST.DESCRIPTION' | translate }}"></p>
+    <p class="text-muted" data-ng-hide="podcast.description || editing">Your podcast doesn't have a description. Tell visitors about your podcast and help them to find it in iTunes by setting both a description and appropriate keywords. Click the <i class="fa fa-edit"></i> button above to continue.</p>
     <hr />
-    <h3 data-ng-hide="uploadProgress >= 1 && uploadProgress < 100"><span data-ng-bind="'PODCAST.NEW_EPISODES' | translate"></span> <span data-ng-bind="podcast.source === 2 && 'PODCAST.NEW_EPISODES_VIMEO' || 'PODCAST.NEW_EPISODES_UPLOAD' | translate"></span>.</h3>
+    <h3 data-ng-hide="uploading && uploadProgress < 100"><span data-ng-bind="'PODCAST.NEW_EPISODES' | translate"></span> <span data-ng-bind="podcast.source === 2 && 'PODCAST.NEW_EPISODES_VIMEO' || 'PODCAST.NEW_EPISODES_UPLOAD' | translate"></span>.</h3>
     <div class="row no-gutters" data-ng-if="podcast.source == 2">
       <div class="col-md-4 margin-bottom-sm">
         <div class="dropdown" dropdown>
@@ -34,8 +33,9 @@
         <tags-input class="source" data-ng-model="sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateSource($tag, 'added')" on-tag-removed="updateSource($tag, 'removed')"></tags-input>
       </div>
     </div>
-    <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
-    <div class="progress" data-ng-if="uploadProgress >= 1 && uploadProgress < 100">
+    <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
+    <h5 class="progress-text pull-left" data-ng-if="uploading && uploadProgress < 100">Uploading... <i class="fa fa-circle-o-notch fa-spin"></i></h5>
+    <div class="progress" data-ng-if="uploading && uploadProgress < 100">
       <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
     </div>
     <hr />
@@ -52,7 +52,7 @@
       <div class="panel-body">
         <div class="content" data-ng-if="podcast.media.length < 1">
           <p>Your podcast episodes will appear here.<span data-ng-if="podcast.source == 2"> It may take a few minutes for Bethel to retrieve your Vimeo videos.</span></p>
-          <button data-ng-if="podcast.source == 1" data-ng-hide="uploadProgress >= 1 && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
+          <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/*,audio/m4a,video/*,video/mp4" class="btn btn-block"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
         </div>
         <table class="table table-hover episodes" data-ng-class="{ 'video': podcast.type == 2, 'audio': podcast.type == 1 }" data-podcast="{{ podcast.id }}" data-url="{{ podcast.ministry.url }}">
           <tbody>

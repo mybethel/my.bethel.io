@@ -2,8 +2,9 @@ angular.module('Bethel.podcast')
 
 .controller('PodcastViewController', function ($rootScope, $scope, $state, $stateParams, $upload, $modal) {
 
-  var titleEditor;
+  var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
+  $scope.uploading = false;
   $scope.uploadProgress = 0;
   $scope.editing = false;
 
@@ -24,11 +25,12 @@ angular.module('Bethel.podcast')
           });
         }
       });
-      new MediumEditor('.editable.description', { disableToolbar: true });
 
-      // On initial page load, the title is not editable.
+      // On initial page load, the title and description are not editable.
       titleEditor = new MediumEditor('.title', { disableToolbar: true, disableReturn: true });
       titleEditor.deactivate();
+      descriptionEditor = new MediumEditor('.description', { disableToolbar: true });
+      descriptionEditor.deactivate();
     });
   };
 
@@ -60,8 +62,10 @@ angular.module('Bethel.podcast')
 
     if ($scope.editing === true) {
       titleEditor.activate();
+      descriptionEditor.activate();
     } else {
       titleEditor.deactivate();
+      descriptionEditor.deactivate();
     }
   });
 
@@ -171,6 +175,8 @@ angular.module('Bethel.podcast')
       policy: $scope.uploadEpisode.policy,
       signature: $scope.uploadEpisode.signature,
     };
+
+    $scope.uploading = true;
 
     $upload.upload({
       url: $scope.uploadEpisode.action,
