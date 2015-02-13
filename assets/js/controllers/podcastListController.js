@@ -17,8 +17,11 @@ angular.module('Bethel.podcast')
 
   var getSubscriberCount = function(podcast) {
     io.socket.get('/podcast/subscribers/' + podcast.id, function (response) {
+      if (!angular.isDefined(response.subscribers))
+        return;
+      
       $scope.$apply(function() {
-        $scope.statistics[podcast.id] = 0;
+        $scope.statistics[podcast.id] = response.subscribers;
       });
     });
   };

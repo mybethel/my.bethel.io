@@ -26,6 +26,8 @@ module.exports.blueprints = {
 
   autoWatch: true,
 
+  defaultLimit: -1,
+
   /**
    * NOTE:
    * A lot of the configuration options below affect so-called "CRUD methods",
