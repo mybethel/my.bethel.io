@@ -1,11 +1,11 @@
   <title><%= podcast.name %></title>
-  <link>http://www.bethel.io</link>
+  <link><% if (ministry.url) { %><%= ministry.url %><% } else { %>http://www.bethel.io/<% } %></link>
   <language>en-us</language>
   <copyright>&#169; <% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></copyright>
   <description>
   <%= podcast.description %>
   </description>
-  <generator>http://getbethel.com</generator>
+  <generator>http://www.bethel.io</generator>
   <itunes:owner>
     <itunes:name><% if (podcast.owner) { %><%= podcast.owner %><% } else { %><%= ministry.name %><% } %></itunes:name>
     <itunes:email><%= ministry.email %></itunes:email>
@@ -20,7 +20,7 @@
   <itunes:category text="Religion &amp; Spirituality">
     <itunes:category text="Christianity"/>
   </itunes:category>
-  <itunes:new-feed-url>https://my.bethel.io/podcast/feed/<%= podcast.id %></itunes:new-feed-url>
+  <itunes:new-feed-url>http://podcast.bethel.io/<%= podcast.id %>.xml</itunes:new-feed-url>
   <atom:link href="https://my.bethel.io/podcast/feed/<%= podcast.id %>" rel="self" type="application/rss+xml"/>
   <% _.each(podcastMedia, function(media) { if (media.url) { %>
   <item>
