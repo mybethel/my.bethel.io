@@ -197,7 +197,10 @@ angular.module('Bethel.podcast')
         podcast: $scope.id,
         type: 'cloud',
         _csrf: $rootScope._csrf
-      }, function() {
+      }, function (podcast) {
+        // Call the endpoint to generate metadata.
+        io.socket.get('/podcastmedia/meta/' + podcast.id);
+
         $scope.init();
       });
 
