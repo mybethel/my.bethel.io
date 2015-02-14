@@ -28,6 +28,23 @@ module.exports = {
     PodcastMedia.find({referenceId: req.param('id')}).sort('date desc').exec(function foundPodcastMedia(err, media) {
       res.send(200, media);
     });
+  },
+
+  meta: function (req, res) {
+
+    PodcastMedia.findOne(req.param('id')).exec(function (err, media) {
+
+      VideoEncoding.getMetadata(media.url, media.podcast.ministry, function (jobDetails) {
+        PodcastMedia.update(req.param('id'), {
+          duration: parseInt(jobDetails.input_media_file.duration_in_ms / 1000)
+        }, function mediaUpdated(err) {
+          if (err)
+            sails.log.error(err);
+
+          return res.send(jobDetails);
+        });
+      });
+    });
   }
 	
 };

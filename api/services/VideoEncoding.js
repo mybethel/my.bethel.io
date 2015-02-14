@@ -48,6 +48,9 @@ exports.checkJob = function(jobId, cb) {
 };
 
 exports.getMetadata = function(filePath, ministryId, cb) {
+  filePath = filePath.replace('http://cloud.bethel.io/', '');
+  filePath = filePath.replace(/%20/g, ' ');
+
   Zencoder.Job.create({
     'input': 's3://cloud.bethel.io/' + filePath,
     'grouping': 'ministry-' + ministryId,
