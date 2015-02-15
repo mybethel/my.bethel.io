@@ -34,6 +34,9 @@ module.exports = {
 
     PodcastMedia.findOne(req.param('id')).exec(function (err, media) {
 
+      if (typeof media === 'undefined' || typeof media.url === 'undefined')
+        return res.serverError('Unable to locate media.');
+
       VideoEncoding.getMetadata(media.url, media.podcast.ministry, function (jobDetails) {
         PodcastMedia.update(req.param('id'), {
           duration: parseInt(jobDetails.input_media_file.duration_in_ms / 1000)
