@@ -34,6 +34,22 @@ function processMediaImport(id, media, ministry) {
 
 module.exports = {
 
+  embed: function (req, res) {
+    if (!req.param('type') || !req.param('id'))
+      return res.badRequest('type and id are required');
+
+    if (req.param('type') === 'episode') {
+      PodcastMedia.findOne(req.param('id')).populate('podcast').exec(function (err, episode) {
+        episode.url = episode.url.replace('http://cloud.bethel.io', 'https://s3.amazonaws.com/cloud.bethel.io');
+        res.view({
+          layout: 'none',
+          episode: episode,
+          podcast: episode.podcast
+        });
+      });
+    }
+  },
+
   list: function (req, res) {
     Podcast.find({ministry: req.session.Ministry.id}).exec(function (err, podcasts) {
       if (err) return next(err);

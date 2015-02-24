@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bethel</title>
+  <link rel="stylesheet" href="/styles/app.css">
+  <style>
+    #embed-frame #embedded.audio-player {
+      background-image: url('https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=200&h=200&blur=150');
+    }
+  </style>
+</head>
+<body id="embed-frame">
+  <img src="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" />
+  <div class="meta">
+    <h1><%= episode.name %></h1>
+    <h2><%= podcast.name %><br /><%= episode.date.toLocaleDateString() %></h2>
+  </div>
+  <audio id="embedded" class="video-js vjs-sublime-skin audio-player" data-setup="{}">
+    <source src="<%= episode.url %>" type="audio/mp3" />
+  </audio>
+  <script src="/components/videojs/dist/video-js/video.js"></script>
+  <script>
+    videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
+    videojs('embedded', {
+      controls: true,
+      controlBar: {
+        fullscreenToggle: false
+      },
+      autoplay: false,
+      loop: false,
+      width: '100%',
+      height: '100%',
+    });
+  </script>
+</body>
+</html>
