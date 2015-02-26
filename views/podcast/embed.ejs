@@ -7,9 +7,31 @@
     #embed-frame #embedded.audio-player {
       background-image: url('https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=200&h=200&blur=150');
     }
+<% if (podcast.embedSettings) { %>
+    .meta, .meta small {
+      <% if (podcast.embedSettings.textColor) { %>color: <%= podcast.embedSettings.textColor %> !important;<% } %>
+    }
+    .vjs-sublime-skin {
+      <% if (podcast.embedSettings.controlColor) { %>color: <%= podcast.embedSettings.controlColor %> !important;<% } %>
+    }
+    .vjs-sublime-skin .vjs-big-play-button:before,
+    .vjs-sublime-skin .vjs-play-control:before {
+      <% if (podcast.embedSettings.controlColor) { %>border-color: transparent transparent transparent <%= podcast.embedSettings.controlColor %>;<% } %>
+    }
+    .vjs-sublime-skin .vjs-progress-control .vjs-play-progress,
+    .vjs-sublime-skin.vjs-playing .vjs-play-control:before,
+    .vjs-sublime-skin.vjs-playing .vjs-play-control:after {
+      <% if (podcast.embedSettings.controlColor) { %>background-color: <%= podcast.embedSettings.controlColor %>;<% } %>
+    }
+
+    .vjs-sublime-skin .vjs-progress-control .vjs-progress-holder:after {
+      <% if (podcast.embedSettings.sliderColor) { %>background-color: <%= podcast.embedSettings.sliderColor %>;<% } %>
+    }
+<% } %>
   </style>
 </head>
 <body id="embed-frame">
+<% podcast.embedSettings %>
   <img src="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" />
   <div class="meta">
     <h1><%= episode.name %></h1>

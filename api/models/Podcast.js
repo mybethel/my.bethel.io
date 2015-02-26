@@ -11,6 +11,10 @@ module.exports = {
 
 	attributes: {
 
+    embedSettings: {
+      type: 'json'
+    },
+
     name: {
       type: 'string',
       required: true
