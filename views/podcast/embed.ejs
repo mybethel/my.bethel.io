@@ -13,7 +13,7 @@
   <img src="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" />
   <div class="meta">
     <h1><%= episode.name %></h1>
-    <h2><%= podcast.name %><br /><%= episode.date.toLocaleDateString() %></h2>
+    <h2><%= podcast.name %><br /><small><%= episode.date.toLocaleDateString() %></small></h2>
   </div>
   <audio id="embedded" class="video-js vjs-sublime-skin audio-player" data-setup="{}">
     <source src="<%= episode.url %>" type="audio/mp3" />
