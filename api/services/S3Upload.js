@@ -94,6 +94,7 @@ policy = function(bucketName) {
       { bucket: 'cloud.bethel.io' },
       { acl: 'public-read' },
       ['starts-with', '$key', bucketName],
+      ['starts-with', '$Content-Type', '']
     ]
   };
 

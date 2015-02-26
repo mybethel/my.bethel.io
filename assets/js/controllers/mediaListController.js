@@ -66,6 +66,7 @@ angular.module('Bethel.media')
       acl: 'public-read',
       policy: $scope.upload.policy,
       signature: $scope.upload.signature,
+      'Content-Type': file.type !== '' ? file.type : 'application/octet-stream'
     };
 
     $upload.upload({

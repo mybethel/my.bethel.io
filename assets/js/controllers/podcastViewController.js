@@ -174,6 +174,7 @@ angular.module('Bethel.podcast')
       acl: 'public-read',
       policy: $scope.uploadEpisode.policy,
       signature: $scope.uploadEpisode.signature,
+      'Content-Type': file.type !== '' ? file.type : 'application/octet-stream'
     };
 
     $scope.uploading = true;

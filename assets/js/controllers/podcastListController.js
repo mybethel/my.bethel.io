@@ -68,6 +68,7 @@ angular.module('Bethel.podcast')
         acl: 'public-read',
         policy: response.policy,
         signature: response.signature,
+        'Content-Type': file.type !== '' ? file.type : 'application/octet-stream'
       };
       $upload.upload({
         url: response.action,
