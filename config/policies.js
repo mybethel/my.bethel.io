@@ -39,7 +39,8 @@ module.exports.policies = {
   },
 
   podcast: {
-    'feed': true
+    'feed': true,
+    'embed': true
   },
 
   podcastmedia: {
