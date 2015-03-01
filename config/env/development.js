@@ -17,6 +17,14 @@ module.exports = {
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
+  connections: {
+    local: {
+      adapter  : 'sails-mongo',
+      url      : 'mongodb://mybethel@localhost/mybethel',
+      schema   : true
+    }
+  },
+
   models: {
     connection: 'local'
   }
