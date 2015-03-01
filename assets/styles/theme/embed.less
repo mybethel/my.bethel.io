@@ -1,4 +1,7 @@
 #embed-frame {
+  background: white;
+  height: 140px;
+  overflow: hidden;
   img {
     position: absolute;
     z-index: 1;
@@ -9,7 +12,7 @@
     color: white;
     z-index: 1;
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       font-weight: 200;
       line-height: 2.5rem;
       white-space: nowrap;
@@ -24,26 +27,22 @@
       }
     }
   }
+  .extras {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    z-index: 1;
+    a {
+      font-size: 1.3em;
+      color: white;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
   #embedded.audio-player {
     background: transparent;
     background-repeat: no-repeat;
     background-size: cover;
-    .vjs-big-play-button {
-      left: 70px;
-    }
-    .vjs-control-bar {
-      margin-left: 140px;
-      opacity: 1 !important;
-      .vjs-progress-control {
-        right: 60px;
-        .vjs-play-progress {
-          z-index: 1;
-        }
-      }
-      .vjs-volume-control {
-        right: 20px;
-      }
-    }
   }
-
 }

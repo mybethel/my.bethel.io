@@ -18,7 +18,8 @@ module.exports = function(grunt) {
 				paths: ['assets/components']
 			},
 			files: {
-				'.tmp/public/styles/app.css': 'assets/styles/app.less'
+				'.tmp/public/styles/app.css': 'assets/styles/app.less',
+				'.tmp/public/styles/vjs-embed.css': 'assets/styles/vjs-embed.less'
 			}
 		}
 	});

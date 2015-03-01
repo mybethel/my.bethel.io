@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bethel</title>
-  <link rel="stylesheet" href="/styles/app.css">
+  <title><%= episode.name %> powered by Bethel</title>
+  <link rel="stylesheet" href="/styles/vjs-embed.css" />
+  <link rel="stylesheet" href="/styles/app.css" />
+  <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/font-awesome.min.css">
   <style>
     #embed-frame #embedded.audio-player {
       background-image: url('https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=200&h=200&blur=150');
     }
 <% if (podcast.embedSettings) { %>
-    .meta, .meta small {
+    .meta, .meta small, .extras a {
       <% if (podcast.embedSettings.textColor) { %>color: <%= podcast.embedSettings.textColor %> !important;<% } %>
     }
-    .vjs-sublime-skin {
+    .vjs-embed-skin {
       <% if (podcast.embedSettings.controlColor) { %>color: <%= podcast.embedSettings.controlColor %> !important;<% } %>
     }
-    .vjs-sublime-skin .vjs-big-play-button:before,
-    .vjs-sublime-skin .vjs-play-control:before {
-      <% if (podcast.embedSettings.controlColor) { %>border-color: transparent transparent transparent <%= podcast.embedSettings.controlColor %>;<% } %>
-    }
-    .vjs-sublime-skin .vjs-progress-control .vjs-play-progress,
-    .vjs-sublime-skin.vjs-playing .vjs-play-control:before,
-    .vjs-sublime-skin.vjs-playing .vjs-play-control:after {
-      <% if (podcast.embedSettings.controlColor) { %>background-color: <%= podcast.embedSettings.controlColor %>;<% } %>
+    .vjs-embed-skin .vjs-progress-control .vjs-play-progress,
+    .vjs-embed-skin .vjs-volume-level {
+      <% if (podcast.embedSettings.controlColor) { %>background: <%= podcast.embedSettings.controlColor %>;<% } %>
     }
 
-    .vjs-sublime-skin .vjs-progress-control .vjs-progress-holder:after {
-      <% if (podcast.embedSettings.sliderColor) { %>background-color: <%= podcast.embedSettings.sliderColor %>;<% } %>
+    .vjs-embed-skin .vjs-progress-control .vjs-progress-holder {
+      <% if (podcast.embedSettings.sliderColor) { %>background: <%= podcast.embedSettings.sliderColor %>;<% } %>
     }
 <% } %>
   </style>
@@ -37,7 +34,11 @@
     <h1><%= episode.name %></h1>
     <h2><%= podcast.name %><br /><small><%= episode.date.toLocaleDateString() %></small></h2>
   </div>
-  <audio id="embedded" class="video-js vjs-sublime-skin audio-player" data-setup="{}">
+  <div class="extras">
+    <% if (podcast.embedSettings.feedUrl) { %><a href="<%= podcast.embedSettings.feedUrl %>"><i class="fa fa-fw fa-rss"></i></a><br /><% } %>
+    <a href="<%= episode.url %>" download><i class="fa fa-fw fa-cloud-download"></i></a>
+  </div>
+  <audio id="embedded" class="video-js vjs-embed-skin audio-player" data-setup="{}">
     <source src="<%= episode.url %>" type="audio/mp3" />
   </audio>
   <script src="/components/videojs/dist/video-js/video.js"></script>
