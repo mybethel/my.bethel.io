@@ -212,14 +212,24 @@ module.exports = {
   subscribers: function(req, res) {
     var statsDate = Number(moment().subtract('week', 1).format('GGGGWW'));
 
-    Stats.findOne({object: req.param('id'), type: 'podcast', date: statsDate}, function foundStatsTracking(err, stat) {
-      if (err) return sails.log.error('Finding stats: ' + err);
+    Stats.find({ object: req.param('id'), type: 'podcast' }).sort('date desc').limit(30).exec(function (err, historical) {
+      var historicalStats = [];
+      if (historical.length >= 1) {
+        historical.forEach(function(historicalStat) {
+          historicalStats.push(historicalStat.count);
+        });
+      }
 
-      if (!stat) return res.send(200, {subscribers: 0});
+      Stats.findOne({ object: req.param('id'), type: 'podcast', date: statsDate }, function (err, stat) {
+        if (err) return sails.log.error('Error finding stats', err);
 
-      return res.send(200, {
-        podcast: req.param('id'),
-        subscribers: Math.round(stat.count/7)
+        if (!stat) stat = { count: 0 };
+
+        return res.send({
+          podcast: req.param('id'),
+          subscribers: Math.round(stat.count/7),
+          historical: historicalStats
+        });
       });
     });
   },

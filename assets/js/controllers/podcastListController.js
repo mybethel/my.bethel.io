@@ -5,6 +5,7 @@ angular.module('Bethel.podcast')
   $scope.createWizard = false;
   $scope.newPodcast = {};
   $scope.statistics = {};
+  $scope.historicalStats = {};
 
   // Bind the podcast list over socket.io for this ministry.
   $rootScope.$watch('ministry', function() {
@@ -22,6 +23,7 @@ angular.module('Bethel.podcast')
       
       $scope.$apply(function() {
         $scope.statistics[podcast.id] = response.subscribers;
+        $scope.historicalStats[podcast.id] = response.historical;
       });
     });
   };
