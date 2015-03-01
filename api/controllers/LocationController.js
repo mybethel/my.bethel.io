@@ -14,13 +14,16 @@ module.exports = {
       findById = req.session.Ministry.id;
     }
 
+    if (!findById)
+      return res.forbidden('You must be logged in.');
+
     Location.find({ministry: findById}, function foundLocations(err, locations) {
-      if (err) res.send(err, 500);
+      if (err) return res.serverError(err);
 
       Location.watch(req.socket);
 
-      res.send(locations, 200);
-    })
+      res.send(locations);
+    });
   },
 
   map: function(req, res) {

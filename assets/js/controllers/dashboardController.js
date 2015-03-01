@@ -45,6 +45,9 @@ angular.module('Bethel.dashboard')
       });
     });
     io.socket.get('/location/ministry', function (response) {
+      if (angular.isDefined(response.status) && response.status !== 200)
+        return;
+
       $scope.$apply(function() {
         $scope.locations = response;
       });
