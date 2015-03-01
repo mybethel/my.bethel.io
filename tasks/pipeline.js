@@ -20,11 +20,7 @@ var cssFilesToInject = [
   '!styles/vjs-embed.css'
 ];
 
-
-// Client-side javascript files to inject in order
-// (uses Grunt-style wildcard/glob/splat expressions)
-var jsFilesToInject = [
-  
+var dependenciesToInject = [
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
 
@@ -60,9 +56,12 @@ var jsFilesToInject = [
 
   // Media player elements
   'components/videojs/dist/video-js/video.js',
+];
 
-  // All of the rest of your client-side js files
-  // will be injected here in no particular order.
+
+// Client-side javascript files to inject in order
+// (uses Grunt-style wildcard/glob/splat expressions)
+var jsFilesToInject = [
   'js/configuration/*.js',
   'js/controllers/*.js',
   'js/filters/*.js',
@@ -83,17 +82,14 @@ var templateFilesToInject = [
   'templates/**/*.html'
 ];
 
-
+var mapFilesToInject = function(path) {
+  return '.tmp/public/' + path;
+};
 
 // Prefix relative paths to source files so they point to the proper locations
 // (i.e. where the other Grunt tasks spit them out, or in some cases, where
 // they reside in the first place)
-module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
-});
-module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
-});
-module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
-  return 'assets/' + path;
-});
+module.exports.cssFilesToInject = cssFilesToInject.map(mapFilesToInject);
+module.exports.dependenciesToInject = dependenciesToInject.map(mapFilesToInject);
+module.exports.jsFilesToInject = jsFilesToInject.map(mapFilesToInject);
+module.exports.templateFilesToInject = templateFilesToInject.map(mapFilesToInject);

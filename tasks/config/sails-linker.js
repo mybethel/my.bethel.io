@@ -11,6 +11,7 @@
  * 		https://github.com/Zolmeister/grunt-sails-linker
  *
  */
+var Pipeline = require('../pipeline');
 module.exports = function(grunt) {
 
 	grunt.config.set('sails-linker', {
@@ -22,9 +23,9 @@ module.exports = function(grunt) {
 				appRoot: '.tmp/public'
 			},
 			files: {
-				'.tmp/public/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.ejs': require('../pipeline').jsFilesToInject
+				'.tmp/public/**/*.html': Pipeline.dependenciesToInject.concat(Pipeline.jsFilesToInject),
+				'views/**/*.html': Pipeline.dependenciesToInject.concat(Pipeline.jsFilesToInject),
+				'views/**/*.ejs': Pipeline.dependenciesToInject.concat(Pipeline.jsFilesToInject)
 			}
 		},
 
@@ -37,9 +38,9 @@ module.exports = function(grunt) {
 				relative: true
 			},
 			files: {
-				'.tmp/public/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.html': require('../pipeline').jsFilesToInject,
-				'views/**/*.ejs': require('../pipeline').jsFilesToInject
+				'.tmp/public/**/*.html': Pipeline.dependenciesToInject.concat(Pipeline.jsFilesToInject),
+				'views/**/*.html': Pipeline.dependenciesToInject.concat(Pipeline.jsFilesToInject),
+				'views/**/*.ejs': Pipeline.dependenciesToInject.concat(Pipeline.jsFilesToInject)
 			}
 		},
 
@@ -51,9 +52,9 @@ module.exports = function(grunt) {
 				appRoot: '.tmp/public'
 			},
 			files: {
-				'.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.ejs': ['.tmp/public/min/production.min.js']
+				'.tmp/public/**/*.html': ['.tmp/public/min/production.min.js', '.tmp/public/concat/dependencies.js'],
+				'views/**/*.html': ['.tmp/public/min/production.min.js', '.tmp/public/concat/dependencies.js'],
+				'views/**/*.ejs': ['.tmp/public/min/production.min.js', '.tmp/public/concat/dependencies.js']
 			}
 		},
 
@@ -66,9 +67,9 @@ module.exports = function(grunt) {
 				relative: true
 			},
 			files: {
-				'.tmp/public/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.html': ['.tmp/public/min/production.min.js'],
-				'views/**/*.ejs': ['.tmp/public/min/production.min.js']
+				'.tmp/public/**/*.html': ['.tmp/public/min/production.min.js', '.tmp/public/concat/dependencies.js'],
+				'views/**/*.html': ['.tmp/public/min/production.min.js', '.tmp/public/concat/dependencies.js'],
+				'views/**/*.ejs': ['.tmp/public/min/production.min.js', '.tmp/public/concat/dependencies.js']
 			}
 		},
 
@@ -81,9 +82,9 @@ module.exports = function(grunt) {
 			},
 
 			files: {
-				'.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.ejs': require('../pipeline').cssFilesToInject
+				'.tmp/public/**/*.html': Pipeline.cssFilesToInject,
+				'views/**/*.html': Pipeline.cssFilesToInject,
+				'views/**/*.ejs': Pipeline.cssFilesToInject
 			}
 		},
 
@@ -97,9 +98,9 @@ module.exports = function(grunt) {
 			},
 
 			files: {
-				'.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.html': require('../pipeline').cssFilesToInject,
-				'views/**/*.ejs': require('../pipeline').cssFilesToInject
+				'.tmp/public/**/*.html': Pipeline.cssFilesToInject,
+				'views/**/*.html': Pipeline.cssFilesToInject,
+				'views/**/*.ejs': Pipeline.cssFilesToInject
 			}
 		},
 
@@ -155,7 +156,7 @@ module.exports = function(grunt) {
 				appRoot: '.tmp/public'
 			},
 			files: {
-				'views/**/*.jade': require('../pipeline').jsFilesToInject
+				'views/**/*.jade': Pipeline.jsFilesToInject
 			}
 		},
 
@@ -168,7 +169,7 @@ module.exports = function(grunt) {
 				relative: true
 			},
 			files: {
-				'views/**/*.jade': require('../pipeline').jsFilesToInject
+				'views/**/*.jade': Pipeline.jsFilesToInject
 			}
 		},
 
@@ -206,7 +207,7 @@ module.exports = function(grunt) {
 			},
 
 			files: {
-				'views/**/*.jade': require('../pipeline').cssFilesToInject
+				'views/**/*.jade': Pipeline.cssFilesToInject
 			}
 		},
 
@@ -220,7 +221,7 @@ module.exports = function(grunt) {
 			},
 
 			files: {
-				'views/**/*.jade': require('../pipeline').cssFilesToInject
+				'views/**/*.jade': Pipeline.cssFilesToInject
 			}
 		},
 
