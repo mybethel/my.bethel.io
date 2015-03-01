@@ -5,33 +5,62 @@
   img {
     position: absolute;
     z-index: 1;
+    @media (max-width: 320px) {
+      width: 40px;
+      right: 15px;
+      bottom: 9px;
+    }
   }
   .meta {
     position: absolute;
     left: 155px;
+    right: 15px;
     color: white;
     z-index: 1;
+    @media (max-width: 320px) {
+      left: 15px;
+    }
     h1 {
       font-size: 2.4rem;
       font-weight: 200;
       line-height: 2.5rem;
+      margin-right: 30px;
+      overflow: hidden;
       white-space: nowrap;
+      @media (max-width: 320px) {
+        font-size: 2rem;
+        white-space: normal;
+        margin-bottom: 5px;
+        margin-top: 15px;
+        margin-right: 0;
+      }
     }
     h2 {
       font-size: 1.6rem;
       margin-top: 0;
+      max-width: 100%;
       white-space: nowrap;
+      overflow: hidden;
+      @media (max-width: 320px) {
+        font-size: 1.4rem;
+      }
       small {
         color: white;
         font-size: 1.2rem;
+        @media (max-width: 320px) {
+          font-size: 1rem;
+        }
       }
     }
   }
   .extras {
     position: absolute;
-    top: 20px;
+    top: 23px;
     right: 15px;
     z-index: 1;
+    @media (max-width: 320px) {
+      display: none;
+    }
     a {
       font-size: 1.3em;
       color: white;

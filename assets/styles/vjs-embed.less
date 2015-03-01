@@ -142,6 +142,11 @@ The default control bar that is a container for most of the controls.
   height: 3.0em;
 
   .background-color-with-alpha(@control-bg-color, @control-bg-alpha);
+
+  @media (max-width: 320px) {
+    left: 13px;
+    height: 4em;
+  }
 }
 
 .vjs-embed-skin.vjs-controls-disabled .vjs-control-bar {
@@ -196,6 +201,9 @@ fonts to show/hide properly.
   width: 100%;
   height: 100%;
   text-align: center;
+  @media (max-width: 320px) {
+    font-size: 2em;
+  }
 }
 .vjs-embed-skin .vjs-control:focus {
   /*  outline: 0; *///
@@ -251,6 +259,9 @@ fonts to show/hide properly.
 .vjs-embed-skin .vjs-volume-menu-button {
   cursor: pointer;
   float: right;
+  @media (max-width: 320px) {
+    display: none;
+  }
 }
 .vjs-embed-skin .vjs-mute-control:before,
 .vjs-embed-skin .vjs-volume-menu-button:before {
@@ -272,6 +283,9 @@ fonts to show/hide properly.
 .vjs-embed-skin .vjs-volume-control {
   width: 5em;
   float: right;
+  @media (max-width: 320px) {
+    display: none;
+  }
 }
 .vjs-embed-skin .vjs-volume-bar {
   width: 5em;
@@ -344,6 +358,10 @@ fonts to show/hide properly.
 
   /* Shrink the bar slower than it grows. *///
   .transition(all 0.4s);
+
+  @media (max-width: 320px) {
+    display: none;
+  }
 }
 
 /* On hover, make the progress bar grow to something that's more clickable.
@@ -441,12 +459,22 @@ fonts to show/hide properly.
   font-size: 1em;
   /* Align vertically by making the line height the same as the control bar *///
   line-height: 3em;
+  @media (max-width: 320px) {
+    font-size: 1.2em;
+    line-height: 3.3em;
+  }
 }
 .vjs-embed-skin .vjs-current-time { float: left; }
 .vjs-embed-skin .vjs-duration { float: left; }
 /* Remaining time is in the HTML, but not included in default design */
 .vjs-embed-skin .vjs-remaining-time { display: none; float: left; }
-.vjs-time-divider { float: left; line-height: 3em; }
+.vjs-time-divider {
+  float: left;
+  line-height: 3em;
+  @media (max-width: 320px) {
+    line-height: 3.8em;
+  }
+}
 
 /* Fullscreen
 --------------------------------------------------------------------------------
