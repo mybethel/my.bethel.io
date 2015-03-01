@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h3 class="modal-title" data-ng-bind="media.name"></h3>
 </div>
-<audio id="media-player" class="video-js vjs-sublime-skin vjs-podcast-skin" data-ng-src="{{ media.url }}"></audio>
+<iframe data-ng-src="{{ media.url }}" width="600" height="140" frameborder="0"></iframe>
 <div class="modal-body podcast-media">
   <div class="row">
     <div class="col-sm-6">

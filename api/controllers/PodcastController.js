@@ -40,6 +40,9 @@ module.exports = {
 
     if (req.param('type') === 'episode') {
       PodcastMedia.findOne(req.param('id')).populate('podcast').exec(function (err, episode) {
+        if (!episode)
+          return res.notFound('episode not found');
+        
         episode.url = episode.url.replace('http://cloud.bethel.io', 'https://s3.amazonaws.com/cloud.bethel.io');
         res.view({
           layout: 'none',

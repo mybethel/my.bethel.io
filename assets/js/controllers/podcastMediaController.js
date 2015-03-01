@@ -5,17 +5,7 @@ angular.module('Bethel.podcast')
   io.socket.get('/podcastmedia/' + mediaId, function (data) {
     $scope.$apply(function() {
       $scope.media = data;
-      $scope.media.url = $sce.trustAsResourceUrl(data.url);
-      $scope.player = videojs('media-player', {
-        controls: true,
-        controlBar: {
-          fullscreenToggle: false
-        },
-        autoplay: false,
-        loop: false,
-        width: '100%',
-        height: 70,
-      });
+      $scope.media.url = $sce.trustAsResourceUrl('/podcast/embed/episode/' + data.id);
     });
   });
 
@@ -45,9 +35,5 @@ angular.module('Bethel.podcast')
   $scope.cancel = function() {
     $modalInstance.dismiss('cancel');
   };
-
-  $scope.$on('$destroy', function() {
-    if ($scope.player) $scope.player.dispose();
-  });
 
 });
