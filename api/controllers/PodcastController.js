@@ -61,7 +61,7 @@ module.exports = {
     var query = Podcast.find({ ministry: ministryId });
 
     if (req.param('episodes'))
-      query.populate('media');
+      query.populate('media', { sort: { date: 0 } });
 
     query.exec(function (err, podcasts) {
       if (err) return next(err);
