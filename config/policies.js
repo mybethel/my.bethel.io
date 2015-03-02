@@ -40,7 +40,8 @@ module.exports.policies = {
 
   podcast: {
     'feed': true,
-    'embed': true
+    'embed': true,
+    'list': true
   },
 
   podcastmedia: {

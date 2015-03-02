@@ -54,7 +54,11 @@ module.exports = {
   },
 
   list: function (req, res) {
-    Podcast.find({ministry: req.session.Ministry.id}).exec(function (err, podcasts) {
+    if (!req.param('id') && typeof req.session.Ministry === 'undefined')
+      return res.badRequest('ministry id required');
+
+    var ministryId = (req.param('id')) ? req.param('id') : req.session.Ministry.id;
+    Podcast.find({ ministry: ministryId }).exec(function (err, podcasts) {
       if (err) return next(err);
       res.send(podcasts);
     });
