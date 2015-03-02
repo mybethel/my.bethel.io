@@ -58,7 +58,12 @@ module.exports = {
       return res.badRequest('ministry id required');
 
     var ministryId = (req.param('id')) ? req.param('id') : req.session.Ministry.id;
-    Podcast.find({ ministry: ministryId }).exec(function (err, podcasts) {
+    var query = Podcast.find({ ministry: ministryId });
+
+    if (req.param('episodes'))
+      query.populate('media');
+
+    query.exec(function (err, podcasts) {
       if (err) return next(err);
       res.send(podcasts);
     });
