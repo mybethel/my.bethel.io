@@ -42,7 +42,8 @@
     "waterline": "~0.10.9",
     "xml2js": "~0.4.4",
     "zencoder": "~1.0.0",
-    "q": "~1.1.2"
+    "q": "~1.1.2",
+    "machinepack-passwords": "~2.2.0"
   },
   "devDependencies": {
     "mocha": "~2.0.1",

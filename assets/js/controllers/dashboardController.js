@@ -25,6 +25,7 @@ angular.module('Bethel.dashboard')
   $scope.stats = [];
   $scope.locations = [];
   $scope.markers = [];
+  $scope.editMe = false;
 
   $scope.chart = {
     options: {
@@ -138,5 +139,20 @@ angular.module('Bethel.dashboard')
 
     }
   });
+
+  $scope.toggleEdit = function() {
+    $scope.editMe = !$scope.editMe;
+
+    if ($scope.editMe) return;
+
+    io.socket.put('/user/' + $scope.user.id, {
+      name: $scope.user.name,
+      email: $scope.user.email,
+      password: $scope.user.password,
+      _csrf: $scope.$root._csrf
+    }, function() {
+      delete $scope.user.password;
+    });
+  };
 
 });

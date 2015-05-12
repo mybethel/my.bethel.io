@@ -35,7 +35,7 @@
     <h2><%= podcast.name %><br /><small><%= episode.date.toLocaleDateString() %></small></h2>
   </div>
   <div class="extras">
-    <% if (podcast.embedSettings.feedUrl) { %><a href="<%= podcast.embedSettings.feedUrl %>"><i class="fa fa-fw fa-rss"></i></a><br /><% } %>
+    <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %><a href="<%= podcast.embedSettings.feedUrl %>"><i class="fa fa-fw fa-rss"></i></a><br /><% } %>
     <a href="<%= episode.url %>" download><i class="fa fa-fw fa-cloud-download"></i></a>
   </div>
   <audio id="embedded" class="video-js vjs-embed-skin audio-player" data-setup="{}">

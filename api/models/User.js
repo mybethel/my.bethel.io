@@ -6,6 +6,9 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
+var Passwords = require('machinepack-passwords'),
+    Gravatar = require('gravatar');
+
 module.exports = {
 
   schema: true,
@@ -59,35 +62,54 @@ module.exports = {
 
   beforeCreate: function(values, next) {
     delete values.id;
-    require('bcrypt').hash(values.password, 10, function passwordEncrypted(err, encryptedPassword) {
-      if (err) return next(err);
-      values.password = encryptedPassword;
-
-      var gravatar = require('gravatar');
-      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'}, true);
-
-      next();
+    Passwords.encryptPassword({ password: values.password }).exec({
+      error: function(err) {
+        next(err);
+      },
+      success: function(result) {
+        values.password = result;
+        values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+        next();
+      }
     });
   },
 
   beforeUpdate: function(values, next) {
-    if (values.email) {
-      var gravatar = require('gravatar');
-      values.avatar = gravatar.url(values.email, {s: 100, d: 'mm'}, true);
-    }
 
-    if (values.invite) {
-      Ministry.findOne(values.invite, function foundPodcast(err, ministry) {
-        if (err) return next(err);
+    console.log(values);
 
-        if (ministry) {
-          values.ministry = ministry.id;
-        }
+    var finish = function() {
+      if (values.email) {
+        values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+      }
 
+      if (values.invite) {
+        Ministry.findOne(values.invite, function (err, ministry) {
+          if (err) return next(err);
+
+          if (ministry) {
+            values.ministry = ministry.id;
+          }
+
+          next();
+        });
+      } else {
         next();
+      }
+    };
+
+    if (values.password) {
+      Passwords.encryptPassword({ password: values.password }).exec({
+        error: function(err) {
+          next(err);
+        },
+        success: function(result) {
+          values.password = result;
+          finish();
+        }
       });
     } else {
-      next();
+      finish();
     }
   }
 

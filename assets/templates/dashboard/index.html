@@ -37,7 +37,35 @@
   </div>
   <div class="ui column dark">
     <div ui-view class="content">
-      <h1>Welcome to Bethel</h1>
+      <div class="panel panel-default me">
+        <div class="panel-body full clearfix">
+          <img class="avatar pull-left" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" />
+          <a data-ng-click="toggleEdit()" class="btn btn-sm pull-right" data-ng-class="{ 'btn-success': editMe }"><i class="fa" data-ng-class="editMe ? 'fa-save' : 'fa-edit'"></i> <span data-ng-bind="editMe ? 'Save Changes' : 'Edit My Account'"></span></a>
+          <h3>Welcome <span data-ng-bind="user.name"></span><br /><small data-ng-bind="ministry.name"></small></h3>
+        </div>
+        <div class="panel-body dark" data-ng-show="editMe">
+          <form class="form-horizontal" role="form" ng-submit="saveMe()">
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Your name</label>
+              <div class="col-sm-8">
+                <input type="text" ng-model="user.name" class="form-control" placeholder="Your full name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">E-mail</label>
+              <div class="col-sm-8">
+                <input type="text" ng-model="user.email" class="form-control" placeholder="E-mail address" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Password</label>
+              <div class="col-sm-8">
+                <input type="text" ng-model="user.password" class="form-control" placeholder="Leave blank if you don't want to change it" />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
       <p>Your ongoing feedback and bug reports are appreciated as we build the first open source digital platform designed for the church. Please let us know how we can improve your experience or new features that would make your life easier!</p>
       <a href="https://mybethel.uservoice.com/" class="btn btn-lg btn-block" target="_blank">Submit Feedback</a>
     </div>
