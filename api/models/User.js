@@ -84,8 +84,6 @@ module.exports = {
 
   beforeUpdate: function(values, next) {
 
-    console.log(values);
-
     var finish = function() {
       if (values.email) {
         values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
