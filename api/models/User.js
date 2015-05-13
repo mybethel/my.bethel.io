@@ -42,6 +42,14 @@ module.exports = {
       type: 'array'
     },
 
+    lastLogin: {
+      type: 'date'
+    },
+
+    isLocked: {
+      type: 'boolean'
+    },
+
     hasRole: function(roleName) {
 
       if (!this.roles || this.roles.indexOf(roleName) == -1) {

@@ -1,0 +1,79 @@
+<div class="dash-panel-full">
+
+  <div class="panel-heading">
+    <h1>Create New User</h1>
+  </div>
+
+  <div class="panel-body">
+    <form class="form-horizontal" role="form" name="createUser" ng-submit="createUserSubmit()">
+
+      <div class="form-group" ng-class="{ 'has-error' : createUser.name.$invalid && !createUser.name.$pristine }">
+        <label for="title" class="col-sm-1 control-label">Name</label>
+        <div class="col-sm-4">
+          <input type="text" name="name" ng-model="newUser.name" class="form-control" placeholder="User name" required/>
+          <p ng-show="createUser.name.$invalid && !createUser.name.$pristine" class="help-block">Name is required.</p>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{ 'has-error' : createUser.email.$invalid && !createUser.email.$pristine }">
+        <label for="title" class="col-sm-1 control-label">Email</label>
+        <div class="col-sm-4">
+          <input type="email" name="email" ng-model="newUser.email" class="form-control" placeholder="Email" required/>
+          <p ng-show="createUser.email.$invalid && !createUser.email.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="title" class="col-sm-1 control-label">Password</label>
+        <div class="col-sm-4">
+          <div class="input-group">
+
+            <input name="password" type="password" ng-model="newUser.password" class="form-control" placeholder="Password" required/>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" ng-class="{ 'has-error' : createUser.confirm_password.$error.validator }">
+        <label for="title" class="col-sm-1 control-label">Confirm Password</label>
+        <div class="col-sm-4">
+          <div class="input-group">
+
+            <input class="form-control" placeholder="Confirm Password" name="confirm_password" type="password" ng-model="newUser.confirmPassword" ui-validate="'$value===newUser.password'" ui-validate-watch="'newUser.password'" required/>
+
+            <div ng-show="createUser.confirm_password.$error.validator" class="help-block">Passwords do not match.</div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="title" class="col-sm-1 control-label">Ministry</label>
+        <div class="col-sm-4">
+          <ui-select ng-model="newUser.ministry" theme="bootstrap">
+            <ui-select-match placeholder="Select a ministry in the list or search by ministry name...">{{$select.selected.name}}</ui-select-match>
+            <ui-select-choices repeat="ministry in ministries | select2Filter: {name: $select.search}">
+              <div ng-bind-html="ministry.name | highlight: $select.search"></div>
+            </ui-select-choices>
+          </ui-select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-1">
+          <input type="submit" class="btn btn-success" value="Create User" data-ng-disabled="createUser.$invalid"/>
+        </div>
+        <div class="col-sm-1">
+          <a ui-sref="staff.users" class="btn btn-default">Cancel</a>
+        </div>
+      </div>
+
+    </form>
+
+    <p data-ng-bind="newUser.name"></p>
+    <p data-ng-bind="newUser.email"></p>
+    <p data-ng-bind="newUser.password"></p>
+    <p data-ng-bind="newUser.ministry"></p>
+  </div>
+</div>
+

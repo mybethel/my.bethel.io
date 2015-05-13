@@ -25,17 +25,6 @@ module.exports = {
     res.view();
   },
 
-  create: function (req, res) {
-    User.create(req.params.all(), function userCreated (err, user) {
-      if (err) return next(err);
-
-      req.session.authenticated = true;
-      req.session.User = user;
-
-      return res.redirect('/welcome');
-    });
-  },
-
   update: function(req, res) {
     User.update(req.param('id'), req.params.all(), function userUpdated(err, user) {
       if (err) return next(err);
@@ -53,6 +42,28 @@ module.exports = {
           return res.send(user);
         });
       }
+    });
+  },
+
+  lockUnlock: function (req, res) {
+
+    var isLocked;
+
+    User.findOne(req.param('id')).exec(function (err, user) {
+      if (err) {
+        return next(err);
+      }
+
+      User.update(user.id, {isLocked: !user.isLocked}, function (err, updatedUser) {
+        if (err) {
+          console.log("ERROR: ", err);
+          res.serverError(err);
+        }
+
+        res.send(updatedUser[0]);
+
+      });
+
     });
   },
 

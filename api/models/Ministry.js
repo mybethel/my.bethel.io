@@ -9,9 +9,10 @@
 module.exports = {
 
   attributes: {
-  	
+
     name: {
-      type: 'string'
+      type: 'string',
+      required: true
     },
 
     description: {
@@ -35,11 +36,6 @@ module.exports = {
       via: 'ministry'
     },
 
-    media: {
-      collection: 'media',
-      via: 'ministry'
-    },
-
     podcasts: {
       collection: 'podcast',
       via: 'ministry'
@@ -49,7 +45,7 @@ module.exports = {
       collection: 'location',
       via: 'ministry'
     }
-    
+
   },
 
   beforeUpdate: function(values, next) {

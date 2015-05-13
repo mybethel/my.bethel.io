@@ -16,6 +16,7 @@
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   'components/animate.css/animate.min.css',
+  'components/angular-ui-select/dist/select.min.css',
   'styles/**/*.css',
   '!styles/vjs-embed.css'
 ];
@@ -39,6 +40,9 @@ var dependenciesToInject = [
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
   'components/angular-sails-bind/dist/angular-sails-bind.min.js',
   'components/angular-wizard/dist/angular-wizard.min.js',
+  'components/angular-sanitize/angular-sanitize.min.js',
+  'components/angular-ui-select/dist/select.min.js',
+  'components/angular-ui-utils/ui-utils.min.js',
 
   // jQuery dependencies
   'components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js',

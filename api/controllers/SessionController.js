@@ -27,6 +27,16 @@ module.exports = {
         req.session.authenticated = true;
         req.session.User = user;
 
+        var currentDate = new Date();
+        User.update(user.id, {lastLogin: currentDate}, function (err, user) {
+
+          if (err) {
+            req.session.flash = {
+              err: err
+            };
+          }
+        });
+
         if (user.roles && user.roles.indexOf('ROLE_SUPER_ADMIN') > -1) {
           req.session.isAdmin = true;
         }

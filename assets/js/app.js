@@ -15,7 +15,8 @@ angular.module('Bethel', [
   'Bethel.dashboard',
   'Bethel.media',
   'Bethel.podcast',
-  'Bethel.staff'
+  'Bethel.staff',
+  'ui.utils'
 ])
 
 .config(function ($urlRouterProvider, $translateProvider) {
@@ -47,7 +48,7 @@ angular.module('Bethel', [
         $scope.authCheck = true;
 
         if (response.isAdmin) {
-          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff' });
+          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff/user' });
         }
       });
     });
