@@ -13,12 +13,13 @@
             <h3><span class="change-count" data-ng-bind="stats.podcastChange | number : 2"></span>% <i class="fa pull-right" data-ng-show="stats.podcastChange" data-ng-class="stats.podcastChange > 0 ? 'fa-arrow-up text-success' : 'fa-arrow-down text-danger'"></i><br /><small><span class="change-type" data-ng-bind="!stats.podcastChange ? 'no change' : (stats.podcastChange > 0 ? 'increase' : 'decrease')"></span> in podcast subscribers</small></h3>
           </div>
         </div>
-        <div class="row storage-row" data-ng-show="stats.storage">
+        <div class="row storage-row" data-ng-show="stats.storage > 0">
           <div class="col-sm-8 col-sm-offset-4">
-            <h3><span class="count">{{ stats.storage | number : 2 }}</span>Gb<br /><small>total storage used</small></h3>
+            <h3 data-ng-show="(stats.storage | number : 2) > 0.00"><span class="count">{{ stats.storage | number : 2 }}</span>Gb<br /><small>total storage used</small></h3>
+            <h3 data-ng-hide="(stats.storage | number : 2) > 0.00"><span class="count">{{ stats.storage * 1024 | number : 2 }}</span>Mb<br /><small>total storage used</small></h3>
           </div>
         </div>
-        <h5 class="text-muted no-stats" data-ng-hide="stats.storage || stats.podcastChange">Check back later for statistics...</h5>
+        <h5 class="text-muted no-stats" data-ng-hide="stats.storage > 0 || stats.podcastChange">Check back later for statistics...</h5>
       </div>
     </div>
     <div class="panel panel-default" data-ng-hide="hideMap">

@@ -92,8 +92,8 @@ angular.module('Bethel.dashboard')
     }
   }, true);
 
-  $scope.$watch('stats', function() {
-    if (typeof $scope.stats.podcast === 'undefined')
+  $scope.$watch('stats', function (newValue, oldValue) {
+    if (!newValue || newValue === oldValue || angular.isUndefined(newValue.podcast))
       return;
 
     var chartData = [];
