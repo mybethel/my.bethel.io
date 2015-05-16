@@ -54,13 +54,19 @@ angular.module('Bethel', [
     });
   };
 
+  $scope.updateCsrf = function() {
+    io.socket.get('/csrfToken', function (response) {
+      $scope.$apply(function() {
+        $scope._csrf = response._csrf;
+      });
+    });
+  };
+
   // Update current session on load or login.
   $scope.updateSession();
+  $scope.updateCsrf();
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
-
-  io.socket.get('/csrfToken', function (response) {
-    $scope._csrf = response._csrf;
-  });
+  $scope.$on('$stateChangeSuccess', $scope.updateCsrf);
 
   // Main navigation bar links.
   $scope.navLinks.push.apply($scope.navLinks, [
