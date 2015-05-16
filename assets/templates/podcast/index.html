@@ -121,7 +121,7 @@
       <p data-ng-bind="'PODCAST.HELP.MIGRATE' | translate"></p>
       <button class="btn btn-default" data-ng-bind="('PODCAST.HELP.MIGRATE_BUTTON' | translate) + ' &#xffeb;'"></button>
     </div>
-    <table class="table table-list">
+    <table class="table table-list" data-ng-if="podcasts.length > 0">
       <thead>
         <tr>
           <th colspan="2"></th>
