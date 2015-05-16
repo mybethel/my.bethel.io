@@ -93,7 +93,7 @@ angular.module('Bethel.dashboard')
   }, true);
 
   $scope.$watch('stats', function (newValue, oldValue) {
-    if (!newValue || newValue === oldValue || angular.isUndefined(newValue.podcast))
+    if (!newValue || newValue === oldValue || !newValue.podcast || newValue.podcast.length < 1)
       return;
 
     var chartData = [];
