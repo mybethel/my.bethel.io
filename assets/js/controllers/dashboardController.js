@@ -68,9 +68,14 @@ angular.module('Bethel.dashboard')
   });
 
   // Certain data is extracted from locations to build markers.
-  $scope.$watch('locations', function() {
+  $scope.$watch('locations', function (newValue, oldValue) {
+    if (!newValue || newValue === oldValue) {
+      $scope.hideMap = true;
+      return;
+    }
+
     $scope.markers = [];
-    $scope.locations.forEach(function (location) {
+    newValue.forEach(function (location) {
       $scope.markers.push({
         id: location.id,
         position: {
@@ -81,6 +86,10 @@ angular.module('Bethel.dashboard')
         title: location.name
       });
     });
+
+    if ($scope.markers.length > 0) {
+      $scope.hideMap = false;
+    }
   }, true);
 
   $scope.$watch('stats', function() {
