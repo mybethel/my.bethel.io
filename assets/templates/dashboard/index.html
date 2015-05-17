@@ -22,7 +22,7 @@
         <h5 class="text-muted no-stats" data-ng-hide="stats.storage > 0 || stats.podcastChange">Check back later for statistics...</h5>
       </div>
     </div>
-    <div class="panel panel-default" data-ng-hide="hideMap">
+    <div class="panel panel-default" data-ng-if="!hideMap">
       <div class="panel-heading">
         <h3 class="panel-title">Ministry Locations</h3>
       </div>
