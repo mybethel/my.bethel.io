@@ -13,13 +13,13 @@ angular.module('Bethel.podcast')
       $scope.$apply(function() {
         $scope.podcast = data;
         $scope.tags = [];
-        if (typeof data.tags !== 'undefined' && typeof data.tags !== 'string') {
+        if (angular.isDefined(data.tags) && typeof data.tags !== 'string') {
           data.tags.forEach(function (tag) {
             $scope.tags.push({ text: tag });
           });
         }
         $scope.sourceMeta = [];
-        if (typeof data.sourceMeta !== 'undefined' && typeof data.sourceMeta !== 'string') {
+        if (angular.isDefined(data.sourceMeta) && typeof data.sourceMeta !== 'string') {
           data.sourceMeta.forEach(function (tag) {
             $scope.sourceMeta.push({ text: tag });
           });
@@ -38,6 +38,7 @@ angular.module('Bethel.podcast')
 
   io.socket.get('/podcast/edit/' + $scope.id, function (data) {
     $scope.$apply(function() {
+      $scope.thumbnailForm = data.s3form;
       $scope.uploadEpisode = data.uploadEpisode;
     });
   });
@@ -57,7 +58,7 @@ angular.module('Bethel.podcast')
   };
 
   $scope.$watch('editing', function() {
-    if (typeof titleEditor === 'undefined')
+    if (angular.isUndefined(titleEditor))
       return;
 
     if ($scope.editing === true) {
@@ -70,7 +71,7 @@ angular.module('Bethel.podcast')
   });
 
   $scope.$watch('podcast', function() {
-    if (typeof $scope.podcast === 'undefined' || typeof $scope.podcasts === 'undefined')
+    if (angular.isUndefined($scope.podcast) || angular.isUndefined($scope.podcasts))
       return;
 
     var i = findIndexByPropertyValue($scope.podcasts, 'id', $scope.id);
@@ -96,7 +97,7 @@ angular.module('Bethel.podcast')
   }));
 
   $scope.setSource = function(source) {
-    if (typeof source.id === 'undefined')
+    if (angular.isUndefined(source.id))
       return;
 
     io.socket.put('/podcast/' + $scope.id, {
@@ -112,7 +113,7 @@ angular.module('Bethel.podcast')
   $scope.updateTags = function(tag, action) {
     switch (action) {
       case 'added':
-        if (typeof $scope.podcast.tags === 'undefined' || typeof $scope.podcast.tags === 'string') {
+        if (angular.isUndefined($scope.podcast.tags) || typeof $scope.podcast.tags === 'string') {
           $scope.podcast.tags = [];
         }
         $scope.podcast.tags.push(tag.text);
@@ -135,7 +136,7 @@ angular.module('Bethel.podcast')
   $scope.updateSource = function(tag, action) {
     switch (action) {
       case 'added':
-        if (typeof $scope.podcast.sourceMeta === 'undefined' || typeof $scope.podcast.sourceMeta === 'string') {
+        if (angular.isUndefined($scope.podcast.sourceMeta) || typeof $scope.podcast.sourceMeta === 'string') {
           $scope.podcast.sourceMeta = [];
         }
         $scope.podcast.sourceMeta.push(tag.text);
@@ -152,6 +153,31 @@ angular.module('Bethel.podcast')
     io.socket.put('/podcast/' + $scope.id, {
       sourceMeta: $scope.podcast.sourceMeta,
       _csrf: $rootScope._csrf
+    });
+  };
+
+  $scope.uploadThumbnail = function ($files) {
+    $scope.thumbnailUploading = true;
+    $upload.upload({
+      url: $scope.thumbnailForm.action,
+      method: 'POST',
+      data: {
+        key: $scope.thumbnailForm.bucket + '/' + $files[0].name,
+        AWSAccessKeyId: $scope.thumbnailForm.key, 
+        acl: 'public-read',
+        policy: $scope.thumbnailForm.policy,
+        signature: $scope.thumbnailForm.signature,
+        'Content-Type': $files[0].type !== '' ? $files[0].type : 'application/octet-stream'
+      },
+      file: $files[0],
+    })
+    .success(function (data, status, headers, config) {
+      io.socket.put('/podcast/' + $scope.id, {
+        id: $scope.id,
+        temporaryImage: $files[0].name,
+        _csrf: $scope.$root._csrf
+      });
+      $scope.thumbnailUploading = false;
     });
   };
 

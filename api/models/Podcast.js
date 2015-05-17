@@ -5,6 +5,8 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
+var request = require('request');
+
 module.exports = {
 
   schema: true,
@@ -84,35 +86,57 @@ module.exports = {
 
 	},
 
+  moveThumbnail: function(temporaryImage, id, cb) {
+    if (!temporaryImage || !id) return cb();
+
+    S3Upload.removeTemp('images/podcast', temporaryImage, id).then(function (result) {
+      request.post({
+        url: 'https://api.imgix.com/v2/image/purger',
+        auth: {
+          username: 'JgesYnARdsp1GzA8aN2Bw5Aa4soB9Ni6',
+          password: '',
+        },
+        json: true,
+        body: { 'url': 'http://bethel.imgix.net/images/' + result }
+      }, function (err, msg, response) {
+        if (err) sails.log.error(err);
+        sails.log.info('Purge IMGIX cache:', response);
+        cb(result);
+      });
+    });
+  },
+
   beforeCreate: function(values, next) {
     delete values.id;
     next();
   },
 
   afterCreate: function(values, next) {
-    if (values.temporaryImage) {
-      S3Upload.removeTemp('images/podcast', values.temporaryImage, values.id).then(function (result) {
-        Podcast.update(values.id, { image: result }, function (err) {
-          if (err) console.log(err);
+    Podcast.moveThumbnail(values.temporaryImage, values.id, function (thumbnail) {
+      if (thumbnail) {
+        Podcast.update(values.id, { image: thumbnail }, function (err) {
+          if (err) sails.log.error(err);
           Podcast.publishUpdate(values.id);
         });
-      });
-    }
+      }
 
-    if (values.source === 2) {
-      VimeoStorageSync.syncOne(values.id, values.service);
-    }
+      if (values.source === 2) {
+        VimeoStorageSync.syncOne(values.id, values.service);
+      }
 
-    next();
+      next();
+    });
   },
 
   beforeUpdate: function(values, next) {
-    if (values.temporaryImage) {
-      values.image = S3Upload.removeTemp('images/podcast', values.temporaryImage, values.id);
+    Podcast.moveThumbnail(values.temporaryImage, values.id, function (thumbnail) {
+      if (thumbnail) {
+        values.image = thumbnail;
+        Podcast.publishUpdate(values.id);
+      }
       delete values.temporaryImage;
-    }
-
-    next();
+      next();
+    });
   },
 
 };

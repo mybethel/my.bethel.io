@@ -2,7 +2,8 @@
   <div class="content">
     <div class="row no-gutters margin-bottom-md">
       <div class="col-md-3">
-        <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ podcast.name }}" />
+        <p><img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" /></p>
+        <button data-ng-show="editing" data-ng-disabled="thumbnailUploading" data-ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg" class="btn btn-default btn-block"><i class="fa" data-ng-class="thumbnailUploading ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i> <span data-ng-bind="thumbnailUploading ? 'Uploading' : 'Replace image'"></span>...</button>
       </div>
       <div class="col-md-8">
         <h1 class="title" data-ng-class="{ 'editable': editing }" data-placeholder="{{ 'PODCAST.TITLE' | translate }}" data-ng-bind="podcast.name"></h1>

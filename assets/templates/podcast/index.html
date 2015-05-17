@@ -82,7 +82,7 @@
                 <li><em>You can skip this step for now if you wish.</em></li>
               </ul>
               <div class="text-center">
-                <button data-ng-disabled="thumbnailUploading" data-ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg" class="btn btn-default"><i class="fa" data-ng-class="(thumbnailUploading) ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i> Choose an image...</button>
+                <button data-ng-disabled="thumbnailUploading" data-ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg" class="btn btn-default"><i class="fa" data-ng-class="(thumbnailUploading) ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i> <span data-ng-bind="thumbnailUploading ? 'Uploading' : 'Choose an image'"></span>...</button>
               </div>
             </div>
           </div>
