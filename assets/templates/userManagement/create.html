@@ -5,6 +5,21 @@
   </div>
 
   <div class="panel-body">
+
+    <div data-ng-if="errors.summary" class="row errors">
+      <div class="col-sm-5">
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <i class="fa fa-exclamation-circle"></i>
+          <strong class="error-summary" data-ng-bind="errors.summary"></strong>
+          <ul data-ng-repeat="error in errors.many">
+            <li data-ng-bind="error"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
     <form class="form-horizontal" role="form" name="createUser" ng-submit="createUserSubmit()">
 
       <div class="form-group" ng-class="{ 'has-error' : createUser.name.$invalid && !createUser.name.$pristine }">
@@ -50,9 +65,9 @@
       <div class="form-group">
         <label for="title" class="col-sm-1 control-label">Ministry</label>
         <div class="col-sm-4">
-          <ui-select ng-model="newUser.ministry" theme="bootstrap">
+          <ui-select ng-model="newUser.ministry" theme="bootstrap" required>
             <ui-select-match placeholder="Select a ministry in the list or search by ministry name...">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="ministry in ministries | select2Filter: {name: $select.search}">
+            <ui-select-choices repeat="ministry.id as ministry in ministries | select2Filter: {name: $select.search}">
               <div ng-bind-html="ministry.name | highlight: $select.search"></div>
             </ui-select-choices>
           </ui-select>
@@ -69,11 +84,7 @@
       </div>
 
     </form>
-
-    <p data-ng-bind="newUser.name"></p>
-    <p data-ng-bind="newUser.email"></p>
-    <p data-ng-bind="newUser.password"></p>
-    <p data-ng-bind="newUser.ministry"></p>
+    </div>
   </div>
 </div>
 

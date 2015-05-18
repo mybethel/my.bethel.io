@@ -2,7 +2,7 @@ angular.module('Bethel.staff')
 
 .controller('UserManagementController', function ($rootScope, $scope, $stateParams, $location) {
 
-  if ($stateParams.userId && !$stateParams.userId.match(/^[0-9a-fA-F]{24}$/)) {
+  if ($stateParams.userId && !$stateParams.userId.match(/^[0-9a-fA-F]{24}$/) || $stateParams.userId === '') {
     $location.path('/staff/user').replace();
   }
 
@@ -40,18 +40,35 @@ angular.module('Bethel.staff')
 
   $scope.createUserSubmit = function() {
 
-    $scope.newUser._csrf = $rootScope._csrf;
+    var newUser = $scope.newUser;
 
-    if ($scope.newUser.ministry) {
-      $scope.newUser.ministry = $scope.newUser.ministry.id;
-    }
+    $scope.errors = {};
+    newUser._csrf = $rootScope._csrf;
+    newUser.isLocked = false;
 
-    console.log('newUser ', $scope.newUser);
-
-    io.socket.post('/user', $scope.newUser,
-    function (data) {
-      console.log('data ', data);
+    io.socket.post('/user', newUser, function (res) {
+      if (res.validationErrors) {
+        $scope.createErrors(res.validationErrors);
+      } else {
+        $location.path('/staff/user/' + res.id).replace();
+      }
+      $scope.$apply();
     });
+
+  };
+
+  $scope.createErrors = function(validationErrors) {
+
+    var invalidAttributes = validationErrors.invalidAttributes;
+
+    $scope.errors.summary = validationErrors.summary;
+    $scope.errors.many = [];
+
+    for (var field in invalidAttributes) {
+      invalidAttributes[field].forEach(function (error) {
+        $scope.errors.many.push(error.message);
+      });
+    }
 
   };
 

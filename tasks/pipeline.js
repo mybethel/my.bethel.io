@@ -51,6 +51,7 @@ var dependenciesToInject = [
   'components/angular-moment/angular-moment.min.js',
   'components/angular-rickshaw/rickshaw.js',
   'components/angular-svg-round-progressbar/roundProgress.min.js',
+  'components/bootstrap/js/alert.js',
   'components/d3/d3.min.js',
   'components/medium-editor/dist/js/medium-editor.min.js',
   'components/ng-file-upload/angular-file-upload.min.js',

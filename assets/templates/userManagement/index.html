@@ -28,12 +28,8 @@
     </thead>
     <tbody>
       <tr data-ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText" class="clickable-row" data-ng-click="detailedUserTransition(user.id)">
-        <td>
-          <a ui-sref="staff.detailedUser({userId: user.id})">
-            <img ng-src="{{user.avatar}}" height="50" width="50" />
-          </a>
-        </td>
-        <td><a ui-sref="staff.detailedUser({userId: user.id})" data-ng-bind="user.name"></a></td>
+        <td><img ng-src="{{user.avatar}}" height="50" width="50" /></td>
+        <td data-ng-bind="user.name"></td>
         <td data-ng-bind="user.email"></td>
         <td><a data-ng-bind="user.ministry.name"></a></td>
         <td data-ng-bind="user.createdAt | date : M/d/yyyy"></td>
