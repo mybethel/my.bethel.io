@@ -9,7 +9,7 @@ module.exports = {
 
   vimeo: function(req, res, next) {
     var Vimeo = require('vimeo-api').Vimeo,
-        VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba', process.env.VIMEO),
+        VimeoAPI = new Vimeo(sails.config.services.vimeo.key, sails.config.services.vimeo.secret),
         redirectUrl = 'http://my.bethel.io/service/vimeo/authorized';
 
     // If this is not a response from Vimeo, redirect the user to request permission.
@@ -40,6 +40,40 @@ module.exports = {
         'picture': token.user.pictures[0].link
       }, function(err, user) {
         if (err) sails.log.error(err);
+
+        res.redirect('/#/dashboard/accounts');
+      });
+    });
+  },
+
+  youtube: function(req, res, next) {
+    var OAuth2 = require('googleapis').auth.OAuth2;
+    var oauth2Client = new OAuth2(sails.config.services.youtube.key, sails.config.services.youtube.secret, 'https://my.bethel.io/service/youtube/authorized');
+
+    if (req.param('id') !== 'authorized') {
+      var url = oauth2Client.generateAuthUrl({
+        access_type: 'offline',
+        scope: sails.config.services.youtube.scope,
+        state: req.session.Ministry.id
+      });
+
+      return res.redirect(url);
+    }
+
+    oauth2Client.getToken(req.query.code, function (err, token) {
+      if (err) return res.forbidden(err);
+
+      Service.findOrCreate({
+        'provider': 'youtube',
+        'ministry': req.session.Ministry.id,
+      }, {
+        'provider': 'youtube',
+        'ministry': req.session.Ministry.id,
+        'accessToken': token.access_token,
+        'refreshToken': token.refresh_token,
+        'expires': token.expiry_date,
+      }, function (err) {
+        if (err) return res.forbidden(err);
 
         res.redirect('/#/dashboard/accounts');
       });

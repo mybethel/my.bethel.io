@@ -14,17 +14,16 @@ module.exports = {
       required: true
     },
 
-    user: {
-      type: 'string',
-      required: true
-    },
-
     accessToken: {
       type: 'string',
       required: true
     },
 
     refreshToken: {
+      type: 'string'
+    },
+
+    user: {
       type: 'string'
     },
 
@@ -37,6 +36,10 @@ module.exports = {
     },
 
     picture: {
+      type: 'string'
+    },
+
+    expires: {
       type: 'string'
     },
 

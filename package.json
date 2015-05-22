@@ -14,6 +14,7 @@
     "ejs": "~0.8.4",
     "forever": "~0.10.11",
     "gm": "~1.17.0",
+    "googleapis": "^2.0.4",
     "gravatar": "~1.0.6",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.4.1",
