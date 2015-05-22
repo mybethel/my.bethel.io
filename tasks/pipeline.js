@@ -70,6 +70,7 @@ var jsFilesToInject = [
   'js/controllers/*.js',
   'js/filters/*.js',
   'js/**/*.js',
+  'features/**/*.js'
 ];
 
 

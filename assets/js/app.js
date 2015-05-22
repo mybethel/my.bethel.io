@@ -16,6 +16,7 @@ angular.module('Bethel', [
   'Bethel.media',
   'Bethel.podcast',
   'Bethel.staff',
+  'Bethel.streaming',
   'ui.utils'
 ])
 
@@ -75,7 +76,7 @@ angular.module('Bethel', [
     { title: 'Media', icon: 'youtube-play', url: '#/media' },
     { title: 'Mobile App', icon: 'mobile', url: '#/beta' },
     { title: 'Volunteers', icon: 'users', url: '#/beta' },
-    { title: 'Live Streaming', icon: 'video-camera', url: '#/beta' },
+    { title: 'Live Streaming', icon: 'video-camera', url: '#/streaming' },
     { title: 'Giving', icon: 'money', url: '#/beta' },
     { title: 'Social Media', icon: 'thumbs-up', url: '#/beta' }
   ]);
