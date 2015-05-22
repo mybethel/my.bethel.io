@@ -42,7 +42,7 @@
         <li class="dropdown" data-ng-show="ministry.name">
           <a href="" class="dropdown-toggle ministry" data-toggle="dropdown" data-ng-bind="ministry.name"></a>
           <ul class="dropdown-menu">
-            <li ng-repeat="link in ministryLinks"><a data-ng-href="{{ link.url }}" data-ng-bind="link.title"></a></li>
+            <li ng-repeat="link in ::ministryLinks"><a data-ng-href="{{ link.url }}" data-ng-bind="link.title"></a></li>
           </ul>
         </li>
         <li class="dropdown"><a class="avatar"><img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" /></a></li>
