@@ -1,10 +1,10 @@
 angular.module('Bethel.dashboard')
 
-.controller('ServicesController', function ($rootScope, $scope, $modal) {
+.controller('ServicesController', function ($scope, $modal) {
 
   $scope.accounts = [];
 
-  io.socket.get('/service?ministry=' + $rootScope.ministry.id, {}, function (response, status) {
+  io.socket.get('/service?ministry=' + $scope.$root.ministry.id, function (response) {
     $scope.$apply(function() { $scope.accounts = response; });
   });
 
