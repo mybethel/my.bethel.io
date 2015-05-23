@@ -16,14 +16,14 @@ angular.module('Bethel.user', [])
 
   $scope.login = function (credentials) {
     io.socket.post('/session/create', credentials, function (response) {
-      if (typeof response.message !== 'undefined' && response.message.error) {
+      if (angular.isDefined(response.error)) {
         // Shake the login dialogue to indicate login wasn't successful.
         $('#login-signup').removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
           $(this).removeClass();
         });
 
         // Set the error scope to associate an error with a field.
-        return $scope.$apply(function() { $scope.error = response.message.error; });
+        return $scope.$apply(function() { $scope.error = response.error; });
       }
 
       // Confirm that login was sucessful.

@@ -46,7 +46,7 @@ angular.module('Bethel.dashboard')
       });
     });
     io.socket.get('/location/ministry', function (response) {
-      if (angular.isDefined(response.status) && response.status !== 200)
+      if (!response || response.status !== 200)
         return;
 
       $scope.$apply(function() {
@@ -69,7 +69,7 @@ angular.module('Bethel.dashboard')
 
   // Certain data is extracted from locations to build markers.
   $scope.$watch('locations', function (newValue, oldValue) {
-    if (!newValue || newValue === oldValue) {
+    if (!newValue || newValue === oldValue || !angular.isArray(newValue)) {
       $scope.hideMap = true;
       return;
     }
