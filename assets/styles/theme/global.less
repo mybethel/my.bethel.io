@@ -9,9 +9,6 @@
   .fa {
     font-size: 20px;
   }
-  img.avatar {
-    border-radius: 50%;
-  }
 }
 
 .ui {
@@ -131,5 +128,19 @@
 
   tr.clickable-row {
     cursor: pointer;
+  }
+}
+
+.navbar-inverse {
+  height: 52px;
+  @media (max-width: @screen-md-min) {
+    .navbar-brand {
+      position: absolute;
+      left: 50%;
+      margin-left: -65px !important;
+    }
+    .navbar-nav {
+      display: none;
+    }
   }
 }
