@@ -38,12 +38,12 @@
           <div class="row">
             <div class="col-md-6 text-center">
               <h3>Bethel Cloud<br /><small>Drag and drop uploading</small></h3>
-              <p><a data-ng-click="selectSource(1)" class="btn" data-ng-class="(newPodcast.source == '1') ? 'btn-success' : 'btn-default'">Use This</a></p>
+              <p><a data-ng-click="selectSource(1)" class="btn storage-bethel" data-ng-class="(newPodcast.source == '1') ? 'btn-success' : 'btn-default'">Use This</a></p>
               <p><span data-ng-bind="(newPodcast.type == '1') ? 'Audio' : 'Video'"></span>: 10¢ per episode/month</p>
             </div>
             <div class="col-md-6 text-center">
               <h3>Vimeo Pro<br /><small>Automatic sync with Vimeo</small></h3>
-              <p><a data-ng-click="selectSource(2)" class="btn" data-ng-class="(newPodcast.source == '2') ? 'btn-success' : 'btn-default'">Use This</a></p>
+              <p><a data-ng-click="selectSource(2)" class="btn storage-vimeo" data-ng-class="(newPodcast.source == '2') ? 'btn-success' : 'btn-default'">Use This</a></p>
               <p><span data-ng-show="newPodcast.type == 1">Audio: 10¢ per episode/month<br />Conversion: 10¢ per minute</span><span data-ng-show="newPodcast.type == 2">Video: Always <strong>FREE</strong></span></p>
             </div>
           </div>
