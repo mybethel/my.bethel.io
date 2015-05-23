@@ -18,6 +18,11 @@ module.exports = {
     });
   },
 
+  stat: function(req, res) {
+    Analytics.registerHit('podcastmedia', req.param('id'));
+    res.ok(req.param('id'));
+  },
+
   refresh: function(req, res) {
     S3StorageSync.sync();
     VimeoStorageSync.sync(true);

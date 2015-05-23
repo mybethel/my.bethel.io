@@ -237,8 +237,8 @@ angular.module('Bethel.podcast')
   $scope.editMedia = function (id) {
 
     var modalInstance = $modal.open({
-      templateUrl: 'templates/podcast/media.html',
-      controller: 'PodcastMediaController',
+      templateUrl: 'features/podcast/podcastMediaView.html',
+      controller: 'podcastMediaController',
       resolve: {
         mediaId: function() {
           return id;
