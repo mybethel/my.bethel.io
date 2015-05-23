@@ -67,10 +67,11 @@ var dependenciesToInject = [
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
   'js/configuration/*.js',
+  'features/**/*Config.js',
   'js/controllers/*.js',
+  'features/**/*Controller.js',
   'js/filters/*.js',
   'js/**/*.js',
-  'features/**/*.js'
 ];
 
 

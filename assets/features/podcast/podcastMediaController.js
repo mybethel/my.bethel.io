@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastMediaController', function ($scope, $rootScope, $modalInstance, mediaId, $sce, $http) {
+.controller('podcastMediaController', function ($scope, $modalInstance, mediaId, $sce, $http) {
 
   io.socket.get('/podcastmedia/' + mediaId, function (data) {
     $scope.$apply(function() {
@@ -11,10 +11,10 @@ angular.module('Bethel.podcast')
 
   // Autocomplete for ministries using the Bethel web platform.
   $scope.getSeries = function(query) {
-    if (typeof $rootScope.ministry.url === 'undefined')
+    if (angular.isUndefined($scope.$root.ministry.url))
       return;
 
-    return $http.get($rootScope.ministry.url + '/bethel/podcaster/autocomplete/' + query)
+    return $http.get($scope.$root.ministry.url + '/bethel/podcaster/autocomplete/' + query)
       .then(function (response){
         return response.data.results;
       });
@@ -26,7 +26,7 @@ angular.module('Bethel.podcast')
       date: $scope.media.date,
       description: $scope.media.description,
       reference: $scope.media.reference,
-      _csrf: $rootScope._csrf
+      _csrf: $scope.$root._csrf
     }, function() {
       $modalInstance.dismiss($scope.media);
     });

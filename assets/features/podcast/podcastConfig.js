@@ -7,13 +7,13 @@ angular.module('Bethel.podcast', ['ngSailsBind', 'mgo-angular-wizard'])
   $stateProvider
     .state('podcast', {
       url: '/podcast',
-      templateUrl: 'templates/podcast/index.html',
-      controller: 'PodcastListController'
+      templateUrl: 'features/podcast/podcastListView.html',
+      controller: 'podcastListController'
     })
     .state('podcast.view', {
       url: '/:podcastId',
-      templateUrl: 'templates/podcast/view.html',
-      controller: 'PodcastViewController'
+      templateUrl: 'features/podcast/podcastDetailView.html',
+      controller: 'podcastDetailController'
     });
 
 });

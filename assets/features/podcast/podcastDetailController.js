@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastViewController', function ($rootScope, $scope, $state, $stateParams, $upload, $modal) {
+.controller('podcastDetailController', function ($scope, $state, $stateParams, $upload, $modal) {
 
   var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
@@ -83,7 +83,7 @@ angular.module('Bethel.podcast')
     $scope.podcast.name = $('h1.title').text();
     io.socket.put('/podcast/' + $scope.id, {
       name: $scope.podcast.name,
-      _csrf: $rootScope._csrf
+      _csrf: $scope.$root._csrf
     });
   }));
 
@@ -92,7 +92,7 @@ angular.module('Bethel.podcast')
     $scope.podcast.description = $('.editable.description').text();
     io.socket.put('/podcast/' + $scope.id, {
       description: $scope.podcast.description,
-      _csrf: $rootScope._csrf
+      _csrf: $scope.$root._csrf
     });
   }));
 
@@ -102,7 +102,7 @@ angular.module('Bethel.podcast')
 
     io.socket.put('/podcast/' + $scope.id, {
       service: source.id,
-      _csrf: $rootScope._csrf
+      _csrf: $scope.$root._csrf
     }, function (updated) {
       $scope.$apply(function () {
         $scope.podcast.service = updated.service;
@@ -129,7 +129,7 @@ angular.module('Bethel.podcast')
 
     io.socket.put('/podcast/' + $scope.id, {
       tags: $scope.podcast.tags,
-      _csrf: $rootScope._csrf
+      _csrf: $scope.$root._csrf
     });
   };
 
@@ -152,7 +152,7 @@ angular.module('Bethel.podcast')
 
     io.socket.put('/podcast/' + $scope.id, {
       sourceMeta: $scope.podcast.sourceMeta,
-      _csrf: $rootScope._csrf
+      _csrf: $scope.$root._csrf
     });
   };
 
@@ -223,7 +223,7 @@ angular.module('Bethel.podcast')
         size: file.size,
         podcast: $scope.id,
         type: 'cloud',
-        _csrf: $rootScope._csrf
+        _csrf: $scope.$root._csrf
       }, function (podcast) {
         // Call the endpoint to generate metadata.
         io.socket.get('/podcastmedia/meta/' + podcast.id);
@@ -253,6 +253,13 @@ angular.module('Bethel.podcast')
         return;
 
       $scope.init();
+    });
+  };
+
+  $scope.submitPodcast = function() {
+    $modal.open({
+      templateUrl: 'features/podcast/podcastSubmitView.html',
+      scope: $scope
     });
   };
 

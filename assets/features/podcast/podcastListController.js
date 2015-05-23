@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('PodcastListController', function ($rootScope, $scope, $sailsBind, $location, WizardHandler, $upload) {
+.controller('podcastListController', function ($scope, $sailsBind, $location, WizardHandler, $upload) {
 
   $scope.createWizard = false;
   $scope.newPodcast = {};
@@ -8,12 +8,12 @@ angular.module('Bethel.podcast')
   $scope.historicalStats = {};
 
   // Bind the podcast list over socket.io for this ministry.
-  $rootScope.$watch('ministry', function() {
-    if (!$rootScope.ministry || !$rootScope.ministry.id)
+  $scope.$root.$watch('ministry', function() {
+    if (!$scope.$root.ministry || !$scope.$root.ministry.id)
       return;
 
-    $sailsBind.bind('podcast', $scope, { 'ministry': $rootScope.ministry.id });
-    $sailsBind.bind('service', $scope, { 'ministry': $rootScope.ministry.id });
+    $sailsBind.bind('podcast', $scope, { 'ministry': $scope.$root.ministry.id });
+    $sailsBind.bind('service', $scope, { 'ministry': $scope.$root.ministry.id });
   });
 
   var getSubscriberCount = function(podcast) {
@@ -30,7 +30,7 @@ angular.module('Bethel.podcast')
 
   // Fetch stats for each of the podcasts.
   $scope.$watchCollection('podcasts', function() {
-    if (typeof $scope.podcasts === 'undefined')
+    if (angular.isUndefined($scope.podcasts))
       return;
 
     $scope.podcasts.forEach(getSubscriberCount);
@@ -86,8 +86,8 @@ angular.module('Bethel.podcast')
   };
 
   $scope.createPodcast = function() {
-    $scope.newPodcast._csrf = $rootScope._csrf;
-    $scope.newPodcast.ministry = $rootScope.ministry;
+    $scope.newPodcast._csrf = $scope.$root._csrf;
+    $scope.newPodcast.ministry = $scope.$root.ministry;
 
     io.socket.post('/podcast', $scope.newPodcast, function (podcastObject) {
       $scope.$apply(function() {

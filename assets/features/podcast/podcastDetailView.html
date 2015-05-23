@@ -40,7 +40,7 @@
       <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
     </div>
     <hr />
-    <h3 class="subscribers"><a ui-sref="podcastsubmit" class="btn btn-sm btn-primary pull-right disabled" data-ng-bind="'PODCAST.ITUNES_SUBMIT' | translate"></a><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
+    <h3 class="subscribers"><a ng-click="submitPodcast()" class="btn btn-primary pull-right" data-ng-bind="'PODCAST.ITUNES_SUBMIT' | translate"></a><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
     <p>Detailed statistics coming soon, stay tuned!</p>
   </div>
 </div>

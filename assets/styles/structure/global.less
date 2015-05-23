@@ -147,7 +147,11 @@ html, body, .ui.viewport {
   right: 0;
   left: 0;
   bottom: 0;
-  background-color: #000;
+  background-color: #2f3439;
+  &.in {
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+  }
 }
 
 section.page-wrap .wizard {
@@ -185,6 +189,27 @@ section.page-wrap .wizard {
     a.help {
       font-size: 16px;
       margin-top: 7px;
+    }
+  }
+}
+
+.modal-dialog {
+  @media (min-width: 768px) {
+    margin: 90px auto;
+  }
+  .modal-content {
+    border-radius: 0;
+    .modal-header {
+      padding: 15px 20px;
+    }
+    .modal-footer {
+      background: #f5f5f5;
+      margin: 30px 0 0 0;
+      padding: 15px 20px;
+      a.help {
+        font-size: 16px;
+        margin-top: 7px;
+      }
     }
   }
 }
