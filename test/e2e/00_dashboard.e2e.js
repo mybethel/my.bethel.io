@@ -60,12 +60,12 @@ describe('Dashboard', function() {
     element(by.model('credentials.pass')).submit();
 
     browser.wait(function() {
-      return element(by.css('.dropdown .ministry')).isPresent().then(function (el) {
+      return element(by.css('.panel.me h3 span')).isPresent().then(function (el) {
         return el === true;
       });
     }).then(function() {
-      element(by.css('.dropdown .ministry')).getText().then(function (text) {
-        expect(text).to.equal('Public Relations');
+      element(by.css('.panel.me h3 span')).getText().then(function (text) {
+        expect(text).to.equal('Jayne Cobb');
       });
     });
 
