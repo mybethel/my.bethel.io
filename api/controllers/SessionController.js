@@ -51,7 +51,11 @@ module.exports = {
             req.session.Ministry = ministry;
           }
 
-          return res.send({ success: 'welcome' });
+          return res.send({
+            user: user,
+            ministry: ministry,
+            isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
+          });
         });
       });
     });
