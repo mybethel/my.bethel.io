@@ -59,10 +59,9 @@ describe('Dashboard', function() {
     element(by.model('credentials.pass')).sendKeys('v3ra');
     element(by.model('credentials.pass')).submit();
 
-    browser.wait(function () {
-      return element(by.css('.dropdown .ministry')).getText().then(function (text) {
-        return text === 'Public Relations';
-      });
+    browser.get('/#/dashboard');
+    element(by.css('.dropdown .ministry')).getText().then(function (text) {
+      expect(text).to.equal('Public Relations');
     });
 
   });
