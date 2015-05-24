@@ -34,7 +34,7 @@
         <tags-input class="source" data-ng-model="sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateSource($tag, 'added')" on-tag-removed="updateSource($tag, 'removed')"></tags-input>
       </div>
     </div>
-    <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/*,video/mp4,video/x-m4v,video/*" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
+    <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
     <h5 class="progress-text pull-left" data-ng-if="uploading && uploadProgress < 100">Uploading... <i class="fa fa-circle-o-notch fa-spin"></i></h5>
     <div class="progress" data-ng-if="uploading && uploadProgress < 100">
       <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
@@ -53,7 +53,7 @@
       <div class="panel-body">
         <div class="content" data-ng-if="podcast.media.length < 1">
           <p>Your podcast episodes will appear here.<span data-ng-if="podcast.source == 2"> It may take a few minutes for Bethel to retrieve your Vimeo videos.</span></p>
-          <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/*,video/mp4,video/x-m4v,video/*" class="btn btn-block"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
+          <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" class="btn btn-block"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
         </div>
         <table class="table table-hover episodes" data-ng-class="{ 'video': podcast.type == 2, 'audio': podcast.type == 1 }" data-podcast="{{ podcast.id }}" data-url="{{ podcast.ministry.url }}">
           <tbody>
