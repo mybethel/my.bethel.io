@@ -42,13 +42,12 @@ angular.module('Bethel.staff')
 
     var newUser = $scope.newUser;
 
-    $scope.errors = {};
     newUser._csrf = $rootScope._csrf;
     newUser.isLocked = false;
 
     io.socket.post('/user', newUser, function (res) {
-      if (res.validationErrors) {
-        $scope.createErrors(res.validationErrors);
+      if (res.invalidAttributes) {
+        $scope.createErrors(res);
       } else {
         $location.path('/staff/user/' + res.id).replace();
       }
@@ -61,6 +60,7 @@ angular.module('Bethel.staff')
 
     var invalidAttributes = validationErrors.invalidAttributes;
 
+    $scope.errors = {};
     $scope.errors.summary = validationErrors.summary;
     $scope.errors.many = [];
 

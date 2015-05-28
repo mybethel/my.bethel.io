@@ -6,10 +6,9 @@
 
   <div class="panel-body">
 
-    <div data-ng-if="errors.summary" class="row errors">
+    <div data-ng-if="errors" class="row errors">
       <div class="col-sm-5">
-        <div class="alert alert-danger alert-dismissible" role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="alert alert-danger" role="alert">
           <i class="fa fa-exclamation-circle"></i>
           <strong class="error-summary" data-ng-bind="errors.summary"></strong>
           <ul data-ng-repeat="error in errors.many">
