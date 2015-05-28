@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--><html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js"><!--<![endif]-->
+<html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js">
 <head>
   <meta charset="utf-8" />
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
@@ -11,6 +8,7 @@
   <!--STYLES-->
   <link rel="stylesheet" href="/components/animate.css/animate.min.css">
   <link rel="stylesheet" href="/components/angular-ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="/components/angular-material/angular-material.min.css">
   <link rel="stylesheet" href="/styles/app.css">
   <link rel="stylesheet" href="/styles/bootstrap-markdown.min.css">
   <link rel="stylesheet" href="/styles/datepicker.css">
@@ -29,8 +27,40 @@
   </script>
 </head>
 
-<body data-ng-class="{ 'nav-collapsed': collapseNav }">
-  <nav class="navbar navbar-inverse" role="navigation">
+<body layout="row" data-ng-class="{ 'nav-collapsed': collapseNav }">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+    <md-toolbar class="md-theme-indigo">
+      <h1 class="md-toolbar-tools">Bethel</h1>
+    </md-toolbar>
+
+    <md-list class="md-hue-3">
+      <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)">
+        <p>{{ link.title }}</p>
+      </md-list-item>
+    </md-list>
+  </md-sidenav>
+
+  <section layout="column" class="main-content" flex>
+    <md-toolbar class="md-whiteframe-glow-z2" aria-hidden="false">
+      <div class="md-toolbar-tools">
+        <div layout="row" flex class="fill-height">
+          <span flex></span>
+          <div class="md-toolbar-item" layout="column">
+            <a class="md-button md-default-theme"><span>{{ ministry.name }}</span></a>
+          </div>
+          <img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" width="64" height="64" />
+        </div>
+      </div>
+    </md-toolbar>
+
+    <md-content>
+      <%- body %>
+    </md-content>
+
+  </section>
+
+
+  <!-- <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="/">Bethel</a>
@@ -67,7 +97,7 @@
     </div>
   </div>
 
-  <div id="popover" class="modal fade"></div>
+  <div id="popover" class="modal fade"></div> -->
 
   <!--TEMPLATES-->
   
@@ -93,11 +123,13 @@
   <script src="/components/angular-sanitize/angular-sanitize.min.js"></script>
   <script src="/components/angular-ui-select/dist/select.min.js"></script>
   <script src="/components/angular-ui-utils/ui-utils.min.js"></script>
+  <script src="/components/angular-material/angular-material.min.js"></script>
+  <script src="/components/angular-animate/angular-animate.min.js"></script>
+  <script src="/components/angular-aria/angular-aria.min.js"></script>
   <script src="/components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js"></script>
   <script src="/components/angular-moment/angular-moment.min.js"></script>
   <script src="/components/angular-rickshaw/rickshaw.js"></script>
   <script src="/components/angular-svg-round-progressbar/roundProgress.min.js"></script>
-  <script src="/components/bootstrap/js/alert.js"></script>
   <script src="/components/d3/d3.min.js"></script>
   <script src="/components/medium-editor/dist/js/medium-editor.min.js"></script>
   <script src="/components/ng-file-upload/angular-file-upload.min.js"></script>

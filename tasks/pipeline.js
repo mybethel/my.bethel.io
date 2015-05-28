@@ -17,6 +17,7 @@
 var cssFilesToInject = [
   'components/animate.css/animate.min.css',
   'components/angular-ui-select/dist/select.min.css',
+  'components/angular-material/angular-material.min.css',
   'styles/**/*.css',
   '!styles/vjs-embed.css'
 ];
@@ -43,6 +44,9 @@ var dependenciesToInject = [
   'components/angular-sanitize/angular-sanitize.min.js',
   'components/angular-ui-select/dist/select.min.js',
   'components/angular-ui-utils/ui-utils.min.js',
+  'components/angular-material/angular-material.min.js',
+  'components/angular-animate/angular-animate.min.js',
+  'components/angular-aria/angular-aria.min.js',
 
   // jQuery dependencies
   'components/jquery-throttle-debounce/jquery.ba-throttle-debounce.min.js',

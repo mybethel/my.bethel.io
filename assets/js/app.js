@@ -5,6 +5,7 @@
  */
 angular.module('Bethel', [
   'http-auth-interceptor',
+  'ngMaterial',
   'ui.router',
   'ui.bootstrap',
   'angulartics',
@@ -20,19 +21,38 @@ angular.module('Bethel', [
   'ui.utils'
 ])
 
-.config(function ($urlRouterProvider, $translateProvider) {
+.config(function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {
 
   $translateProvider.preferredLanguage('en');
   $translateProvider.useLoader('$translatePartialLoader', {
     urlTemplate: '/i18n/{part}/{lang}.json'
   });
 
+  $urlRouterProvider.otherwise('/dashboard');
+
+  $mdThemingProvider.definePalette('brandBlue', $mdThemingProvider.extendPalette('blue', {
+    '500': '1591b5'
+  }));
+
+  $mdThemingProvider.theme('default')
+    .primaryPalette('brandBlue')
+    .accentPalette('blue-grey');
+
 })
 
 .controller('AppCtrl', ['$rootScope', '$state', function ($scope, $state) {
 
   $scope.redirect = '';
-  $scope.navLinks = [];
+  $scope.navLinks = [
+    { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
+    { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
+    { title: 'Media', icon: 'youtube-play', url: '#/media' },
+    { title: 'Mobile App', icon: 'mobile', url: '#/beta' },
+    { title: 'Volunteers', icon: 'users', url: '#/beta' },
+    { title: 'Live Streaming', icon: 'video-camera', url: '#/streaming' },
+    { title: 'Giving', icon: 'money', url: '#/beta' },
+    { title: 'Social Media', icon: 'thumbs-up', url: '#/beta' }
+  ];
   $scope.user = null;
   $scope.ministry = null;
   $scope.authCheck = false;
@@ -71,28 +91,10 @@ angular.module('Bethel', [
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
   $scope.$on('$stateChangeSuccess', $scope.updateCsrf);
 
-  // Main navigation bar links.
-  $scope.navLinks.push.apply($scope.navLinks, [
-    { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
-    { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
-    { title: 'Media', icon: 'youtube-play', url: '#/media' },
-    { title: 'Mobile App', icon: 'mobile', url: '#/beta' },
-    { title: 'Volunteers', icon: 'users', url: '#/beta' },
-    { title: 'Live Streaming', icon: 'video-camera', url: '#/streaming' },
-    { title: 'Giving', icon: 'money', url: '#/beta' },
-    { title: 'Social Media', icon: 'thumbs-up', url: '#/beta' }
-  ]);
-
   $scope.toggleNav = function() {
     $scope.collapseNav = !$scope.collapseNav;
   };
 
-  // Ministry dropdown menu.
-  $scope.ministryLinks = [
-    { title: 'Connected Accounts', url: '/#/dashboard/accounts' },
-    { title: 'Settings', url: '/ministry/edit' },
-    { title: 'Locations', url: '/#/dashboard/locations' }
-  ];
 }]);
 
 String.prototype.capitalize = function() {
