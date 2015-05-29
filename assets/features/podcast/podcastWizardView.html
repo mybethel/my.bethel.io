@@ -1,7 +1,9 @@
 <md-dialog flex="50" class="wizard">
   <md-dialog-content class="sticky-container">
+    <md-toolbar class="md-accent md-hue-3">
+      <h1 class="md-toolbar-tools">Create a new podcast</h1>
+    </md-toolbar>
     <div>
-      <h2>Create a new podcast</h2>
       <p>We'll walk you through everything. Let's go!</p>
       <md-input-container>
         <label>Name your podcast</label>
@@ -11,7 +13,7 @@
   </md-dialog-content>
   <div class="md-actions" layout="row">
     <span flex></span>
-    <md-button ng-click="answer('not useful')">Cancel</md-button>
-    <md-button ng-click="answer('useful')" class="md-primary">Next</md-button>
+    <md-button ng-click="cancel()">Cancel</md-button>
+    <md-button ng-click="hide()" class="md-primary">Next</md-button>
   </div>
 </md-dialog>
