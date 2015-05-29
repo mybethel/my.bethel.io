@@ -8,11 +8,20 @@ angular.module('Bethel.staff')
 
   $scope.user = {};
   $scope.newUser = {};
+  $scope.existing = {isExisting: "existing"};
   $scope.$parent.selectedStaffSection = 'users';
 
   $rootScope.$watch('isAdmin', function() {
     if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
       $location.path('/').replace();
+    }
+  });
+
+  $scope.$watch('existing.isExisting', function (existing) {
+    if (existing === 'new') {
+      delete $scope.newUser.ministry;
+    } else if (existing === 'existing') {
+      delete $scope.newUser.newMinistry;
     }
   });
 
@@ -40,10 +49,37 @@ angular.module('Bethel.staff')
 
   $scope.createUserSubmit = function() {
 
+    var newMinistry = $scope.newUser.newMinistry;
+
+    if (newMinistry) {
+
+      io.socket.post('/ministry', {
+        name: newMinistry,
+        _csrf: $rootScope._csrf
+      }, function (ministry) {
+        $scope.$apply(function() {
+          $scope.ministries.push(ministry);
+          $scope.newMinistry = ministry;
+        });
+        $scope.createNewUser(ministry);
+      });
+
+    } else {
+      $scope.createNewUser();
+    }
+
+  };
+
+  $scope.createNewUser = function(ministry) {
+
     var newUser = $scope.newUser;
 
     newUser._csrf = $rootScope._csrf;
     newUser.isLocked = false;
+
+    if (ministry) {
+      newUser.ministry = $scope.newMinistry.id;
+    }
 
     io.socket.post('/user', newUser, function (res) {
       if (res.invalidAttributes) {
@@ -68,6 +104,11 @@ angular.module('Bethel.staff')
       invalidAttributes[field].forEach(function (error) {
         $scope.errors.many.push(error.message);
       });
+    }
+
+    if ($scope.newMinistry) {
+      $scope.existing.isExisting = "existing";
+      $scope.newUser.ministry = $scope.newMinistry.id;
     }
 
   };
