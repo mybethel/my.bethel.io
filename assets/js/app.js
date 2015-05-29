@@ -30,7 +30,8 @@ angular.module('Bethel', [
   $urlRouterProvider.otherwise('/dashboard');
 
   $mdThemingProvider.definePalette('brandBlue', $mdThemingProvider.extendPalette('blue', {
-    '500': '1591b5'
+    '500': '1591b5',
+    '800': '106982'
   }));
 
   $mdThemingProvider.theme('default')
