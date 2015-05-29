@@ -1,6 +1,7 @@
 <div ui-view>
 
 <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="showWizard($event)">
+  <md-tooltip>New Podcast</md-tooltip>
   <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
 </md-button>
 
@@ -11,16 +12,17 @@
   </div>
 </md-toolbar>
 
-<md-content layout-padding>
-  <md-grid-list
-        md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4"
-        md-row-height-gt-md="1:1" md-row-height="4:3"
-        md-gutter="8px" md-gutter-gt-sm="4px" >
-    <md-grid-tile ng-repeat="podcast in podcasts | orderBy : 'name'" ng-click="view(podcast.id)">
-      <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300" alt="{{ podcast.name }}" width="100%" class="md-avatar" />
-      <md-grid-tile-footer><h3>{{ podcast.name }}</h3></md-grid-tile-footer>
-    </md-grid-tile>
-  </md-grid-list>
+<md-content layout-padding layout="row">
+  <div ng-repeat="podcast in podcasts | orderBy : 'name'" flex="25">
+    <md-card ng-click="view(podcast.id)">
+      <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300" alt="{{ podcast.name }}" class="md-card-image" alt="{{ podcast.name }}">
+      <md-card-content>
+        <h2 class="md-title">{{ podcast.name }}</h2>
+      </md-card-content>
+      <md-divider></md-divider>
+      <md-subheader>{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }} subscribers, {{ podcast.media.length }} episodes</md-subheader>
+    </md-card>
+  </div>
 
   <div class="ui horizontal podcast">
     <div class="panel panel-default wizard" data-ng-show="createWizard">
