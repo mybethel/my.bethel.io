@@ -10,8 +10,4 @@ angular.module('Bethel.podcast')
     $mdDialog.cancel();
   };
 
-  $scope.answer = function(answer) {
-    $mdDialog.hide(answer);
-  };
-
 });
