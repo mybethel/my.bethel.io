@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastListController', function ($scope, $sailsBind, $location, WizardHandler, $upload) {
+.controller('podcastListController', function ($scope, $mdDialog, $sailsBind, $location, WizardHandler, $upload) {
 
   $scope.createWizard = false;
   $scope.newPodcast = {};
@@ -36,13 +36,17 @@ angular.module('Bethel.podcast')
     $scope.podcasts.forEach(getSubscriberCount);
   });
 
-  $scope.cancelWizard = function() {
-    $scope.newPodcast = {};
-    $scope.createWizard = false;
-  };
-
-  $scope.showWizard = function() {
-    $scope.createWizard = true;
+  $scope.showWizard = function(event) {
+    $mdDialog.show({
+      controller: 'podcastWizardController',
+      templateUrl: 'features/podcast/podcastWizardView.html',
+      targetEvent: event,
+    })
+    .then(function (answer) {
+      $scope.alert = 'You said the information was "' + answer + '".';
+    }, function() {
+      $scope.alert = 'You cancelled the dialog.';
+    });
   };
 
   $scope.selectType = function(type) {

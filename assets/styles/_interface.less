@@ -1,3 +1,9 @@
+body,
+md-content.md-default-theme,
+md-list.md-default-theme md-list-item button {
+  background-color: #f4f6f8;
+}
+
 md-sidenav {
   background-color: rgb(33,33,33);
   width: 220px !important;
@@ -15,6 +21,15 @@ md-sidenav {
 
 section.main-content {
   .md-toolbar-tools {
-    padding-right: 0;
+    .md-button.md-default-theme.md-icon-button {
+      border-radius: 50%;
+      fill: #fff;
+    }
+  }
+}
+
+md-dialog.wizard {
+  md-input-container {
+    font-size: 1.3em;
   }
 }
