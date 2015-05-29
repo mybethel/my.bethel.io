@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="/styles/theme.css">
   <link rel="stylesheet" href="/styles/vjs-embed.css">
   <!--STYLES END-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
   <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/font-awesome.min.css">
   <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/rickshaw.min.css">
   <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/medium-editor/medium-editor.min.css">
@@ -34,70 +35,15 @@
     </md-toolbar>
 
     <md-list class="md-hue-3">
-      <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)">
+      <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-cloak>
         <p>{{ link.title }}</p>
       </md-list-item>
     </md-list>
   </md-sidenav>
 
   <section layout="column" class="main-content" flex>
-    <md-toolbar class="md-whiteframe-glow-z2" aria-hidden="false">
-      <div class="md-toolbar-tools">
-        <div layout="row" flex class="fill-height">
-          <span flex></span>
-          <div class="md-toolbar-item" layout="column">
-            <a class="md-button md-default-theme"><span>{{ ministry.name }}</span></a>
-          </div>
-          <img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" width="64" height="64" />
-        </div>
-      </div>
-    </md-toolbar>
-
-    <md-content>
-      <%- body %>
-    </md-content>
-
+    <%- body %>
   </section>
-
-
-  <!-- <nav class="navbar navbar-inverse" role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">Bethel</a>
-      </div>
-      <ul class="nav navbar-nav">
-        <li><a data-ng-click="toggleNav()"><i class="fa fa-bars"></i></a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right" ng-show="user.name">
-        <li class="dropdown" data-ng-show="ministry.name">
-          <a href="" class="dropdown-toggle ministry" data-toggle="dropdown" data-ng-bind="ministry.name"></a>
-          <ul class="dropdown-menu">
-            <li ng-repeat="link in ::ministryLinks"><a data-ng-href="{{ link.url }}" data-ng-bind="link.title"></a></li>
-          </ul>
-        </li>
-        <li><a href="logout" title="Log out"><i class="fa fa-sign-out"></i></a></li>
-        <li class="dropdown"><a class="avatar"><img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" /></a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <div class="ui viewport primary">
-    <div class="ui horizontal">
-
-      <nav class="ui column navigation" role="navigation">
-        <ul id="main-menu" class="nav nav-pills nav-stacked nav-main" ngCloak>
-          <li ng-repeat="link in navLinks"><a href="{{ link.url }}"><i class="fa fa-{{ link.icon }}"></i>{{ link.title }}</a></li>
-        </ul>
-      </nav>
-
-      <section class="ui column page-wrap">
-        <%- body %>
-      </section>
-
-    </div>
-  </div>
-
-  <div id="popover" class="modal fade"></div> -->
 
   <!--TEMPLATES-->
   
@@ -160,6 +106,7 @@
   <script src="/features/podcast/podcastDetailController.js"></script>
   <script src="/features/podcast/podcastListController.js"></script>
   <script src="/features/podcast/podcastMediaController.js"></script>
+  <script src="/features/podcast/podcastWizardController.js"></script>
   <script src="/features/streaming/streamingController.js"></script>
   <script src="/js/filters/bytesFilter.js"></script>
   <script src="/js/filters/durationFilter.js"></script>

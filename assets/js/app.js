@@ -7,7 +7,6 @@ angular.module('Bethel', [
   'http-auth-interceptor',
   'ngMaterial',
   'ui.router',
-  'ui.bootstrap',
   'angulartics',
   'angulartics.google.analytics',
   'angularMoment',
@@ -44,19 +43,21 @@ angular.module('Bethel', [
 
   $scope.redirect = '';
   $scope.navLinks = [
-    { title: 'Dashboard', icon: 'tachometer', url: '#/dashboard' },
-    { title: 'Podcasting', icon: 'microphone', url: '#/podcast' },
-    { title: 'Media', icon: 'youtube-play', url: '#/media' },
-    { title: 'Mobile App', icon: 'mobile', url: '#/beta' },
-    { title: 'Volunteers', icon: 'users', url: '#/beta' },
-    { title: 'Live Streaming', icon: 'video-camera', url: '#/streaming' },
-    { title: 'Giving', icon: 'money', url: '#/beta' },
-    { title: 'Social Media', icon: 'thumbs-up', url: '#/beta' }
+    { title: 'Dashboard', icon: 'tachometer', url: 'dashboard' },
+    { title: 'Podcasting', icon: 'microphone', url: 'podcast' },
+    { title: 'Media', icon: 'youtube-play', url: 'media' },
+    { title: 'Mobile App', icon: 'mobile', url: 'beta' },
+    { title: 'Volunteers', icon: 'users', url: 'beta' },
+    { title: 'Live Streaming', icon: 'video-camera', url: 'streaming' },
+    { title: 'Giving', icon: 'money', url: 'beta' },
+    { title: 'Social Media', icon: 'thumbs-up', url: 'beta' }
   ];
   $scope.user = null;
   $scope.ministry = null;
   $scope.authCheck = false;
   $scope.collapseNav = false;
+
+  $scope.nav = $state.go;
 
   $scope.updateSession = function(ev, data) {
     io.socket.get('/session/current', function (response) {
@@ -67,7 +68,7 @@ angular.module('Bethel', [
         $scope.authCheck = true;
 
         if (response.isAdmin) {
-          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff/user' });
+          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: 'staff.users' });
         }
 
         if ($state.current.name === '' && angular.isDefined(response.user)) {
