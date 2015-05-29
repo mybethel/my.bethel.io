@@ -30,12 +30,13 @@
 
 <body layout="row" data-ng-class="{ 'nav-collapsed': collapseNav }">
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
-    <md-toolbar class="md-theme-indigo">
+    <md-toolbar>
       <h1 class="md-toolbar-tools">Bethel</h1>
     </md-toolbar>
 
-    <md-list class="md-hue-3">
+    <md-list class="md-accent md-hue-3">
       <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-cloak>
+        <md-icon md-svg-icon="icons/ic_{{ link.icon }}_24px.svg"></md-icon>
         <p>{{ link.title }}</p>
       </md-list-item>
     </md-list>

@@ -43,14 +43,14 @@ angular.module('Bethel', [
 
   $scope.redirect = '';
   $scope.navLinks = [
-    { title: 'Dashboard', icon: 'tachometer', url: 'dashboard' },
-    { title: 'Podcasting', icon: 'microphone', url: 'podcast' },
-    { title: 'Media', icon: 'youtube-play', url: 'media' },
-    { title: 'Mobile App', icon: 'mobile', url: 'beta' },
-    { title: 'Volunteers', icon: 'users', url: 'beta' },
-    { title: 'Live Streaming', icon: 'video-camera', url: 'streaming' },
-    { title: 'Giving', icon: 'money', url: 'beta' },
-    { title: 'Social Media', icon: 'thumbs-up', url: 'beta' }
+    { title: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
+    { title: 'Podcasting', icon: 'mic', url: 'podcast' },
+    { title: 'Media', icon: 'play_circle_filled', url: 'media' },
+    { title: 'Mobile App', icon: 'phone_iphone', url: 'beta' },
+    { title: 'Volunteers', icon: 'people', url: 'beta' },
+    { title: 'Live Streaming', icon: 'videocam', url: 'streaming' },
+    { title: 'Giving', icon: 'attach_money', url: 'beta' },
+    { title: 'Social Media', icon: 'thumb_up', url: 'beta' }
   ];
   $scope.user = null;
   $scope.ministry = null;
@@ -68,7 +68,7 @@ angular.module('Bethel', [
         $scope.authCheck = true;
 
         if (response.isAdmin) {
-          $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: 'staff.users' });
+          $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
         }
 
         if ($state.current.name === '' && angular.isDefined(response.user)) {
