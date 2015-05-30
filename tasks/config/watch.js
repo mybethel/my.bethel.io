@@ -18,15 +18,15 @@ module.exports = function(grunt) {
 		api: {
 
 			// API files to watch:
-			files: ['api/**/*']
+			files: ['api/**/*', '!**/node_modules/**']
 		},
 		assets: {
 
 			// Assets to watch:
-			files: ['assets/**/*', '!**/components/**', 'tasks/pipeline.js'],
+			files: ['assets/**/*', 'tasks/pipeline.js', '!**/node_modules/**', '!**/components/**'],
 
 			// When assets are changed:
-			tasks: ['default']
+			tasks: ['syncAssets', 'concat', 'linkAssets']
 		}
 	});
 
