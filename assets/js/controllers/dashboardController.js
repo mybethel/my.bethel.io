@@ -40,6 +40,9 @@ angular.module('Bethel.dashboard')
   };
 
   $scope.init = function() {
+    if ($scope.stats.length > 0 && $scope.locations.length > 0)
+      return;
+    
     io.socket.get('/dashboard/stats', function (response) {
       $scope.$apply(function() {
         $scope.stats = response;
@@ -108,8 +111,6 @@ angular.module('Bethel.dashboard')
       data: chartData
     }];
   });
-
-  $scope.init();
 
   $scope.$on('sailsSocket:connect', function (ev, data) {
     $scope.init();
