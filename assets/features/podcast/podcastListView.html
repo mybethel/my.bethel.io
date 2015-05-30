@@ -1,5 +1,3 @@
-<div ui-view>
-
 <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="showWizard($event)">
   <md-tooltip>New Podcast</md-tooltip>
   <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
@@ -12,7 +10,7 @@
   </div>
 </md-toolbar>
 
-<md-content layout-padding layout="row">
+<md-content layout-padding layout="row" ui-view>
   <div ng-repeat="podcast in podcasts | orderBy : 'name'" flex="25">
     <md-card ng-click="view(podcast.id)">
       <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300" alt="{{ podcast.name }}" class="md-card-image" alt="{{ podcast.name }}">
@@ -151,5 +149,3 @@
     </div>
   </div>
 </md-content>
-
-</div>

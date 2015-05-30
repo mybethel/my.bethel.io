@@ -6,7 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bethel</title>
   <!--STYLES-->
-  <link rel="stylesheet" href="min/production.min.css">
+  <link rel="stylesheet" href="/components/animate.css/animate.min.css">
+  <link rel="stylesheet" href="/components/angular-ui-select/dist/select.min.css">
+  <link rel="stylesheet" href="/components/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="/styles/app.css">
+  <link rel="stylesheet" href="/styles/bootstrap-markdown.min.css">
+  <link rel="stylesheet" href="/styles/datepicker.css">
+  <link rel="stylesheet" href="/styles/theme.css">
+  <link rel="stylesheet" href="/styles/vjs-embed.css">
   <!--STYLES END-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
   <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/rickshaw.min.css">
@@ -21,46 +28,29 @@
 </head>
 
 <body layout="row" data-ng-class="{ 'nav-collapsed': collapseNav }">
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" layout-fill>
     <md-toolbar class="md-hue-2">
       <h1 class="md-toolbar-tools">Bethel</h1>
     </md-toolbar>
 
-    <md-list class="md-accent md-hue-3">
-      <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-cloak>
-        <md-icon md-svg-icon="icons/ic_{{ link.icon }}_24px.svg"></md-icon>
-        <p>{{ link.title }}</p>
-      </md-list-item>
-    </md-list>
+    <md-content flex>
+      <md-list class="md-accent md-hue-3">
+        <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-cloak>
+          <md-icon md-svg-icon="icons/ic_{{ link.icon }}_24px.svg"></md-icon>
+          <p>{{ link.title }}</p>
+        </md-list-item>
+      </md-list>
+    </md-content>
   </md-sidenav>
 
-  <section layout="column" class="main-content" flex>
-    <%- body %>
-  </section>
-
-  <!--TEMPLATES-->
-  
-  <!--TEMPLATES END-->
-
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <div layout="column" class="main-content" ui-view flex>
+    <!--ANGULAR VIEW-->
+  </div>
 
   <!--SCRIPTS-->
-  <script src="min/production.min.js"></script>
-  <script src="concat/dependencies.js"></script>
+  <script src="/concat/production.js"></script>
   <!--SCRIPTS END-->
 
-  <script>
-    videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
-  </script>
-
-  <!--LIBRARIES-->
-  <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> 
-  <script src="//s3.amazonaws.com/static.bethel.io/js/bootstrap-datepicker.js"></script>
-  <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.form.js"></script>
-  <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.typeahead.js"></script>
-  <script src="//s3.amazonaws.com/static.bethel.io/js/jquery.validate.js"></script>
-  <!--LIBRARIES END-->
-  </body>
+</body>
 
 </html>
