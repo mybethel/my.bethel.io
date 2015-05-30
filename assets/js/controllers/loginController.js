@@ -6,11 +6,8 @@ angular.module('Bethel.user', [])
   $scope.invitedUser = {};
   $scope.error = {};
 
-  io.socket.get('/csrfToken', function (response) {
-    $scope.credentials._csrf = response._csrf;
-  });
-
   $scope.login = function (credentials) {
+    credentials._csrf = $scope.$root._csrf;
     io.socket.post('/session/create', credentials, function (response) {
       if (angular.isDefined(response.error)) {
         // Shake the login dialogue to indicate login wasn't successful.

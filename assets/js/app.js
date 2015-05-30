@@ -89,7 +89,6 @@ angular.module('Bethel', [
 
   // Update current session on load or login.
   $scope.updateSession();
-  $scope.updateCsrf();
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
   $scope.$on('$stateChangeSuccess', $scope.updateCsrf);
 
