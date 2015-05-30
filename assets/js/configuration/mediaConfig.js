@@ -1,8 +1,6 @@
 angular.module('Bethel.media', [
   'ui.router',
-  'angularFileUpload',
-  'ngTagsInput',
-  'angular-svg-round-progress'
+  'angularFileUpload'
 ])
 
 .config(function ($stateProvider, $translatePartialLoaderProvider) {

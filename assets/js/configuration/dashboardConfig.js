@@ -1,4 +1,4 @@
-angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps', 'angular-rickshaw'])
+angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps'])
 
 .config(function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
 
