@@ -26,7 +26,7 @@ module.exports = function(grunt) {
 			files: ['assets/**/*', '!**/components/**', 'tasks/pipeline.js'],
 
 			// When assets are changed:
-			tasks: ['syncAssets' , 'linkAssets']
+			tasks: ['default']
 		}
 	});
 
