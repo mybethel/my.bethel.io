@@ -40,6 +40,10 @@ angular.module('Bethel', [
 
 })
 
+.run(function() {
+  videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
+})
+
 .controller('AppCtrl', ['$rootScope', '$state', function ($scope, $state) {
 
   $scope.redirect = '';

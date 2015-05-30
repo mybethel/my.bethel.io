@@ -6,7 +6,7 @@
  * Minifies client-side javascript `assets`.
  *
  * For usage docs see:
- * 		https://github.com/gruntjs/grunt-contrib-uglify
+ *    https://github.com/gruntjs/grunt-contrib-uglify
  *
  */
 module.exports = function(grunt) {
@@ -15,9 +15,6 @@ module.exports = function(grunt) {
     dist: {
       src: ['.tmp/public/concat/production.js'],
       dest: '.tmp/public/min/production.min.js'
-    },
-    options: {
-      mangle: false
     }
   });
 
