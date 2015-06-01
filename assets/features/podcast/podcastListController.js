@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastListController', function ($scope, $mdDialog, $sailsBind, $location, WizardHandler, $upload) {
+.controller('podcastListController', ['$scope', '$state', '$mdDialog', '$sailsBind', '$location', 'WizardHandler', '$upload', function ($scope, $state, $mdDialog, $sailsBind, $location, WizardHandler, $upload) {
 
   $scope.createWizard = false;
   $scope.newPodcast = {};
@@ -15,6 +15,10 @@ angular.module('Bethel.podcast')
     $sailsBind.bind('podcast', $scope, { 'ministry': $scope.$root.ministry.id });
     $sailsBind.bind('service', $scope, { 'ministry': $scope.$root.ministry.id });
   });
+
+  $scope.view = function(podcast) {
+    $state.go('.view', { podcastId: podcast });
+  };
 
   var getSubscriberCount = function(podcast) {
     io.socket.get('/podcast/subscribers/' + podcast.id, function (response) {
@@ -103,4 +107,4 @@ angular.module('Bethel.podcast')
     });
   };
 
-});
+}]);

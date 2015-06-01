@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast', ['ngSailsBind', 'mgo-angular-wizard'])
 
-.config(function ($stateProvider, $translatePartialLoaderProvider) {
+.config(['$stateProvider', '$translatePartialLoaderProvider', function ($stateProvider, $translatePartialLoaderProvider) {
 
   $translatePartialLoaderProvider.addPart('podcast');
 
@@ -16,4 +16,4 @@ angular.module('Bethel.podcast', ['ngSailsBind', 'mgo-angular-wizard'])
       controller: 'podcastDetailController'
     });
 
-});
+}]);

@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastWizardController', function ($scope, $mdDialog) {
+.controller('podcastWizardController', ['$scope', '$mdDialog', function ($scope, $mdDialog) {
 
   $scope.hide = function() {
     $mdDialog.hide();
@@ -10,4 +10,4 @@ angular.module('Bethel.podcast')
     $mdDialog.cancel();
   };
 
-});
+}]);

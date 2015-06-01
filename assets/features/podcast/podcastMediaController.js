@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastMediaController', function ($scope, $modalInstance, mediaId, $sce, $http) {
+.controller('podcastMediaController', ['$scope', '$modalInstance', 'mediaId', '$sce', '$http', function ($scope, $modalInstance, mediaId, $sce, $http) {
 
   io.socket.get('/podcastmedia/' + mediaId, function (data) {
     $scope.$apply(function() {
@@ -36,4 +36,4 @@ angular.module('Bethel.podcast')
     $modalInstance.dismiss('cancel');
   };
 
-});
+}]);
