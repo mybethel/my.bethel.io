@@ -38,6 +38,7 @@ angular.module('Bethel.podcast')
 
   $scope.showWizard = function(event) {
     $mdDialog.show({
+      clickOutsideToClose: true,
       controller: 'podcastWizardController',
       templateUrl: 'features/podcast/podcastWizardView.html',
       targetEvent: event,
