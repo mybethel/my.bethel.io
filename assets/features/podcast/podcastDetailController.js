@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastDetailController', function ($scope, $state, $stateParams, $upload, $modal) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', '$upload', function ($scope, $state, $stateParams, $upload) {
 
   var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
@@ -25,12 +25,6 @@ angular.module('Bethel.podcast')
           });
         }
       });
-
-      // On initial page load, the title and description are not editable.
-      titleEditor = new MediumEditor('.title', { disableToolbar: true, disableReturn: true });
-      titleEditor.deactivate();
-      descriptionEditor = new MediumEditor('.description', { disableToolbar: true });
-      descriptionEditor.deactivate();
     });
   };
 
@@ -70,8 +64,10 @@ angular.module('Bethel.podcast')
     }
   });
 
-  $scope.$watch('podcast', function() {
-    if (angular.isUndefined($scope.podcast) || angular.isUndefined($scope.podcasts))
+  $scope.$watch('podcast', function (newValue, oldValue) {
+    $scope.$parent.podcastCurrent = newValue;
+    
+    if (!newValue || angular.isUndefined($scope.podcasts))
       return;
 
     var i = findIndexByPropertyValue($scope.podcasts, 'id', $scope.id);
@@ -79,22 +75,22 @@ angular.module('Bethel.podcast')
   }, true);
 
   // Save action for podcast title.
-  $('h1.title').on('input', $.debounce(250, function() {
-    $scope.podcast.name = $('h1.title').text();
-    io.socket.put('/podcast/' + $scope.id, {
-      name: $scope.podcast.name,
-      _csrf: $scope.$root._csrf
-    });
-  }));
+  // $('h1.title').on('input', $.debounce(250, function() {
+  //   $scope.podcast.name = $('h1.title').text();
+  //   io.socket.put('/podcast/' + $scope.id, {
+  //     name: $scope.podcast.name,
+  //     _csrf: $scope.$root._csrf
+  //   });
+  // }));
 
-  // Save action for podcast description.
-  $('.editable.description').on('input', $.debounce(250, function() {
-    $scope.podcast.description = $('.editable.description').text();
-    io.socket.put('/podcast/' + $scope.id, {
-      description: $scope.podcast.description,
-      _csrf: $scope.$root._csrf
-    });
-  }));
+  // // Save action for podcast description.
+  // $('.editable.description').on('input', $.debounce(250, function() {
+  //   $scope.podcast.description = $('.editable.description').text();
+  //   io.socket.put('/podcast/' + $scope.id, {
+  //     description: $scope.podcast.description,
+  //     _csrf: $scope.$root._csrf
+  //   });
+  // }));
 
   $scope.setSource = function(source) {
     if (angular.isUndefined(source.id))
@@ -263,4 +259,4 @@ angular.module('Bethel.podcast')
     });
   };
 
-});
+}]);

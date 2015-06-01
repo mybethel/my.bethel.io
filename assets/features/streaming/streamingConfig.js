@@ -1,5 +1,6 @@
 angular.module('Bethel.streaming', ['ui.router'])
-.config(function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+
+.config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
 
   $stateProvider
     .state('streaming', {
@@ -7,4 +8,4 @@ angular.module('Bethel.streaming', ['ui.router'])
       templateUrl: 'features/streaming/streamingView.html'
     });
 
-});
+}]);

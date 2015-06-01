@@ -1,4 +1,4 @@
 angular.module('Bethel.streaming')
-.controller('streamingController', function ($scope) {
+.controller('streamingController', ['$scope', function ($scope) {
 
-});
+}]);
