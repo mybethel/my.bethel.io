@@ -66,7 +66,14 @@ angular.module('Bethel.podcast')
 
   $scope.$watch('podcast', function (newValue, oldValue) {
     $scope.$parent.podcastCurrent = newValue;
-    
+
+    if (!newValue || newValue === oldValue)
+      return;
+
+    if (!angular.isArray(newValue.tags)) {
+      $scope.podcast.tags = [];
+    }
+
     if (!newValue || angular.isUndefined($scope.podcasts))
       return;
 

@@ -1,3 +1,5 @@
+<div layout="column" flex ui-view>
+
 <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="showWizard($event)">
   <md-tooltip>New Podcast</md-tooltip>
   <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
@@ -10,7 +12,7 @@
   </div>
 </md-toolbar>
 
-<md-content flex layout="column" layout-align="center center">
+<md-content class="main-content" flex layout="column" layout-align="center center">
 
   <div layout="row" layout-align="center center" layout-fill layout-wrap>
 
@@ -37,3 +39,5 @@
   </div>
 
 </md-content>
+
+</div>
