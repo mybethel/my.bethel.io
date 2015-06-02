@@ -1,86 +1,69 @@
-<div layout="row">
-
+<div layout="row" flex>
 <div layout="column" flex>
 
 <md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
     <span flex></span>
+    <small><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize></small>
   </div>
 </md-toolbar>
 
-<md-content flex layout="column" layout-align="center center">
+<md-content class="main-content" flex layout="column" layout-margin layout-padding>
 
-    <button data-ng-show="editing" data-ng-disabled="thumbnailUploading" data-ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg" class="btn btn-default btn-block"><i class="fa" data-ng-class="thumbnailUploading ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i> <span data-ng-bind="thumbnailUploading ? 'Uploading' : 'Replace image'"></span>...</button>
-      
-    <tags-input ng-model="tags" data-placeholder="{{ 'PODCAST.TAGS' | translate }}" on-tag-added="updateTags($tag, 'added')" on-tag-removed="updateTags($tag, 'removed')" data-ng-show="editing"></tags-input>
-    <p data-ng-bind="podcast.description" data-ng-show="podcast.description || editing" class="description md" data-ng-class="{ 'editable': editing }" data-placeholder="{{ 'PODCAST.DESCRIPTION' | translate }}"></p>
-    <p class="text-muted" data-ng-hide="podcast.description || editing">Your podcast doesn't have a description. Tell visitors about your podcast and help them to find it in iTunes by setting both a description and appropriate keywords. Click the <i class="fa fa-edit"></i> button above to continue.</p>
-    <hr />
-    <h3 data-ng-hide="uploading && uploadProgress < 100"><span data-ng-bind="'PODCAST.NEW_EPISODES' | translate"></span> <span data-ng-bind="podcast.source === 2 && 'PODCAST.NEW_EPISODES_VIMEO' || 'PODCAST.NEW_EPISODES_UPLOAD' | translate"></span>.</h3>
-<!--     <div class="row no-gutters" data-ng-if="podcast.source == 2">
-      <div class="col-md-4 margin-bottom-sm">
-        <div class="dropdown" dropdown>
-          <button dropdown-toggle class="btn btn-block btn-lg btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            <span data-ng-bind="podcast.service.name"></span>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu" role="menu">
-            <li role="presentation" data-ng-repeat="account in accounts"><a data-ng-click="setSource(account)" data-ng-bind="account.name"></a></li>
-            <li role="presentation"><a data-ui-sref="dashboard.accounts" data-ng-bind="'PODCAST.VIMEO_CONNECT' | translate"></a></li>
-          </ul>
+  <md-button class="md-fab md-fab-bottom-right md-hue-3" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*">
+    <md-tooltip>Upload Episode</md-tooltip>
+    <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+  </md-button>
+
+  <div class="md-whiteframe-z1">
+    <md-list>
+      <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
+      <md-subheader class="md-no-sticky"><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 Podcast Episode', 'other': '{} Podcast Episodes' }"></ng-pluralize></md-subheader>
+      <md-list-item ng-if="!media || media.length < 1">
+        <p>Upload your first podcast episode now!</p>
+      </md-list-item>
+      <md-list-item class="md-2-line" ng-repeat="media in podcast.media | orderBy : 'date' : true">
+        <div class="md-list-item-text">
+          <h3> {{ media.name }} </h3>
+          <p am-time-ago="media.date"></p>
         </div>
-      </div>
-      <div class="col-md-8 margin-bottom-sm">
-        <tags-input class="source" data-ng-model="sourceMeta" placeholder="Include which tagged videos?" on-tag-added="updateSource($tag, 'added')" on-tag-removed="updateSource($tag, 'removed')"></tags-input>
-      </div>
-    </div>
-    <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" class="btn btn-block btn-success btn-lg"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
-    <h5 class="progress-text pull-left" data-ng-if="uploading && uploadProgress < 100">Uploading... <i class="fa fa-circle-o-notch fa-spin"></i></h5>
-    <div class="progress" data-ng-if="uploading && uploadProgress < 100">
-      <div class="progress-bar" role="progressbar" aria-valuenow="{{ uploadProgress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ uploadProgress }}%;" data-ng-bind="uploadProgress + '%'"></div>
-    </div>
-    <hr />
-    <h3 class="subscribers"><a ng-click="submitPodcast()" class="btn btn-primary pull-right" data-ng-bind="'PODCAST.ITUNES_SUBMIT' | translate"></a><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize>...</h3>
-    <p>Detailed statistics coming soon, stay tuned!</p>
-
-    <div class="ui column dark view">
-  <div class="content">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title"><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 Podcast Episode', 'other': '{} Podcast Episodes' }"></ng-pluralize></h3>
-      </div>
-      <div class="panel-body">
-        <div class="content" data-ng-if="podcast.media.length < 1">
-          <p>Your podcast episodes will appear here.<span data-ng-if="podcast.source == 2"> It may take a few minutes for Bethel to retrieve your Vimeo videos.</span></p>
-          <button data-ng-if="podcast.source == 1" data-ng-hide="uploading && uploadProgress < 100" data-ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" class="btn btn-block"><i class="fa fa-upload"></i> <span data-ng-bind="'PODCAST.UPLOAD' | translate"></span></button>
-        </div>
-        <table class="table table-hover episodes" data-ng-class="{ 'video': podcast.type == 2, 'audio': podcast.type == 1 }" data-podcast="{{ podcast.id }}" data-url="{{ podcast.ministry.url }}">
-          <tbody>
-            <tr class="media" data-ng-repeat="media in podcast.media | orderBy:'date':true">
-              <td>
-                <img data-ng-if="media.thumbnail" class="media-object pull-left" data-ng-src="{{ media.thumbnail }}" width="100" /><h5 data-ng-bind="media.name"></h5>
-                <small class="text-muted" data-am-time-ago="media.date"></small>
-              </td>
-              <td class="operations" data-ng-if="podcast.source != 2"><button class="btn media-edit-button" ng-click="editMedia(media.id)">Edit</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-</div> -->
+      </md-list-item>
+    </md-list>
+  </div>
 
 </md-content>
 
 </div>
 
-<md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" layout-fill flex="30">
-  <img data-ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" />
+<md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-is-open="1 == 1" layout-fill flex="30">
 
-  <md-input-container>
-    <label>Podcast title</label>
-    <input type="text" ng-model="podcast.name">
-  </md-input-container>
+  <md-content flex>
+
+    <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="100%" />
+
+    <div layout="row" layout-align="center center">
+      <md-button class="md-primary" ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg">Upload New Image</md-button>
+    </div>
+
+    <div layout-padding layout-margin>
+
+      <md-input-container>
+        <label>Podcast title</label>
+        <input type="text" ng-model="podcast.name">
+      </md-input-container>
+
+      <md-chips ng-model="podcast.tags" secondary-placeholder="Tags"></md-chips>
+
+      <md-input-container>
+        <label>Description</label>
+        <textarea ng-model="podcast.description" columns="1" rows="3" md-maxlength="4000"></textarea>
+      </md-input-container>
+
+    </div>
+
+  </md-content>
+
 </md-sidenav>
 
 </div>
