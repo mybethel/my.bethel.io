@@ -49,6 +49,7 @@ var jsFilesToInject = [
   'components/angular-material/angular-material.min.js',
   'components/angular-animate/angular-animate.min.js',
   'components/angular-aria/angular-aria.min.js',
+  'components/angular-messages/angular-messages.min.js',
 
   // User interface
   'components/angular-moment/angular-moment.min.js',

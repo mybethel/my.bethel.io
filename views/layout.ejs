@@ -26,7 +26,7 @@
 </head>
 
 <body layout="row">
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" layout-fill>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-if="user" layout-fill>
     <md-toolbar class="md-hue-2">
       <h1 class="md-toolbar-tools">Bethel</h1>
     </md-toolbar>
@@ -41,9 +41,61 @@
     </md-content>
   </md-sidenav>
 
-  <div layout="column" class="main-content" ui-view flex>
+  <div class="main-content" flex layout="column" ng-if="user" ui-view>
     <!--ANGULAR VIEW-->
   </div>
+
+  <md-content id="login" class="main-content inverse" flex layout="row" layout-align="center center" ng-if="!user">
+    <div flex="30" flex-sm="90" flex-md="50" flex layout="column" layout-align="center center" ng-controller="LoginController">
+
+       <img src="https://s3.amazonaws.com/static.bethel.io/images/logo.png" />
+
+      <md-card layout-fill id="login-signup" ng-show="authCheck == true">
+
+        <!-- <md-toolbar class="md-accent md-hue-1">
+          <div class="md-toolbar-tools">
+            <h2>Welcome Back!</h2>
+          </div>
+        </md-toolbar> -->
+
+        <md-card-content>
+          <form name="userLoginForm" ng-submit="login(credentials)">
+
+            <md-input-container>
+              <md-icon md-svg-src="icons/ic_person_24px.svg" class="name"></md-icon>
+              <input autocorrect="off" autocapitalize="off" name="email" ng-model="credentials.name" placeholder="Email" required spellcheck="false" type="email" />
+              <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched">
+                <div ng-message="required || email">A valid e-mail address is required.</div>
+              </div>
+            </md-input-container>
+
+            <md-input-container>
+              <md-icon md-svg-src="icons/ic_lock_24px.svg" class="name"></md-icon>
+              <input autocorrect="off" autocapitalize="off" name="password" ng-model="credentials.pass" placeholder="Password" required spellcheck="false" type="password" />
+              <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched">
+                <div ng-message="required">A password is required.</div>
+              </div>
+            </md-input-container>
+
+            <div layout="row">
+              <md-button aria-label="Log In" class="md-accent md-hue-3 md-raised" flex>
+                Log In
+              </md-button>
+            </div>
+
+          </form>
+        </md-card-content>
+
+        <md-divider></md-divider>
+
+        <md-card-footer>
+          <a class="panel-footer" href="/#/signup">New to Bethel? &nbsp;<span>Sign Up</span></a>
+        </md-card-footer>
+
+      </md-card>
+
+    </div>
+  </md-content>
 
   <!--SCRIPTS-->
   <script src="/concat/production.js"></script>
