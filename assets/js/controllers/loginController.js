@@ -2,9 +2,7 @@ angular.module('Bethel.user', [])
 
 .controller('LoginController', function ($scope, authService) {
 
-  $scope.credentials = {};
   $scope.invitedUser = {};
-  $scope.error = {};
 
   $scope.login = function (credentials) {
     credentials._csrf = $scope.$root._csrf;
@@ -43,5 +41,11 @@ angular.module('Bethel.user', [])
     });
 
   };
+
+  $scope.$watch('error', function (error) {
+    if (!error) return;
+    $scope.userLoginForm.email.$setValidity('loginValid', !error.name);
+    $scope.userLoginForm.password.$setValidity('loginValid', !error.pass);
+  });
 
 });

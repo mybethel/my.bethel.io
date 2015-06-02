@@ -7,7 +7,7 @@ before(function() {
     browser.baseUrl = 'http://localhost:1337';
 
     Sails.lift({
-      environment: 'production',
+      environment: 'development',
       connections: {
         mongo: {
           adapter: 'sails-mongo',
@@ -20,9 +20,9 @@ before(function() {
       session: { adapter: 'memory' }
     }, function (err, server) {
       sails = server;
-      if (err) return done(err);
+      if (err) return console.error(err);
       
-      deferred.fulfill(true);
+      setTimeout(function(){ deferred.fulfill(true); }, 5000);
     });
 
     return deferred.promise;
