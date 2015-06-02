@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="Bethel" data-ng-controller="AppCtrl" class="no-js">
+<html lang="en" ng-app="Bethel" ng-controller="AppCtrl">
 <head>
   <meta charset="utf-8" />
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
@@ -26,7 +26,7 @@
 </head>
 
 <body layout="row">
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-if="user" layout-fill>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak ng-if="user" layout-fill>
     <md-toolbar class="md-hue-2">
       <h1 class="md-toolbar-tools">Bethel</h1>
     </md-toolbar>
@@ -45,18 +45,12 @@
     <!--ANGULAR VIEW-->
   </div>
 
-  <md-content id="login" class="main-content inverse" flex layout="row" layout-align="center center" ng-if="!user">
+  <md-content class="main-content inverse" flex id="login" layout="row" layout-align="center center" ng-cloak ng-if="!user">
     <div flex="30" flex-sm="90" flex-md="50" flex layout="column" layout-align="center center" ng-controller="LoginController">
 
        <img src="https://s3.amazonaws.com/static.bethel.io/images/logo.png" />
 
       <md-card layout-fill id="login-signup" ng-show="authCheck == true">
-
-        <!-- <md-toolbar class="md-accent md-hue-1">
-          <div class="md-toolbar-tools">
-            <h2>Welcome Back!</h2>
-          </div>
-        </md-toolbar> -->
 
         <md-card-content>
           <form name="userLoginForm" ng-submit="login(credentials)">
@@ -66,6 +60,7 @@
               <input autocorrect="off" autocapitalize="off" name="email" ng-model="credentials.name" placeholder="Email" required spellcheck="false" type="email" />
               <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched">
                 <div ng-message="required || email">A valid e-mail address is required.</div>
+                <div ng-message="loginValid">No account was found with this e-mail address.</div>
               </div>
             </md-input-container>
 
@@ -74,6 +69,7 @@
               <input autocorrect="off" autocapitalize="off" name="password" ng-model="credentials.pass" placeholder="Password" required spellcheck="false" type="password" />
               <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched">
                 <div ng-message="required">A password is required.</div>
+                <div ng-message="loginValid">The password you entered was incorrect.</div>
               </div>
             </md-input-container>
 

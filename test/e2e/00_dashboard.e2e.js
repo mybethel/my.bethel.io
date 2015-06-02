@@ -5,16 +5,12 @@ describe('Dashboard', function() {
   it('requires users to login.', function() {
     browser.get('/#/dashboard');
 
-    // Welcome back title.
-    element(by.css('h2.title')).getText().then(function (text) {
-      expect(text).to.be('Welcome back!');
-    });
     // Login form main wrapping element.
-    element(by.css('form.user-form')).isPresent().then(function (el) {
+    element(by.css('form[name="userLoginForm"]')).isPresent().then(function (el) {
       expect(el).to.be(true);
     });
     // New user create account link.
-    element(by.css('a.panel-footer')).isPresent().then(function (el) {
+    element(by.css('md-card-footer a')).isPresent().then(function (el) {
       expect(el).to.be(true);
     });
 
@@ -48,7 +44,7 @@ describe('Dashboard', function() {
     element(by.model('credentials.name')).sendKeys('test@bethel.io');
     element(by.model('credentials.name')).submit();
 
-    element(by.css('.form-item-pass.has-error')).isPresent().then(function (el) {
+    element(by.css('input[name="password"].ng-invalid-required')).isPresent().then(function (el) {
       expect(el).to.be(true);
     });
 

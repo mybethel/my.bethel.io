@@ -68,10 +68,12 @@ angular.module('Bethel', [
   $scope.updateSession = function(ev, data) {
     io.socket.get('/session/current', function (response) {
       $scope.$apply(function() {
+        $scope.authCheck = true;
+        if (response.auth) return;
+
         $scope.user = response.user;
         $scope.ministry = response.ministry;
         $scope.isAdmin = response.isAdmin;
-        $scope.authCheck = true;
 
         if (response.isAdmin) {
           $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
