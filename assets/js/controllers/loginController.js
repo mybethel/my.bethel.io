@@ -11,9 +11,11 @@ angular.module('Bethel.user', [])
     io.socket.post('/session/create', credentials, function (response) {
       if (angular.isDefined(response.error)) {
         // Shake the login dialogue to indicate login wasn't successful.
-        $('#login-signup').removeClass().addClass('shake animated').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-          $(this).removeClass();
-        });
+        angular.element(document.querySelector('#login-signup'))
+          .addClass('shake animated')
+          .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+            angular.element(this).removeClass('shake animated');
+          });
 
         // Set the error scope to associate an error with a field.
         return $scope.$apply(function() { $scope.error = response.error; });
