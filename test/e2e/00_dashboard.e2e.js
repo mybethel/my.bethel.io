@@ -56,12 +56,12 @@ describe('Dashboard', function() {
     element(by.model('credentials.pass')).submit();
 
     browser.wait(function() {
-      return element(by.css('.panel.me h3 span')).isPresent().then(function (el) {
+      return element(by.css('.welcome-modal h2')).isPresent().then(function (el) {
         return el === true;
       });
     }).then(function() {
-      element(by.css('.panel.me h3 span')).isPresent().then(function (el) {
-        expect(el).to.be(true);
+      element(by.css('.welcome-modal h2')).getText().then(function (text) {
+        expect(text).to.equal('Welcome, Jayne Cobb');
       });
     });
 

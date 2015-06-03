@@ -56,7 +56,8 @@ angular.module('Bethel', [
     { title: 'Volunteers', icon: 'people', url: 'beta' },
     { title: 'Live Streaming', icon: 'videocam', url: 'streaming' },
     { title: 'Giving', icon: 'attach_money', url: 'beta' },
-    { title: 'Social Media', icon: 'thumb_up', url: 'beta' }
+    { title: 'Social Media', icon: 'thumb_up', url: 'beta' },
+    { title: 'Settings', icon: 'settings', url: 'settings' }
   ];
   $scope.user = null;
   $scope.ministry = null;
