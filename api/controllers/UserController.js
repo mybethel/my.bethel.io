@@ -25,6 +25,30 @@ module.exports = {
     res.view();
   },
 
+  invite: function (req, res) {
+
+    var inviteCode = req.param('inviteCode'),
+        userId = new Buffer(inviteCode.replace('-','+').replace('_','/'), 'base64').toString('hex');
+
+    if (req.session.User) {
+      return res.redirect('/');
+    }
+
+    User.findOne(userId).exec(function (err, user) {
+      if (err) console.log(err);
+      if (err) return next(err);
+
+      if (!user) {
+        return res.forbidden({ error: { name: true } });
+      }
+
+      user.inviteCode = req.param('inviteCode');
+      return res.view({invitedUser: JSON.stringify(user)});
+
+    });
+
+  },
+
   update: function(req, res) {
     User.update(req.param('id'), req.params.all(), function userUpdated(err, user) {
       if (err) return next(err);

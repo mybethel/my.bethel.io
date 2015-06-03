@@ -53,7 +53,7 @@ module.exports = {
     hasRole: function(roleName) {
 
       if (!this.roles || this.roles.indexOf(roleName) == -1) {
-          return false;
+        return false;
       }
 
       return true;
@@ -62,6 +62,12 @@ module.exports = {
 
     toJSON: function() {
       var obj = this.toObject();
+
+      obj.inviteCode = new Buffer(obj.id, 'hex')
+        .toString('base64')
+        .replace('+','-')
+        .replace('/','_');
+
       delete obj.password;
       return obj;
     }
@@ -70,16 +76,38 @@ module.exports = {
 
   beforeCreate: function(values, next) {
     delete values.id;
-    Passwords.encryptPassword({ password: values.password }).exec({
-      error: function(err) {
-        next(err);
-      },
-      success: function(result) {
-        values.password = result;
-        values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
-        next();
-      }
+
+    if (values.password) {
+      Passwords.encryptPassword({ password: values.password }).exec({
+        error: function(err) {
+          next(err);
+        },
+        success: function(result) {
+          values.password = result;
+          values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+          next();
+        }
+      });
+    } else {
+      next();
+    }
+  },
+
+  afterCreate: function(values, next) {
+
+    if (!values.password || values.password === '') {
+      values.password = new Buffer(values.id, 'hex')
+        .toString('base64')
+        .replace('+','-')
+        .replace('/','_');
+    }
+
+    User.update(values.id, {password: values.password}, function userUpdated(err, user) {
+      if (err) return next(err);
+
+      next();
     });
+
   },
 
   beforeUpdate: function(values, next) {

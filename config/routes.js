@@ -26,6 +26,11 @@ module.exports.routes = {
     view: 'homepage'
   },
 
+  '/invite/:inviteCode': {
+    controller: 'user',
+    action: 'invite'
+  },
+
   '/login': {
     controller: 'user',
     action: 'login'

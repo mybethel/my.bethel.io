@@ -18,7 +18,7 @@ angular.module('Bethel.staff', ['ui.router', 'ngSanitize', 'ui.select'])
       templateUrl: 'templates/userManagement/view.html',
       controller: 'UserManagementController'
     })
-    .state('userCreate', {
+    .state('staff.userCreate', {
       url: '/createUser',
       templateUrl: 'templates/userManagement/create.html',
       controller: 'UserManagementController'

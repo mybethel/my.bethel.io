@@ -14,10 +14,12 @@
     position: absolute;
     width: 160px;
   }
+
   .title {
     margin-bottom: 15px;
     margin-top: 40px;
   }
+
   form {
     padding: 30px;
 
@@ -27,31 +29,56 @@
       position: relative;
       z-index: 1;
     }
+
     .form-item {
       position: relative;
       input:focus {
         z-index: 2;
       }
     }
+
     i {
       pointer-events: none;
       padding: 14px;
       position: absolute;
       z-index: 3;
     }
+
     input[type="text"], input[type="email"] {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       margin-bottom: -1px;
     }
+
     input[type="password"] {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       margin-bottom: 10px;
     }
   }
+
   .panel-footer {
     display: block;
     padding: 20px;
+  }
+
+  &.invite-form {
+
+    form {
+      .form-control {
+        padding-left: 10px;
+      }
+
+      input[type="password"], input[type="email"] {
+        margin: 0;
+        border-radius: 0;
+        margin-bottom: -1px;
+      }
+
+      .form-item-inviteCode input {
+        margin-bottom: 10px;
+        border-radius: 0 0 5px 5px;
+      }
+    }
   }
 }

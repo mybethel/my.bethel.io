@@ -27,11 +27,9 @@ angular.module('Bethel', [
     urlTemplate: '/i18n/{part}/{lang}.json'
   });
 
-  $urlRouterProvider.otherwise('/dashboard');
-
 })
 
-.controller('AppCtrl', ['$rootScope', function ($scope) {
+.controller('AppCtrl', ['$rootScope', '$state', function ($scope, $state) {
 
   $scope.redirect = '';
   $scope.navLinks = [];
@@ -50,6 +48,10 @@ angular.module('Bethel', [
 
         if (response.isAdmin) {
           $scope.navLinks.unshift({ title: 'Staff', icon: 'wrench', url: '/#/staff/user' });
+        }
+
+        if ($state.current.name === '' && angular.isDefined(response.user)) {
+          $state.transitionTo('dashboard');
         }
       });
     });
