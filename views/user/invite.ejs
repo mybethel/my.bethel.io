@@ -17,23 +17,17 @@
         <input autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="autofocus" class="form-control form-text" placeholder="E-mail" type="email" ng-model="invitedUser.email" required="true">
       </div>
 
-      <div class="form-item form-type-password form-item-pass" ng-class="{'has-error': error.password === true}">
+      <div class="form-item form-type-password form-item-pass showHidePass" ng-class="{'has-error': error.password === true}">
         <input class="form-control form-text" placeholder="Password" type="{{showPass ? 'text' : 'password'}}" ng-model="invitedUser.password" required="true">
-        <div class="pass-bg">
-          <a href="" ng-click="showPass = !showPass">{{showPass ? 'Hide' : 'Show'}}</a>
-        </div>
+        <a href="" ng-click="showPass = !showPass">{{showPass ? 'Hide' : 'Show'}}</a>
       </div>
 
       <div class="form-item form-type-textfield form-item-inviteCode" ng-class="{'has-error': error.inviteCode === true}">
-        <input class="form-control form-text" placeholder="Invite Code" type="text" ng-model="invitedUser.inviteCode" required="true">
+        <input class="form-control form-text" placeholder="Invite Code" type="text" ng-model="invitedUser.inviteCode" required="true" disabled>
       </div>
-
-      <label>
-        <input type="checkbox" ng-model="showPass">
-        {{showPass ? 'Hide' : 'Show'}} Password
-      </label>
 
       <button class="btn btn-lg btn-block" tabindex="3" type="submit" value="Log In">Let's Go!</button>
     </form>
+    <a class="panel-footer" href="/">Already a member? &nbsp;<span>Log In</span></a>
   </div>
 </div>

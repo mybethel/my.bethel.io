@@ -77,6 +77,8 @@ module.exports = {
   beforeCreate: function(values, next) {
     delete values.id;
 
+    values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+
     if (values.password) {
       Passwords.encryptPassword({ password: values.password }).exec({
         error: function(err) {
@@ -84,7 +86,6 @@ module.exports = {
         },
         success: function(result) {
           values.password = result;
-          values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
           next();
         }
       });
@@ -112,25 +113,9 @@ module.exports = {
 
   beforeUpdate: function(values, next) {
 
-    var finish = function() {
-      if (values.email) {
-        values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
-      }
-
-      if (values.invite) {
-        Ministry.findOne(values.invite, function (err, ministry) {
-          if (err) return next(err);
-
-          if (ministry) {
-            values.ministry = ministry.id;
-          }
-
-          next();
-        });
-      } else {
-        next();
-      }
-    };
+    if (values.email) {
+      values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+    }
 
     if (values.password) {
       Passwords.encryptPassword({ password: values.password }).exec({
@@ -139,11 +124,11 @@ module.exports = {
         },
         success: function(result) {
           values.password = result;
-          finish();
+          next();
         }
       });
     } else {
-      finish();
+      next();
     }
   }
 

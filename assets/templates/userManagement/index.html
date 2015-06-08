@@ -24,6 +24,11 @@
             <i ng-show="orderByField == 'createdAt'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
           </a>
         </th>
+        <th>
+          <a href="" data-ng-click="orderByField='lastLogin'; reverseSort = !reverseSort">Last Login
+            <i ng-show="orderByField == 'lastLogin'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+          </a>
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -33,6 +38,7 @@
         <td data-ng-bind="user.email"></td>
         <td><a data-ng-bind="user.ministry.name"></a></td>
         <td data-ng-bind="user.createdAt | date : M/d/yyyy"></td>
+        <td data-ng-bind="user.lastLogin | date : M/d/yyyy"></td>
       </tr>
     </tbody>
   </table>
