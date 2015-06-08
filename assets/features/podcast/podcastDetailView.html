@@ -4,32 +4,49 @@
 <md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
-    <span flex></span>
-    <small><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize></small>
   </div>
-</md-toolbar>
-
-<md-content class="main-content" flex layout="column" layout-margin layout-padding>
-
-  <md-button class="md-fab md-fab-bottom-right md-hue-3" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*">
+  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*">
     <md-tooltip>Upload Episode</md-tooltip>
     <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
   </md-button>
+</md-toolbar>
 
-  <div class="md-whiteframe-z1">
-    <md-list>
-      <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
-      <md-subheader class="md-no-sticky"><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 Podcast Episode', 'other': '{} Podcast Episodes' }"></ng-pluralize></md-subheader>
-      <md-list-item ng-if="!media || media.length < 1">
-        <p>Upload your first podcast episode now!</p>
-      </md-list-item>
-      <md-list-item class="md-2-line" ng-repeat="media in podcast.media | orderBy : 'date' : true">
-        <div class="md-list-item-text">
-          <h3> {{ media.name }} </h3>
-          <p am-time-ago="media.date"></p>
-        </div>
-      </md-list-item>
-    </md-list>
+<md-content class="main-content" flex layout="row" layout-wrap>
+
+  <div flex="100" layout="row" layout-padding>
+    <div flex="50">
+    </div>
+    <div flex="50">
+      <span ng-if="statistics[id] < 1">
+        <md-subheader class="md-no-sticky"><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize></md-subheader>
+        <md-button class="md-primary">Submit Podcast to iTunes</md-button>
+      </span>
+    </div>
+  </div>
+
+  <div flex="100" layout-padding>
+
+  <md-subheader class="md-no-sticky"><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize></md-subheader>
+    <md-whiteframe class="md-whiteframe-z1" layout>
+      <md-list class="episodes" flex="100">
+        <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
+        <md-list-item ng-if="!podcast.media || podcast.media.length < 1">
+          <p>Upload your first podcast episode now!</p>
+        </md-list-item>
+        <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="media in podcast.media | orderBy : 'date' : true">
+          <div class="md-list-item-text" flex="70">
+            <h3> {{ media.name }} </h3>
+            <p am-time-ago="media.date"></p>
+          </div>
+          <div class="episode-tools" flex="30">
+            <md-button class="md-mini md-primary">Edit</md-button>
+            <md-button ng-disabled="true" class="md-mini">Embed</md-button>
+          </div>
+          <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+      </md-list>
+    </md-whiteframe>
+
   </div>
 
 </md-content>
@@ -53,7 +70,10 @@
         <input type="text" ng-model="podcast.name">
       </md-input-container>
 
-      <md-chips ng-model="podcast.tags" secondary-placeholder="Tags"></md-chips>
+      <md-input-container>
+        <label>Tags</label>
+        <input type="text" ng-model="podcast.tags">
+      </md-input-container>
 
       <md-input-container>
         <label>Description</label>

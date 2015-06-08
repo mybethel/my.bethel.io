@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 	grunt.config.set('less', {
 		dev: {
 			options: {
-				paths: ['assets/components']
+				paths: ['assets/components', 'assets/features']
 			},
 			files: {
 				'.tmp/public/styles/app.css': 'assets/styles/app.less',
