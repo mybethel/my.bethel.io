@@ -47,6 +47,12 @@ angular.module('Bethel.staff')
     });
   };
 
+  $scope.sendInviteEmail = function() {
+    io.socket.get('/user/sendInvite/' + $stateParams.userId, function (response, status) {
+      console.log(response, status);
+    });
+  };
+
   $scope.createUserSubmit = function() {
 
     var newMinistry = $scope.newUser.newMinistry;

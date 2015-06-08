@@ -1,10 +1,5 @@
 <div id="focus" ng-hide="user">
-  <div id="login-signup"
-       ng-show="authCheck == true"
-       ng-controller="LoginController"
-       ng-init="invitedUser = <%= invitedUser %>"
-       class="invite-form panel ng-hide"
-  >
+  <div id="login-signup" ng-show="authCheck == true" ng-controller="LoginController" ng-init="invitedUser = <%= invitedUser %>" class="invite-form panel ng-hide">
     <img src="https://s3.amazonaws.com/static.bethel.io/images/logo.png" class="logo" />
     <h2 class="title">Sign Up!</h2>
     <form class="user-form" ng-submit="signup(invitedUser)">

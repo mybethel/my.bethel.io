@@ -15,6 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var Mandrill = require('machinepack-mandrill');
+
 module.exports = {
 
   login: function (req, res) {
@@ -44,6 +46,40 @@ module.exports = {
 
       user.inviteCode = req.param('inviteCode');
       return res.view({invitedUser: JSON.stringify(user)});
+
+    });
+
+  },
+
+  sendInvite: function (req, res) {
+
+    console.log(req.param('id'));
+
+    User.findOne(req.param('id')).exec(function (err, user) {
+      if (err) return next(err);
+
+      if (user) {
+        Mandrill.sendPlaintextEmail({
+          apiKey: sails.config.mandrill.key,
+          toEmail: 'josh@imor.tl',
+          toName: user.name,
+          subject: 'Welcome, ' + user.name + '!',
+          message: user.name + ',\nThanks for joining our community. Your email is ' + user.email + '. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
+          fromEmail: 'bethel@is.the.greatest.com',
+          fromName: 'Bethel Bethelson',
+        }).exec({
+          // An unexpected error occurred.
+          error: function (err){
+            console.log('MAIL ERROR ', err);
+            return next(err);
+          },
+          // OK.
+          success: function (){
+            console.log('SENT MAIL!!!!!');
+            res.send(200);
+          },
+        });
+      }
 
     });
 
