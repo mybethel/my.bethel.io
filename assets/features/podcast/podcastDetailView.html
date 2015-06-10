@@ -15,11 +15,12 @@
 
   <div flex="100" layout="row" layout-padding>
     <div flex="50">
+      
     </div>
     <div flex="50">
       <span ng-if="statistics[id] < 1">
         <md-subheader class="md-no-sticky"><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize></md-subheader>
-        <md-button class="md-primary">Submit Podcast to iTunes</md-button>
+        <md-button class="md-primary" ng-click="submitPodcast($event)">Submit Podcast to iTunes</md-button>
       </span>
     </div>
   </div>

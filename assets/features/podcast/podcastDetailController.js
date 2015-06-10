@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', '$upload', function ($scope, $state, $stateParams, $upload) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', '$upload', '$mdDialog', function ($scope, $state, $stateParams, $upload, $mdDialog) {
 
   var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
@@ -12,18 +12,6 @@ angular.module('Bethel.podcast')
     io.socket.get('/podcast/' + $scope.id, function (data) {
       $scope.$apply(function() {
         $scope.podcast = data;
-        $scope.tags = [];
-        if (angular.isDefined(data.tags) && typeof data.tags !== 'string') {
-          data.tags.forEach(function (tag) {
-            $scope.tags.push({ text: tag });
-          });
-        }
-        $scope.sourceMeta = [];
-        if (angular.isDefined(data.sourceMeta) && typeof data.sourceMeta !== 'string') {
-          data.sourceMeta.forEach(function (tag) {
-            $scope.sourceMeta.push({ text: tag });
-          });
-        }
       });
     });
   };
@@ -64,41 +52,6 @@ angular.module('Bethel.podcast')
     }
   });
 
-  $scope.$watch('podcast', function (newValue, oldValue) {
-    $scope.$parent.podcastCurrent = newValue;
-
-    if (!newValue || newValue === oldValue)
-      return;
-
-    if (!angular.isArray(newValue.tags)) {
-      $scope.podcast.tags = [];
-    }
-
-    if (!newValue || angular.isUndefined($scope.podcasts))
-      return;
-
-    var i = findIndexByPropertyValue($scope.podcasts, 'id', $scope.id);
-    $scope.podcasts[i] = $scope.podcast;
-  }, true);
-
-  // Save action for podcast title.
-  // $('h1.title').on('input', $.debounce(250, function() {
-  //   $scope.podcast.name = $('h1.title').text();
-  //   io.socket.put('/podcast/' + $scope.id, {
-  //     name: $scope.podcast.name,
-  //     _csrf: $scope.$root._csrf
-  //   });
-  // }));
-
-  // // Save action for podcast description.
-  // $('.editable.description').on('input', $.debounce(250, function() {
-  //   $scope.podcast.description = $('.editable.description').text();
-  //   io.socket.put('/podcast/' + $scope.id, {
-  //     description: $scope.podcast.description,
-  //     _csrf: $scope.$root._csrf
-  //   });
-  // }));
-
   $scope.setSource = function(source) {
     if (angular.isUndefined(source.id))
       return;
@@ -110,29 +63,6 @@ angular.module('Bethel.podcast')
       $scope.$apply(function () {
         $scope.podcast.service = updated.service;
       });
-    });
-  };
-
-  $scope.updateTags = function(tag, action) {
-    switch (action) {
-      case 'added':
-        if (angular.isUndefined($scope.podcast.tags) || typeof $scope.podcast.tags === 'string') {
-          $scope.podcast.tags = [];
-        }
-        $scope.podcast.tags.push(tag.text);
-        break;
-
-      case 'removed':
-        var tagToDelete = $scope.podcast.tags.indexOf(tag.text);
-        if (tagToDelete > -1) {
-          $scope.podcast.tags.splice(tagToDelete, 1);
-        }
-        break;
-    }
-
-    io.socket.put('/podcast/' + $scope.id, {
-      tags: $scope.podcast.tags,
-      _csrf: $scope.$root._csrf
     });
   };
 
@@ -259,10 +189,15 @@ angular.module('Bethel.podcast')
     });
   };
 
-  $scope.submitPodcast = function() {
-    $modal.open({
+  $scope.submitPodcast = function(event) {
+    $mdDialog.show({
+      clickOutsideToClose: true,
       templateUrl: 'features/podcast/podcastSubmitView.html',
-      scope: $scope
+      targetEvent: event,
+      locals: { id: $scope.id },
+      controller: function submitPodcastDialog($scope, id) {
+        $scope.feed = 'http://podcast.bethel.io/' + id + '.xml';
+      }
     });
   };
 
