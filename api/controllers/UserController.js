@@ -53,28 +53,33 @@ module.exports = {
 
   sendInvite: function (req, res) {
 
-    console.log(req.param('id'));
-
     User.findOne(req.param('id')).exec(function (err, user) {
       if (err) return next(err);
 
       if (user) {
-        Mandrill.sendPlaintextEmail({
+
+        var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+','-').replace('/','_'),
+            inviteUrl = sails.getBaseurl() + '/invite/' + inviteCode,
+            templateVariables = [
+              {name: 'inviteUrl', content: inviteUrl},
+              {name: 'userName', content: user.name},
+              {name: 'year', content: new Date().getFullYear()}
+            ];
+
+        Mandrill.sendTemplateEmail({
           apiKey: sails.config.mandrill.key,
           toEmail: 'josh@imor.tl',
+          templateName: 'beta-invite',
           toName: user.name,
-          subject: 'Welcome, ' + user.name + '!',
-          message: user.name + ',\nThanks for joining our community. Your email is ' + user.email + '. If you have any questions, please don\'t hesitate to send them our way. Feel free to reply to this email directly.\n\nSincerely,\nThe Management',
-          fromEmail: 'bethel@is.the.greatest.com',
-          fromName: 'Bethel Bethelson',
+          subject: 'Welcome to Bethel!',
+          fromEmail: 'hello@bethel.io',
+          fromName: 'Bethel',
+          mergeVars: templateVariables,
         }).exec({
-          // An unexpected error occurred.
-          error: function (err){
+          error: function (err) {
             console.log('MAIL ERROR ', err);
-            return next(err);
           },
-          // OK.
-          success: function (){
+          success: function () {
             console.log('SENT MAIL!!!!!');
             res.send(200);
           },
