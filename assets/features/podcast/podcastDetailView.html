@@ -13,7 +13,7 @@
   
 </md-toolbar>
 
-<md-content class="main-content" flex layout="row" layout-wrap>
+<md-content class="main-content" layout="row" layout-wrap>
 
   <div flex="100" layout="row" layout-padding>
     <div flex="50">
@@ -27,14 +27,15 @@
     </div>
   </div>
 
-  <div flex="100" layout-padding>
+  <div flex="100" layout-padding layout-align="top center">
 
-  <md-subheader class="md-no-sticky"><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize></md-subheader>
+  <md-subheader class="md-no-sticky"><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize><span ng-if="uploading"> (1 uploading)</span></md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout>
       <md-list class="episodes" flex="100">
         <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
         <md-list-item ng-if="!podcast.media || podcast.media.length < 1">
-          <p>Upload your first podcast episode now!</p>
+          <p ng-if="!uploading">Upload your first podcast episode now!</p>
+          <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
         </md-list-item>
         <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="media in podcast.media | orderBy : 'date' : true">
           <div class="md-list-item-text" flex="70">
