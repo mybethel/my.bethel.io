@@ -1,13 +1,15 @@
-<div class="modal-header">
-  <a ng-click="$close()" class="close">&times;</a>
-  <h4 class="modal-title">Ready to submit your podcast to iTunes? Here's how!</h4>
-</div>
-<div class="modal-body text-center podcast-feed">
-  <p>Copy the link to your Podcast Feed URL:</p>
-  <p><input type="text" class="form-control disabled" value="http://podcast.bethel.io/{{ podcast.id }}.xml" /></p>
-  <a href="https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/publishPodcast" target="_blank">Click here</a> to submit your Podcast to iTunes
-</div>
-<div class="modal-footer">
-  <a href="mailto:help@bethel.io" class="pull-left help">Need Help?</a>
-  <a class="btn btn-default" ng-click="$close()">Done</a>
-</div>
+<md-dialog flex="50">
+  <md-dialog-content class="sticky-container">
+    <md-toolbar class="md-accent md-hue-3">
+      <h1 class="md-toolbar-tools">Ready to submit your podcast to iTunes? Here's how!</h1>
+    </md-toolbar>
+    <div>
+      <p>Copy the link to your Podcast Feed URL:</p>
+      <md-input-container>
+        <label>Podcast feed</label>
+        <input type="text" ng-model="feed" />
+      </md-input-container>
+      <a href="https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/publishPodcast" target="_blank">Click here</a> to submit your Podcast to iTunes
+    </div>
+  </md-dialog-content>
+</md-dialog>
