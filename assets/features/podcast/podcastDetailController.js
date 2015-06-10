@@ -9,21 +9,24 @@ angular.module('Bethel.podcast')
   $scope.editing = false;
 
   $scope.init = function() {
+
     io.socket.get('/podcast/' + $scope.id, function (data) {
       $scope.$apply(function() {
         $scope.podcast = data;
+        $scope.thumbnailUploading = false;
       });
     });
+
+    io.socket.get('/podcast/edit/' + $scope.id, function (data) {
+      $scope.$apply(function() {
+        $scope.thumbnailForm = data.s3form;
+        $scope.uploadEpisode = data.uploadEpisode;
+      });
+    });
+
   };
 
   $scope.init();
-
-  io.socket.get('/podcast/edit/' + $scope.id, function (data) {
-    $scope.$apply(function() {
-      $scope.thumbnailForm = data.s3form;
-      $scope.uploadEpisode = data.uploadEpisode;
-    });
-  });
 
   io.socket.get('/service/list', {}, function (response, status) {
     $scope.$apply(function() { $scope.accounts = response; });
@@ -32,23 +35,6 @@ angular.module('Bethel.podcast')
   io.socket.on('podcast', function (message) {
     if (message.verb === 'updated' && message.id === $scope.podcast.id) {
       $scope.init();
-    }
-  });
-
-  $scope.toggleEditing = function() {
-    $scope.editing = !$scope.editing;
-  };
-
-  $scope.$watch('editing', function() {
-    if (angular.isUndefined(titleEditor))
-      return;
-
-    if ($scope.editing === true) {
-      titleEditor.activate();
-      descriptionEditor.activate();
-    } else {
-      titleEditor.deactivate();
-      descriptionEditor.deactivate();
     }
   });
 
@@ -89,7 +75,7 @@ angular.module('Bethel.podcast')
     });
   };
 
-  $scope.uploadThumbnail = function ($files) {
+  $scope.uploadThumbnail = function($files) {
     $scope.thumbnailUploading = true;
     $upload.upload({
       url: $scope.thumbnailForm.action,
@@ -110,7 +96,6 @@ angular.module('Bethel.podcast')
         temporaryImage: $files[0].name,
         _csrf: $scope.$root._csrf
       });
-      $scope.thumbnailUploading = false;
     });
   };
 

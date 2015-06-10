@@ -5,17 +5,19 @@
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
   </div>
-  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" multiple accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*">
-    <md-tooltip>Upload Episode</md-tooltip>
+  <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
     <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-  </md-button>
+  </button>
+
+    <!-- <md-tooltip>Upload Episode</md-tooltip> -->
+  
 </md-toolbar>
 
 <md-content class="main-content" flex layout="row" layout-wrap>
 
   <div flex="100" layout="row" layout-padding>
     <div flex="50">
-      
+
     </div>
     <div flex="50">
       <span ng-if="statistics[id] < 1">
@@ -60,8 +62,12 @@
 
     <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="100%" />
 
-    <div layout="row" layout-align="center center">
-      <md-button class="md-primary" ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg">Upload New Image</md-button>
+    <div layout="row" layout-align="center center" ng-hide="thumbnailUploading">
+      <button class="md-primary md-button md-default-theme" ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg">Upload New Image</button>
+    </div>
+
+    <div layout="row" layout-align="center center" ng-show="thumbnailUploading">
+      <md-progress-circular md-diameter="24" md-mode="indeterminate"></md-progress-circular>
     </div>
 
     <div layout-padding layout-margin>
