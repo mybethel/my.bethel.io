@@ -6,11 +6,9 @@
     <h2>{{ podcast.name }}</h2>
   </div>
   <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
+    <md-tooltip>Upload Episode</md-tooltip>
     <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
   </button>
-
-    <!-- <md-tooltip>Upload Episode</md-tooltip> -->
-  
 </md-toolbar>
 
 <md-content class="main-content" layout="row" layout-wrap>
