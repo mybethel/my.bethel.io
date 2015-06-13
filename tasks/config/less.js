@@ -19,7 +19,8 @@ module.exports = function(grunt) {
 			},
 			files: {
 				'.tmp/public/styles/app.css': 'assets/styles/app.less',
-				'.tmp/public/styles/vjs-embed.css': 'assets/styles/vjs-embed.less'
+				'.tmp/public/styles/vjs-embed.css': 'assets/styles/vjs-embed.less',
+				'.tmp/public/styles/embed.css': 'assets/styles/embed.less'
 			}
 		}
 	});
