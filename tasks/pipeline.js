@@ -59,6 +59,8 @@ var jsFilesToInject = [
   // Media player elements
   'components/videojs/dist/video-js/video.js',
 
+  'shared/sharedConfig.js',
+  'shared/*.js',
   'js/configuration/*.js',
   'features/**/*Config.js',
   'js/controllers/*.js',
