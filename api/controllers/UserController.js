@@ -68,7 +68,7 @@ module.exports = {
 
         Mandrill.sendTemplateEmail({
           apiKey: sails.config.mandrill.key,
-          toEmail: 'josh@imor.tl',
+          toEmail: user.email,
           templateName: 'beta-invite',
           toName: user.name,
           subject: 'Welcome to Bethel!',
