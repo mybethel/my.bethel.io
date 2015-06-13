@@ -2,21 +2,27 @@
 
   <hr>
 
-  <div class="row user-management-row">
-    <div class="col-md-3">
+  <div class="row">
+    <div class="col-sm-12">
       <h3>User Management: </h3>
     </div>
-    <div class="col-md-2">
+  </div>
+
+  <div class="row user-management-row">
+    <div class="col-md-3">
       <button data-ng-click="lockUnlock()" class="btn btn-primary">
         <i class="fa" data-ng-class="user.isLocked ? 'fa-unlock' : 'fa-lock'"></i>
         <span data-ng-bind="user.isLocked ? 'Unlock' : 'Lock'"></span> User Account
       </button>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <button class="btn btn-primary"><i class="fa fa-key"></i>Masquerade as User</button>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-3">
       <button class="btn btn-primary"><i class="fa fa-shield"></i>Reset User Password</button>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-primary" ng-click="sendInviteEmail()"><i ng-class="{'fa-circle-o-notch fa-spin': emailSending, 'fa-check':emailSending === false, 'fa-envelope': emailSending === undefined}" class="fa"></i>Send Invite Email</button>
     </div>
   </div>
 
