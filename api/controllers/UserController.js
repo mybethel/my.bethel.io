@@ -37,12 +37,9 @@ module.exports = {
     }
 
     User.findOne(userId).exec(function (err, user) {
-      if (err) console.log(err);
-      if (err) return next(err);
+      if (err) return res.serverError(err);
 
-      if (!user) {
-        return res.forbidden({ error: { name: true } });
-      }
+      if (!user) return res.forbidden('Invalid invite code');
 
       user.inviteCode = req.param('inviteCode');
       return res.view({invitedUser: JSON.stringify(user)});
@@ -54,36 +51,35 @@ module.exports = {
   sendInvite: function (req, res) {
 
     User.findOne(req.param('id')).exec(function (err, user) {
-      if (err) return next(err);
+      if (err) return res.serverError(err);
 
-      if (user) {
+      if (!user) return res.serverError('No user found with that id');
 
-        var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+','-').replace('/','_'),
-            inviteUrl = sails.getBaseurl() + '/invite/' + inviteCode,
-            templateVariables = [
-              {name: 'inviteUrl', content: inviteUrl},
-              {name: 'userName', content: user.name},
-              {name: 'year', content: new Date().getFullYear()}
-            ];
+      var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+','-').replace('/','_'),
+          inviteUrl = sails.getBaseurl() + '/invite/' + inviteCode,
+          templateVariables = [
+            {name: 'inviteUrl', content: inviteUrl},
+            {name: 'userName', content: user.name},
+            {name: 'year', content: new Date().getFullYear()}
+          ];
 
-        Mandrill.sendTemplateEmail({
-          apiKey: sails.config.mandrill.key,
-          toEmail: user.email,
-          templateName: 'beta-invite',
-          toName: user.name,
-          subject: 'Welcome to Bethel!',
-          fromEmail: 'hello@bethel.io',
-          fromName: 'Bethel',
-          mergeVars: templateVariables,
-        }).exec({
-          error: function (err) {
-            return res.serverError(err);
-          },
-          success: function () {
-            return res.ok();
-          },
-        });
-      }
+      Mandrill.sendTemplateEmail({
+        apiKey: sails.config.mandrill.key,
+        toEmail: user.email,
+        templateName: 'beta-invite',
+        toName: user.name,
+        subject: 'Welcome to Bethel!',
+        fromEmail: 'hello@bethel.io',
+        fromName: 'Bethel',
+        mergeVars: templateVariables,
+      }).exec({
+        error: function (err) {
+          return res.serverError(err);
+        },
+        success: function () {
+          return res.ok();
+        },
+      });
 
     });
 
