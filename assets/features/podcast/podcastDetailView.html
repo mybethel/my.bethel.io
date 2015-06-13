@@ -31,7 +31,7 @@
     <md-whiteframe class="md-whiteframe-z1" layout>
       <md-list class="episodes" flex="100">
         <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
-        <md-list-item ng-if="!podcast.media || podcast.media.length < 1">
+        <md-list-item ng-if="podcast.media.length < 1">
           <p ng-if="!uploading">Upload your first podcast episode now!</p>
           <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
         </md-list-item>

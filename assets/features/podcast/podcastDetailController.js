@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', '$upload', '$mdDialog', function ($scope, $state, $stateParams, $upload, $mdDialog) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', function ($scope, $state, $stateParams, upload, $mdDialog) {
 
   var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
@@ -19,7 +19,7 @@ angular.module('Bethel.podcast')
 
     io.socket.get('/podcast/edit/' + $scope.id, function (data) {
       $scope.$apply(function() {
-        $scope.thumbnailForm = data.s3form;
+        $scope.thumbnailS3 = data.s3form;
         $scope.uploadEpisode = data.uploadEpisode;
       });
     });
@@ -77,26 +77,15 @@ angular.module('Bethel.podcast')
 
   $scope.uploadThumbnail = function($files) {
     $scope.thumbnailUploading = true;
-    $upload.upload({
-      url: $scope.thumbnailForm.action,
-      method: 'POST',
-      data: {
-        key: $scope.thumbnailForm.bucket + '/' + $files[0].name,
-        AWSAccessKeyId: $scope.thumbnailForm.key, 
-        acl: 'public-read',
-        policy: $scope.thumbnailForm.policy,
-        signature: $scope.thumbnailForm.signature,
-        'Content-Type': $files[0].type !== '' ? $files[0].type : 'application/octet-stream'
-      },
-      file: $files[0],
-    })
-    .success(function (data, status, headers, config) {
-      io.socket.put('/podcast/' + $scope.id, {
-        id: $scope.id,
-        temporaryImage: $files[0].name,
-        _csrf: $scope.$root._csrf
+
+    upload.s3($scope.thumbnailS3, $files[0])
+      .success(function (data, status, headers, config) {
+        io.socket.put('/podcast/' + $scope.id, {
+          id: $scope.id,
+          temporaryImage: $files[0].name,
+          _csrf: $scope.$root._csrf
+        });
       });
-    });
   };
 
   // Triggered when a file is chosen for upload.
@@ -112,65 +101,39 @@ angular.module('Bethel.podcast')
     var fileExt = file.name.split('.').pop(),
         fileName = file.name.replace('.' + fileExt, '');
 
-    var fileMeta = {
-      key: $scope.uploadEpisode.bucket + '/' + file.name,
-      AWSAccessKeyId: $scope.uploadEpisode.key,
-      acl: 'public-read',
-      policy: $scope.uploadEpisode.policy,
-      signature: $scope.uploadEpisode.signature,
-      'Content-Type': file.type !== '' ? file.type : 'application/octet-stream'
-    };
-
     $scope.uploading = true;
 
-    $upload.upload({
-      url: $scope.uploadEpisode.action,
-      method: 'POST',
-      data: fileMeta,
-      file: file,
-    })
-    .progress(function(evt) {
-      $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
-    })
-    .success(function(data, status, headers, config) {
+    upload.s3($scope.uploadEpisode, file)
+      .progress(function(evt) {
+        $scope.uploadProgress = parseInt(100.0 * evt.loaded / evt.total);
+      })
+      .success(function(data, status, headers, config) {
 
-      io.socket.post('/podcastmedia', {
-        name: fileName,
-        date: file.lastModifiedDate,
-        url: 'http://cloud.bethel.io/' + encodeURI(fileMeta.key),
-        size: file.size,
-        podcast: $scope.id,
-        type: 'cloud',
-        _csrf: $scope.$root._csrf
-      }, function (podcast) {
-        // Call the endpoint to generate metadata.
-        io.socket.get('/podcastmedia/meta/' + podcast.id);
+        io.socket.post('/podcastmedia', {
+          name: fileName,
+          date: file.lastModifiedDate,
+          url: 'http://cloud.bethel.io/' + encodeURI(fileMeta.key),
+          size: file.size,
+          podcast: $scope.id,
+          type: 'cloud',
+          _csrf: $scope.$root._csrf
+        }, function (podcast) {
+          // Call the endpoint to generate metadata.
+          io.socket.get('/podcastmedia/meta/' + podcast.id);
 
-        $scope.init();
+          $scope.init();
+        });
+
       });
-
-    });
   };
 
-  $scope.editMedia = function (id) {
-
-    var modalInstance = $modal.open({
+  $scope.editMedia = function (mediaId) {
+    $mdDialog.show({
+      clickOutsideToClose: true,
       templateUrl: 'features/podcast/podcastMediaView.html',
-      controller: 'podcastMediaController',
-      resolve: {
-        mediaId: function() {
-          return id;
-        }
-      }
-    });
-
-    modalInstance.result.then(function (selectedItem) {
-      $scope.selected = selectedItem;
-    }, function (result) {
-      if (result === 'cancel')
-        return;
-
-      $scope.init();
+      targetEvent: event,
+      locals: { id: mediaId },
+      controller: 'podcastMediaController'
     });
   };
 
