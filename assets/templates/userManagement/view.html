@@ -22,7 +22,7 @@
       <button class="btn btn-primary"><i class="fa fa-shield"></i>Reset User Password</button>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-primary" ng-click="sendInviteEmail()"><i class="fa fa-envelope"></i>Send Invite Email</button>
+      <button class="btn btn-primary" ng-click="sendInviteEmail()"><i ng-class="{'fa-circle-o-notch fa-spin': emailSending, 'fa-check':emailSending === false, 'fa-envelope': emailSending === undefined}" class="fa"></i>Send Invite Email</button>
     </div>
   </div>
 

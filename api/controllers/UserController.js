@@ -77,11 +77,10 @@ module.exports = {
           mergeVars: templateVariables,
         }).exec({
           error: function (err) {
-            console.log('MAIL ERROR ', err);
+            return res.serverError(err);
           },
           success: function () {
-            console.log('SENT MAIL!!!!!');
-            res.send(200);
+            return res.ok();
           },
         });
       }
@@ -121,8 +120,7 @@ module.exports = {
 
       User.update(user.id, {isLocked: !user.isLocked}, function (err, updatedUser) {
         if (err) {
-          console.log("ERROR: ", err);
-          res.serverError(err);
+          return res.serverError(err);
         }
 
         res.send(updatedUser[0]);
