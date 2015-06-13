@@ -1,0 +1,243 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:700,400,300);
+@import url(https://fonts.googleapis.com/css?family=Lato:700,300,100);
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  &:before,
+  &:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+}
+html, body {
+  height: 100%;
+}
+html {
+  font-family: sans-serif;
+  font-size: 10px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+  background: #f4f6f8;
+  color: #333333;
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  margin: 0;
+}
+a {
+  background-color: transparent;
+  color: #1591b5;
+  text-decoration: none;
+  &:active,
+  &:hover {
+    outline: 0;
+  }
+  &:hover,
+  &:focus {
+    color: #0d5a70;
+    text-decoration: underline;
+  }
+  &:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+  }
+}
+audio {
+  display: inline-block;
+  vertical-align: baseline;
+  &:not([controls]) {
+    display: none;
+    height: 0;
+  }
+}
+h1, h2 {
+  color: inherit;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+h1 {
+  font-size: 36px;
+  margin: 0.67em 0;
+}
+h2 {
+  font-size: 30px;
+  small {
+    font-size: 65%;
+    font-weight: normal;
+    line-height: 1;
+    color: #777777;
+  }
+}
+small {
+  font-size: 85%;
+}
+img {
+  border: 0;
+  vertical-align: middle;
+}
+.video-js {
+  background-color: #000;
+  padding: 0;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 10px;
+  vertical-align: middle;
+  font-weight: normal;
+  font-style: normal;
+  font-family: Arial, sans-serif;
+}
+.vjs-embed-skin {
+  color: #cccccc;
+}
+#embed-frame {
+  background: white;
+  height: 140px;
+  overflow: hidden;
+  img {
+    position: absolute;
+    z-index: 1;
+    @media (max-width: 320px) {
+      width: 40px;
+      right: 15px;
+      bottom: 9px;
+    }
+  }
+  .meta {
+    position: absolute;
+    left: 155px;
+    right: 15px;
+    color: white;
+    z-index: 1;
+    @media (max-width: 320px) {
+      left: 15px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 200;
+      line-height: 2.5rem;
+      margin-right: 30px;
+      overflow: hidden;
+      white-space: nowrap;
+      @media (max-width: 320px) {
+        font-size: 2rem;
+        white-space: normal;
+        margin-bottom: 5px;
+        margin-top: 15px;
+        margin-right: 0;
+      }
+    }
+    h2 {
+      font-size: 1.6rem;
+      margin-top: 0;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      @media (max-width: 320px) {
+        font-size: 1.4rem;
+      }
+      small {
+        color: white;
+        font-size: 1.2rem;
+        @media (max-width: 320px) {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  .extras {
+    position: absolute;
+    top: 23px;
+    right: 15px;
+    z-index: 1;
+    @media (max-width: 320px) {
+      display: none;
+    }
+    a {
+      font-size: 1.3em;
+      color: white;
+      :hover {
+        text-decoration: none;
+      }
+    }
+  }
+  #embedded.audio-player {
+    background: transparent;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+@font-face {
+  font-family: 'VideoJS';
+  src: url('https://static.bethel.io/libraries/video-js/font/vjs.eot');
+  src: url('https://static.bethel.io/libraries/video-js/font/vjs.eot?#iefix') format('embedded-opentype'), url('https://static.bethel.io/libraries/video-js/font/vjs.woff') format('woff'), url('https://static.bethel.io/libraries/video-js/font/vjs.ttf') format('truetype'), url('https://static.bethel.io/libraries/video-js/font/vjs.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url("https://my.bethel.io/fonts/glyphicons-halflings-regular.eot");
+  src: url("https://my.bethel.io/fonts/glyphicons-halflings-regular.eot#iefix") format('embedded-opentype'), url("https://my.bethel.io/fonts/glyphicons-halflings-regular.woff") format('woff'), url("https://my.bethel.io/fonts/glyphicons-halflings-regular.ttf") format('truetype'), url("https://my.bethel.io/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format('svg');
+}
+@-webkit-keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 40px 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@-ms-viewport {
+  width: device-width;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}

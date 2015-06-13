@@ -16,10 +16,8 @@
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   'components/animate.css/animate.min.css',
-  'components/angular-ui-select/dist/select.min.css',
   'components/angular-material/angular-material.min.css',
-  'styles/**/*.css',
-  '!styles/vjs-embed.css'
+  'styles/app.css',
 ];
 
 // Client-side javascript files to inject in order
