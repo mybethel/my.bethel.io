@@ -1,29 +1,35 @@
-<div class="modal-header">
-  <h3 class="modal-title" data-ng-bind="media.name"></h3>
-</div>
-<iframe data-ng-src="{{ media.url }}" width="600" height="140" frameborder="0"></iframe>
-<div class="modal-body podcast-media">
-  <div class="row">
-    <div class="col-sm-6">
-      <datepicker data-ng-model="media.date" show-weeks="false" class="date well well-sm"></datepicker>
-    </div>
-    <div class="col-sm-6">
-      <div class="form-group">
-        <label data-ng-bind="'PODCAST.MEDIA.TITLE' | translate"></label>
-        <input type="text" class="form-control" placeholder="{{ 'PODCAST.MEDIA.TITLE' | translate }}" data-ng-model="media.name" />
-      </div>
-      <div class="form-group">
-        <label><small data-ng-bind="'PODCAST.MEDIA.DESCRIPTION' | translate"></small></label>
-        <textarea class="form-control" rows="3" placeholder="{{ 'PODCAST.MEDIA.DESCRIPTION_HELP' | translate }}" data-ng-model="media.description"></textarea>
-      </div>
+<md-dialog flex="50" class="podcast-media">
+  <md-dialog-content class="sticky-container">
+
+    <iframe data-ng-src="{{ media.url }}" width="600" height="140" frameborder="0"></iframe>
+
+    <div layout-padding>
+
+      <md-input-container>
+        <label>{{ 'PODCAST.MEDIA.TITLE' | translate }}</label>
+        <input type="text" ng-model="media.name">
+      </md-input-container>
+
+      <md-input-container>
+        <label>Episode Date</label>
+        <input type="text" ng-model="media.date">
+      </md-input-container>
+
+      <md-input-container>
+        <label>{{ 'PODCAST.MEDIA.DESCRIPTION' | translate }}</label>
+        <textarea ng-model="media.description" columns="1" rows="3"></textarea>
+      </md-input-container>
+
       <div class="form-group" data-ng-if="ministry.url">
         <label><small data-ng-bind="'PODCAST.MEDIA.PLAYER' | translate"></small></label>
         <input type="text" class="form-control" placeholder="{{ 'PODCAST.MEDIA.PLAYER_HELP' | translate }}" data-ng-model="media.reference" typeahead="series for series in getSeries($viewValue)" />
       </div>
+
     </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">Cancel</md-button>
+    <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
   </div>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-default" data-ng-click="cancel()">Cancel</button>
-  <button class="btn btn-primary" data-ng-click="save()">Save Changes</button>
-</div>
+</md-dialog>

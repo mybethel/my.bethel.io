@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
-
-.controller('podcastMediaController', ['$scope', '$modalInstance', 'mediaId', '$sce', '$http', function ($scope, $modalInstance, mediaId, $sce, $http) {
+.controller('podcastMediaController', ['$scope', '$mdDialog', 'mediaId', '$sce', '$http',
+  function ($scope, $mdDialog, mediaId, $sce, $http) {
 
   io.socket.get('/podcastmedia/' + mediaId, function (data) {
     $scope.$apply(function() {
@@ -28,12 +28,12 @@ angular.module('Bethel.podcast')
       reference: $scope.media.reference,
       _csrf: $scope.$root._csrf
     }, function() {
-      $modalInstance.dismiss($scope.media);
+      $mdDialog.hide();
     });
   };
 
   $scope.cancel = function() {
-    $modalInstance.dismiss('cancel');
+    $mdDialog.cancel();
   };
 
 }]);

@@ -127,12 +127,12 @@ angular.module('Bethel.podcast')
       });
   };
 
-  $scope.editMedia = function (mediaId) {
+  $scope.editMedia = function (id) {
     $mdDialog.show({
       clickOutsideToClose: true,
       templateUrl: 'features/podcast/podcastMediaView.html',
       targetEvent: event,
-      locals: { id: mediaId },
+      locals: { mediaId: id },
       controller: 'podcastMediaController'
     });
   };
