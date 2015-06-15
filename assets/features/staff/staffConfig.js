@@ -5,32 +5,32 @@ angular.module('Bethel.staff', ['ui.router', 'ngSanitize', 'ui.select'])
   $stateProvider
     .state('staff', {
       url: '/staff',
-      templateUrl: 'templates/staff/index.html',
+      templateUrl: 'features/staff/staffView.html',
       controller: 'StaffController'
     })
     .state('staff.users', {
       url: '/user',
-      templateUrl: 'templates/userManagement/index.html',
+      templateUrl: 'features/staff/staffUserListView.html',
       controller: 'UserListController'
     })
     .state('staff.detailedUser', {
       url: '/user/:userId',
-      templateUrl: 'templates/userManagement/view.html',
+      templateUrl: 'features/staff/staffUserDetailView.html',
       controller: 'UserManagementController'
     })
     .state('staff.userCreate', {
       url: '/createUser',
-      templateUrl: 'templates/userManagement/create.html',
+      templateUrl: 'features/staff/staffUserCreateView.html',
       controller: 'UserManagementController'
     })
     .state('staff.ministries', {
       url: '/ministries',
-      templateUrl: 'templates/ministryManagement/index.html',
+      templateUrl: 'features/staff/staffMinistryListView.html',
       controller: 'MinistryListController'
     })
     .state('staff.detailedMinistry', {
       url: '/ministry/:ministryId',
-      templateUrl: 'templates/ministryManagement/view.html',
+      templateUrl: 'features/staff/staffMinistryDetailView.html',
       controller: 'MinistryManagementController'
     });
 
