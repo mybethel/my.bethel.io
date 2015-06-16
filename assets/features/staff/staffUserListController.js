@@ -2,7 +2,7 @@ angular.module('Bethel.staff')
 
 .controller('UserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', 'sailsSocket', function ($rootScope, $scope, $stateParams, $state, $location, sailsSocket) {
 
-  $scope.$parent.selectedStaffSection = 'users';
+  $scope.$parent.tabIndex = 0;
 
   $rootScope.$watch('isAdmin', function() {
     if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {

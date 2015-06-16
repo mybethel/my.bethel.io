@@ -9,7 +9,7 @@ angular.module('Bethel.staff')
   $scope.user = {};
   $scope.newUser = {};
   $scope.existing = {isExisting: "existing"};
-  $scope.$parent.selectedStaffSection = 'users';
+  $scope.$parent.tabIndex = 0;
 
   $rootScope.$watch('isAdmin', function() {
     if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
