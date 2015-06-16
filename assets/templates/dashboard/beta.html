@@ -1,11 +1,25 @@
-<md-toolbar class="md-accent md-hue-2">
+<md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
-    <h2>Hi! I'm in Beta. Check back soon!</h2>
+    <h2>Feature in Beta</h2>
   </div>
 </md-toolbar>
 
-<md-content layout-padding>
-  <div class="layout-content">
-    <p>Interested in testing this feature and providing valuable feedback? <a href="mailto:hello@bethel.io">Let us know!</a></p>
+<md-content class="main-content" layout-padding layout="column" flex ui-view layout-align="center center">
+
+  <div layout="row" layout-fill layout-align="center center">
+
+    <div flex="30">
+      <md-card>
+        <md-card-content style="text-align:center;">
+          <img src="https://avatars0.githubusercontent.com/u/7086970?v=3&amp;s=150" alt="Bethel Technologies" />
+          <p>Interested in testing this feature and providing valuable feedback?</p>
+        </md-card-content>
+        <div class="md-actions" layout="row" layout-align="center center">
+          <md-button href="mailto:hello@bethel.io">Let us know!</md-button>
+        </div>
+      </md-card>
+    </div>
+
   </div>
+
 </md-content>
