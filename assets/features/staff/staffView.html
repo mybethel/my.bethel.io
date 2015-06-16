@@ -1,32 +1,11 @@
-<div layout="row" flex>
+<div layout="row" flex id="staff">
   <div layout="column" flex>
 
-    <md-tabs md-border-bottom md-selected="selectedIndex">
+    <md-tabs md-border-bottom md-selected="tabIndex">
       <md-tab label="people" ui-sref=".users"></md-tab>
       <md-tab label="ministries" ui-sref=".ministries"></md-tab>
     </md-tabs>
 
-    <md-toolbar aria-hidden="false">
-
-      <div layout="row" class="md-toolbar-tools">
-
-        <h2 ng-bind="selectedIndex === 0 ? 'People' : 'Ministries'"></h2>
-
-        <div>
-          <button ng-if="selectedIndex === 0" class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Create User" style="overflow: hidden;">
-            <md-tooltip>Create User</md-tooltip>
-            <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-          </button>
-
-          <button ng-if="selectedIndex === 1" class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Create Ministry" style="overflow: hidden;">
-            <md-tooltip>Create Ministry</md-tooltip>
-            <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-          </button>
-        </div>
-
-      </div>
-
-    </md-toolbar>
 <!-- 
     <div layout="row">
       <div flex offset="60">
@@ -38,9 +17,8 @@
       </div>
     </div>
  -->
-    <md-content>
-      <div data-ui-view class="panel-body"></div>
-    </md-content>
+
+    <div data-ui-view class="panel-body"></div>
 
   </div>
 </div>

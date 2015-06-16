@@ -1,41 +1,52 @@
-<div class="ministries">
-  <h1>Ministries</h1>
-    <a data-ng-click="toggleCreatingMinistry()" data-ng-show="!creatingMinistry" class="btn btn-sm btn-success create-ministry"><span class="glyphicon glyphicon-plus"></span> Create Ministry</a>
+<md-toolbar aria-hidden="false">
+  <div layout="row" class="md-toolbar-tools">
+    <h2>Ministries</h2>
+    <button  data-ng-click="toggleCreatingMinistry()" class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Create Ministry" style="overflow: hidden;">
+      <md-tooltip>Create Ministry</md-tooltip>
+      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+    </button>
+  </div>
+</md-toolbar>
 
-  <form class="form-inline" data-ng-show="creatingMinistry" ng-submit="createMinistry()">
-    <h3>Create New Ministry</h3>
-    <div class="form-group">
-      <label for="ministryName">Name</label>
-      <input type="text" class="form-control" id="ministryName" placeholder="Ministry Name" data-ng-model="newMinistry.name" />
-    </div>
-    <input type="submit" class="btn btn-success" data-ng-disabled="!newMinistry.name" value="Create" />
-    <a class="btn btn-default" data-ng-click="toggleCreatingMinistry()">Cancel</a>
-  </form>
+<md-content>
+  <div class="ministries">
 
-  <table class="table table-list table-hover">
-    <thead>
-      <tr>
-        <th>
-          <a href="" data-ng-click="orderByField='name'; reverseSort = !reverseSort">Name
-            <i ng-show="orderByField == 'name'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-          </a>
-        </th>
-        <th>User Count</th>
-        <th>
-          <a href="" data-ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created
-            <i ng-show="orderByField == 'createdAt'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-          </a>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr data-ng-repeat="ministry in ministries | orderBy: orderByField: reverseSort | filter:searchText" class="clickable-row" data-ng-click="detailedMinistryTransition(ministry.id)">
-        <td>
-          <a ui-sref="staff.detailedMinistry({ministryId: ministry.id})" data-ng-bind="ministry.name"></a>
-        </td>
-        <td data-ng-bind="ministry.users ? ministry.users.length : 0"></td>
-        <td data-ng-bind="ministry.createdAt | date : M/d/yyyy"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <form class="form-inline" data-ng-show="creatingMinistry" ng-submit="createMinistry()">
+      <h3>Create New Ministry</h3>
+      <div class="form-group">
+        <label for="ministryName">Name</label>
+        <input type="text" class="form-control" id="ministryName" placeholder="Ministry Name" data-ng-model="newMinistry.name" />
+      </div>
+      <input type="submit" class="btn btn-success" data-ng-disabled="!newMinistry.name" value="Create" />
+      <a class="btn btn-default" data-ng-click="toggleCreatingMinistry()">Cancel</a>
+    </form>
+
+    <table class="table table-list table-hover">
+      <thead>
+        <tr>
+          <th>
+            <a href="" data-ng-click="orderByField='name'; reverseSort = !reverseSort">Name
+              <i ng-show="orderByField == 'name'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </a>
+          </th>
+          <th>User Count</th>
+          <th>
+            <a href="" data-ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created
+              <i ng-show="orderByField == 'createdAt'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="ministry in ministries | orderBy: orderByField: reverseSort | filter:searchText" class="clickable-row" data-ng-click="detailedMinistryTransition(ministry.id)">
+          <td>
+            <a ui-sref="staff.detailedMinistry({ministryId: ministry.id})" data-ng-bind="ministry.name"></a>
+          </td>
+          <td data-ng-bind="ministry.users ? ministry.users.length : 0"></td>
+          <td data-ng-bind="ministry.createdAt | date : M/d/yyyy"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</md-content>

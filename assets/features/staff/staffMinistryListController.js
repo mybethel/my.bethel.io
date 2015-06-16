@@ -4,8 +4,7 @@ angular.module('Bethel.staff')
 
   $scope.creatingMinistry = false;
   $scope.newMinistry = {};
-
-  $scope.$parent.selectedStaffSection = 'ministries';
+  $scope.$parent.tabIndex = 1;
 
   $rootScope.$watch('isAdmin', function() {
     if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {

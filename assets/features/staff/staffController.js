@@ -8,6 +8,12 @@ angular.module('Bethel.staff')
     }
   });
 
+  $scope.$on('$locationChangeStart', function() {
+    if ($location.path() === '/staff') {
+      $location.path('/staff/user').replace();
+    }
+  });
+
 });
 
 
