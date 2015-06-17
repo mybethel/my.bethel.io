@@ -79,10 +79,6 @@ angular.module('Bethel', [
       if (response.isAdmin) {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
       }
-
-      if ($state.current.name === '' && angular.isDefined(response.user)) {
-        $state.transitionTo('dashboard');
-      }
     });
   };
 

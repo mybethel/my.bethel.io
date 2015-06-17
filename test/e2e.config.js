@@ -1,13 +1,17 @@
 exports.config = {
   capabilities: {
-    'browserName': 'firefox'
-  },
-  framework: 'mocha',
-  mochaOpts: {
-    reporter: 'spec',
-    slow: 3000,
-    enableTimeouts: false
-  },
+    'browserName': 'firefox'
+  },
+  framework: 'jasmine2',
+  onPrepare: function() {
+    var SpecReporter = require('jasmine-spec-reporter');
+    jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
+  },
+  jasmineNodeOpts: {
+    defaultTimeoutInterval: 30000,
+    print: function() {},
+    showColors: true
+  },
   rootElement: 'html',
   specs: [
     'bootstrap.test.js',
