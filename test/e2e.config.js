@@ -1,6 +1,6 @@
 exports.config = {
   capabilities: {
-    'browserName': 'firefox'
+    'browserName': 'chrome'
   },
   framework: 'mocha',
   mochaOpts: {

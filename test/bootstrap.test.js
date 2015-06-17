@@ -15,12 +15,14 @@ before(function() {
         }
       },
       log: { level: 'info' },
-      migrate: 'drop',
-      models: { connection: 'mongo' },
+      models: {
+        migrate: 'drop',
+        connection: 'mongo'
+      },
       session: { adapter: 'memory' }
     }, function (err, server) {
       sails = server;
-      if (err) return console.error(err);
+      if (err) return deferred.reject(err);
       
       setTimeout(function(){ deferred.fulfill(true); }, 5000);
     });

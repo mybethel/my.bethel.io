@@ -30,7 +30,7 @@ describe('Dashboard', function() {
           password: 'v3ra',
           ministry: ministry.id
         }, function (err, user) {
-          if (err) console.log(err);
+          if (err) deferred.reject(err);
           deferred.fulfill(true);
         });
       });
@@ -53,13 +53,13 @@ describe('Dashboard', function() {
   it('should accept valid login credentials.', function() {
 
     element(by.model('credentials.pass')).sendKeys('v3ra');
-    element(by.model('credentials.pass')).submit();
+    element(by.css('button')).click();
 
     browser.wait(function() {
       return element(by.css('.welcome-modal h2')).isPresent().then(function (el) {
         return el === true;
       });
-    }).then(function() {
+    }, 2000).then(function() {
       element(by.css('.welcome-modal h2')).getText().then(function (text) {
         expect(text).to.equal('Welcome, Jayne Cobb');
       });

@@ -89,7 +89,8 @@ module.exports = {
           next();
         }
       });
-    } else {
+    }
+    else {
       next();
     }
   },
@@ -101,20 +102,23 @@ module.exports = {
         .toString('base64')
         .replace('+','-')
         .replace('/','_');
+
+      User.update(values.id, { password: values.password }, function userUpdated(err, user) {
+        if (err) return next(err);
+
+        next();
+      });
     }
-
-    User.update(values.id, {password: values.password}, function userUpdated(err, user) {
-      if (err) return next(err);
-
+    else {
       next();
-    });
+    }
 
   },
 
   beforeUpdate: function(values, next) {
 
     if (values.email) {
-      values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+      values.avatar = Gravatar.url(values.email, { s: 100, d: 'mm' }, true);
     }
 
     if (values.password) {
