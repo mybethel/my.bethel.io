@@ -25,7 +25,8 @@
     "animate.css": "~3.2.0",
     "ng-file-upload": "~2.0.4",
     "videojs": "~4.11.4",
-    "angular-messages": "~1.4.0"
+    "angular-messages": "~1.4.0",
+    "angular-mocks": "~1.4.1"
   },
   "resolutions": {
     "angular": "1.4.0"

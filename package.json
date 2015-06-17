@@ -53,19 +53,36 @@
     "zencoder": "~1.0.0"
   },
   "devDependencies": {
+    "codacy-coverage": "^1.1.2",
+    "expect": "^1.6.0",
+    "istanbul": "^0.3.14",
+    "jasmine": "^2.3.1",
+    "jasmine-core": "^2.3.4",
+    "jasmine-spec-reporter": "^2.2.3",
+    "karma": "^0.12.36",
+    "karma-coverage": "^0.3.1",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.2.0",
+    "karma-spec-reporter": "0.0.19",
     "mocha": "~2.0.1",
-    "protractor": "~1.5.0",
-    "expect.js": "~0.3.1"
+    "phantomjs": "^1.9.17",
+    "protractor": "~1.5.0"
   },
   "scripts": {
-    "start": "node app.js",
+    "postinstall": "./node_modules/.bin/bower install",
     "debug": "node debug app.js",
+    "start": "node app.js",
     "pretest": "./node_modules/.bin/webdriver-manager update",
-    "test": "protractor test/protractor.config.js",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "test": "npm run unit && npm run protractor",
+    "posttest": "cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage --token 411a15d5ec144bcc89cd4f57b147bb8f --verbose",
+    "mocha": "mocha test/sails/main.sails.js test/sails/*.js --timeout 15000",
+    "protractor": "protractor test/e2e.config.js",
+    "karma": "karma start test/angular.config.js",
+    "unit": "istanbul cover -x '**/config/**' -x 'api/responses/**' --dir ./coverage/sails _mocha -- test/sails/main.sails.js test/sails/*.js --timeout 15000 && npm run karma",
+    "postunit": "node ./test/report.js"
   },
   "engines": {
-    "node": "0.10.x",
+    "node": "0.12.x",
     "npm": "2.1.x"
   },
   "main": "app.js",

@@ -89,6 +89,9 @@ var templateFilesToInject = [
 module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
   return '.tmp/public/' + path;
 });
+module.exports.jsFilesToTest = jsFilesToInject.map(function(path) {
+  return 'assets/' + path;
+});
 module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
   return '.tmp/public/' + path;
 });
