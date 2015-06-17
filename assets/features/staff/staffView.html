@@ -1,45 +1,37 @@
-<div layout="row" flex id="staff">
-  <div layout="column" flex>
 
-    <md-tabs md-border-bottom md-selected="tabIndex">
-      <md-tab label="people" ui-sref=".users"></md-tab>
-      <md-tab label="ministries" ui-sref=".ministries"></md-tab>
-    </md-tabs>
+<md-toolbar aria-hidden="false">
+  <div layout="row" class="md-toolbar-tools">
+    <h2 ng-bind="tabIndex === 0 ? 'People' : 'Ministries'"></h2>
+
+    <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" style="overflow: hidden;">
+      <md-tooltip ng-bind="tabIndex === 0 ? 'Create User' : 'Create Ministry'">Create User</md-tooltip>
+      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+    </button>
+<!--
+    <button ng-if="tabIndex === 1" data-ng-click="toggleCreatingMinistry()" class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Create Ministry" style="overflow: hidden;">
+      <md-tooltip>Create Ministry</md-tooltip>
+      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+    </button>
+ -->
+  </div>
+</md-toolbar>
+
+<md-tabs md-border-bottom md-selected="tabIndex" class="staffTabs">
+  <md-tab label="people" ui-sref=".users"></md-tab>
+  <md-tab label="ministries" ui-sref=".ministries"></md-tab>
+</md-tabs>
 
 <!-- 
-    <div layout="row">
-      <div flex offset="60">
-        <md-input-container class="md-icon-float staff-search-box">
-          <label>Search</label>
-          <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-          <input ng-model="searchText" type="text">
-        </md-input-container>
-      </div>
-    </div>
- -->
-
-    <div data-ui-view class="panel-body"></div>
-
+<div layout="row">
+  <div flex offset="60">
+    <md-input-container class="md-icon-float staff-search-box">
+      <label>Search</label>
+      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+      <input ng-model="searchText" type="text">
+    </md-input-container>
   </div>
 </div>
+-->
 
-<!-- 
-<div class="ui column light">
-
-  <div class="panel-heading staff">
-    <div class="pull-right">
-      <div class="search-box">
-        <i class="fa fa-search"></i>
-        <input class="form-control" placeholder="Search" ng-model="searchText">
-      </div>
-    </div>
-    <ul class="nav nav-pills">
-      <li data-ng-class="{ 'active': selectedStaffSection == 'users' }"><a ui-sref=".users" class="panel-title">People</a></li>
-      <li data-ng-class="{ 'active': selectedStaffSection == 'ministries' }"><a ui-sref=".ministries">Ministries</a></li>
-    </ul>
-  </div>
-
-  <div data-ui-view class="panel-body"></div>
-
-</div>
- -->
+<md-content ui-view class="panel-body" layout="column" layout-fill flex>
+</md-content>

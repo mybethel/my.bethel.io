@@ -1,56 +1,35 @@
 
-<md-toolbar aria-hidden="false">
-  <div layout="row" class="md-toolbar-tools">
-    <h2>People</h2>
-    <button ui-sref="staff.userCreate" class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Create User" style="overflow: hidden;">
-      <md-tooltip>Create User</md-tooltip>
-      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-    </button>
-  </div>
-</md-toolbar>
+<md-list flex>
+  <md-list-item layout="row">
+    <div class="md-list-item-text" flex>
+      <strong class="clickable" ng-click="orderByField='name'; reverseSort = !reverseSort">Person</strong>
+    </div>
+    <div class="md-list-item-text" flex>
+      <strong class="clickable" ng-click="orderByField='ministry.name'; reverseSort = !reverseSort">Ministry</strong>
+    </div>
+    <div class="md-list-item-text" flex>
+      <strong class="clickable" ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created</strong>
+    </div>
+    <div class="md-list-item-text" flex>
+      <strong class="clickable" ng-click="orderByField='lastLogin'; reverseSort = !reverseSort">Last Login</strong>
+    </div>
+  </md-list-item>
 
-<md-content>
-  <div class="users">
-    <table class="table table-list table-hover users">
-      <thead>
-        <tr>
-          <th></th>
-          <th>
-            <a href="" data-ng-click="orderByField='name'; reverseSort = !reverseSort">Name
-              <i ng-show="orderByField == 'name'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </a>
-          </th>
-          <th>
-            <a href="" data-ng-click="orderByField='email'; reverseSort = !reverseSort">Email
-              <i ng-show="orderByField == 'email'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </a>
-          </th>
-          <th>
-            <a href="" data-ng-click="orderByField='ministry.name'; reverseSort = !reverseSort">Ministry
-              <i ng-show="orderByField == 'ministry.name'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </a>
-          </th>
-          <th>
-            <a href="" data-ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created
-              <i ng-show="orderByField == 'createdAt'" class="fa" data-ng-class="reverseSort ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
-            </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText" class="clickable-row" data-ng-click="detailedUserTransition(user.id)">
-          <td>
-            <a ui-sref="staff.detailedUser({userId: user.id})">
-              <img ng-src="{{user.avatar}}" height="50" width="50" />
-            </a>
-          </td>
-          <td><a ui-sref="staff.detailedUser({userId: user.id})" data-ng-bind="user.name"></a></td>
-          <td data-ng-bind="user.email"></td>
-          <td><a data-ng-bind="user.ministry.name"></a></td>
-          <td data-ng-bind="user.createdAt | date : M/d/yyyy"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</md-content>
-
+  <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText"  ng-click="detailedUserTransition(user.id)">
+    <img ng-src="{{user.avatar}}" class="md-avatar" />
+    <div class="md-list-item-text" flex>
+      <h3>{{ user.name }}</h3>
+      <p>{{ user.email }}</p>
+    </div>
+    <div class="md-list-item-text" flex>
+      <p>{{ user.ministry.name }}</p>
+    </div>
+    <div class="md-list-item-text" flex>
+      <p>{{ user.createdAt | date : M/d/yyyy }}</p>
+    </div>
+    <div class="md-list-item-text" flex>
+      <p am-time-ago="user.lastLogin"></p>
+    </div>
+    <md-divider ng-if="!$last"></md-divider>
+  </md-list-item>
+</md-list>
