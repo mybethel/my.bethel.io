@@ -18,6 +18,7 @@ angular.module('Bethel', [
   'Bethel.podcast',
   'Bethel.staff',
   'Bethel.streaming',
+  'Bethel.util',
   'ui.utils'
 ])
 
@@ -45,7 +46,7 @@ angular.module('Bethel', [
   videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
 })
 
-.controller('AppCtrl', ['$rootScope', '$state', function ($scope, $state) {
+.controller('AppCtrl', ['$rootScope', '$state', '$socket', function ($scope, $state, $socket) {
 
   $scope.redirect = '';
   $scope.navLinks = [
@@ -67,31 +68,27 @@ angular.module('Bethel', [
   $scope.nav = $state.go;
 
   $scope.updateSession = function(ev, data) {
-    io.socket.get('/session/current', function (response) {
-      $scope.$apply(function() {
-        $scope.authCheck = true;
-        if (response.auth) return;
+    $socket.get('/session/current').then(function (response) {
+      $scope.authCheck = true;
+      if (response.auth) return;
 
-        $scope.user = response.user;
-        $scope.ministry = response.ministry;
-        $scope.isAdmin = response.isAdmin;
+      $scope.user = response.user;
+      $scope.ministry = response.ministry;
+      $scope.isAdmin = response.isAdmin;
 
-        if (response.isAdmin) {
-          $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
-        }
+      if (response.isAdmin) {
+        $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
+      }
 
-        if ($state.current.name === '' && angular.isDefined(response.user)) {
-          $state.transitionTo('dashboard');
-        }
-      });
+      if ($state.current.name === '' && angular.isDefined(response.user)) {
+        $state.transitionTo('dashboard');
+      }
     });
   };
 
   $scope.updateCsrf = function() {
-    io.socket.get('/csrfToken', function (response) {
-      $scope.$apply(function() {
-        $scope._csrf = response._csrf;
-      });
+    $socket.get('/csrfToken').then(function (response) {
+      $scope._csrf = response._csrf;
     });
   };
 
