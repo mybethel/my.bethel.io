@@ -1,10 +1,10 @@
 var Sails = require('sails'), sails;
 
-before(function() {
+beforeAll(function() {
   protractor.promise.controlFlow().execute(function() {
 
     var deferred = new protractor.promise.Deferred();
-    browser.baseUrl = 'http://localhost:1337';
+    browser.baseUrl = 'http://localhost:1337/';
 
     Sails.lift({
       environment: 'development',
@@ -14,7 +14,7 @@ before(function() {
           url: 'mongodb://localhost:27017'
         }
       },
-      log: { level: 'info' },
+      log: { level: 'warn' },
       models: {
         migrate: 'drop',
         connection: 'mongo'
@@ -31,7 +31,7 @@ before(function() {
   });
 });
 
-after(function() {
+afterAll(function() {
   protractor.promise.controlFlow().execute(function() {
     var deferred = new protractor.promise.Deferred();
     sails.lower(function() {

@@ -1,22 +1,16 @@
-var expect = require('expect.js');
-
 describe('Dashboard', function() {
 
   it('requires users to login.', function() {
-    browser.get('/#/dashboard');
+    browser.get('#/dashboard');
 
     // Login form main wrapping element.
-    element(by.css('form[name="userLoginForm"]')).isPresent().then(function (el) {
-      expect(el).to.be(true);
-    });
+    expect(element(by.css('form[name="userLoginForm"]')).isPresent()).toBe(true);
     // New user create account link.
-    element(by.css('md-card-footer a')).isPresent().then(function (el) {
-      expect(el).to.be(true);
-    });
+    expect(element(by.css('md-card-footer a')).isPresent()).toBe(true);
 
   });
 
-  before(function() {
+  beforeAll(function() {
     protractor.promise.controlFlow().execute(function() {
 
       var deferred = new protractor.promise.Deferred();
@@ -44,9 +38,7 @@ describe('Dashboard', function() {
     element(by.model('credentials.name')).sendKeys('test@bethel.io');
     element(by.model('credentials.name')).submit();
 
-    element(by.css('input[name="password"].ng-invalid-required')).isPresent().then(function (el) {
-      expect(el).to.be(true);
-    });
+    expect(element(by.css('input[name="password"].ng-invalid-required')).isPresent()).toBe(true);
 
   });
 
@@ -60,9 +52,7 @@ describe('Dashboard', function() {
         return el === true;
       });
     }, 2000).then(function() {
-      element(by.css('.welcome-modal h2')).getText().then(function (text) {
-        expect(text).to.equal('Welcome, Jayne Cobb');
-      });
+      expect(element(by.css('.welcome-modal h2')).getText()).toBe('Welcome, Jayne Cobb');
     });
 
   });
