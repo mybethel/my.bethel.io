@@ -19,13 +19,13 @@ angular.module('Bethel.podcast')
   };
 
   $scope.save = function() {
-    io.socket.put('/podcastmedia/' + mediaId, {
+    $socket.put('/podcastmedia/' + mediaId, {
       name: $scope.media.name,
       date: $scope.media.date,
       description: $scope.media.description,
       reference: $scope.media.reference,
       _csrf: $scope.$root._csrf
-    }, function() {
+    }).then(function() {
       $mdDialog.hide();
     });
   };
