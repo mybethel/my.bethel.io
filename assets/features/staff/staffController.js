@@ -1,6 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('StaffController', function ($rootScope, $scope, $location) {
+.controller('staffController', ['$rootScope', '$scope', '$location', '$mdDialog',
+  function ($rootScope, $scope, $location, $mdDialog) {
 
   $rootScope.$watch('isAdmin', function() {
     if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
@@ -14,6 +15,6 @@ angular.module('Bethel.staff')
     }
   });
 
-});
+}]);
 
 

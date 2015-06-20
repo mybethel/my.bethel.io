@@ -1,13 +1,12 @@
 angular.module('Bethel.staff')
 
-.controller('MinistryListController', function ($rootScope, $scope, $stateParams, $state, $location) {
+.controller('staffMinistryListController',['$scope', '$stateParams', '$state', '$location', '$mdDialog',
+  function ($scope, $stateParams, $state, $location, $mdDialog) {
 
-  $scope.creatingMinistry = false;
-  $scope.newMinistry = {};
   $scope.$parent.tabIndex = 1;
 
-  $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
+  $scope.$root.$watch('isAdmin', function() {
+    if (typeof $scope.$root.isAdmin !== 'undefined' && $scope.$root.isAdmin === false) {
       $location.path('/').replace();
     }
   });
@@ -25,27 +24,43 @@ angular.module('Bethel.staff')
     $state.transitionTo('staff.detailedMinistry', {'ministryId': ministryId});
   };
 
-  $scope.toggleCreatingMinistry = function() {
-    $scope.newMinistry = {};
-    $scope.creatingMinistry = !$scope.creatingMinistry;
-  };
+  $scope.showCreateMinistry = function(event) {
 
-  $scope.createMinistry = function() {
+    $mdDialog.show({
+      clickOutsideToClose: true,
+      focusOnOpen: false,
+      parent: document.body
+      templateUrl: 'features/staff/staffMinistryCreateView.html',
+      targetEvent: event,
+      controller:  function createMinistryDialog($scope, $timeout) {
 
-    var ministry = $scope.newMinistry;
+        $scope.createNewMinistry = function() {
 
-    io.socket.post('/ministry', {
-      name: ministry.name,
-      _csrf: $rootScope._csrf
-    }, function (data) {
-      $scope.$apply(function() {
-        $scope.ministries.push(data);
-        $scope.toggleCreatingMinistry();
-      });
-    });
+          io.socket.post('/ministry', {
+            name: $scope.newMinistry.name,
+            _csrf: $scope.$root._csrf
+          }, function (data) {
+            $mdDialog.hide(data);
+          });
+
+        };
+
+        $scope.cancel = function() {
+          $mdDialog.cancel();
+        };
+
+        $timeout(function () {
+          document.querySelector('input.focus').focus();
+        });
+
+      }
+    })
+    .then(function (data) {
+      $scope.ministries.push(data)
+    });;
 
   };
 
   $scope.init();
 
-});
+}]);

@@ -1,27 +1,10 @@
 
-<md-toolbar aria-hidden="false">
-  <div layout="row" class="md-toolbar-tools">
-    <h2 ng-bind="tabIndex === 0 ? 'People' : 'Ministries'"></h2>
-
-    <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" style="overflow: hidden;">
-      <md-tooltip ng-bind="tabIndex === 0 ? 'Create User' : 'Create Ministry'">Create User</md-tooltip>
-      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-    </button>
-<!-- 
-    <button ng-if="tabIndex === 1" data-ng-click="toggleCreatingMinistry()" class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Create Ministry" style="overflow: hidden;">
-      <md-tooltip>Create Ministry</md-tooltip>
-      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-    </button>
-  -->
-  </div>
-</md-toolbar>
-
 <md-tabs md-border-bottom md-selected="tabIndex" class="staffTabs">
   <md-tab label="people" ui-sref=".users"></md-tab>
   <md-tab label="ministries" ui-sref=".ministries"></md-tab>
 </md-tabs>
 
-<!-- 
+<!--
 <div layout="row">
   <div flex offset="60">
     <md-input-container class="md-icon-float staff-search-box">
@@ -33,5 +16,5 @@
 </div>
 -->
 
-<md-content ui-view class="panel-body" layout="column" layout-fill flex>
-</md-content>
+<div class="panel-body" layout="column" ui-view layout-fill flex>
+</div>
