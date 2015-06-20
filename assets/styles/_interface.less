@@ -48,6 +48,19 @@ button.md-button {
     min-height: 30px;
     min-width: 68px;
   }
+  &.muted {
+    color: #666 !important;
+  }
+  &.bucket {
+    background-color: #f6f6f6 !important;
+    color: #666;
+    padding: 16px 0;
+    md-icon {
+      display: block;
+      height: 50px;
+      width: 50px;
+    }
+  }
 }
 
 h2.md-subheader.md-default-theme {
@@ -79,8 +92,29 @@ md-card.getting-started {
 }
 
 md-dialog.wizard {
+  h1 {
+    font-weight: 200;
+    text-align: center;
+    margin: 30px 0 0;
+  }
+  p {
+    margin: 10px 0 20px;
+    text-align: center;
+  }
+  .md-actions {
+    background: #f4f6f8;
+  }
+  md-dialog-content > div {
+    margin-top: 30px;
+  }
   md-input-container {
     font-size: 1.3em;
+    margin-left: 10%;
+    margin-top: 15px;
+    width: 80%;
+  }
+  .md-subheader-inner {
+    padding: 0;
   }
 }
 

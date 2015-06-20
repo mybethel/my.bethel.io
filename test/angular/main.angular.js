@@ -1,6 +1,6 @@
 var setupController = function(controllerName) {
 
-  beforeEach(inject(function($rootScope, $controller, $injector, $httpBackend) {
+  beforeEach(inject(function ($rootScope, $controller, $injector, $httpBackend) {
     scope = $rootScope.$new();
     ctrl = $controller(controllerName, {
       $scope: scope
