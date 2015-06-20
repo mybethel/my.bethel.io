@@ -52,7 +52,7 @@ angular.module('Bethel.podcast')
     $scope.newPodcast._csrf = $scope.$root._csrf;
     $scope.newPodcast.ministry = $scope.$root.ministry;
 
-    io.socket.post('/podcast', $scope.newPodcast, function (newPodcast) {
+    $socket.post('/podcast', $scope.newPodcast).then(function (newPodcast) {
       $mdDialog.hide(newPodcast);
     });
   };
