@@ -18,11 +18,6 @@ angular.module('Bethel.staff', ['ui.router', 'ngSanitize', 'ui.select'])
       templateUrl: 'features/staff/staffUserDetailView.html',
       controller: 'staffUserManagementController'
     })
-    .state('staff.userCreate', {
-      url: '/createUser',
-      templateUrl: 'features/staff/staffUserCreateView.html',
-      controller: 'staffUserManagementController'
-    })
     .state('staff.ministries', {
       url: '/ministries',
       templateUrl: 'features/staff/staffMinistryListView.html',

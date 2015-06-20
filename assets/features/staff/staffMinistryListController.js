@@ -29,7 +29,6 @@ angular.module('Bethel.staff')
     $mdDialog.show({
       clickOutsideToClose: true,
       focusOnOpen: false,
-      parent: document.body
       templateUrl: 'features/staff/staffMinistryCreateView.html',
       targetEvent: event,
       controller:  function createMinistryDialog($scope, $timeout) {
@@ -56,7 +55,7 @@ angular.module('Bethel.staff')
       }
     })
     .then(function (data) {
-      $scope.ministries.push(data)
+      $scope.ministries.push(data);
     });;
 
   };

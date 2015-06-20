@@ -1,35 +1,42 @@
 
-<md-list flex>
-  <md-list-item layout="row">
-    <div class="md-list-item-text" flex>
-      <strong class="clickable" ng-click="orderByField='name'; reverseSort = !reverseSort">Person</strong>
-    </div>
-    <div class="md-list-item-text" flex>
-      <strong class="clickable" ng-click="orderByField='ministry.name'; reverseSort = !reverseSort">Ministry</strong>
-    </div>
-    <div class="md-list-item-text" flex>
-      <strong class="clickable" ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created</strong>
-    </div>
-    <div class="md-list-item-text" flex>
-      <strong class="clickable" ng-click="orderByField='lastLogin'; reverseSort = !reverseSort">Last Login</strong>
-    </div>
-  </md-list-item>
+<button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" style="overflow: hidden;" aria-label="Create User"  ng-click="showCreateUser($event)">
+  <md-tooltip>Create User</md-tooltip>
+  <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+</button>
 
-  <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText"  ng-click="detailedUserTransition(user.id)">
-    <img ng-src="{{user.avatar}}" class="md-avatar" />
-    <div class="md-list-item-text" flex>
-      <h3>{{ user.name }}</h3>
-      <p>{{ user.email }}</p>
-    </div>
-    <div class="md-list-item-text" flex>
-      <p>{{ user.ministry.name }}</p>
-    </div>
-    <div class="md-list-item-text" flex>
-      <p>{{ user.createdAt | date : M/d/yyyy }}</p>
-    </div>
-    <div class="md-list-item-text" flex>
-      <p am-time-ago="user.lastLogin"></p>
-    </div>
-    <md-divider ng-if="!$last"></md-divider>
-  </md-list-item>
-</md-list>
+<md-content>
+  <md-list flex>
+    <md-list-item layout="row">
+      <div class="md-list-item-text" flex>
+        <strong class="clickable" ng-click="orderByField='name'; reverseSort = !reverseSort">Person</strong>
+      </div>
+      <div class="md-list-item-text" flex>
+        <strong class="clickable" ng-click="orderByField='ministry.name'; reverseSort = !reverseSort">Ministry</strong>
+      </div>
+      <div class="md-list-item-text" flex>
+        <strong class="clickable" ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created</strong>
+      </div>
+      <div class="md-list-item-text" flex>
+        <strong class="clickable" ng-click="orderByField='lastLogin'; reverseSort = !reverseSort">Last Login</strong>
+      </div>
+    </md-list-item>
+
+    <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText"  ng-click="detailedUserTransition(user.id)">
+      <img ng-src="{{user.avatar}}" class="md-avatar" />
+      <div class="md-list-item-text" flex>
+        <h3>{{ user.name }}</h3>
+        <p>{{ user.email }}</p>
+      </div>
+      <div class="md-list-item-text" flex>
+        <p>{{ user.ministry.name }}</p>
+      </div>
+      <div class="md-list-item-text" flex>
+        <p>{{ user.createdAt | date : M/d/yyyy }}</p>
+      </div>
+      <div class="md-list-item-text" flex>
+        <p am-time-ago="user.lastLogin"></p>
+      </div>
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>
