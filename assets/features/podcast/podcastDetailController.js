@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
-
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', function ($scope, $state, $stateParams, upload, $mdDialog) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', '$socket',
+  function ($scope, $state, $stateParams, upload, $mdDialog, $socket) {
 
   var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
@@ -10,26 +10,22 @@ angular.module('Bethel.podcast')
 
   $scope.init = function() {
 
-    io.socket.get('/podcast/' + $scope.id, function (data) {
-      $scope.$apply(function() {
-        $scope.podcast = data;
-        $scope.thumbnailUploading = false;
-      });
+    $socket.get('/podcast/' + $scope.id).then(function (data) {
+      $scope.podcast = data;
+      $scope.thumbnailUploading = false;
     });
 
-    io.socket.get('/podcast/edit/' + $scope.id, function (data) {
-      $scope.$apply(function() {
-        $scope.thumbnailS3 = data.s3form;
-        $scope.uploadEpisode = data.uploadEpisode;
-      });
+    $socket.get('/podcast/edit/' + $scope.id).then(function (data) {
+      $scope.thumbnailS3 = data.s3form;
+      $scope.uploadEpisode = data.uploadEpisode;
     });
 
   };
 
   $scope.init();
 
-  io.socket.get('/service/list', {}, function (response, status) {
-    $scope.$apply(function() { $scope.accounts = response; });
+  $socket.get('/service/list').then(function (data) {
+    $scope.accounts = response;
   });
 
   io.socket.on('podcast', function (message) {
@@ -119,8 +115,7 @@ angular.module('Bethel.podcast')
           _csrf: $scope.$root._csrf
         }, function (podcast) {
           // Call the endpoint to generate metadata.
-          io.socket.get('/podcastmedia/meta/' + podcast.id);
-
+          $socket.get('/podcastmedia/meta/' + podcast.id);
           $scope.init();
         });
 
