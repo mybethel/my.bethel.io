@@ -1,6 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('MinistryManagementController', function ($rootScope, $scope, $stateParams, $location) {
+.controller('staffMinistryManagementController', ['$rootScope', '$scope', '$stateParams', '$location',
+  function ($rootScope, $scope, $stateParams, $location) {
 
   var creatingMinistry = false;
 
@@ -28,4 +29,4 @@ angular.module('Bethel.staff')
 
   $scope.init();
 
-});
+}]);

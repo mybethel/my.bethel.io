@@ -1,6 +1,6 @@
 angular.module('Bethel.staff')
 
-.controller('UserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', 'sailsSocket', function ($rootScope, $scope, $stateParams, $state, $location, sailsSocket) {
+.controller('staffUserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', 'sailsSocket', function ($rootScope, $scope, $stateParams, $state, $location, sailsSocket) {
 
   $scope.$parent.tabIndex = 0;
 
