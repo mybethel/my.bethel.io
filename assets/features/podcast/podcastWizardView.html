@@ -88,46 +88,56 @@
 
     </wz-step>
     <wz-step>
-      <h1 class="text-center">Upload your podcast image</h1>
-      <h4 class="text-center">Subscribers will see this image in iTunes</h4>
-      <hr />
-      <div class="row">
-        <div class="col-md-3 col-md-offset-1">
+
+      <md-dialog-content class="sticky-container">
+        <md-toolbar>
+          <h1>Upload your podcast image</h1>
+          <p>Subscribers will see this image in iTunes</p>
+        </md-toolbar>
+        <div layout="row" layout-align="center center">
           <img data-ng-src="https://images.bethel.io/images/{{ newPodcast.temporaryImage ? 'podcast/tmp/' + newPodcast.temporaryImage : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" width="200" alt="{{ newPodcast.name }}" />
-        </div>
-        <div class="col-md-7">
-          <ul>
-            <li>Save your image as a <strong>PNG</strong> or <strong>JPEG</strong> file.</li>
-            <li>Your image should measure 1,400 pixels square.</li>
-            <li>Remember, your image may be small on some devices.</li>
-            <li><em>You can skip this step for now if you wish.</em></li>
-          </ul>
-          <div class="text-center">
-            <button data-ng-disabled="thumbnailUploading" data-ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg" class="btn btn-default"><i class="fa" data-ng-class="(thumbnailUploading) ? 'fa-circle-o-notch fa-spin' : 'fa-upload'"></i> <span data-ng-bind="thumbnailUploading ? 'Uploading' : 'Choose an image'"></span>...</button>
+          <div flex="60" offset="5">
+            <ul>
+              <li>Save your image as <strong>PNG</strong> or <strong>JPEG</strong>.</li>
+              <li>Your image should measure 1,400 pixels square.</li>
+              <li>Remember, your image may be small on some devices.</li>
+              <li><em>You can skip this step for now.</em></li>
+            </ul>
+            <button accept="image/png,image/jpg,image/jpeg" class="md-button md-default-theme md-primary" ng-file-select="uploadThumbnail($files)" ng-hide="thumbnailUploading">Upload an image</button>
+            <md-progress-circular md-diameter="24" md-mode="indeterminate" ng-show="thumbnailUploading"></md-progress-circular>
           </div>
         </div>
+      </md-dialog-content>
+      <div class="md-actions" layout="row">
+        <md-button class="muted" href="mailto:help@bethel.io">Need Help?</md-button>
+        <span flex></span>
+        <md-button wz-previous>Back</md-button>
+        <md-button wz-next class="md-primary">Next</md-button>
       </div>
-      <div class="panel-footer text-right">
-        <a href="mailto:help@bethel.io" class="pull-left help">Need Help?</a>
-        <a class="btn btn-default" wz-previous>Back</a>
-        <input type="submit" class="btn btn-primary" wz-next value="Continue" />
-      </div>
+
     </wz-step>
     <wz-step>
-      <h1 class="text-center">Just about done!</h1>
-      <h4 class="text-center">This is how your podcast will appear in iTunes search results</h4>
-      <hr />
-      <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-          <img data-ng-src="https://images.bethel.io/images/{{ newPodcast.temporaryImage ? 'podcast/tmp/' + newPodcast.temporaryImage : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" width="200" alt="{{ newPodcast.name }}" />
-          <p><span data-ng-bind="newPodcast.name"></span><br /><small data-ng-bind="ministry.name" class="text-muted"></small></p>
+
+      <md-dialog-content class="sticky-container">
+        <md-toolbar>
+          <h1>Just about done!</h1>
+          <p>Is everything below correct?</p>
+        </md-toolbar>
+        <div layout="row" layout-align="center center">
+          <div>
+            <img data-ng-src="https://images.bethel.io/images/{{ newPodcast.temporaryImage ? 'podcast/tmp/' + newPodcast.temporaryImage : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" width="200" alt="{{ newPodcast.name }}" />
+            <p><strong>{{ newPodcast.name }}</strong><br />
+              <small class="text-muted">{{ $root.ministry.name }}</small></p>
+          </div>
         </div>
+      </md-dialog-content>
+      <div class="md-actions" layout="row">
+        <md-button class="muted" href="mailto:help@bethel.io">Need Help?</md-button>
+        <span flex></span>
+        <md-button wz-previous>Back</md-button>
+        <md-button wz-next class="md-primary">Create My Podcast!</md-button>
       </div>
-      <div class="panel-footer text-right">
-        <a href="#" class="pull-left help">Need Help?</a>
-        <a class="btn btn-default" wz-previous>Back</a>
-        <input type="submit" class="btn btn-primary" wz-next value="Create My Podcast!" />
-      </div>
+
     </wz-step>
   </wizard>
 </md-dialog>
