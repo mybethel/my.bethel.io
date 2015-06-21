@@ -1,9 +1,11 @@
 angular.module('Bethel.podcast')
-.controller('podcastWizardController', ['$scope', '$mdDialog', '$socket', '$timeout', '$upload', 'WizardHandler',
-  function ($scope, $mdDialog, $socket, $timeout, $upload, WizardHandler) {
+.controller('podcastWizardController', ['$scope', '$mdDialog', '$sailsBind', '$socket', '$timeout', 'upload', 'WizardHandler',
+  function ($scope, $mdDialog, $sailsBind, $socket, $timeout, upload, WizardHandler) {
 
   $scope.newPodcast = {};
+  $sailsBind.bind('service', $scope, { 'ministry': $scope.$root.ministry.id });
 
+  // Focus on the "Name Your Podcast" field when the modal opens.
   $timeout(function() {
     document.querySelector('input.focus').focus();
   });
@@ -16,35 +18,34 @@ angular.module('Bethel.podcast')
   $scope.selectSource = function(source) {
     $scope.newPodcast.source = source;
 
+    // If the user selects Bethel Cloud, the wizard will continue automatically.
+    // Vimeo Pro sync requires additional information from the user.
     if (source !== 2)
       WizardHandler.wizard().next();
   };
 
-  $scope.selectAccount = function(account) {
-    $scope.newPodcast.service = account;
-  };
+  $scope.$watch('newPodcast.service', function (newValue, oldValue) {
+    if (!newValue || newValue === oldValue)
+      return;
+
+    // If the user is connecting a new Vimeo account, this happens in a new tab
+    // so that their current progress in the wizard is not lost.
+    if (newValue === 'SERVICES_NEW') {
+      window.open('/service/vimeo', '_blank'); 
+      delete $scope.newPodcast.service;
+    }
+  });
 
   $scope.uploadThumbnail = function ($files) {
     $scope.thumbnailUploading = true;
     $socket.get('/podcast/new').then(function (response) {
-      var fileMeta = {
-        key: response.bucket + '/' + $files[0].name,
-        AWSAccessKeyId: response.key, 
-        acl: 'public-read',
-        policy: response.policy,
-        signature: response.signature,
-        'Content-Type': $files[0].type !== '' ? $files[0].type : 'application/octet-stream'
-      };
-      $upload.upload({
-        url: response.action,
-        method: 'POST',
-        data: fileMeta,
-        file: $files[0],
-      })
-      .success(function (data, status, headers, config) {
-        $scope.newPodcast.temporaryImage = $files[0].name;
-        $scope.thumbnailUploading = false;
-      });
+
+      upload.s3(response, $files[0])
+        .success(function() {
+          $scope.newPodcast.temporaryImage = $files[0].name;
+          $scope.thumbnailUploading = false;
+        });
+
     });
   };
 
@@ -52,9 +53,7 @@ angular.module('Bethel.podcast')
     $scope.newPodcast._csrf = $scope.$root._csrf;
     $scope.newPodcast.ministry = $scope.$root.ministry;
 
-    $socket.post('/podcast', $scope.newPodcast).then(function (newPodcast) {
-      $mdDialog.hide(newPodcast);
-    });
+    $socket.post('/podcast', $scope.newPodcast).then($mdDialog.hide);
   };
 
   $scope.cancel = function() {
