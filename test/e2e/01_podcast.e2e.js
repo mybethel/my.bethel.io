@@ -10,11 +10,23 @@ describe('Podcasting', function() {
     element(by.css('button.md-fab')).click();
   });
 
+  // @todo: Updated wizard test to include sad paths and validation.
   it('uses a wizard to walk the user through podcast creation.', function() {
+    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Create a new podcast');
+    element(by.model('newPodcast.name')).sendKeys('The History of the Verse');
+    element(by.css('md-dialog section.current button.md-primary')).click();
 
-    expect(element(by.css('md-dialog h1')).getText()).toBe('Create a new podcast');
-    // @todo: Updated wizard test based on new Material UI.
+    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('What type of podcast?');
+    element(by.css('button.type-audio')).click();
+
+    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Choose episode storage');
+    element(by.css('button.storage-bethel')).click();
+
+    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Upload your podcast image');
+    element(by.css('md-dialog section.current .md-actions button.md-primary')).click();
     
+    expect(element(by.css('.podcast-preview p strong')).getText()).toBe('The History of the Verse');
+    element(by.css('md-dialog section.current button.md-primary')).click();
   });
 
 });
