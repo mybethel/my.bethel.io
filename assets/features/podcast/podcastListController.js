@@ -11,7 +11,6 @@ angular.module('Bethel.podcast')
       return;
 
     $sailsBind.bind('podcast', $scope, { 'ministry': $scope.$root.ministry.id });
-    $sailsBind.bind('service', $scope, { 'ministry': $scope.$root.ministry.id });
   });
 
   $scope.view = function(podcast) {
