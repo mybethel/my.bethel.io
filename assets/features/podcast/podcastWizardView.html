@@ -30,12 +30,12 @@
           <p>Create separate podcasts for audio and video.</p>
         </md-toolbar>
         <div layout="row" layout-align="center center">
-          <md-button flex="30" class="bucket" ng-click="selectType(1)" ng-class="{ 'md-primary': newPodcast.type == '1' }">
+          <md-button flex="30" class="bucket type-audio" ng-click="selectType(1)" ng-class="{ 'md-primary': newPodcast.type == '1' }">
             <md-icon md-svg-icon="icons/ic_mic_24px.svg"></md-icon>
             Audio
             <md-tooltip>Ideal for on-the-go listeners</md-tooltip>
           </md-button>
-          <md-button flex="30" class="bucket" ng-click="selectType(2)" ng-class="{ 'md-primary': newPodcast.type == '2' }">
+          <md-button flex="30" class="bucket type-video" ng-click="selectType(2)" ng-class="{ 'md-primary': newPodcast.type == '2' }">
             <md-icon md-svg-icon="icons/ic_play_circle_filled_24px.svg"></md-icon>
             Video
             <md-tooltip>Supports full HD episodes</md-tooltip>
@@ -58,11 +58,11 @@
           <p>Where will new episodes be uploaded?</p>
         </md-toolbar>
         <div layout="row" layout-align="center center">
-          <md-button class="bucket" flex="30" ng-class="{ 'md-primary': newPodcast.source == '1' }" ng-click="selectSource(1)">
+          <md-button class="bucket storage-bethel" flex="30" ng-class="{ 'md-primary': newPodcast.source == '1' }" ng-click="selectSource(1)">
             Bethel Cloud
             <md-tooltip>Drag and drop uploading</md-tooltip>
           </md-button>
-          <md-button class="bucket" flex="30" ng-class="{ 'md-primary': newPodcast.source == '2' }" ng-click="selectSource(2)">
+          <md-button class="bucket storage-vimeo" flex="30" ng-class="{ 'md-primary': newPodcast.source == '2' }" ng-click="selectSource(2)">
             Vimeo Pro
             <md-tooltip>Automatic sync with your Vimeo account</md-tooltip>
           </md-button>
@@ -124,7 +124,7 @@
           <p>Is everything below correct?</p>
         </md-toolbar>
         <div layout="row" layout-align="center center">
-          <div>
+          <div class="podcast-preview">
             <img data-ng-src="https://images.bethel.io/images/{{ newPodcast.temporaryImage ? 'podcast/tmp/' + newPodcast.temporaryImage : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" width="200" alt="{{ newPodcast.name }}" />
             <p><strong>{{ newPodcast.name }}</strong><br />
               <small class="text-muted">{{ $root.ministry.name }}</small></p>
