@@ -19,6 +19,12 @@ angular.module('Bethel.staff')
         $scope.ministries = response;
       });
     });
+
+    io.socket.get('/ministry', function (response, status) {
+      $scope.$apply(function() {
+        $scope.ministries = response;
+      });
+    });
   };
 
   $scope.detailedUserTransition = function(userId) {
