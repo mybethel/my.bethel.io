@@ -56,7 +56,7 @@ angular.module('Bethel.staff')
     })
     .then(function (data) {
       $scope.ministries.push(data);
-    });;
+    });
 
   };
 

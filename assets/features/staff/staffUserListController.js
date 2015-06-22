@@ -13,6 +13,12 @@ angular.module('Bethel.staff')
 
   $scope.init = function() {
     $scope.users = sailsSocket.populateMany('/user');
+
+    io.socket.get('/ministry', function (response, status) {
+      $scope.$apply(function() {
+        $scope.ministries = response;
+      });
+    });
   };
 
   $scope.detailedUserTransition = function(userId) {
@@ -26,11 +32,12 @@ angular.module('Bethel.staff')
       focusOnOpen: false,
       templateUrl: 'features/staff/staffUserCreateView.html',
       targetEvent: event,
+      locals: { ministries: $scope.ministries },
       controller: 'staffUserCreateController'
     })
-    .then(function (data) {
-      console.log('DATA ', data);
-      // $scope.ministries.push(data)
+    .then(function (newUser) {
+      $scope.users.push(newUser);
+      $location.path('/staff/user/' + newUser.id).replace();
     });;
 
   }
