@@ -16,17 +16,29 @@ describe('Podcasting', function() {
     element(by.model('newPodcast.name')).sendKeys('The History of the Verse');
     element(by.css('md-dialog section.current button.md-primary')).click();
 
-    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('What type of podcast?');
-    element(by.css('button.type-audio')).click();
+    browser.wait(function() {
+      return element(by.css('button.type-audio')).isPresent().then(function (el) {
+        return el === true;
+      });
+    }, 1000).then(function() {
+      expect(element(by.css('md-dialog section.current h1')).getText()).toBe('What type of podcast?');
+      element(by.css('button.type-audio')).click();
 
-    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Choose episode storage');
-    element(by.css('button.storage-bethel')).click();
+      browser.wait(function() {
+        return element(by.css('button.storage-bethel')).isPresent().then(function (el) {
+          return el === true;
+        });
+      }, 1000).then(function() {
+        expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Choose episode storage');
+        element(by.css('button.storage-bethel')).click();
 
-    expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Upload your podcast image');
-    element(by.css('md-dialog section.current .md-actions button.md-primary')).click();
-    
-    expect(element(by.css('.podcast-preview p strong')).getText()).toBe('The History of the Verse');
-    element(by.css('md-dialog section.current button.md-primary')).click();
+        expect(element(by.css('md-dialog section.current h1')).getText()).toBe('Upload your podcast image');
+        element(by.css('md-dialog section.current .md-actions button.md-primary')).click();
+        
+        expect(element(by.css('.podcast-preview p strong')).getText()).toBe('The History of the Verse');
+        element(by.css('md-dialog section.current button.md-primary')).click();
+      });
+    });
   });
 
 });

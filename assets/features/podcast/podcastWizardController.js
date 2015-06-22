@@ -1,9 +1,14 @@
 angular.module('Bethel.podcast')
-.controller('podcastWizardController', ['$scope', '$mdDialog', '$sailsBind', '$socket', '$timeout', 'upload', 'WizardHandler',
-  function ($scope, $mdDialog, $sailsBind, $socket, $timeout, upload, WizardHandler) {
+.controller('podcastWizardController', ['$mdDialog', '$scope', '$sailsBind', '$socket', '$timeout', 'upload', 'WizardHandler',
+  function ($mdDialog, $scope, $sailsBind, $socket, $timeout, upload, WizardHandler) {
 
   $scope.newPodcast = {};
-  $sailsBind.bind('service', $scope, { 'ministry': $scope.$root.ministry.id });
+
+  $scope.$root.$watch('ministry', function (newValue) {
+    if (!newValue) return;
+    $scope.services = [];
+    $sailsBind.bind('service', $scope, { ministry: newValue.id });
+  });
 
   // Focus on the "Name Your Podcast" field when the modal opens.
   $timeout(function() {
@@ -25,8 +30,7 @@ angular.module('Bethel.podcast')
   };
 
   $scope.$watch('newPodcast.service', function (newValue, oldValue) {
-    if (!newValue || newValue === oldValue)
-      return;
+    if (!newValue) return;
 
     // If the user is connecting a new Vimeo account, this happens in a new tab
     // so that their current progress in the wizard is not lost.
@@ -36,17 +40,19 @@ angular.module('Bethel.podcast')
     }
   });
 
-  $scope.uploadThumbnail = function ($files) {
+  $scope.selectThumbnail = function($files) {
+    $scope.thumbnail = $files[0];
     $scope.thumbnailUploading = true;
-    $socket.get('/podcast/new').then(function (response) {
+    $socket.get('/podcast/new').then($scope.uploadThumbnail);
+  };
 
-      upload.s3(response, $files[0])
-        .success(function() {
-          $scope.newPodcast.temporaryImage = $files[0].name;
-          $scope.thumbnailUploading = false;
-        });
+  $scope.uploadThumbnail = function(response) {
+    upload.s3(response, $scope.thumbnail).success($scope.applyThumbnail);
+  };
 
-    });
+  $scope.applyThumbnail = function() {
+    $scope.newPodcast.temporaryImage = $scope.thumbnail.name;
+    $scope.thumbnailUploading = false;
   };
 
   $scope.createPodcast = function() {

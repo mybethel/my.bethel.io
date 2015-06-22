@@ -103,7 +103,7 @@
               <li>Remember, your image may be small on some devices.</li>
               <li><em>You can skip this step for now.</em></li>
             </ul>
-            <button accept="image/png,image/jpg,image/jpeg" class="md-button md-default-theme md-primary" ng-file-select="uploadThumbnail($files)" ng-hide="thumbnailUploading">Upload an image</button>
+            <button accept="image/png,image/jpg,image/jpeg" class="md-button md-default-theme md-primary" ng-file-select="selectThumbnail($files)" ng-hide="thumbnailUploading">Upload an image</button>
             <md-progress-circular md-diameter="24" md-mode="indeterminate" ng-show="thumbnailUploading"></md-progress-circular>
           </div>
         </div>
