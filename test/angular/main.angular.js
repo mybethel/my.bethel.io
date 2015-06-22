@@ -8,7 +8,8 @@ var setupController = function(controllerName) {
     injector = $injector;
 
     httpBackend = $httpBackend;
-    httpBackend.whenGET(/^templates\//).passThrough();
+    httpBackend.whenGET(/i18n/).respond(200);
+    httpBackend.whenGET(/templates\//).respond(200);
   }));
 
 };
@@ -27,5 +28,7 @@ describe('Angular unit tests', function() {
     });
 
   });
+
+  window.test.podcast();
 
 });
