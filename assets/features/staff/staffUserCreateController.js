@@ -1,10 +1,12 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserCreateController', ['$scope', '$mdDialog',
-  function ($scope, $mdDialog) {
+.controller('staffUserCreateController', ['$scope', '$timeout', '$location', '$mdDialog', 'ministries',
+  function ($scope, $timeout, $location, $mdDialog, ministries) {
 
   $scope.newUser = {};
   $scope.existing = {isExisting: "existing"};
+  $scope.ministries = ministries;
+  $scope.searchText = "";
 
   $scope.$watch('existing.isExisting', function (existing) {
     if (existing === 'new') {
@@ -24,10 +26,8 @@ angular.module('Bethel.staff')
         name: newMinistry,
         _csrf: $scope.$root._csrf
       }, function (ministry) {
-        $scope.$apply(function() {
-          $scope.ministries.push(ministry);
-          $scope.newMinistry = ministry;
-        });
+        $scope.ministries.push(ministry);
+        $scope.newMinistry = ministry;
         $scope.createNewUser(ministry);
       });
 
@@ -46,15 +46,16 @@ angular.module('Bethel.staff')
 
     if (ministry) {
       newUser.ministry = $scope.newMinistry.id;
+    } else {
+      newUser.ministry = newUser.ministry.id;
     }
 
     io.socket.post('/user', newUser, function (res) {
       if (res.invalidAttributes) {
         $scope.createErrors(res);
       } else {
-        $location.path('/staff/user/' + res.id).replace();
+        $mdDialog.hide(res);
       }
-      $scope.$apply();
     });
 
   };
@@ -75,10 +76,14 @@ angular.module('Bethel.staff')
 
     if ($scope.newMinistry) {
       $scope.existing.isExisting = "existing";
-      $scope.newUser.ministry = $scope.newMinistry.id;
+      $scope.newUser.ministry = $scope.newMinistry;
     }
 
   };
+
+  $timeout(function () {
+    document.querySelector('input.focus').focus();
+  });
 
   $scope.cancel = function() {
     $mdDialog.cancel();

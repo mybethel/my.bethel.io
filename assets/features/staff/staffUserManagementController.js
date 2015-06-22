@@ -21,12 +21,6 @@ angular.module('Bethel.staff')
         $scope.user = response;
       });
     });
-
-    io.socket.get('/ministry', function (response, status) {
-      $scope.$apply(function() {
-        $scope.ministries = response;
-      });
-    });
   };
 
   $scope.lockUnlock = function() {
