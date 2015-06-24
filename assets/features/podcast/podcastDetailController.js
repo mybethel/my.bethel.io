@@ -25,7 +25,7 @@ angular.module('Bethel.podcast')
   $scope.init();
 
   $socket.get('/service/list').then(function (data) {
-    $scope.accounts = response;
+    $scope.accounts = data;
   });
 
   io.socket.on('podcast', function (message) {
@@ -34,40 +34,18 @@ angular.module('Bethel.podcast')
     }
   });
 
-  $scope.setSource = function(source) {
-    if (angular.isUndefined(source.id))
-      return;
+  $scope.$watch('podcast', function (newValue, oldValue) {
+    if (!newValue || !oldValue) return;
 
     $socket.put('/podcast/' + $scope.id, {
-      service: source.id,
-      _csrf: $scope.$root._csrf
-    }).then(function (updated) {
-      $scope.podcast.service = updated.service;
+      _csrf: $scope.$root._csrf,
+      name: newValue.name,
+      service: newValue.service,
+      sourceMeta: newValue.sourceMeta,
+      tags: newValue.tags,
+      description: newValue.description,
     });
-  };
-
-  $scope.updateSource = function(tag, action) {
-    switch (action) {
-      case 'added':
-        if (angular.isUndefined($scope.podcast.sourceMeta) || typeof $scope.podcast.sourceMeta === 'string') {
-          $scope.podcast.sourceMeta = [];
-        }
-        $scope.podcast.sourceMeta.push(tag.text);
-        break;
-
-      case 'removed':
-        var tagToDelete = $scope.podcast.sourceMeta.indexOf(tag.text);
-        if (tagToDelete > -1) {
-          $scope.podcast.sourceMeta.splice(tagToDelete, 1);
-        }
-        break;
-    }
-
-    $socket.put('/podcast/' + $scope.id, {
-      sourceMeta: $scope.podcast.sourceMeta,
-      _csrf: $scope.$root._csrf
-    });
-  };
+  }, true);
 
   $scope.uploadThumbnail = function($files) {
     $scope.thumbnailUploading = true;

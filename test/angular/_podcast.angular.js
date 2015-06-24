@@ -3,6 +3,16 @@ window.test.podcast = function() {
 
   describe('Podcasting', function() {
 
+    describe('podcastListController', function() {
+
+      setupController('podcastListController');
+
+      it('bootstraps successfully.', function() {
+        expect(true).toBe(true);
+      });
+
+    });
+
     describe('podcastWizardController', function() {
 
       setupController('podcastWizardController');
