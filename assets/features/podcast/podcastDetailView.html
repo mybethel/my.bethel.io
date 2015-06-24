@@ -73,17 +73,17 @@
 
       <md-input-container>
         <label>Podcast title</label>
-        <input type="text" ng-model="podcast.name">
+        <input type="text" ng-model="podcast.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
       </md-input-container>
 
       <md-input-container>
         <label>Tags</label>
-        <input type="text" ng-model="podcast.tags">
+        <input type="text" ng-model="podcast.tags" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
       </md-input-container>
 
       <md-input-container>
         <label>Description</label>
-        <textarea ng-model="podcast.description" columns="1" rows="3" md-maxlength="4000"></textarea>
+        <textarea ng-model="podcast.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="3" md-maxlength="4000"></textarea>
       </md-input-container>
 
     </div>
