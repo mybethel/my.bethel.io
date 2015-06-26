@@ -32,5 +32,6 @@ describe('Angular unit tests', function() {
   });
 
   window.test.podcast();
+  window.test.staff();
 
 });
