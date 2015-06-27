@@ -3,6 +3,7 @@ angular.module('Bethel.staff')
 .controller('staffUserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', 'sailsSocket', '$mdDialog',
   function ($rootScope, $scope, $stateParams, $state, $location, sailsSocket, $mdDialog) {
 
+  var $ctrl = this;
   $scope.$parent.tabIndex = 0;
 
   $rootScope.$watch('isAdmin', function() {
@@ -11,21 +12,17 @@ angular.module('Bethel.staff')
     }
   });
 
-  $scope.init = function() {
-    $scope.users = sailsSocket.populateMany('/user');
+  $ctrl.populateUsers = function (response, status) {
+    $scope.users = response;
+    $scope.orderByField = 'name';
+  }
 
-    io.socket.get('/ministry', function (response, status) {
-      $scope.$apply(function() {
-        $scope.ministries = response;
-      });
-    });
+  $ctrl.populateMinistries = function (response, status) {
+    $scope.ministries = response;
+  }
 
-    io.socket.get('/ministry', function (response, status) {
-      $scope.$apply(function() {
-        $scope.ministries = response;
-      });
-    });
-  };
+  $socket.get('/user').then($ctrl.populateUsers);
+  $socket.get('/ministry').then($ctrl.populateMinistries);
 
   $scope.detailedUserTransition = function(userId) {
     $state.transitionTo('staff.detailedUser', {'userId': userId});
@@ -38,16 +35,14 @@ angular.module('Bethel.staff')
       focusOnOpen: false,
       templateUrl: 'features/staff/staffUserCreateView.html',
       targetEvent: event,
-      locals: { ministries: $scope.ministries },
+      locals: {ministries: $scope.ministries},
       controller: 'staffUserCreateController'
     })
     .then(function (newUser) {
       $scope.users.push(newUser);
       $location.path('/staff/user/' + newUser.id).replace();
-    });;
+    });
 
   }
-
-  $scope.init();
 
 }]);
