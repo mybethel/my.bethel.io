@@ -38,7 +38,6 @@ angular.module('Bethel.podcast')
     if (!newValue || !oldValue) return;
 
     $socket.put('/podcast/' + $scope.id, {
-      _csrf: $scope.$root._csrf,
       name: newValue.name,
       service: newValue.service,
       sourceMeta: newValue.sourceMeta,
@@ -54,8 +53,7 @@ angular.module('Bethel.podcast')
       .success(function (data, status, headers, config) {
         $socket.put('/podcast/' + $scope.id, {
           id: $scope.id,
-          temporaryImage: $files[0].name,
-          _csrf: $scope.$root._csrf
+          temporaryImage: $files[0].name
         });
       });
   };
@@ -87,8 +85,7 @@ angular.module('Bethel.podcast')
           url: 'http://cloud.bethel.io/' + encodeURI(fileMeta.key),
           size: file.size,
           podcast: $scope.id,
-          type: 'cloud',
-          _csrf: $scope.$root._csrf
+          type: 'cloud'
         }).then(function (podcast) {
           // Call the endpoint to generate metadata.
           $socket.get('/podcastmedia/meta/' + podcast.id);

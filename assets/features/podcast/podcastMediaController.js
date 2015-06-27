@@ -23,8 +23,7 @@ angular.module('Bethel.podcast')
       name: $scope.media.name,
       date: $scope.media.date,
       description: $scope.media.description,
-      reference: $scope.media.reference,
-      _csrf: $scope.$root._csrf
+      reference: $scope.media.reference
     }).then(function() {
       $mdDialog.hide();
     });
