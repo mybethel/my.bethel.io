@@ -1,13 +1,13 @@
 angular.module('Bethel.podcast')
-.controller('podcastWizardController', ['$mdDialog', '$scope', '$socket', '$timeout', 'upload', 'WizardHandler',
-  function ($mdDialog, $scope, $socket, $timeout, upload, WizardHandler) {
+.controller('podcastWizardController', ['$mdDialog', '$scope', 'sailsSocket', '$timeout', 'upload', 'WizardHandler',
+  function ($mdDialog, $scope, sailsSocket, $timeout, upload, WizardHandler) {
 
   $scope.newPodcast = {};
 
   $scope.$root.$watch('ministry', function (newValue) {
     if (!newValue) return;
     $scope.services = [];
-    $scope.services = $socket.populateList('service', { 'ministry': newValue.id });
+    $scope.services = sailsSocket.populateList('service', { 'ministry': newValue.id });
   });
 
   // Focus on the "Name Your Podcast" field when the modal opens.
@@ -43,7 +43,7 @@ angular.module('Bethel.podcast')
   $scope.selectThumbnail = function($files) {
     $scope.thumbnail = $files[0];
     $scope.thumbnailUploading = true;
-    $socket.get('/podcast/new').then($scope.uploadThumbnail);
+    sailsSocket.get('/podcast/new').then($scope.uploadThumbnail);
   };
 
   $scope.uploadThumbnail = function(response) {
@@ -57,7 +57,7 @@ angular.module('Bethel.podcast')
 
   $scope.createPodcast = function() {
     $scope.newPodcast.ministry = $scope.$root.ministry;
-    $socket.post('/podcast', $scope.newPodcast).then($mdDialog.hide);
+    sailsSocket.post('/podcast', $scope.newPodcast).then($mdDialog.hide);
   };
 
   $scope.cancel = function() {

@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', '$socket',
-  function ($scope, $state, $stateParams, upload, $mdDialog, $socket) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket',
+  function ($scope, $state, $stateParams, upload, $mdDialog, sailsSocket) {
 
   var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
@@ -10,12 +10,12 @@ angular.module('Bethel.podcast')
 
   $scope.init = function() {
 
-    $socket.get('/podcast/' + $scope.id).then(function (data) {
+    sailsSocket.get('/podcast/' + $scope.id).then(function (data) {
       $scope.podcast = data;
       $scope.thumbnailUploading = false;
     });
 
-    $socket.get('/podcast/edit/' + $scope.id).then(function (data) {
+    sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
       $scope.thumbnailS3 = data.s3form;
       $scope.uploadEpisode = data.uploadEpisode;
     });
@@ -24,7 +24,7 @@ angular.module('Bethel.podcast')
 
   $scope.init();
 
-  $socket.get('/service/list').then(function (data) {
+  sailsSocket.get('/service/list').then(function (data) {
     $scope.accounts = data;
   });
 
@@ -37,7 +37,7 @@ angular.module('Bethel.podcast')
   $scope.$watch('podcast', function (newValue, oldValue) {
     if (!newValue || !oldValue) return;
 
-    $socket.put('/podcast/' + $scope.id, {
+    sailsSocket.put('/podcast/' + $scope.id, {
       name: newValue.name,
       service: newValue.service,
       sourceMeta: newValue.sourceMeta,
@@ -51,7 +51,7 @@ angular.module('Bethel.podcast')
 
     upload.s3($scope.thumbnailS3, $files[0])
       .success(function (data, status, headers, config) {
-        $socket.put('/podcast/' + $scope.id, {
+        sailsSocket.put('/podcast/' + $scope.id, {
           id: $scope.id,
           temporaryImage: $files[0].name
         });
@@ -79,7 +79,7 @@ angular.module('Bethel.podcast')
       })
       .success(function(data, status, headers, config) {
 
-        $socket.post('/podcastmedia', {
+        sailsSocket.post('/podcastmedia', {
           name: fileName,
           date: file.lastModifiedDate,
           url: 'http://cloud.bethel.io/' + encodeURI(fileMeta.key),
@@ -88,7 +88,7 @@ angular.module('Bethel.podcast')
           type: 'cloud'
         }).then(function (podcast) {
           // Call the endpoint to generate metadata.
-          $socket.get('/podcastmedia/meta/' + podcast.id);
+          sailsSocket.get('/podcastmedia/meta/' + podcast.id);
           $scope.init();
         });
 

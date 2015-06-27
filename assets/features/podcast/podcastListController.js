@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
-.controller('podcastListController', ['$scope', '$state', '$mdDialog', '$socket', '$location',
-  function ($scope, $state, $mdDialog, $socket, $location) {
+.controller('podcastListController', ['$scope', '$state', '$mdDialog', 'sailsSocket', '$location',
+  function ($scope, $state, $mdDialog, sailsSocket, $location) {
 
   $scope.statistics = {};
   $scope.historicalStats = {};
@@ -8,7 +8,7 @@ angular.module('Bethel.podcast')
   // Bind the podcast list over socket.io for this ministry.
   $scope.$root.$watch('ministry', function (newValue) {
     if (!newValue || !newValue.id) return;
-    $scope.podcasts = $socket.populateList('podcast', { 'ministry': newValue.id });
+    $scope.podcasts = sailsSocket.populateList('podcast', { 'ministry': newValue.id });
   });
 
   $scope.view = function(podcast) {
@@ -16,7 +16,7 @@ angular.module('Bethel.podcast')
   };
 
   var getSubscriberCount = function(podcast) {
-    $socket.get('/podcast/subscribers/' + podcast.id).then(function (response) {
+    sailsSocket.get('/podcast/subscribers/' + podcast.id).then(function (response) {
       if (!angular.isDefined(response.subscribers))
         return;
 

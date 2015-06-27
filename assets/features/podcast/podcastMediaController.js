@@ -1,8 +1,8 @@
 angular.module('Bethel.podcast')
-.controller('podcastMediaController', ['$scope', '$mdDialog', 'mediaId', '$sce', '$socket', '$http',
-  function ($scope, $mdDialog, mediaId, $sce, $socket, $http) {
+.controller('podcastMediaController', ['$scope', '$mdDialog', 'mediaId', '$sce', 'sailsSocket', '$http',
+  function ($scope, $mdDialog, mediaId, $sce, sailsSocket, $http) {
 
-  $socket.get('/podcastmedia/' + mediaId).then(function (data) {
+  sailsSocket.get('/podcastmedia/' + mediaId).then(function (data) {
     $scope.media = data;
     $scope.media.url = $sce.trustAsResourceUrl('/podcast/embed/episode/' + data.id);
   });
@@ -19,7 +19,7 @@ angular.module('Bethel.podcast')
   };
 
   $scope.save = function() {
-    $socket.put('/podcastmedia/' + mediaId, {
+    sailsSocket.put('/podcastmedia/' + mediaId, {
       name: $scope.media.name,
       date: $scope.media.date,
       description: $scope.media.description,
