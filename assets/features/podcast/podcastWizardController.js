@@ -1,13 +1,13 @@
 angular.module('Bethel.podcast')
-.controller('podcastWizardController', ['$mdDialog', '$scope', '$sailsBind', '$socket', '$timeout', 'upload', 'WizardHandler',
-  function ($mdDialog, $scope, $sailsBind, $socket, $timeout, upload, WizardHandler) {
+.controller('podcastWizardController', ['$mdDialog', '$scope', '$socket', '$timeout', 'upload', 'WizardHandler',
+  function ($mdDialog, $scope, $socket, $timeout, upload, WizardHandler) {
 
   $scope.newPodcast = {};
 
   $scope.$root.$watch('ministry', function (newValue) {
     if (!newValue) return;
     $scope.services = [];
-    $sailsBind.bind('service', $scope, { ministry: newValue.id });
+    $scope.services = $socket.populateList('service', { 'ministry': newValue.id });
   });
 
   // Focus on the "Name Your Podcast" field when the modal opens.
@@ -56,9 +56,7 @@ angular.module('Bethel.podcast')
   };
 
   $scope.createPodcast = function() {
-    $scope.newPodcast._csrf = $scope.$root._csrf;
     $scope.newPodcast.ministry = $scope.$root.ministry;
-
     $socket.post('/podcast', $scope.newPodcast).then($mdDialog.hide);
   };
 

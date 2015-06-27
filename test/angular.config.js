@@ -13,8 +13,10 @@ module.exports = function(config) {
     },
     reporters: ['spec', 'coverage'],
     coverageReporter: {
-      type : 'json',
-      subdir: 'angular'
+      reporters: [
+        { type: 'json', subdir: 'angular' },
+        { type: 'lcov', subdir: 'angular' }
+      ]
     },
     port: 9876,
     colors: true,

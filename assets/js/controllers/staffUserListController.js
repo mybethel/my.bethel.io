@@ -1,6 +1,6 @@
 angular.module('Bethel.staff')
 
-.controller('UserListController', function ($rootScope, $scope, $stateParams, $state, $location) {
+.controller('UserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', '$socket', function ($rootScope, $scope, $stateParams, $state, $location, $socket) {
 
   $scope.$parent.selectedStaffSection = 'users';
 
@@ -11,12 +11,7 @@ angular.module('Bethel.staff')
   });
 
   $scope.init = function() {
-    io.socket.get('/user', function (response, status) {
-      $scope.$apply(function() {
-        $scope.users = response;
-        $scope.orderByField = 'name';
-      });
-    });
+    $scope.users = $socket.populateList('/user');
   };
 
   $scope.detailedUserTransition = function(userId) {
@@ -25,4 +20,4 @@ angular.module('Bethel.staff')
 
   $scope.init();
 
-});
+}]);

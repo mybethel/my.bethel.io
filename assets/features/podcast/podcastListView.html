@@ -16,7 +16,7 @@
 
   <div layout="row" layout-align="center center" layout-fill layout-wrap>
 
-    <div ng-if="podcasts.length < 1" flex="50">
+    <div ng-if="podcasts.length < 1 && !$io.outstanding" flex="50">
       <md-card class="getting-started">
         <md-card-content>
           <h2 class="md-title">{{ 'PODCAST.HELP.TITLE' | translate }}</h2>
