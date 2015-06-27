@@ -9,9 +9,13 @@ angular.module('Bethel.staff')
     }
   });
 
-  if ($location.path() === '/staff') {
-    $location.path('/staff/user').replace();
+  this.init = function () {
+    if ($location.path() === '/staff') {
+      $location.path('/staff/user').replace();
+    }
   }
+
+  this.init();
 
 }]);
 
