@@ -1,6 +1,6 @@
 angular.module('Bethel.staff')
 
-.controller('UserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', '$socket', function ($rootScope, $scope, $stateParams, $state, $location, $socket) {
+.controller('UserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', 'sailsSocket', function ($rootScope, $scope, $stateParams, $state, $location, sailsSocket) {
 
   $scope.$parent.selectedStaffSection = 'users';
 
@@ -11,7 +11,7 @@ angular.module('Bethel.staff')
   });
 
   $scope.init = function() {
-    $scope.users = $socket.populateList('/user');
+    $scope.users = sailsSocket.populateList('/user');
   };
 
   $scope.detailedUserTransition = function(userId) {

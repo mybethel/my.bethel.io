@@ -46,7 +46,7 @@ angular.module('Bethel', [
   videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
 })
 
-.controller('AppCtrl', ['$rootScope', '$state', '$socket', function ($scope, $state, $socket) {
+.controller('AppCtrl', ['$rootScope', '$state', 'sailsSocket', function ($scope, $state, sailsSocket) {
 
   $scope.redirect = '';
   $scope.navLinks = [
@@ -68,7 +68,7 @@ angular.module('Bethel', [
   $scope.nav = $state.go;
 
   $scope.updateSession = function(ev, data) {
-    $socket.get('/session/current').then(function (response) {
+    sailsSocket.get('/session/current').then(function (response) {
       $scope.authCheck = true;
       if (response.auth) return;
 
@@ -83,7 +83,7 @@ angular.module('Bethel', [
   };
 
   $scope.updateCsrf = function() {
-    $socket.get('/csrfToken').then(function (response) {
+    sailsSocket.get('/csrfToken').then(function (response) {
       $scope._csrf = response._csrf;
     });
   };
