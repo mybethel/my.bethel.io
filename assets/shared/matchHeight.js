@@ -10,10 +10,16 @@ angular.module('Bethel.util')
         return element[0].childNodes.length;
       }, function (newValue, oldValue) {
         if (!newValue || newValue === oldValue) return;
+        scope.registerElements();
+      });
+
+      scope.registerElements = function() {
         $timeout(function() {
           scope.equalized = element.find(scope.equalize);
         });
-      });
+      };
+
+      scope.registerElements();
 
       scope.getMaxHeight = function() {
         scope.maxHeight = 0;
