@@ -43,6 +43,8 @@ angular.module('Bethel.podcast')
       sourceMeta: newValue.sourceMeta,
       tags: newValue.tags,
       description: newValue.description,
+    }).then(function() {
+      $scope.$parent.init();
     });
   }, true);
 
