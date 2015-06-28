@@ -1,14 +1,12 @@
 angular.module('Bethel.staff')
 
-.controller('staffMinistryCreateController', ['$scope', '$timeout', '$mdDialog',
-  function ($scope, $timeout, $mdDialog) {
+.controller('staffMinistryCreateController', ['$scope', '$timeout', '$socket', '$mdDialog',
+  function ($scope, $timeout, $socket, $mdDialog) {
 
   $scope.createNewMinistry = function() {
 
-    io.socket.post('/ministry', {
-      name: $scope.newMinistry.name,
-      _csrf: $scope.$root._csrf
-    }, function (data) {
+    $socket.post('/ministry', {name: $scope.newMinistry.name, _csrf: $scope.$root._csrf})
+    .then(function (data) {
       $mdDialog.hide(data);
     });
 
