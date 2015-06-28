@@ -13,13 +13,24 @@
 
 <md-content class="main-content" layout="row" layout-wrap>
 
-  <div flex="100" layout="row" layout-padding>
-    <div flex="50">
-
+  <div class="statistics" flex="100" layout="row" layout-padding>
+    <div flex="30">
+      <md-card>
+        <md-card-content>
+          <strong>{{ subscriberCount | number }}</strong><br />
+          <small>audience</small>
+        </md-card-content>
+      </md-card>
+      <md-card ng-class="subscriberChange > 1 ? 'good' : 'bad'" ng-if="subscriberChange !== 0">
+        <md-card-content>
+          <strong>{{ subscriberChange | number : 1 }}%</strong><br />
+          <small>{{ subscriberChange > 1 ? 'increase' : 'decrease' }}</small>
+        </md-card-content>
+      </md-card>
+      <md-button class="md-primary" ng-click="submitPodcast($event)" ng-if="subscriberCount < 1">Submit to iTunes</md-button>
     </div>
-    <div flex="50">
-      <md-subheader class="md-no-sticky"><ng-pluralize count="statistics[id]" when="{ '0': 'No subscribers yet', '1': '1 subscriber so far', 'other': '{} weekly subscribers' }"></ng-pluralize></md-subheader>
-      <md-button class="md-primary" ng-click="submitPodcast($event)" ng-if="statistics[id] < 1">Submit Podcast to iTunes</md-button>
+    <div flex="70">
+      <canvas id="line" class="chart chart-line" data="subscriberChart.data" labels="subscriberChart.labels" options="subscriberChart.options"></canvas>
     </div>
   </div>
 

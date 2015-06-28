@@ -1,12 +1,25 @@
 angular.module('Bethel.podcast')
+.run(function() {
+  Chart.defaults.global.colours[0] = '#106982';
+})
 .controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket',
   function ($scope, $state, $stateParams, upload, $mdDialog, sailsSocket) {
 
-  var titleEditor, descriptionEditor;
   $scope.id = $stateParams.podcastId;
   $scope.uploading = false;
   $scope.uploadProgress = 0;
   $scope.editing = false;
+  $scope.subscriberCount = 0;
+  $scope.subscriberChange = 0;
+
+  $scope.subscriberChart = {
+    data: [[]],
+    labels: [],
+    options: {
+      scaleShowVerticalLines: false,
+      pointHitDetectionRadius: 5
+    }
+  };
 
   $scope.init = function() {
 
@@ -17,14 +30,16 @@ angular.module('Bethel.podcast')
       $scope.uploadEpisode = data.uploadEpisode;
     });
 
+    $scope.podcastStats = sailsSocket.populate('podcast/subscribers/' + $scope.id);
+
   };
 
   $scope.init();
 
   io.socket.on('podcast', function (message) {
-    if (message.verb === 'updated' && message.id === $scope.podcast.id) {
-      $scope.init();
-    }
+    if (message.verb !== 'updated' || message.id !== $scope.podcast.id)
+      return;
+    $scope.init();
   });
 
   $scope.$watch('podcast', function (newValue, oldValue) {
@@ -39,6 +54,19 @@ angular.module('Bethel.podcast')
     }).then(function() {
       $scope.$parent.init();
     });
+  }, true);
+
+  $scope.$watch('podcastStats', function (newValue) {
+    if (!newValue || !newValue.historical) return;
+    $scope.subscriberChart.data[0] = [];
+    $scope.subscriberChart.labels = [];
+    angular.forEach(newValue.historical, function (subscribers, week) {
+      $scope.subscriberChart.data[0].push(subscribers);
+      $scope.subscriberChart.labels.push(moment(String(week), 'YYYYw').format('MMM D'));
+    });
+    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-2)[0];
+    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-3)[0];
+    $scope.subscriberChange = (($scope.subscriberCount - $scope.subscriberCompare) / $scope.subscriberCompare) * 100;
   }, true);
 
   $scope.uploadThumbnail = function($files) {

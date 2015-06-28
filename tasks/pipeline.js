@@ -17,6 +17,7 @@
 var cssFilesToInject = [
   'components/animate.css/animate.min.css',
   'components/angular-material/angular-material.min.css',
+  'components/angular-chart.js/dist/angular-chart.css',
   'styles/app.css',
 ];
 
@@ -47,6 +48,9 @@ var jsFilesToInject = [
   'components/angular-animate/angular-animate.min.js',
   'components/angular-aria/angular-aria.min.js',
   'components/angular-messages/angular-messages.min.js',
+  'components/Chart.js/src/Chart.Core.js',
+  'components/Chart.js/src/Chart.Line.js',
+  'components/angular-chart.js/dist/angular-chart.min.js',
 
   // User interface
   'components/angular-moment/angular-moment.min.js',

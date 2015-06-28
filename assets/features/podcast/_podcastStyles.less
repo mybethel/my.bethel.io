@@ -29,9 +29,34 @@ md-list.episodes {
   }
 }
 
+.statistics {
+  md-card {
+    background: rgb(69, 90, 100);
+    &.good {
+      background: #49c5b1;
+    }
+    &.bad {
+      background: #c54949;
+    }
+  }
+  md-card-content {
+    text-align: center;
+    color: #FFF;
+    strong {
+      font-size: 32px;
+    }
+    small {
+      font-size: 16px;
+    }
+  }
+  canvas {
+    margin-top: 5px;
+  }
+}
+
 .vimeo-sync {
   h4 {
-    margin-bottom: 0;
+    margin: 0;
     small {
       font-weight: normal;
     }
