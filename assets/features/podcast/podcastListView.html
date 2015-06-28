@@ -14,7 +14,7 @@
 
 <md-content class="main-content" flex layout="column" layout-align="center center">
 
-  <div layout="row" layout-align="center center" layout-fill layout-wrap>
+  <div layout="row" layout-align="center center" layout-fill layout-wrap match-height equalize="md-card-content">
 
     <div ng-if="podcasts.length < 1 && !sailsSocket.outstanding" flex="50">
       <md-card class="getting-started">
@@ -33,7 +33,7 @@
 
     <div ng-repeat="podcast in podcasts | orderBy : 'name'" flex="25">
       <md-card ng-click="view(podcast.id)">
-        <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300" alt="{{ podcast.name }}" class="md-card-image" alt="{{ podcast.name }}">
+        <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300" alt="{{ podcast.name }}" class="md-card-image" alt="{{ podcast.name }}" />
         <md-card-content>
           <h2 class="md-title">{{ podcast.name }}</h2>
         </md-card-content>
