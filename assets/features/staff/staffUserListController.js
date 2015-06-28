@@ -6,12 +6,6 @@ angular.module('Bethel.staff')
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
 
-  $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
-      $location.path('/').replace();
-    }
-  });
-
   $ctrl.populateUsers = function (response, status) {
     $scope.users = response;
     $scope.orderByField = 'name';

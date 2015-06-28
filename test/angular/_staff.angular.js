@@ -94,6 +94,63 @@ window.test.staff = function() {
 
     });
 
+    describe('staffMinistryListController', function() {
+
+      setupController('staffMinistryListController');
+
+      it('bootstraps successfully.', function () {
+        expect(scope.$parent.tabIndex).toBe(1);
+      });
+
+      it('redirects non-admins to dashboard', function() {
+        $location = injector.get('$location');
+        scope.$root.isAdmin = false;
+        scope.$apply();
+        expect($location.path()).toBe('/dashboard');
+
+        scope.$root.isAdmin = true;
+        $location.path('/staff/ministries');
+        scope.$apply();
+        expect($location.path()).toBe('/staff/ministries');
+      });
+
+
+      it('populates ministries on init', function() {
+        expect(scope.ministries).toBeUndefined();
+        ctrl.populateMinistries([]);
+        expect(scope.ministries).toBeDefined();
+      });
+
+      beforeEach(inject(function ($mdDialog) {
+        $q = injector.get('$q');
+        _.extend($mdDialog, {
+          show: function(thing) {
+            deferred = $q.defer();
+            return deferred.promise;
+          }
+        });
+      }));
+
+      it('calls state transition when ministry row is clicked', function() {
+        var requestUrl = 'staff.detailedMinistry',
+            userRequest = {'ministryId': 1};
+
+        $state = injector.get('$state');
+        spyOn($state, 'transitionTo');
+        scope.detailedMinistryTransition(1);
+        expect($state.transitionTo).toHaveBeenCalledWith(requestUrl, userRequest);
+      });
+
+      it('calls mddialog show on showCreateMinistry', function() {
+        scope.ministries = [];
+        scope.showCreateMinistry({});
+        deferred.resolve({name: "Season 2 Ministry"});
+        scope.$digest();
+        expect(scope.ministries[0].name).toBe("Season 2 Ministry");
+      });
+
+    });
+
   });
 
 };

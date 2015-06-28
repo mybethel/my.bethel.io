@@ -1,24 +1,17 @@
 angular.module('Bethel.staff')
 
-.controller('staffMinistryListController',['$scope', '$stateParams', '$state', '$location', '$mdDialog',
-  function ($scope, $stateParams, $state, $location, $mdDialog) {
+.controller('staffMinistryListController',['$scope', '$stateParams', '$state', '$socket', '$mdDialog',
+  function ($scope, $stateParams, $state, $socket, $mdDialog) {
 
+  var $ctrl = this;
   $scope.$parent.tabIndex = 1;
 
-  $scope.$root.$watch('isAdmin', function() {
-    if (typeof $scope.$root.isAdmin !== 'undefined' && $scope.$root.isAdmin === false) {
-      $location.path('/').replace();
-    }
-  });
+  $ctrl.populateMinistries = function (response, status) {
+    $scope.ministries = response;
+    $scope.orderByField = 'createdAt';
+  }
 
-  $scope.init = function() {
-    io.socket.get('/ministry', function (response, status) {
-      $scope.$apply(function() {
-        $scope.ministries = response;
-        $scope.orderByField = 'createdAt';
-      });
-    });
-  };
+  $socket.get('/ministry').then($ctrl.populateMinistries);
 
   $scope.detailedMinistryTransition = function(ministryId) {
     $state.transitionTo('staff.detailedMinistry', {'ministryId': ministryId});
@@ -31,35 +24,12 @@ angular.module('Bethel.staff')
       focusOnOpen: false,
       templateUrl: 'features/staff/staffMinistryCreateView.html',
       targetEvent: event,
-      controller:  function createMinistryDialog($scope, $timeout) {
-
-        $scope.createNewMinistry = function() {
-
-          io.socket.post('/ministry', {
-            name: $scope.newMinistry.name,
-            _csrf: $scope.$root._csrf
-          }, function (data) {
-            $mdDialog.hide(data);
-          });
-
-        };
-
-        $scope.cancel = function() {
-          $mdDialog.cancel();
-        };
-
-        $timeout(function () {
-          document.querySelector('input.focus').focus();
-        });
-
-      }
+      controller: 'staffMinistryCreateController'
     })
     .then(function (data) {
       $scope.ministries.push(data);
     });
 
   };
-
-  $scope.init();
 
 }]);
