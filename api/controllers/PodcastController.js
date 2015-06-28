@@ -1,5 +1,5 @@
 /**
- * PodcastController.js 
+ * PodcastController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -23,7 +23,7 @@ function processMediaImport(id, media, ministry) {
       sails.log.error(err);
 
     media.shift();
-    
+
     if (media && media[0]) {
       processMediaImport(id, media, ministry);
     } else {
@@ -42,7 +42,7 @@ module.exports = {
       PodcastMedia.findOne(req.param('id')).populate('podcast').exec(function (err, episode) {
         if (!episode)
           return res.notFound('episode not found');
-        
+
         episode.url = episode.url.replace('http://cloud.bethel.io', 'https://s3.amazonaws.com/cloud.bethel.io');
         res.view({
           layout: 'none',
@@ -147,11 +147,11 @@ module.exports = {
   },
 
   edit: function (req, res) {
-    Podcast.findOne(req.param('id'), function foundPodcast(err, podcast) {
+    Podcast.findOne(req.param('id')).populate('media').populate('service').exec(function foundPodcast(err, podcast) {
       if (err) return next(err);
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
-    
+
       Service.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
         res.send({
           s3form: uploadForm,
@@ -196,7 +196,7 @@ module.exports = {
         podcast: podcast,
         ministry: podcast.ministry,
         podcastMedia: podcast.media
-      });      
+      });
     });
   },
 

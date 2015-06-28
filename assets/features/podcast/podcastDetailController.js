@@ -10,23 +10,16 @@ angular.module('Bethel.podcast')
 
   $scope.init = function() {
 
-    sailsSocket.get('/podcast/' + $scope.id).then(function (data) {
-      $scope.podcast = data;
-      $scope.thumbnailUploading = false;
-    });
-
     sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
+      $scope.podcast = data.podcast;
       $scope.thumbnailS3 = data.s3form;
+      $scope.thumbnailUploading = false;
       $scope.uploadEpisode = data.uploadEpisode;
     });
 
   };
 
   $scope.init();
-
-  sailsSocket.get('/service/list').then(function (data) {
-    $scope.accounts = data;
-  });
 
   io.socket.on('podcast', function (message) {
     if (message.verb === 'updated' && message.id === $scope.podcast.id) {
