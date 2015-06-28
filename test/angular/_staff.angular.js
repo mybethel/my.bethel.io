@@ -114,7 +114,6 @@ window.test.staff = function() {
         expect($location.path()).toBe('/staff/ministries');
       });
 
-
       it('populates ministries on init', function() {
         expect(scope.ministries).toBeUndefined();
         ctrl.populateMinistries([]);
@@ -147,6 +146,47 @@ window.test.staff = function() {
         deferred.resolve({name: "Season 2 Ministry"});
         scope.$digest();
         expect(scope.ministries[0].name).toBe("Season 2 Ministry");
+      });
+
+    });
+
+    describe('staffMinistryCreateController', function() {
+
+      setupController('staffMinistryCreateController');
+
+      it('bootstraps successfully', function() {
+        $timeout = injector.get('$timeout');
+        $timeout.flush();
+      });
+
+      it('hides dialog when cancel is called', function() {
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'cancel');
+        scope.cancel();
+        expect($mdDialog.cancel).toHaveBeenCalled();
+      });
+
+      beforeEach(inject(function ($socket) {
+        $q = injector.get('$q');
+        _.extend($socket, {
+          post: function(place, thing) {
+            deferred = $q.defer();
+            return deferred.promise;
+          }
+        });
+      }));
+
+      it('creates a new ministry', function() {
+        scope.newMinistry = {name: "UnitTest Ministry"};
+
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'hide');
+
+        scope.createNewMinistry();
+        deferred.resolve(scope.newMinistry);
+        scope.$digest();
+
+        expect($mdDialog.hide).toHaveBeenCalledWith(scope.newMinistry);
       });
 
     });
