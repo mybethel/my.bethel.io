@@ -5,10 +5,14 @@ angular.module('Bethel.podcast')
   $scope.statistics = {};
   $scope.historicalStats = {};
 
+  $scope.init = function() {
+    $scope.podcasts = sailsSocket.populateList('podcast', { 'ministry': $scope.$root.ministry.id });
+  };
+
   // Bind the podcast list over socket.io for this ministry.
   $scope.$root.$watch('ministry', function (newValue) {
     if (!newValue || !newValue.id) return;
-    $scope.podcasts = sailsSocket.populateList('podcast', { 'ministry': newValue.id });
+    $scope.init();
   });
 
   $scope.view = function(podcast) {
