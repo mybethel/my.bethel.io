@@ -1,6 +1,6 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserManagementController', function ($rootScope, $scope, $stateParams, $location, $timeout) {
+.controller('staffUserDetailController', function ($rootScope, $scope, $stateParams, $location, $timeout) {
 
   if ($stateParams.userId && !$stateParams.userId.match(/^[0-9a-fA-F]{24}$/) || $stateParams.userId === '') {
     $location.path('/staff/user').replace();

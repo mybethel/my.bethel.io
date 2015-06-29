@@ -16,17 +16,17 @@ angular.module('Bethel.staff', ['ui.router', 'ngSanitize', 'ui.select'])
     .state('staff.detailedUser', {
       url: '/user/:userId',
       templateUrl: 'features/staff/staffUserDetailView.html',
-      controller: 'staffUserManagementController'
+      controller: 'staffUserDetailController'
     })
-    .state('staff.ministries', {
-      url: '/ministries',
+    .state('staff.ministry', {
+      url: '/ministry',
       templateUrl: 'features/staff/staffMinistryListView.html',
       controller: 'staffMinistryListController'
     })
     .state('staff.detailedMinistry', {
       url: '/ministry/:ministryId',
       templateUrl: 'features/staff/staffMinistryDetailView.html',
-      controller: 'staffMinistryManagementController'
+      controller: 'staffMinistryDetailController'
     });
 
 });
