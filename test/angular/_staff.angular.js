@@ -109,9 +109,9 @@ window.test.staff = function() {
         expect($location.path()).toBe('/dashboard');
 
         scope.$root.isAdmin = true;
-        $location.path('/staff/ministries');
+        $location.path('/staff/ministry');
         scope.$apply();
-        expect($location.path()).toBe('/staff/ministries');
+        expect($location.path()).toBe('/staff/ministry');
       });
 
       it('populates ministries on init', function() {
@@ -187,6 +187,46 @@ window.test.staff = function() {
         scope.$digest();
 
         expect($mdDialog.hide).toHaveBeenCalledWith(scope.newMinistry);
+      });
+
+    });
+
+    describe('staffUserCreateController', function() {
+
+      setupController('staffUserCreateController');
+
+    });
+
+    describe('staffMinistryDetailController', function() {
+
+      setupController('staffMinistryDetailController');
+
+      it('bootstraps successfully', function() {
+        expect(scope.creatingMinistry).toBe(false);
+        expect(scope.$parent.tabIndex).toBe(1);
+        expect(scope.ministry).toBeUndefined();
+      });
+
+      it('redirects if invalid ministry id provided', function() {
+        $stateParams = injector.get('$stateParams');
+        $location = injector.get('$location');
+
+        $stateParams.ministryId = '5574d437484aee280fa67fc2';
+        $location.path('/staff/ministry/5574d437484aee280fa67fc2');
+        scope.$apply();
+        expect($location.path()).toBe('/staff/ministry/5574d437484aee280fa67fc2');
+
+        $stateParams.ministryId = 'not24characters';
+        scope.$apply();
+        expect($location.path()).toBe('/staff/ministry');
+      });
+
+      it('loads a user with populateMinistry', function() {
+        var ministry = {name: 'Francisco'};
+
+        expect(scope.ministry).toBeUndefined();
+        scope.populateMinistry(ministry);
+        expect(scope.ministry).toBe(ministry);
       });
 
     });
