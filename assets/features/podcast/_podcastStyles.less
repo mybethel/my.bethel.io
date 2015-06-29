@@ -30,13 +30,25 @@ md-list.episodes {
 }
 
 .statistics {
+  h3 {
+    color: rgba(0,0,0,0.54);
+    text-align: center;
+  }
+  p {
+    color: rgba(0,0,0,0.54);
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 25px;
+    margin-bottom: 5px;
+    text-align: center;
+  }
   md-card {
     background: rgb(69, 90, 100);
     &.good {
-      background: #49c5b1;
+      background: #496445;
     }
     &.bad {
-      background: #c54949;
+      background: #644545;
     }
   }
   md-card-content {
@@ -60,6 +72,9 @@ md-list.episodes {
     small {
       font-weight: normal;
     }
+  }
+  md-chips-wrap {
+    margin-bottom: 30px;
   }
   .md-chip-remove {
     position: relative;
