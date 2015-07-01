@@ -1,10 +1,11 @@
-var setupController = function(controllerName) {
+var setupController = function(controllerName, params) {
+
+  params = params || {};
 
   beforeEach(inject(function ($rootScope, $controller, $injector, $httpBackend, $q) {
     scope = $rootScope.$new();
-    ctrl = $controller(controllerName, {
-      $scope: scope
-    });
+    params['$scope'] = scope;
+    ctrl = $controller(controllerName, params);
     injector = $injector;
     q = $q;
 

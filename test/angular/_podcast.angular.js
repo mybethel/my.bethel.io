@@ -3,8 +3,29 @@ window.test.podcast = function() {
 
   describe('Podcasting', function() {
 
-    describe('podcastListController', function() {
+    describe('podcastDetailController', function() {
+      setupController('podcastDetailController', { $stateParams: { podcastId: 2 }});
 
+      it('bootstraps successfully.', function() {
+        expect(scope.id).toEqual(2);
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'get').and.callFake(function() {
+          var deferred = q.defer();
+          deferred.resolve({
+            podcast: { name: 'Test'},
+            s3form: { secret: 'not_telling' },
+            uploadEpisode: { form: 'data' }
+          });
+          return deferred.promise;
+        });
+        scope.init();
+        expect(sailsSocket.get).toHaveBeenCalledWith('/podcast/edit/2');
+        scope.$digest();
+      });
+
+    });
+
+    describe('podcastListController', function() {
       setupController('podcastListController');
 
       it('bootstraps successfully.', function() {
@@ -56,7 +77,6 @@ window.test.podcast = function() {
     });
 
     describe('podcastWizardController', function() {
-
       setupController('podcastWizardController');
 
       beforeEach(inject(function (WizardHandler) {
