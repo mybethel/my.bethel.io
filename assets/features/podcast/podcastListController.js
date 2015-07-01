@@ -9,7 +9,7 @@ angular.module('Bethel.podcast')
 
   $scope.init = function() {
     if (!$scope.$root.ministry) return;
-    $scope.podcasts = sailsSocket.populateList('podcast', { 'ministry': $scope.$root.ministry.id });
+    $scope.podcasts = sailsSocket.populateMany('podcast', { 'ministry': $scope.$root.ministry.id });
   };
 
   // Bind the podcast list over socket.io for this ministry.

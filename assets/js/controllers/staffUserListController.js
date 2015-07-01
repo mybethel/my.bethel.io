@@ -11,7 +11,7 @@ angular.module('Bethel.staff')
   });
 
   $scope.init = function() {
-    $scope.users = sailsSocket.populateList('/user');
+    $scope.users = sailsSocket.populateMany('/user');
   };
 
   $scope.detailedUserTransition = function(userId) {
