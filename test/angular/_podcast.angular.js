@@ -8,7 +8,49 @@ window.test.podcast = function() {
       setupController('podcastListController');
 
       it('bootstraps successfully.', function() {
-        expect(true).toBe(true);
+        scope.$root.ministry = false;
+        scope.$root.$apply();
+        scope.init();
+        scope.$root.ministry = { id: 1 };
+        scope.$root.$apply();
+        expect(scope.podcasts).toBeDefined();
+      });
+
+      it('allows the user to select a podcast.', function() {
+        $state = injector.get('$state');
+        spyOn($state, 'go');
+        scope.view(1);
+        expect($state.go).toHaveBeenCalledWith('podcast.view', { podcastId: 1 });
+      });
+
+      it('gets subscriber statistics for each podcast.', function() {
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'get').and.callFake(function() {
+          var deferred = q.defer();
+          deferred.resolve({
+            podcast: 'Ghy2',
+            subscribers: 123,
+            historical: [1,2,3]
+          });
+          return deferred.promise;
+        });
+        ctrl.getSubscriberCount({ id: 1 });
+        expect(sailsSocket.get).toHaveBeenCalledWith('/podcast/subscribers/1');
+        scope.$digest();
+        expect(scope.statistics.Ghy2).toEqual(123);
+        expect(scope.historicalStats.Ghy2[1]).toEqual(2);
+      });
+
+      it('displays a wizard to walk the user through creating a new podcast.', function() {
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'show').and.callFake(function() {
+          var deferred = q.defer();
+          deferred.resolve({ id: 1, name: 'Test Podcast'});
+          return deferred.promise;
+        });
+        scope.showWizard({});
+        scope.$digest();
+        expect(scope.podcasts[0].name).toEqual('Test Podcast');
       });
 
     });
