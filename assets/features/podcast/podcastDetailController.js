@@ -22,7 +22,6 @@ angular.module('Bethel.podcast')
   };
 
   $scope.init = function() {
-
     sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
       $scope.podcast = data.podcast;
       $scope.thumbnailS3 = data.s3form;
@@ -30,7 +29,7 @@ angular.module('Bethel.podcast')
       $scope.uploadEpisode = data.uploadEpisode;
     });
 
-    $scope.podcastStats = sailsSocket.populate('podcast/subscribers/' + $scope.id);
+    $scope.podcastStats = sailsSocket.populateOne('podcast/subscribers/' + $scope.id);
 
   };
 
@@ -83,13 +82,13 @@ angular.module('Bethel.podcast')
 
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
-  $scope.onFileSelect = function ($files) {
+  $scope.onFileSelect = function($files) {
     for (var i = 0; i < $files.length; i++) {
       $scope.createPodcastMedia($files[i]);
     }
   };
 
-  $scope.createPodcastMedia = function (file) {
+  $scope.createPodcastMedia = function(file) {
 
     var fileExt = file.name.split('.').pop(),
         fileName = file.name.replace('.' + fileExt, '');
@@ -118,7 +117,7 @@ angular.module('Bethel.podcast')
       });
   };
 
-  $scope.editMedia = function (id) {
+  $scope.editMedia = function(id) {
     $mdDialog.show({
       clickOutsideToClose: true,
       templateUrl: 'features/podcast/podcastMediaView.html',

@@ -7,7 +7,7 @@ angular.module('Bethel.podcast')
   $scope.$root.$watch('ministry', function (newValue) {
     if (!newValue) return;
     $scope.services = [];
-    $scope.services = sailsSocket.populateList('service', { 'ministry': newValue.id });
+    $scope.services = sailsSocket.populateMany('service', { 'ministry': newValue.id });
   });
 
   // Focus on the "Name Your Podcast" field when the modal opens.
@@ -35,7 +35,7 @@ angular.module('Bethel.podcast')
     // If the user is connecting a new Vimeo account, this happens in a new tab
     // so that their current progress in the wizard is not lost.
     if (newValue === 'SERVICES_NEW') {
-      window.open('/service/vimeo', '_blank'); 
+      window.open('/service/vimeo', '_blank');
       delete $scope.newPodcast.service;
     }
   });

@@ -7,13 +7,13 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     outstanding: 0
   };
 
-  var populateQuery = function(from, params, type) {
+  var populateQuery = function(from, params, many) {
     if (from[0] !== '/') from = '/'.concat(from);
     $rootScope.sailsSocket.outstanding++;
-    var result = (type === 'list') ? [] : {};
+    var result = many ? [] : {};
     io.socket.get(from, params, function (data) {
       angular.forEach(data, function (item, index) {
-        if (type === 'list') {
+        if (many) {
           result.push(item);
         } else {
           result[index] = item;
@@ -31,12 +31,12 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     });
   };
 
-  this.populate = function(from, params) {
+  this.populateOne = function(from, params) {
     return populateQuery(from, params);
   };
 
-  this.populateList = function(from, params) {
-    return populateQuery(from, params, 'list');
+  this.populateMany = function(from, params) {
+    return populateQuery(from, params, true);
   };
 
   this.post = function(where, what) {
