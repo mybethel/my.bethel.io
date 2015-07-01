@@ -43,7 +43,7 @@ angular.module('Bethel', [
 })
 
 .run(function() {
-  videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
+  videojs.options.flash.swf = 'https://static.bethel.io/libraries/video-js/video-js.swf';
 })
 
 .controller('AppCtrl', ['$rootScope', '$state', 'sailsSocket', function ($scope, $state, sailsSocket) {
@@ -67,7 +67,7 @@ angular.module('Bethel', [
 
   $scope.nav = $state.go;
 
-  $scope.updateSession = function(ev, data) {
+  $scope.updateSession = function() {
     sailsSocket.get('/session/current').then(function (response) {
       $scope.authCheck = true;
       if (response.auth) return;
@@ -79,6 +79,8 @@ angular.module('Bethel', [
       if (response.isAdmin) {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
       }
+    }, function (error) {
+      $scope.authCheck = true;
     });
   };
 
@@ -106,7 +108,7 @@ String.prototype.capitalize = function() {
 function findIndexByPropertyValue(arr, property, value) {
   var index = null;
   for (var i in arr) {
-    if (arr[i][property] == value) {
+    if (arr[i][property] === value) {
       index = i;
       break;
     }

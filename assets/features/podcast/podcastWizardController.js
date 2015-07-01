@@ -29,7 +29,7 @@ angular.module('Bethel.podcast')
       WizardHandler.wizard().next();
   };
 
-  $scope.$watch('newPodcast.service', function (newValue, oldValue) {
+  $scope.$watch('newPodcast.service', function (newValue) {
     if (!newValue) return;
 
     // If the user is connecting a new Vimeo account, this happens in a new tab
