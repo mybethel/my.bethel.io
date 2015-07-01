@@ -192,6 +192,50 @@ window.test.staff = function() {
       });
     });
 
+    describe('staffUserCreateController', function() {
+
+      setupController('staffUserCreateController', {'ministries': []});
+
+      it('bootstraps successfully', function() {
+        expect(scope.newUser).toBeUndefined();
+        expect(scope.ministries).toEqual([]);
+        expect(scope.searchText).toEqual("");
+      });
+
+      it('populates ministries after new ministry created', function() {
+        var ministryToCreate = {name: 'Inland Coastal Ministry'};
+
+        scope.ministries = [];
+        expect(scope.newMinistry).toBeUndefined();
+        spyOn(scope, 'createNewUser');
+
+        ctrl.populateMinistries(ministryToCreate);
+        expect(scope.ministries[0].name).toEqual(ministryToCreate.name);
+        expect(scope.createNewUser).toHaveBeenCalledWith(ministryToCreate);
+      });
+
+      it('creates a ministry if specified with new user', function() {
+        $socket = injector.get('$socket');
+        $q = injector.get('$q');
+        expect(scope.newMinistry).toBeUndefined();
+        scope.newUser = {newMinistry: {name: "Mew Nimistry"}};
+        scope.ministries = [];
+
+        spyOn($socket, 'post').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({name: "Mew Nimistry"});
+          return deferred.promise;
+        });
+        scope.createUserSubmit();
+        scope.$digest();
+
+        expect($socket.post).toHaveBeenCalled();
+        expect(scope.ministries[0].name).toEqual('Mew Nimistry');
+        expect(scope.newMinistry.name).toEqual('Mew Nimistry');
+      });
+
+    });
+
     describe('staffUserDetailController', function() {
 
       setupController('staffUserDetailController', {'$stateParams': {userId: '543b2b0b06ee1cb56414cbc4'}});

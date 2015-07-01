@@ -1,9 +1,9 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserCreateController', ['$scope', '$timeout', '$location', '$mdDialog', 'ministries',
-  function ($scope, $timeout, $location, $mdDialog, ministries) {
+.controller('staffUserCreateController', ['$scope', '$timeout', '$location', '$socket', '$mdDialog', 'ministries',
+  function ($scope, $timeout, $location, $socket, $mdDialog, ministries) {
 
-  $scope.newUser = {};
+  $ctrl = this;
   $scope.existing = {isExisting: "existing"};
   $scope.ministries = ministries;
   $scope.searchText = "";
@@ -16,20 +16,24 @@ angular.module('Bethel.staff')
     }
   });
 
+  $ctrl.populateMinistries = function(response, status) {
+    $scope.ministries.push(response);
+    $scope.newMinistry = response;
+    $scope.createNewUser(response);
+  };
+
   $scope.createUserSubmit = function() {
 
     var newMinistry = $scope.newUser.newMinistry;
 
     if (newMinistry) {
 
-      io.socket.post('/ministry', {
-        name: newMinistry,
-        _csrf: $scope.$root._csrf
-      }, function (ministry) {
-        $scope.ministries.push(ministry);
-        $scope.newMinistry = ministry;
-        $scope.createNewUser(ministry);
-      });
+      var ministryToCreate = {
+            name: newMinistry,
+            _csrf: $scope.$root._csrf
+          };
+
+      $socket.post('/ministry', ministryToCreate).then($ctrl.populateMinistries);
 
     } else {
       $scope.createNewUser();
