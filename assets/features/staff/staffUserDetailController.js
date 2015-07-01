@@ -1,42 +1,42 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserDetailController', function ($rootScope, $scope, $stateParams, $location, $timeout) {
+.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', '$socket', '$timeout',
+  function ($scope, $stateParams, $location, $socket, $timeout) {
 
-  if ($stateParams.userId && !$stateParams.userId.match(/^[0-9a-fA-F]{24}$/) || $stateParams.userId === '') {
-    $location.path('/staff/user').replace();
-  }
-
-  $scope.user = {};
+  var $ctrl = this;
   $scope.$parent.tabIndex = 0;
 
-  $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
-      $location.path('/').replace();
+  $scope.$watch(function() {
+    return $stateParams.userId;
+  }, function (newValue, oldValue) {
+    if (!newValue || !newValue.match(/^[0-9a-fA-F]{24}$/)) {
+      $location.path('/staff/user').replace();
     }
   });
 
-  $scope.init = function() {
-    io.socket.get('/user/' + $stateParams.userId, function (response, status) {
-      $scope.$apply(function() {
-        $scope.user = response;
-      });
-    });
+  $ctrl.populateUser = function(response, status) {
+    $scope.user = response;
+  };
+
+  $ctrl.init = function() {
+    $socket.get('/user/' + $stateParams.userId).then($ctrl.populateUser);
+  };
+
+  $ctrl.setLockedStatus = function(updatedUser, status) {
+    $scope.user.isLocked = updatedUser.isLocked;
   };
 
   $scope.lockUnlock = function() {
-    io.socket.get('/user/lockUnlock/' + $stateParams.userId, function (updatedUser, status) {
-      $scope.$apply(function() {
-        $scope.user.isLocked = updatedUser.isLocked;
-      });
-    });
+    $socket.get('/user/lockUnlock/' + $stateParams.userId).then($ctrl.setLockedStatus);
+  };
+
+  $ctrl.getEmailConfirmation = function(response, status) {
+    $scope.emailSending = false;
   };
 
   $scope.sendInviteEmail = function() {
     $scope.emailSending = true;
-    io.socket.get('/user/sendInvite/' + $stateParams.userId, function (response, status) {
-      $scope.emailSending = false;
-      $scope.$apply();
-    });
+    $socket.get('/user/sendInvite/' + $stateParams.userId).then($ctrl.getEmailConfirmation);
   };
 
   $scope.$watch('emailSending', function() {
@@ -47,6 +47,6 @@ angular.module('Bethel.staff')
     }
   });
 
-  $scope.init();
+  $ctrl.init();
 
-});
+}]);

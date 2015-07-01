@@ -3,8 +3,8 @@ angular.module('Bethel.staff')
 .controller('staffMinistryDetailController', ['$scope', '$stateParams', '$location', '$socket',
   function ($scope, $stateParams, $location, $socket) {
 
+  var $ctrl = this;
   $scope.$parent.tabIndex = 1;
-  $scope.creatingMinistry = false;
 
   $scope.$watch(function() {
     return $stateParams.ministryId;
@@ -14,10 +14,14 @@ angular.module('Bethel.staff')
     }
   });
 
-  $scope.populateMinistry = function(response, status) {
+  $ctrl.populateMinistry = function(response, status) {
     $scope.ministry = response;
-  }
+  };
 
-  $socket.get('/ministry/' + $stateParams.ministryId).then($scope.populateMinistry);
+  $ctrl.init = function() {
+    $socket.get('/ministry/' + $stateParams.ministryId).then($ctrl.populateMinistry);
+  };
+
+  $ctrl.init();
 
 }]);
