@@ -5,9 +5,10 @@ angular.module('Bethel.staff')
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 1;
+  $scope.id = $stateParams.ministryId;
 
   $scope.$watch(function() {
-    return $stateParams.ministryId;
+    return $scope.id;
   }, function (newValue, oldValue) {
     if (!newValue || !newValue.match(/^[0-9a-fA-F]{24}$/)) {
       $location.path('/staff/ministry').replace();
@@ -19,7 +20,7 @@ angular.module('Bethel.staff')
   };
 
   $ctrl.init = function() {
-    $socket.get('/ministry/' + $stateParams.ministryId).then($ctrl.populateMinistry);
+    $socket.get('/ministry/' + $scope.id).then($ctrl.populateMinistry);
   };
 
   $ctrl.init();

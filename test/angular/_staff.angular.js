@@ -86,9 +86,9 @@ window.test.staff = function() {
       it('calls mddialog show on showCreateUser', function() {
         scope.users = [];
         scope.showCreateUser({});
-        deferred.resolve({name: "Mal"});
+        deferred.resolve({name: 'Mal'});
         scope.$digest();
-        expect(scope.users[0].name).toBe("Mal");
+        expect(scope.users[0].name).toBe('Mal');
       });
     });
 
@@ -141,9 +141,9 @@ window.test.staff = function() {
       it('calls mddialog show on showCreateMinistry', function() {
         scope.ministries = [];
         scope.showCreateMinistry({});
-        deferred.resolve({name: "Season 2 Ministry"});
+        deferred.resolve({name: 'Season 2 Ministry'});
         scope.$digest();
-        expect(scope.ministries[0].name).toBe("Season 2 Ministry");
+        expect(scope.ministries[0].name).toBe('Season 2 Ministry');
       });
     });
 
@@ -179,7 +179,7 @@ window.test.staff = function() {
       }));
 
       it('creates a new ministry', function() {
-        scope.newMinistry = {name: "UnitTest Ministry"};
+        scope.newMinistry = {name: 'UnitTest Ministry'};
 
         $mdDialog = injector.get('$mdDialog');
         spyOn($mdDialog, 'hide');
@@ -194,22 +194,22 @@ window.test.staff = function() {
 
     describe('staffUserDetailController', function() {
 
-      setupController('staffUserDetailController');
+      setupController('staffUserDetailController', {'$stateParams': {userId: '543b2b0b06ee1cb56414cbc4'}});
 
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(0);
       });
 
       it('redirects if invalid user id provided', function() {
-        $stateParams = injector.get('$stateParams');
         $location = injector.get('$location');
 
-        $stateParams.userId = '543b2b0b06ee1cb56414cbc4';
-        $location.path('/staff/user/543b2b0b06ee1cb56414cbc4');
-        scope.$apply();
-        expect($location.path()).toBe('/staff/user/543b2b0b06ee1cb56414cbc4');
+        expect(scope.id).toBe('543b2b0b06ee1cb56414cbc4');
 
-        $stateParams.userId = 'not24characters';
+        $location.path('/staff/user/' + scope.id);
+        scope.$apply();
+        expect($location.path()).toBe('/staff/user/' + scope.id);
+
+        scope.id = 'not24characters';
         scope.$apply();
         expect($location.path()).toBe('/staff/user');
       });
@@ -301,7 +301,7 @@ window.test.staff = function() {
 
     describe('staffMinistryDetailController', function() {
 
-      setupController('staffMinistryDetailController');
+      setupController('staffMinistryDetailController', {'$stateParams': {ministryId: '5574d437484aee280fa67fc2'}});
 
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(1);
@@ -309,15 +309,15 @@ window.test.staff = function() {
       });
 
       it('redirects if invalid ministry id provided', function() {
-        $stateParams = injector.get('$stateParams');
         $location = injector.get('$location');
 
-        $stateParams.ministryId = '5574d437484aee280fa67fc2';
-        $location.path('/staff/ministry/5574d437484aee280fa67fc2');
-        scope.$apply();
-        expect($location.path()).toBe('/staff/ministry/5574d437484aee280fa67fc2');
+        expect(scope.id).toBe('5574d437484aee280fa67fc2');
 
-        $stateParams.ministryId = 'not24characters';
+        $location.path('/staff/ministry/' + scope.id);
+        scope.$apply();
+        expect($location.path()).toBe('/staff/ministry/' + scope.id);
+
+        scope.id = 'not24characters';
         scope.$apply();
         expect($location.path()).toBe('/staff/ministry');
       });

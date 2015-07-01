@@ -5,9 +5,10 @@ angular.module('Bethel.staff')
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
+  $scope.id = $stateParams.userId;
 
   $scope.$watch(function() {
-    return $stateParams.userId;
+    return $scope.id;
   }, function (newValue, oldValue) {
     if (!newValue || !newValue.match(/^[0-9a-fA-F]{24}$/)) {
       $location.path('/staff/user').replace();
@@ -19,7 +20,7 @@ angular.module('Bethel.staff')
   };
 
   $ctrl.init = function() {
-    $socket.get('/user/' + $stateParams.userId).then($ctrl.populateUser);
+    $socket.get('/user/' + $scope.id).then($ctrl.populateUser);
   };
 
   $ctrl.setLockedStatus = function(updatedUser, status) {
@@ -27,7 +28,7 @@ angular.module('Bethel.staff')
   };
 
   $scope.lockUnlock = function() {
-    $socket.get('/user/lockUnlock/' + $stateParams.userId).then($ctrl.setLockedStatus);
+    $socket.get('/user/lockUnlock/' + $scope.id).then($ctrl.setLockedStatus);
   };
 
   $ctrl.getEmailConfirmation = function(response, status) {
@@ -36,7 +37,7 @@ angular.module('Bethel.staff')
 
   $scope.sendInviteEmail = function() {
     $scope.emailSending = true;
-    $socket.get('/user/sendInvite/' + $stateParams.userId).then($ctrl.getEmailConfirmation);
+    $socket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
   };
 
   $scope.$watch('emailSending', function() {
