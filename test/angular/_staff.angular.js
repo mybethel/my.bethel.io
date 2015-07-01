@@ -30,7 +30,6 @@ window.test.staff = function() {
         ctrl.init();
         expect($location.path()).toBe('/staff/user');
       });
-
     });
 
     describe('staffUserListController', function() {
@@ -91,7 +90,6 @@ window.test.staff = function() {
         scope.$digest();
         expect(scope.users[0].name).toBe("Mal");
       });
-
     });
 
     describe('staffMinistryListController', function() {
@@ -147,7 +145,11 @@ window.test.staff = function() {
         scope.$digest();
         expect(scope.ministries[0].name).toBe("Season 2 Ministry");
       });
+    });
 
+    describe('staffUserCreateController', function() {
+
+      setupController('staffUserCreateController');
     });
 
     describe('staffMinistryCreateController', function() {
@@ -188,13 +190,113 @@ window.test.staff = function() {
 
         expect($mdDialog.hide).toHaveBeenCalledWith(scope.newMinistry);
       });
-
     });
 
-    describe('staffUserCreateController', function() {
+    describe('staffUserDetailController', function() {
 
-      setupController('staffUserCreateController');
+      setupController('staffUserDetailController');
 
+      it('bootstraps successfully', function() {
+        expect(scope.$parent.tabIndex).toBe(0);
+      });
+
+      it('redirects if invalid user id provided', function() {
+        $stateParams = injector.get('$stateParams');
+        $location = injector.get('$location');
+
+        $stateParams.userId = '543b2b0b06ee1cb56414cbc4';
+        $location.path('/staff/user/543b2b0b06ee1cb56414cbc4');
+        scope.$apply();
+        expect($location.path()).toBe('/staff/user/543b2b0b06ee1cb56414cbc4');
+
+        $stateParams.userId = 'not24characters';
+        scope.$apply();
+        expect($location.path()).toBe('/staff/user');
+      });
+
+      it('loads a user with populateUser', function() {
+        var user = {name: 'Francisco'};
+
+        expect(scope.user).toBeUndefined();
+        ctrl.populateUser(user);
+        expect(scope.user).toBe(user);
+      });
+
+      it('gets a user through sockets', function() {
+        $socket = injector.get('$socket');
+        $q = injector.get('$q');
+        scope.user = {};
+
+        spyOn($socket, 'get').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({id: 1, name: 'Francisco'});
+          return deferred.promise;
+        });
+        ctrl.init();
+        scope.$digest();
+
+        expect($socket.get).toHaveBeenCalled();
+        expect(scope.user.name).toEqual('Francisco');
+      });
+
+      it('toggles the lock status of a user', function() {
+        var updatedUser = {isLocked: true};
+        scope.user = {isLocked: false};
+        ctrl.setLockedStatus(updatedUser, {});
+        expect(scope.user.isLocked).toBe(true);
+      });
+
+      it('requests the api change the locked status of a user', function() {
+        $socket = injector.get('$socket');
+        $q = injector.get('$q');
+        scope.user = {};
+
+        spyOn($socket, 'get').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({isLocked: true});
+          return deferred.promise;
+        });
+        scope.lockUnlock();
+        scope.$digest();
+
+        expect($socket.get).toHaveBeenCalled();
+        expect(scope.user.isLocked).toEqual(true);
+      });
+
+      it('changes email confirmation status after send', function() {
+        scope.emailSending = true;
+        ctrl.getEmailConfirmation();
+        expect(scope.emailSending).toBe(false);
+      });
+
+      it('requests email sending through sockets', function() {
+        $socket = injector.get('$socket');
+        $q = injector.get('$q');
+
+        spyOn($socket, 'get').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve();
+          return deferred.promise;
+        });
+        scope.sendInviteEmail();
+        expect(scope.emailSending).toBe(true);
+        scope.$digest();
+
+        expect($socket.get).toHaveBeenCalled();
+        expect(scope.emailSending).toEqual(false);
+      });
+
+      it('watches emailSending status and removes from scope', function() {
+        $timeout = injector.get('$timeout');
+        scope.emailSending = true;
+        scope.$apply();
+        expect(scope.emailSending).toBe(true);
+
+        scope.emailSending = false;
+        scope.$apply();
+        $timeout.flush();
+        expect(scope.emailSending).toBeUndefined();
+      });
     });
 
     describe('staffMinistryDetailController', function() {
@@ -202,7 +304,6 @@ window.test.staff = function() {
       setupController('staffMinistryDetailController');
 
       it('bootstraps successfully', function() {
-        expect(scope.creatingMinistry).toBe(false);
         expect(scope.$parent.tabIndex).toBe(1);
         expect(scope.ministry).toBeUndefined();
       });
@@ -221,12 +322,28 @@ window.test.staff = function() {
         expect($location.path()).toBe('/staff/ministry');
       });
 
-      it('loads a user with populateMinistry', function() {
+      it('loads a ministry with populateMinistry', function() {
         var ministry = {name: 'Francisco'};
 
         expect(scope.ministry).toBeUndefined();
-        scope.populateMinistry(ministry);
+        ctrl.populateMinistry(ministry);
         expect(scope.ministry).toBe(ministry);
+      });
+
+      it('gets a ministry through sockets', function() {
+        $socket = injector.get('$socket');
+        $q = injector.get('$q');
+
+        spyOn($socket, 'get').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({id: 1, name: 'Francisco\s Ministry'});
+          return deferred.promise;
+        });
+        ctrl.init();
+        scope.$digest();
+
+        expect($socket.get).toHaveBeenCalled();
+        expect(scope.ministry.name).toEqual('Francisco\s Ministry');
       });
 
     });
