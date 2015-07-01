@@ -1,11 +1,12 @@
 var setupController = function(controllerName) {
 
-  beforeEach(inject(function ($rootScope, $controller, $injector, $httpBackend) {
+  beforeEach(inject(function ($rootScope, $controller, $injector, $httpBackend, $q) {
     scope = $rootScope.$new();
     ctrl = $controller(controllerName, {
       $scope: scope
     });
     injector = $injector;
+    q = $q;
 
     httpBackend = $httpBackend;
     httpBackend.whenGET(/i18n/).respond(200);
