@@ -76,6 +76,14 @@ window.test.podcast = function() {
 
     });
 
+    describe('podcastMediaController', function() {
+      setupController('podcastMediaController', { mediaId: 2 });
+
+      it('bootstraps successfully.', function() {
+        expect(true).toEqual(true);
+      });
+    });
+
     describe('podcastWizardController', function() {
       setupController('podcastWizardController');
 
