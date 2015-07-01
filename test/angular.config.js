@@ -8,7 +8,8 @@ module.exports = function(config) {
     ]),
     preprocessors: {
       'assets/features/**/*.js': 'coverage',
-      'assets/js/**/*.js': 'coverage',
+      'assets/js/app.js': 'coverage',
+      'assets/js/**/!(dependencies)/*.js': 'coverage',
       'assets/shared/*.js': 'coverage'
     },
     reporters: ['spec', 'coverage'],
