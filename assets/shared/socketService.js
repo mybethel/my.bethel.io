@@ -27,7 +27,9 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
 
   this.get = function(where) {
     return $q(function (resolve, reject) {
-      io.socket.get(where, resolve);
+      io.socket.get(where, function(data, response) {
+        return (response.statusCode < 400) ? resolve(data) : reject(data);
+      });
     });
   };
 
@@ -42,14 +44,18 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
   this.post = function(where, what) {
     what._csrf = $rootScope.sailsSocket._csrf;
     return $q(function (resolve, reject) {
-      io.socket.post(where, what, resolve);
+      io.socket.post(where, what, function(data, response) {
+        return (response.statusCode < 400) ? resolve(data) : reject(data);
+      });
     });
   };
 
   this.put = function(where, what) {
     what._csrf = $rootScope.sailsSocket._csrf;
     return $q(function (resolve, reject) {
-      io.socket.put(where, what, resolve);
+      io.socket.put(where, what, function(data, response) {
+        return (response.statusCode < 400) ? resolve(data) : reject(data);
+      });
     });
   };
 
