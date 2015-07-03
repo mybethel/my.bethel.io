@@ -7,11 +7,12 @@ angular.module('Bethel.staff')
   $scope.existing = {isExisting: "existing"};
   $scope.ministries = ministries;
   $scope.searchText = "";
+  $scope.newUser = {};
 
   $scope.$watch('existing.isExisting', function (existing) {
-    if (existing === 'new') {
+    if (existing === 'new' && $scope.newUser.ministry) {
       delete $scope.newUser.ministry;
-    } else if (existing === 'existing') {
+    } else if (existing === 'existing' && $scope.newUser.newMinistry) {
       delete $scope.newUser.newMinistry;
     }
   });
@@ -41,6 +42,14 @@ angular.module('Bethel.staff')
 
   };
 
+  $ctrl.handleNewUser = function(response, status) {
+    if (response.invalidAttributes) {
+      $ctrl.createErrors(response);
+    } else {
+      $mdDialog.hide(response);
+    }
+  };
+
   $scope.createNewUser = function(ministry) {
 
     var newUser = $scope.newUser;
@@ -54,17 +63,11 @@ angular.module('Bethel.staff')
       newUser.ministry = newUser.ministry.id;
     }
 
-    io.socket.post('/user', newUser, function (res) {
-      if (res.invalidAttributes) {
-        $scope.createErrors(res);
-      } else {
-        $mdDialog.hide(res);
-      }
-    });
+    $socket.post('/user', newUser).then($ctrl.handleNewUser);
 
   };
 
-  $scope.createErrors = function(validationErrors) {
+  $ctrl.createErrors = function(validationErrors) {
 
     var invalidAttributes = validationErrors.invalidAttributes;
 

@@ -7,7 +7,7 @@ window.test.staff = function() {
 
       setupController('staffController');
 
-      it('will not redirect admins.', function () {
+      it('will not redirect admins.', function() {
         $location = injector.get('$location');
 
         scope.$root.isAdmin = true;
@@ -16,14 +16,14 @@ window.test.staff = function() {
         expect($location.path()).toBe('/staff/user');
       });
 
-      it('redirects non-admins to dashboard.', function () {
+      it('redirects non-admins to dashboard.', function() {
         $location = injector.get('$location');
         scope.$root.isAdmin = false;
         scope.$root.$apply();
         expect($location.path()).toBe('/dashboard');
       });
 
-      it('redirects admins to staff/user page if /staff is visited.', function () {
+      it('redirects admins to staff/user page if /staff is visited.', function() {
         $location = injector.get('$location');
         scope.$root.isAdmin = true;
         $location.path('/staff');
@@ -36,7 +36,7 @@ window.test.staff = function() {
 
       setupController('staffUserListController');
 
-      it('bootstraps successfully.', function () {
+      it('bootstraps successfully.', function() {
         expect(scope.$parent.tabIndex).toBe(0);
       });
 
@@ -96,7 +96,7 @@ window.test.staff = function() {
 
       setupController('staffMinistryListController');
 
-      it('bootstraps successfully.', function () {
+      it('bootstraps successfully.', function() {
         expect(scope.$parent.tabIndex).toBe(1);
       });
 
@@ -197,9 +197,32 @@ window.test.staff = function() {
       setupController('staffUserCreateController', {'ministries': []});
 
       it('bootstraps successfully', function() {
-        expect(scope.newUser).toBeUndefined();
+        expect(scope.newUser).toBeDefined();
         expect(scope.ministries).toEqual([]);
         expect(scope.searchText).toEqual("");
+
+        $timeout = injector.get('$timeout');
+        $timeout.flush();
+      });
+
+      it('watches isExisting ministry property and clears ministry select', function() {
+        scope.newUser = {newMinistry: {}};
+        scope.existing = {isExisting: 'existing'};
+        scope.$apply();
+        expect(scope.newUser.newMinistry).toBeUndefined();
+
+        scope.newUser = {ministry: {}};
+        scope.existing = {isExisting: 'new'};
+        scope.$apply();
+        expect(scope.newUser.ministry).toBeUndefined();
+      });
+
+      it('skips ministry creation if existing ministry is selected', function() {
+        scope.newUser = {ministry: {id: 1}};
+        spyOn(scope, 'createNewUser');
+
+        scope.createUserSubmit();
+        expect(scope.createNewUser).toHaveBeenCalled();
       });
 
       it('populates ministries after new ministry created', function() {
@@ -218,7 +241,7 @@ window.test.staff = function() {
         $socket = injector.get('$socket');
         $q = injector.get('$q');
         expect(scope.newMinistry).toBeUndefined();
-        scope.newUser = {newMinistry: {name: "Mew Nimistry"}};
+        scope.newUser = {newMinistry: {id: 3, name: "Mew Nimistry"}};
         scope.ministries = [];
 
         spyOn($socket, 'post').and.callFake(function() {
@@ -232,6 +255,82 @@ window.test.staff = function() {
         expect($socket.post).toHaveBeenCalled();
         expect(scope.ministries[0].name).toEqual('Mew Nimistry');
         expect(scope.newMinistry.name).toEqual('Mew Nimistry');
+      });
+
+      it('handles new users after promise with errors', function() {
+        var newUser = {id: 1, name: 'Fiona'};
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'hide');
+
+        ctrl.handleNewUser(newUser);
+        expect($mdDialog.hide).toHaveBeenCalledWith(newUser);
+      });
+
+      it('creates new user after form submitted and ministry created if necessary', function() {
+        $socket = injector.get('$socket');
+        $q = injector.get('$q');
+
+        spyOn($socket, 'post').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({name: "Uew Nser"});
+          return deferred.promise;
+        });
+
+        scope.newUser = {name: 'Laguna Larry'};
+        scope.newMinistry = {id: 3};
+
+        scope.createNewUser(scope.newMinistry);
+        expect(scope.newUser.ministry).toEqual(3);
+
+        expect($socket.post).toHaveBeenCalledWith('/user', scope.newUser);
+
+        scope.newUser = {name: 'Paradise Peter', ministry: {id: 4}};
+
+        scope.createNewUser();
+        expect(scope.newUser.ministry).toEqual(4);
+      });
+
+      it('handleNewUser generates errors if invalid user attributes are defined', function() {
+        var errors = {invalidAttributes: {message: 'Everything/s Broke'}};
+        spyOn(ctrl, 'createErrors');
+
+        ctrl.handleNewUser(errors);
+        expect(ctrl.createErrors).toHaveBeenCalledWith(errors);
+      });
+
+      it('creates errors with createErrors', function() {
+        expect(scope.errors).toBeUndefined();
+        var validationErrors = {
+              summary: 'Stuff Broke Yo',
+              invalidAttributes: {
+                email: [{
+                  message: 'email broke',
+                  rule: 'email'
+                }]
+              }
+            };
+
+        ctrl.createErrors(validationErrors);
+        expect(scope.errors).toBeDefined();
+        expect(scope.errors.summary).toEqual(validationErrors.summary);
+        expect(scope.errors.many[0]).toEqual('email broke');
+      });
+
+      it('resets ministry select if new ministry is created with errors in user creation', function() {
+        scope.newUser = {};
+        scope.newMinistry = {id: 3, name: 'just created'};
+        scope.existing = {isExisting: 'new'};
+
+        ctrl.createErrors({});
+        expect(scope.existing.isExisting).toEqual('existing');
+        expect(scope.newUser.ministry).toEqual(scope.newMinistry);
+      });
+
+      it('hides dialog when cancel is called', function() {
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'cancel');
+        scope.cancel();
+        expect($mdDialog.cancel).toHaveBeenCalled();
       });
 
     });
