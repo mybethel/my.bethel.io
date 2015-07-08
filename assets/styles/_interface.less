@@ -27,9 +27,6 @@ md-tabs {
     .md-tab {
       padding-top: 20px;
     }
-    md-tabs-content-wrapper {
-      top: 64px !important;
-    }
   }
 }
 
@@ -52,11 +49,14 @@ md-sidenav.md-sidenav-left {
     border-radius: 0;
     color: #aaa;
     md-icon {
-      fill: #ddd;
+      color: #ddd;
     }
   }
   md-content.md-default-theme {
     background-color: rgb(33,33,33);
+  }
+  md-list.md-default-theme md-list-item button {
+    background: transparent;
   }
 }
 
