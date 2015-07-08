@@ -1,5 +1,4 @@
-angular.module('Bethel.user', [])
-
+angular.module('Bethel.user')
 .controller('LoginController', function ($scope, authService) {
 
   $scope.invitedUser = {};
