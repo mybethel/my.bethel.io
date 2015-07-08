@@ -32,7 +32,7 @@
     <md-content flex>
       <md-list class="md-accent md-hue-3">
         <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-cloak>
-          <md-icon md-svg-icon="icons/ic_{{ link.icon }}_24px.svg"></md-icon>
+          <md-icon>{{ link.icon }}</md-icon>
           <p>{{ link.title }}</p>
         </md-list-item>
       </md-list>
@@ -54,7 +54,7 @@
           <form name="userLoginForm" ng-submit="login(credentials)">
 
             <md-input-container>
-              <md-icon md-svg-src="icons/ic_person_24px.svg" class="name"></md-icon>
+              <md-icon class="name">person</md-icon>
               <input autocorrect="off" autocapitalize="off" name="email" ng-model="credentials.name" placeholder="Email" required spellcheck="false" type="email" />
               <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched">
                 <div ng-message="required || email">A valid e-mail address is required.</div>
@@ -63,7 +63,7 @@
             </md-input-container>
 
             <md-input-container>
-              <md-icon md-svg-src="icons/ic_lock_24px.svg" class="name"></md-icon>
+              <md-icon class="name">lock</md-icon>
               <input autocorrect="off" autocapitalize="off" name="password" ng-model="credentials.pass" placeholder="Password" required spellcheck="false" type="password" />
               <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched">
                 <div ng-message="required">A password is required.</div>
