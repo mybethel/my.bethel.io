@@ -12,8 +12,25 @@ md-content.main-content.inverse {
   background-repeat: no-repeat;
 }
 
-md-tabs md-tabs-canvas {
-  background: #FFF;
+md-tabs {
+  md-tabs-canvas {
+    background: #FFF;
+  }
+  md-content.md-default-theme {
+    background: transparent;
+  }
+  &.tall {
+    md-tabs-canvas,
+    md-tab-item {
+      height: 64px;
+    }
+    .md-tab {
+      padding-top: 20px;
+    }
+    md-tabs-content-wrapper {
+      top: 64px !important;
+    }
+  }
 }
 
 @media (min-width: 960px) {
