@@ -1,22 +1,16 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserListController', ['$rootScope', '$scope', '$stateParams', '$state', '$location', 'sailsSocket', '$mdDialog',
-  function ($rootScope, $scope, $stateParams, $state, $location, sailsSocket, $mdDialog) {
+.controller('staffUserListController', ['$scope', '$stateParams', '$state', '$location', 'sailsSocket', '$mdDialog',
+  function ($scope, $stateParams, $state, $location, sailsSocket, $mdDialog) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
+  $scope.orderByField = 'name';
 
-  $ctrl.populateUsers = function (response, status) {
-    $scope.users = response;
-    $scope.orderByField = 'name';
+  $ctrl.init = function() {
+    $scope.users = sailsSocket.populateMany('/user');
+    $scope.ministries = sailsSocket.populateMany('/ministry');
   }
-
-  $ctrl.populateMinistries = function (response, status) {
-    $scope.ministries = response;
-  }
-
-  $socket.get('/user').then($ctrl.populateUsers);
-  $socket.get('/ministry').then($ctrl.populateMinistries);
 
   $scope.detailedUserTransition = function(userId) {
     $state.transitionTo('staff.detailedUser', {'userId': userId});
@@ -38,5 +32,7 @@ angular.module('Bethel.staff')
     });
 
   }
+
+  $ctrl.init();
 
 }]);
