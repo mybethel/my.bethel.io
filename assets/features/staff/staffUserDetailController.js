@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', '$socket', '$timeout',
-  function ($scope, $stateParams, $location, $socket, $timeout) {
+.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', 'sailsSocket', '$timeout',
+  function ($scope, $stateParams, $location, sailsSocket, $timeout) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
@@ -15,12 +15,8 @@ angular.module('Bethel.staff')
     }
   });
 
-  $ctrl.populateUser = function(response, status) {
-    $scope.user = response;
-  };
-
   $ctrl.init = function() {
-    $socket.get('/user/' + $scope.id).then($ctrl.populateUser);
+    $scope.user = sailsSocket.populateOne('/user/' + $scope.id);
   };
 
   $ctrl.setLockedStatus = function(updatedUser, status) {
@@ -28,7 +24,7 @@ angular.module('Bethel.staff')
   };
 
   $scope.lockUnlock = function() {
-    $socket.get('/user/lockUnlock/' + $scope.id).then($ctrl.setLockedStatus);
+    sailsSocket.get('/user/lockUnlock/' + $scope.id).then($ctrl.setLockedStatus);
   };
 
   $ctrl.getEmailConfirmation = function(response, status) {
@@ -37,7 +33,7 @@ angular.module('Bethel.staff')
 
   $scope.sendInviteEmail = function() {
     $scope.emailSending = true;
-    $socket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
+    sailsSocket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
   };
 
   $scope.$watch('emailSending', function() {

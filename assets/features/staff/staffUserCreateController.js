@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserCreateController', ['$scope', '$timeout', '$location', '$socket', '$mdDialog', 'ministries',
-  function ($scope, $timeout, $location, $socket, $mdDialog, ministries) {
+.controller('staffUserCreateController', ['$scope', '$timeout', '$location', 'sailsSocket', '$mdDialog', 'ministries',
+  function ($scope, $timeout, $location, sailsSocket, $mdDialog, ministries) {
 
   $ctrl = this;
   $scope.existing = {isExisting: "existing"};
@@ -34,7 +34,7 @@ angular.module('Bethel.staff')
             _csrf: $scope.$root._csrf
           };
 
-      $socket.post('/ministry', ministryToCreate).then($ctrl.populateMinistries);
+      sailsSocket.post('/ministry', ministryToCreate).then($ctrl.populateMinistries);
 
     } else {
       $scope.createNewUser();
@@ -63,7 +63,7 @@ angular.module('Bethel.staff')
       newUser.ministry = newUser.ministry.id;
     }
 
-    $socket.post('/user', newUser).then($ctrl.handleNewUser);
+    sailsSocket.post('/user', newUser).then($ctrl.handleNewUser);
 
   };
 

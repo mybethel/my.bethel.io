@@ -38,6 +38,14 @@ window.test.staff = function() {
 
       it('bootstraps successfully.', function() {
         expect(scope.$parent.tabIndex).toBe(0);
+        expect(scope.orderByField).toEqual('name');
+
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'populateMany').and.callThrough();
+
+        ctrl.init();
+        expect(sailsSocket.populateMany.calls.argsFor(0)).toEqual(['/user']);
+        expect(sailsSocket.populateMany.calls.argsFor(1)).toEqual(['/ministry']);
       });
 
       it('redirects non-admins to dashboard', function() {
@@ -52,17 +60,6 @@ window.test.staff = function() {
         expect($location.path()).toBe('/staff/user');
       });
 
-      it('populates users and ministries on init', function() {
-        expect(scope.users).toBeUndefined();
-        expect(scope.ministries).toBeUndefined();
-
-        ctrl.populateUsers([]);
-        ctrl.populateMinistries([]);
-
-        expect(scope.users).toBeDefined();
-        expect(scope.ministries).toBeDefined();
-      });
-
       it('calls state transition when user row is clicked', function() {
         var requestUrl = 'staff.detailedUser',
             userRequest = {'userId': 1};
@@ -73,20 +70,18 @@ window.test.staff = function() {
         expect($state.transitionTo).toHaveBeenCalledWith(requestUrl, userRequest);
       });
 
-      beforeEach(inject(function ($mdDialog) {
-        $q = injector.get('$q');
-        _.extend($mdDialog, {
-          show: function(thing) {
-            deferred = $q.defer();
-            return deferred.promise;
-          }
-        });
-      }));
-
       it('calls mddialog show on showCreateUser', function() {
         scope.users = [];
+        $mdDialog = injector.get('$mdDialog');
+        $q = injector.get('$q');
+
+        spyOn($mdDialog, 'show').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({name: "Mal"});
+          return deferred.promise;
+        });
+
         scope.showCreateUser({});
-        deferred.resolve({name: 'Mal'});
         scope.$digest();
         expect(scope.users[0].name).toBe('Mal');
       });
@@ -98,6 +93,7 @@ window.test.staff = function() {
 
       it('bootstraps successfully.', function() {
         expect(scope.$parent.tabIndex).toBe(1);
+        expect(scope.orderByField).toEqual('createdAt');
       });
 
       it('redirects non-admins to dashboard', function() {
@@ -112,22 +108,6 @@ window.test.staff = function() {
         expect($location.path()).toBe('/staff/ministry');
       });
 
-      it('populates ministries on init', function() {
-        expect(scope.ministries).toBeUndefined();
-        ctrl.populateMinistries([]);
-        expect(scope.ministries).toBeDefined();
-      });
-
-      beforeEach(inject(function ($mdDialog) {
-        $q = injector.get('$q');
-        _.extend($mdDialog, {
-          show: function(thing) {
-            deferred = $q.defer();
-            return deferred.promise;
-          }
-        });
-      }));
-
       it('calls state transition when ministry row is clicked', function() {
         var requestUrl = 'staff.detailedMinistry',
             userRequest = {'ministryId': 1};
@@ -140,55 +120,18 @@ window.test.staff = function() {
 
       it('calls mddialog show on showCreateMinistry', function() {
         scope.ministries = [];
+        $mdDialog = injector.get('$mdDialog');
+        $q = injector.get('$q');
+
+        spyOn($mdDialog, 'show').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({name: 'Season 2 Ministry'});
+          return deferred.promise;
+        });
+
         scope.showCreateMinistry({});
-        deferred.resolve({name: 'Season 2 Ministry'});
         scope.$digest();
         expect(scope.ministries[0].name).toBe('Season 2 Ministry');
-      });
-    });
-
-    describe('staffUserCreateController', function() {
-
-      setupController('staffUserCreateController');
-    });
-
-    describe('staffMinistryCreateController', function() {
-
-      setupController('staffMinistryCreateController');
-
-      it('bootstraps successfully', function() {
-        $timeout = injector.get('$timeout');
-        $timeout.flush();
-      });
-
-      it('hides dialog when cancel is called', function() {
-        $mdDialog = injector.get('$mdDialog');
-        spyOn($mdDialog, 'cancel');
-        scope.cancel();
-        expect($mdDialog.cancel).toHaveBeenCalled();
-      });
-
-      beforeEach(inject(function ($socket) {
-        $q = injector.get('$q');
-        _.extend($socket, {
-          post: function(place, thing) {
-            deferred = $q.defer();
-            return deferred.promise;
-          }
-        });
-      }));
-
-      it('creates a new ministry', function() {
-        scope.newMinistry = {name: 'UnitTest Ministry'};
-
-        $mdDialog = injector.get('$mdDialog');
-        spyOn($mdDialog, 'hide');
-
-        scope.createNewMinistry();
-        deferred.resolve(scope.newMinistry);
-        scope.$digest();
-
-        expect($mdDialog.hide).toHaveBeenCalledWith(scope.newMinistry);
       });
     });
 
@@ -238,13 +181,13 @@ window.test.staff = function() {
       });
 
       it('creates a ministry if specified with new user', function() {
-        $socket = injector.get('$socket');
+        sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
         expect(scope.newMinistry).toBeUndefined();
         scope.newUser = {newMinistry: {id: 3, name: "Mew Nimistry"}};
         scope.ministries = [];
 
-        spyOn($socket, 'post').and.callFake(function() {
+        spyOn(sailsSocket, 'post').and.callFake(function() {
           var deferred = $q.defer();
           deferred.resolve({name: "Mew Nimistry"});
           return deferred.promise;
@@ -252,7 +195,7 @@ window.test.staff = function() {
         scope.createUserSubmit();
         scope.$digest();
 
-        expect($socket.post).toHaveBeenCalled();
+        expect(sailsSocket.post).toHaveBeenCalled();
         expect(scope.ministries[0].name).toEqual('Mew Nimistry');
         expect(scope.newMinistry.name).toEqual('Mew Nimistry');
       });
@@ -267,10 +210,10 @@ window.test.staff = function() {
       });
 
       it('creates new user after form submitted and ministry created if necessary', function() {
-        $socket = injector.get('$socket');
+        sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
 
-        spyOn($socket, 'post').and.callFake(function() {
+        spyOn(sailsSocket, 'post').and.callFake(function() {
           var deferred = $q.defer();
           deferred.resolve({name: "Uew Nser"});
           return deferred.promise;
@@ -282,7 +225,7 @@ window.test.staff = function() {
         scope.createNewUser(scope.newMinistry);
         expect(scope.newUser.ministry).toEqual(3);
 
-        expect($socket.post).toHaveBeenCalledWith('/user', scope.newUser);
+        expect(sailsSocket.post).toHaveBeenCalledWith('/user', scope.newUser);
 
         scope.newUser = {name: 'Paradise Peter', ministry: {id: 4}};
 
@@ -332,7 +275,43 @@ window.test.staff = function() {
         scope.cancel();
         expect($mdDialog.cancel).toHaveBeenCalled();
       });
+    });
 
+    describe('staffMinistryCreateController', function() {
+
+      setupController('staffMinistryCreateController');
+
+      it('bootstraps successfully', function() {
+        $timeout = injector.get('$timeout');
+        $timeout.flush();
+      });
+
+      it('hides dialog when cancel is called', function() {
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'cancel');
+        scope.cancel();
+        expect($mdDialog.cancel).toHaveBeenCalled();
+      });
+
+      it('creates a new ministry', function() {
+        scope.newMinistry = {name: 'UnitTest Ministry'};
+        $mdDialog = injector.get('$mdDialog');
+        sailsSocket = injector.get('sailsSocket');
+        $q = injector.get('$q');
+
+        spyOn($mdDialog, 'hide');
+        spyOn(sailsSocket, 'post').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve(scope.newMinistry);
+          return deferred.promise;
+        });
+
+        scope.createNewMinistry();
+        scope.$digest();
+
+        expect(sailsSocket.post).toHaveBeenCalled();
+        expect($mdDialog.hide).toHaveBeenCalledWith(scope.newMinistry);
+      });
     });
 
     describe('staffUserDetailController', function() {
@@ -341,6 +320,18 @@ window.test.staff = function() {
 
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(0);
+
+        expect(scope.id).toEqual('543b2b0b06ee1cb56414cbc4');
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'populateOne').and.callFake(function() {
+          return {id: 1, name: 'Francisco'}
+        });
+
+        ctrl.init();
+        expect(sailsSocket.populateOne).toHaveBeenCalledWith('/user/543b2b0b06ee1cb56414cbc4');
+        scope.$digest();
+
+        expect(scope.user.name).toEqual('Francisco');
       });
 
       it('redirects if invalid user id provided', function() {
@@ -357,31 +348,6 @@ window.test.staff = function() {
         expect($location.path()).toBe('/staff/user');
       });
 
-      it('loads a user with populateUser', function() {
-        var user = {name: 'Francisco'};
-
-        expect(scope.user).toBeUndefined();
-        ctrl.populateUser(user);
-        expect(scope.user).toBe(user);
-      });
-
-      it('gets a user through sockets', function() {
-        $socket = injector.get('$socket');
-        $q = injector.get('$q');
-        scope.user = {};
-
-        spyOn($socket, 'get').and.callFake(function() {
-          var deferred = $q.defer();
-          deferred.resolve({id: 1, name: 'Francisco'});
-          return deferred.promise;
-        });
-        ctrl.init();
-        scope.$digest();
-
-        expect($socket.get).toHaveBeenCalled();
-        expect(scope.user.name).toEqual('Francisco');
-      });
-
       it('toggles the lock status of a user', function() {
         var updatedUser = {isLocked: true};
         scope.user = {isLocked: false};
@@ -390,11 +356,11 @@ window.test.staff = function() {
       });
 
       it('requests the api change the locked status of a user', function() {
-        $socket = injector.get('$socket');
+        sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
         scope.user = {};
 
-        spyOn($socket, 'get').and.callFake(function() {
+        spyOn(sailsSocket, 'get').and.callFake(function() {
           var deferred = $q.defer();
           deferred.resolve({isLocked: true});
           return deferred.promise;
@@ -402,7 +368,7 @@ window.test.staff = function() {
         scope.lockUnlock();
         scope.$digest();
 
-        expect($socket.get).toHaveBeenCalled();
+        expect(sailsSocket.get).toHaveBeenCalled();
         expect(scope.user.isLocked).toEqual(true);
       });
 
@@ -413,10 +379,10 @@ window.test.staff = function() {
       });
 
       it('requests email sending through sockets', function() {
-        $socket = injector.get('$socket');
+        sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
 
-        spyOn($socket, 'get').and.callFake(function() {
+        spyOn(sailsSocket, 'get').and.callFake(function() {
           var deferred = $q.defer();
           deferred.resolve();
           return deferred.promise;
@@ -425,7 +391,7 @@ window.test.staff = function() {
         expect(scope.emailSending).toBe(true);
         scope.$digest();
 
-        expect($socket.get).toHaveBeenCalled();
+        expect(sailsSocket.get).toHaveBeenCalled();
         expect(scope.emailSending).toEqual(false);
       });
 
@@ -448,7 +414,19 @@ window.test.staff = function() {
 
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(1);
-        expect(scope.ministry).toBeUndefined();
+        expect(scope.ministry).toBeDefined();
+
+        expect(scope.id).toEqual('5574d437484aee280fa67fc2');
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'populateOne').and.callFake(function() {
+          return {id: '5574d437484aee280fa67fc2', name: 'Francisco\s Ministry'}
+        });
+
+        ctrl.init();
+        expect(sailsSocket.populateOne).toHaveBeenCalledWith('/ministry/5574d437484aee280fa67fc2');
+        scope.$digest();
+
+        expect(scope.ministry.name).toEqual('Francisco\s Ministry');
       });
 
       it('redirects if invalid ministry id provided', function() {
@@ -464,31 +442,6 @@ window.test.staff = function() {
         scope.$apply();
         expect($location.path()).toBe('/staff/ministry');
       });
-
-      it('loads a ministry with populateMinistry', function() {
-        var ministry = {name: 'Francisco'};
-
-        expect(scope.ministry).toBeUndefined();
-        ctrl.populateMinistry(ministry);
-        expect(scope.ministry).toBe(ministry);
-      });
-
-      it('gets a ministry through sockets', function() {
-        $socket = injector.get('$socket');
-        $q = injector.get('$q');
-
-        spyOn($socket, 'get').and.callFake(function() {
-          var deferred = $q.defer();
-          deferred.resolve({id: 1, name: 'Francisco\s Ministry'});
-          return deferred.promise;
-        });
-        ctrl.init();
-        scope.$digest();
-
-        expect($socket.get).toHaveBeenCalled();
-        expect(scope.ministry.name).toEqual('Francisco\s Ministry');
-      });
-
     });
 
     describe('staffMinistryCreateController', function() {

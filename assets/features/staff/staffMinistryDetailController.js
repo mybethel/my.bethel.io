@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffMinistryDetailController', ['$scope', '$stateParams', '$location', '$socket',
-  function ($scope, $stateParams, $location, $socket) {
+.controller('staffMinistryDetailController', ['$scope', '$stateParams', '$location', 'sailsSocket',
+  function ($scope, $stateParams, $location, sailsSocket) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 1;
@@ -15,12 +15,8 @@ angular.module('Bethel.staff')
     }
   });
 
-  $ctrl.populateMinistry = function(response, status) {
-    $scope.ministry = response;
-  };
-
   $ctrl.init = function() {
-    $socket.get('/ministry/' + $scope.id).then($ctrl.populateMinistry);
+    $scope.ministry = sailsSocket.populateOne('/ministry/' + $scope.id);
   };
 
   $ctrl.init();

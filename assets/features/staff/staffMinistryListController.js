@@ -1,17 +1,13 @@
 angular.module('Bethel.staff')
 
-.controller('staffMinistryListController',['$scope', '$stateParams', '$state', '$socket', '$mdDialog',
-  function ($scope, $stateParams, $state, $socket, $mdDialog) {
+.controller('staffMinistryListController',['$scope', '$state', 'sailsSocket', '$mdDialog',
+  function ($scope, $state, sailsSocket, $mdDialog) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 1;
+  $scope.orderByField = 'createdAt';
 
-  $ctrl.populateMinistries = function (response, status) {
-    $scope.ministries = response;
-    $scope.orderByField = 'createdAt';
-  }
-
-  $socket.get('/ministry').then($ctrl.populateMinistries);
+  $scope.ministries = sailsSocket.populateMany('/ministry');
 
   $scope.detailedMinistryTransition = function(ministryId) {
     $state.transitionTo('staff.detailedMinistry', {'ministryId': ministryId});
