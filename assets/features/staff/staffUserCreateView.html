@@ -1,19 +1,34 @@
 
-<md-dialog flex="50" class="wizard">
+<md-dialog flex="50" class="user-create wizard">
+
   <md-dialog-content class="sticky-container">
-    <md-toolbar class="md-accent md-hue-3">
-      <h1 class="md-toolbar-tools">Create a New User</h1>
+    <md-toolbar>
+      <h1>Create a New User</h1>
     </md-toolbar>
     <div class="new-user-form">
 
+      <form name="createUser">
+
       <md-input-container>
         <label>User Name</label>
-        <input class="focus" type="text" ng-model="newUser.name">
+        <input class="focus" type="text" name="name" ng-model="newUser.name" required>
+        <div ng-messages="!createUser.name.$untouched && createUser.name.$error">
+          <div ng-message="required">Name is required.</div>
+        </div>
       </md-input-container>
 
       <md-input-container>
         <label>User Email</label>
-        <input type="text" ng-model="newUser.email">
+        <input
+          type="email"
+          name="email"
+          ng-model="newUser.email"
+          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+          required>
+        <div ng-messages="!createUser.email.$untouched && createUser.email.$error">
+          <div ng-message="required">Email is required.</div>
+          <div ng-message="pattern">Invalid email address.</div>
+        </div>
       </md-input-container>
 
       <label>Select or create a ministry with which to associate this user: </label>
@@ -33,6 +48,8 @@
           md-items="ministry in ministries | filter: {name: searchText}"
           md-item-text="ministry.name"
           md-min-length="0"
+          md-search-text-change="null"
+          md-selected-item-change="null"
           placeholder="Select Ministry">
         <md-item-template>
           <span md-highlight-text="searchText" md-highlight-flags="^i">{{ministry.name}}</span>
@@ -42,13 +59,16 @@
         </md-not-found>
       </md-autocomplete>
 
+      </form>
     </div>
   </md-dialog-content>
+
   <div class="md-actions" layout="row">
     <span flex></span>
     <md-button ng-click="cancel()">Cancel</md-button>
     <md-button ng-click="createUserSubmit()" class="md-raised">Create</md-button>
   </div>
+
 </md-dialog>
 
 <!--
