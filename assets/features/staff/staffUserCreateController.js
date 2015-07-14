@@ -90,7 +90,7 @@ angular.module('Bethel.staff')
 
   $timeout(function () {
     document.querySelector('input.focus').focus();
-  });
+  }, 100);
 
   $scope.cancel = function() {
     $mdDialog.cancel();
