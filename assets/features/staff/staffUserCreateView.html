@@ -1,13 +1,13 @@
 
 <md-dialog flex="50" class="user-create wizard">
 
+  <form name="createUser" ng-submit="createUserSubmit(createUser)" novalidate>
+
   <md-dialog-content class="sticky-container">
     <md-toolbar>
       <h1>Create a New User</h1>
     </md-toolbar>
     <div class="new-user-form">
-
-      <form name="createUser">
 
       <md-input-container>
         <label>User Name</label>
@@ -23,26 +23,20 @@
           type="email"
           name="email"
           ng-model="newUser.email"
+          ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }"
           pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+          unique="user"
           required>
         <div ng-messages="!createUser.email.$untouched && createUser.email.$error">
           <div ng-message="required">Email is required.</div>
           <div ng-message="pattern">Invalid email address.</div>
+          <div ng-message="unique">Email address already in use.</div>
         </div>
       </md-input-container>
 
       <label>Select or create a ministry with which to associate this user: </label>
-      <md-radio-group ng-model="existing.isExisting" class="md-primary" layout="row">
-        <md-radio-button value="existing" class="md-primary">Existing</md-radio-button>
-        <md-radio-button value="new">New</md-radio-button>
-      </md-radio-group>
 
-      <md-input-container ng-show="existing.isExisting === 'new'">
-        <label>New Ministry Name</label>
-        <input type="text" ng-model="newUser.newMinistry">
-      </md-input-container>
-
-      <md-autocomplete ng-show="existing.isExisting === 'existing'"
+      <md-autocomplete
           md-selected-item="newUser.ministry"
           md-search-text="searchText"
           md-items="ministry in ministries | filter: {name: searchText}"
@@ -50,25 +44,26 @@
           md-min-length="0"
           md-search-text-change="null"
           md-selected-item-change="null"
+          md-autoselect="true"
           placeholder="Select Ministry">
         <md-item-template>
           <span md-highlight-text="searchText" md-highlight-flags="^i">{{ministry.name}}</span>
         </md-item-template>
         <md-not-found>
-          No matches found.
+          No matches found. A new ministry will be created.
         </md-not-found>
       </md-autocomplete>
 
-      </form>
     </div>
   </md-dialog-content>
 
   <div class="md-actions" layout="row">
     <span flex></span>
-    <md-button ng-click="cancel()">Cancel</md-button>
-    <md-button ng-click="createUserSubmit()" class="md-raised">Create</md-button>
+    <md-button type="button" ng-click="cancel()">Cancel</md-button>
+    <md-button type="submit" class="md-raised" ng-disabled="createUser.$invalid">Create</md-button>
   </div>
 
+  </form>
 </md-dialog>
 
 <!--

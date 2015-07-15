@@ -4,33 +4,41 @@ angular.module('Bethel.staff')
   function ($scope, $timeout, $location, sailsSocket, $mdDialog, ministries) {
 
   $ctrl = this;
-  $scope.existing = {isExisting: "existing"};
   $scope.ministries = ministries;
   $scope.searchText = "";
   $scope.newUser = {};
 
-  $scope.$watch('existing.isExisting', function (existing) {
-    if (existing === 'new' && $scope.newUser.ministry) {
-      delete $scope.newUser.ministry;
-    } else if (existing === 'existing' && $scope.newUser.newMinistry) {
-      delete $scope.newUser.newMinistry;
+  $scope.$watch('searchText', function (searchText) {
+    if (!searchText && !$scope.newUser.ministry) {
+      $scope.createUser.$setValidity('ministry', false);
+    } else {
+      $scope.createUser.$setValidity('ministry', true);
     }
   });
 
-  $ctrl.populateMinistries = function(response, status) {
-    $scope.ministries.push(response);
-    $scope.newMinistry = response;
-    $scope.createNewUser(response);
+  $ctrl.populateMinistries = function(createdMinistry, status) {
+    $scope.ministries.push(createdMinistry);
+    $scope.createNewUser(createdMinistry);
   };
 
-  $scope.createUserSubmit = function() {
+  $scope.createUserSubmit = function(sender) {
 
-    var newMinistry = $scope.newUser.newMinistry;
+    if (sender.$invalid) return;
 
-    if (newMinistry) {
+    // check for ministry name based on searchText
+    if (!$scope.newUser.ministry ) {
+      angular.forEach(ministries, function (ministry) {
+        if (ministry.name.toLowerCase() === $scope.searchText.toLowerCase()) {
+          console.log('found this ministry ', ministry);
+          $scope.newUser.ministry = ministry;
+        }
+      });
+    }
+
+    if (!$scope.newUser.ministry) {
 
       var ministryToCreate = {
-            name: newMinistry,
+            name: $scope.searchText,
             _csrf: $scope.$root._csrf
           };
 
@@ -50,15 +58,15 @@ angular.module('Bethel.staff')
     }
   };
 
-  $scope.createNewUser = function(ministry) {
+  $scope.createNewUser = function(createdMinistry) {
 
     var newUser = $scope.newUser;
 
     newUser._csrf = $scope.$root._csrf;
     newUser.isLocked = false;
 
-    if (ministry) {
-      newUser.ministry = $scope.newMinistry.id;
+    if (createdMinistry) {
+      newUser.ministry = createdMinistry.id;
     } else {
       newUser.ministry = newUser.ministry.id;
     }
@@ -79,11 +87,6 @@ angular.module('Bethel.staff')
       invalidAttributes[field].forEach(function (error) {
         $scope.errors.many.push(error.message);
       });
-    }
-
-    if ($scope.newMinistry) {
-      $scope.existing.isExisting = "existing";
-      $scope.newUser.ministry = $scope.newMinistry;
     }
 
   };
