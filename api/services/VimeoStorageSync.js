@@ -1,5 +1,7 @@
 var moment = require('moment'),
-    Vimeo = require('vimeo-api').Vimeo;
+    Promise = require('bluebird'),
+    Vimeo = require('vimeo-api').Vimeo,
+    VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba');
 
 function podcastMediaUpsert(video, podcast) {
   var videoId = video.uri.toString().replace('/videos/', '');
@@ -41,24 +43,92 @@ function podcastMediaUpsert(video, podcast) {
   });
 }
 
-function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
-  var VimeoAPI = new Vimeo('4990932cb9c798b238e98108b4890c59497297ba'),
-      queryHeaders = {
-        'Authorization': 'Bearer ' + token
-      };
+var vimeo = {};
 
-  if (modifiedCheck) {
-    queryHeaders['If-Modified-Since'] = moment().subtract('minutes', 6).toString();
-  }
+vimeo.refreshAll = false;
 
-  VimeoAPI.request({
-    path: user + '/videos?page=' + pageNumber,
-    headers: queryHeaders
-  }, function (error, body, statusCode, headers) {
-    if (error || (statusCode === 304 && modifiedCheck) || statusCode !== 200 || (!body && !body.data)) {
-      sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
+vimeo.sync = function(refreshAll) {
+  this.refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
+  sails.log.info('Syncing Vimeo storage.');
+
+  return new Promise(function(resolve, reject) {
+
+    Podcast.find({ source: 2 }, function foundPodcasts(err, podcasts) {
+      if (err) return reject(err);
+
+      podcasts.map(function(podcast) {
+        return vimeo.syncPodcast(podcast);
+      });
+
+      Promise.all(podcasts).then(function() {
+        sails.log.info('Vimeo sync completed.');
+        resolve();
+      });
+    });
+
+  });
+
+};
+
+vimeo.syncPodcast = function(podcast) {
+  return new Promise(function(resolve, reject) {
+    if (!podcast.service || !podcast.sourceMeta) {
+      sails.log.warn('Vimeo account or tags not defined for podcast ' + podcast.id + '.');
+      return reject();
+    }
+
+    Service.findOne(podcast.service, function foundService(err, service) {
+      if (err || !service) {
+        sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
+        return reject();
+      }
+
+      vimeo.queryApi(podcast, service.user, service.accessToken).then(resolve);
+    });
+  });
+}
+
+vimeo.syncOne = function(podcast, service) {
+
+  Podcast.findOne(podcast, function foundPodcast(err, podcastObject) {
+    if (err || !podcastObject.sourceMeta) {
+      sails.log.error('Vimeo meta tags not defined for podcast ' + podcast.id + '.');
       return;
     }
+
+    Service.findOne(service, function foundService(err, serviceObject) {
+      if (err || !service) {
+        sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
+        return;
+      }
+
+      vimeo.queryApi(podcastObject, serviceObject.user, serviceObject.accessToken);
+    });
+
+  });
+
+};
+
+vimeo.queryApi = function(podcast, user, token) {
+  return new Promise(function(resolve, reject) {
+    var queryHeaders = { 'Authorization': 'Bearer ' + token };
+
+    if (!vimeo.refreshAll) {
+      queryHeaders['If-Modified-Since'] = moment().subtract('minutes', 6).toString();
+    }
+
+    VimeoAPI.request({
+      path: user + '/videos',
+      headers: queryHeaders
+    }, function (error, body, statusCode, headers) {
+      if (error || (statusCode === 304 && !vimeo.refreshAll) || statusCode !== 200 || (!body && !body.data)) {
+        sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
+        return resolve();
+      }
+
+      if (body.total > body.page * body.per_page) {
+        var totalPages = Math.ceil(body.total - (body.page * body.per_page) / body.per_page);
+      }
 
     body.data.forEach(function(video) {
       if (video.tags) {
@@ -69,10 +139,6 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
         });
       }
     });
-
-    if (body.paging.next) {
-      queryVimeoAPI(podcast, user, token, pageNumber + 1, modifiedCheck);
-    }
   });
 
   // Search for Vimeo podcast media that are missing a URL.
@@ -102,52 +168,6 @@ function queryVimeoAPI(podcast, user, token, pageNumber, modifiedCheck) {
       })
     });
   })
-}
-
-exports.sync = function(refreshAll) {
-  refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
-
-  sails.log.info('Syncing Vimeo storage.');
-
-  Podcast.find({source: 2}, function foundPodcasts(err, podcasts) {
-    if (err) return sails.log.error(err);
-
-    podcasts.forEach(function(podcast) {
-      if (!podcast.service || !podcast.sourceMeta) {
-        sails.log.warn('Vimeo account or tags not defined for podcast ' + podcast.id + '.');
-        return;
-      }
-
-      Service.findOne(podcast.service, function foundService(err, service) {
-        if (err || !service) {
-          sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
-          return;
-        }
-
-        queryVimeoAPI(podcast, service.user, service.accessToken, 1, !refreshAll);
-      });
-    });
-  });
-
 };
 
-exports.syncOne = function(podcast, service) {
-
-  Podcast.findOne(podcast, function foundPodcast(err, podcastObject) {
-    if (err || !podcastObject.sourceMeta) {
-      sails.log.error('Vimeo meta tags not defined for podcast ' + podcast.id + '.');
-      return;
-    }
-
-    Service.findOne(service, function foundService(err, serviceObject) {
-      if (err || !service) {
-        sails.log.error('Vimeo service not defined for podcast ' + podcast.id + '.');
-        return;
-      }
-
-      queryVimeoAPI(podcastObject, serviceObject.user, serviceObject.accessToken, 1, false);
-    });
-
-  });
-
-};
+module.exports = vimeo;
