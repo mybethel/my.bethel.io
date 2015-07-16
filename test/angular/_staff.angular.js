@@ -137,34 +137,24 @@ window.test.staff = function() {
 
     describe('staffUserCreateController', function() {
 
-      setupController('staffUserCreateController', {'ministries': []});
+      setupController('staffUserCreateController', {'ministries': [{id: 1, name: "One Ministry"}, {id: 2, name: "Two Ministry"}]});
 
       it('bootstraps successfully', function() {
+        scope.createUser = {$setValidity: function() {} };
         expect(scope.newUser).toBeDefined();
-        expect(scope.ministries).toEqual([]);
+        expect(scope.ministries[0].name).toEqual("One Ministry");
         expect(scope.searchText).toEqual("");
 
         $timeout = injector.get('$timeout');
         $timeout.flush();
       });
 
-      it('watches isExisting ministry property and clears ministry select', function() {
-        scope.newUser = {newMinistry: {}};
-        scope.existing = {isExisting: 'existing'};
-        scope.$apply();
-        expect(scope.newUser.newMinistry).toBeUndefined();
-
-        scope.newUser = {ministry: {}};
-        scope.existing = {isExisting: 'new'};
-        scope.$apply();
-        expect(scope.newUser.ministry).toBeUndefined();
-      });
-
       it('skips ministry creation if existing ministry is selected', function() {
         scope.newUser = {ministry: {id: 1}};
         spyOn(scope, 'createNewUser');
+        var sender = {$invalid: false};
 
-        scope.createUserSubmit();
+        scope.createUserSubmit(sender);
         expect(scope.createNewUser).toHaveBeenCalled();
       });
 
@@ -172,7 +162,6 @@ window.test.staff = function() {
         var ministryToCreate = {name: 'Inland Coastal Ministry'};
 
         scope.ministries = [];
-        expect(scope.newMinistry).toBeUndefined();
         spyOn(scope, 'createNewUser');
 
         ctrl.populateMinistries(ministryToCreate);
@@ -180,24 +169,53 @@ window.test.staff = function() {
         expect(scope.createNewUser).toHaveBeenCalledWith(ministryToCreate);
       });
 
+      it('stops submission if new user form is invalid', function() {
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'post').and.callThrough();
+
+        var sender = {$invalid: true};
+
+        scope.createUserSubmit(sender);
+        expect(sailsSocket.post).not.toHaveBeenCalled();
+      });
+
       it('creates a ministry if specified with new user', function() {
         sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
-        expect(scope.newMinistry).toBeUndefined();
-        scope.newUser = {newMinistry: {id: 3, name: "Mew Nimistry"}};
+        scope.createUser = {$setValidity: function() {} };
         scope.ministries = [];
+        scope.searchText = 'Mew Ninistry';
+        var sender = {$invalid: false};
 
         spyOn(sailsSocket, 'post').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({name: "Mew Nimistry"});
+          deferred.resolve({name: "Mew Ninistry"});
           return deferred.promise;
         });
-        scope.createUserSubmit();
+        scope.createUserSubmit(sender);
         scope.$digest();
 
         expect(sailsSocket.post).toHaveBeenCalled();
-        expect(scope.ministries[0].name).toEqual('Mew Nimistry');
-        expect(scope.newMinistry.name).toEqual('Mew Nimistry');
+        expect(scope.ministries[0].name).toEqual('Mew Ninistry');
+      });
+
+      it('uses an existing ministry if searchText matches ministry name', function() {
+        scope.newUser = {};
+        scope.searchText = "one ministry";
+        var sender = {$invalid: false};
+
+        scope.createUserSubmit(sender);
+
+        expect(scope.newUser.ministry).toEqual(1);
+      });
+
+      it('does not close dialog if there were errors creating user', function() {
+        var response = {invalidAttributes: {}};
+        $mdDialog = injector.get('$mdDialog');
+        spyOn($mdDialog, 'hide');
+
+        ctrl.handleNewUser(response);
+        expect($mdDialog.hide).not.toHaveBeenCalledWith();
       });
 
       it('handles new users after promise with errors', function() {
@@ -231,42 +249,6 @@ window.test.staff = function() {
 
         scope.createNewUser();
         expect(scope.newUser.ministry).toEqual(4);
-      });
-
-      it('handleNewUser generates errors if invalid user attributes are defined', function() {
-        var errors = {invalidAttributes: {message: 'Everything/s Broke'}};
-        spyOn(ctrl, 'createErrors');
-
-        ctrl.handleNewUser(errors);
-        expect(ctrl.createErrors).toHaveBeenCalledWith(errors);
-      });
-
-      it('creates errors with createErrors', function() {
-        expect(scope.errors).toBeUndefined();
-        var validationErrors = {
-              summary: 'Stuff Broke Yo',
-              invalidAttributes: {
-                email: [{
-                  message: 'email broke',
-                  rule: 'email'
-                }]
-              }
-            };
-
-        ctrl.createErrors(validationErrors);
-        expect(scope.errors).toBeDefined();
-        expect(scope.errors.summary).toEqual(validationErrors.summary);
-        expect(scope.errors.many[0]).toEqual('email broke');
-      });
-
-      it('resets ministry select if new ministry is created with errors in user creation', function() {
-        scope.newUser = {};
-        scope.newMinistry = {id: 3, name: 'just created'};
-        scope.existing = {isExisting: 'new'};
-
-        ctrl.createErrors({});
-        expect(scope.existing.isExisting).toEqual('existing');
-        expect(scope.newUser.ministry).toEqual(scope.newMinistry);
       });
 
       it('hides dialog when cancel is called', function() {
