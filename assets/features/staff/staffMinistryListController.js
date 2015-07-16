@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffMinistryListController',['$scope', '$state', 'sailsSocket', '$mdDialog',
-  function ($scope, $state, sailsSocket, $mdDialog) {
+.controller('staffMinistryListController',['$scope', '$state', '$location', 'sailsSocket', '$mdDialog',
+  function ($scope, $state, $location, sailsSocket, $mdDialog) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 1;
@@ -22,8 +22,9 @@ angular.module('Bethel.staff')
       targetEvent: event,
       controller: 'staffMinistryCreateController'
     })
-    .then(function (data) {
-      $scope.ministries.push(data);
+    .then(function (newMinistry) {
+      $scope.ministries.push(newMinistry);
+      $location.path('/staff/ministry/' + newMinistry.id).replace();
     });
 
   };

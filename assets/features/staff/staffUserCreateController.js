@@ -26,10 +26,9 @@ angular.module('Bethel.staff')
     if (sender.$invalid) return;
 
     // check for ministry name based on searchText
-    if (!$scope.newUser.ministry ) {
+    if (!$scope.newUser.ministry) {
       angular.forEach(ministries, function (ministry) {
         if (ministry.name.toLowerCase() === $scope.searchText.toLowerCase()) {
-          console.log('found this ministry ', ministry);
           $scope.newUser.ministry = ministry;
         }
       });
@@ -52,7 +51,7 @@ angular.module('Bethel.staff')
 
   $ctrl.handleNewUser = function(response, status) {
     if (response.invalidAttributes) {
-      $ctrl.createErrors(response);
+      return;
     } else {
       $mdDialog.hide(response);
     }
@@ -72,22 +71,6 @@ angular.module('Bethel.staff')
     }
 
     sailsSocket.post('/user', newUser).then($ctrl.handleNewUser);
-
-  };
-
-  $ctrl.createErrors = function(validationErrors) {
-
-    var invalidAttributes = validationErrors.invalidAttributes;
-
-    $scope.errors = {};
-    $scope.errors.summary = validationErrors.summary;
-    $scope.errors.many = [];
-
-    for (var field in invalidAttributes) {
-      invalidAttributes[field].forEach(function (error) {
-        $scope.errors.many.push(error.message);
-      });
-    }
 
   };
 

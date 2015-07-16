@@ -3,78 +3,65 @@
 
   <form name="createUser" ng-submit="createUserSubmit(createUser)" novalidate>
 
-  <md-dialog-content class="sticky-container">
-    <md-toolbar>
-      <h1>Create a New User</h1>
-    </md-toolbar>
-    <div class="new-user-form">
+    <md-dialog-content class="sticky-container">
+      <md-toolbar>
+        <h1>Create a New User</h1>
+      </md-toolbar>
+      <div class="new-user-form">
 
-      <md-input-container>
-        <label>User Name</label>
-        <input class="focus" type="text" name="name" ng-model="newUser.name" required>
-        <div ng-messages="!createUser.name.$untouched && createUser.name.$error">
-          <div ng-message="required">Name is required.</div>
-        </div>
-      </md-input-container>
+        <md-input-container>
+          <label>User Name</label>
+          <input class="focus" type="text" name="name" ng-model="newUser.name" required>
+          <div ng-messages="!createUser.name.$untouched && createUser.name.$error">
+            <div ng-message="required">Name is required.</div>
+          </div>
+        </md-input-container>
 
-      <md-input-container>
-        <label>User Email</label>
-        <input
-          type="email"
-          name="email"
-          ng-model="newUser.email"
-          ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }"
-          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-          unique="user"
-          required>
-        <div ng-messages="!createUser.email.$untouched && createUser.email.$error">
-          <div ng-message="required">Email is required.</div>
-          <div ng-message="pattern">Invalid email address.</div>
-          <div ng-message="unique">Email address already in use.</div>
-        </div>
-      </md-input-container>
+        <md-input-container>
+          <label>User Email</label>
+          <input
+            type="email"
+            name="email"
+            ng-model="newUser.email"
+            ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }"
+            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+            unique="user"
+            required>
+          <div ng-messages="!createUser.email.$untouched && createUser.email.$error">
+            <div ng-message="required">Email is required.</div>
+            <div ng-message="pattern">Invalid email address.</div>
+            <div ng-message="unique">Email address already in use.</div>
+          </div>
+        </md-input-container>
 
-      <label>Select or create a ministry with which to associate this user: </label>
+        <label>Select or create a ministry with which to associate this user: </label>
 
-      <md-autocomplete
-          md-selected-item="newUser.ministry"
-          md-search-text="searchText"
-          md-items="ministry in ministries | filter: {name: searchText}"
-          md-item-text="ministry.name"
-          md-min-length="0"
-          md-search-text-change="null"
-          md-selected-item-change="null"
-          md-autoselect="true"
-          placeholder="Select Ministry">
-        <md-item-template>
-          <span md-highlight-text="searchText" md-highlight-flags="^i">{{ministry.name}}</span>
-        </md-item-template>
-        <md-not-found>
-          No matches found. A new ministry will be created.
-        </md-not-found>
-      </md-autocomplete>
+        <md-autocomplete
+            md-selected-item="newUser.ministry"
+            md-search-text="searchText"
+            md-items="ministry in ministries | filter: {name: searchText}"
+            md-item-text="ministry.name"
+            md-min-length="0"
+            md-search-text-change="null"
+            md-selected-item-change="null"
+            md-autoselect="true"
+            placeholder="Select Ministry">
+          <md-item-template>
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{ministry.name}}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found. A new ministry will be created.
+          </md-not-found>
+        </md-autocomplete>
 
+      </div>
+    </md-dialog-content>
+
+    <div class="md-actions" layout="row">
+      <span flex></span>
+      <md-button type="button" ng-click="cancel()">Cancel</md-button>
+      <md-button type="submit" class="md-primary" ng-disabled="createUser.$invalid">Create</md-button>
     </div>
-  </md-dialog-content>
-
-  <div class="md-actions" layout="row">
-    <span flex></span>
-    <md-button type="button" ng-click="cancel()">Cancel</md-button>
-    <md-button type="submit" class="md-raised" ng-disabled="createUser.$invalid">Create</md-button>
-  </div>
 
   </form>
 </md-dialog>
-
-<!--
-  <div data-ng-if="errors" class="row errors">
-    <div class="col-sm-5">
-      <div class="alert alert-danger" role="alert">
-        <i class="fa fa-exclamation-circle"></i>
-        <strong class="error-summary" data-ng-bind="errors.summary"></strong>
-        <ul data-ng-repeat="error in errors.many">
-          <li data-ng-bind="error"></li>
-        </ul>
-      </div>
-    </div>
-  </div> -->
