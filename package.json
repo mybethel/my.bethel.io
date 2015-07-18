@@ -30,6 +30,7 @@
     "grunt-sails-linker": "~0.9.5",
     "grunt-stripcomments": "~0.3.1",
     "grunt-sync": "~0.0.4",
+    "heroku-client": "^2.0.0",
     "include-all": "^0.1.6",
     "machinepack-mandrill": "^0.5.0",
     "machinepack-passwords": "~2.2.0",
