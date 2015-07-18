@@ -9,7 +9,7 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps'])
     })
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'templates/dashboard/index.html',
+      templateUrl: 'features/user/userDashboardView.html',
       controller: 'DashboardController'
     })
     .state('dashboard.location', {
