@@ -24,4 +24,9 @@ angular.module('Bethel.user')
     });
   }, true);
 
+  // Prevent the password from staying in scope.
+  $scope.$on('$destroy', function() {
+    delete($scope.user.password);
+  });
+
 }]);
