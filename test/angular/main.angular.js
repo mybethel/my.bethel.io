@@ -11,7 +11,7 @@ var setupController = function(controllerName, params) {
 
     httpBackend = $httpBackend;
     httpBackend.whenGET(/i18n/).respond(200);
-    httpBackend.whenGET(/templates\//).respond(200);
+    httpBackend.whenGET(/templates\/|View\.html/).respond(200);
   }));
 
 };
