@@ -4,11 +4,12 @@
   <div class="md-toolbar-tools">
     <span flex></span>
     <div class="md-toolbar-item" layout="column">
-      <a class="md-button md-default-theme"><span>{{ ministry.name }}</span></a>
+      <a class="md-button md-default-theme" href="#/settings"><span>{{ ministry.name }}</span></a>
     </div>
     <div class="md-toolbar-item" layout="column">
       <a href="/logout"><i class="material-icons md-24">exit_to_app</i></a>
     </div>
+    &nbsp;
     <img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" width="64" height="64" />
   </div>
 </md-toolbar>
