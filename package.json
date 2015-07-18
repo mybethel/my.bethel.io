@@ -60,6 +60,7 @@
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js",
+    "pretest": "./node_modules/.bin/webdriver-manager update",
     "test": "protractor test/protractor.config.js",
     "postinstall": "./node_modules/bower/bin/bower install"
   },
