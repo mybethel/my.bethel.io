@@ -19,6 +19,15 @@ module.exports = {
       type: 'text'
     },
 
+    email: {
+      type: 'string',
+      email: true
+    },
+
+    locality: {
+      type: 'string'
+    },
+
     temporaryImage: {
       type: 'string'
     },
