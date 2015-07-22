@@ -10,7 +10,7 @@ angular.module('Bethel.util')
         if (!attrs.equalize)
           return element[0].children;
 
-        return element[0].querySelectorAll('.' + attrs.equalize);
+        return element[0].querySelectorAll(attrs.equalize);
       };
 
       function applyMaxHeight() {
@@ -44,10 +44,7 @@ angular.module('Bethel.util')
         angular.forEach(scope.equalized, function (el) {
           scope.$watch(function() {
             return el.offsetHeight;
-          }, function (newValue, oldValue) {
-            if (!newValue || newValue === oldValue) return;
-            getMaxHeight();
-          });
+          }, getMaxHeight);
         });
       });
 
