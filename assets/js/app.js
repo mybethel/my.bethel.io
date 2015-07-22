@@ -19,6 +19,7 @@ angular.module('Bethel', [
   'Bethel.staff',
   'Bethel.streaming',
   'Bethel.util',
+  'bethel.dom',
   'ui.utils'
 ])
 
