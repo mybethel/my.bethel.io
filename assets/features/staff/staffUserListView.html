@@ -21,7 +21,7 @@
       </div>
     </md-list-item>
 
-    <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText"  ng-click="detailedUserTransition(user.id)">
+    <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="user in users | orderBy: orderByField: reverseSort | filter:searchText" ng-click="detailedUserTransition(user.id)">
       <img ng-src="{{user.avatar}}" class="md-avatar" />
       <div class="md-list-item-text" flex>
         <h3>{{ user.name }}</h3>

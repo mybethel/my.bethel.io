@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', 'sailsSocket', '$timeout',
-  function ($scope, $stateParams, $location, sailsSocket, $timeout) {
+.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', '$filter', 'sailsSocket', '$timeout',
+  function ($scope, $stateParams, $location, $filter, sailsSocket, $timeout) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
@@ -18,6 +18,11 @@ angular.module('Bethel.staff')
   $ctrl.init = function() {
     $scope.user = sailsSocket.populateOne('/user/' + $scope.id);
   };
+
+  $scope.$watch('user.createdAt', function (createdAt) {
+    $scope.user.createdAt = $filter('date')(createdAt);
+    $scope.user.lastLogin = $filter('date')($scope.user.lastLogin);
+  });
 
   $ctrl.setLockedStatus = function(updatedUser, status) {
     $scope.user.isLocked = updatedUser.isLocked;
