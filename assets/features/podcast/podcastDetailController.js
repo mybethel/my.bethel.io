@@ -5,6 +5,7 @@ angular.module('Bethel.podcast')
 .controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket',
   function ($scope, $state, $stateParams, upload, $mdDialog, sailsSocket) {
 
+  var $ctrl = this;
   $scope.id = $stateParams.podcastId;
   $scope.uploading = false;
   $scope.uploadProgress = 0;
@@ -55,6 +56,18 @@ angular.module('Bethel.podcast')
     });
   }, true);
 
+  $ctrl.populateDemo = function() {
+    $scope.isDemo = ($scope.subscriberCount < 1);
+    if (!$scope.isDemo) return;
+    for (var i = 0; i < 10; i++) {
+      $scope.subscriberChart.data[0].push(Math.round((i * 10) + (Math.random() * 30)));
+      $scope.subscriberChart.labels.push(moment().subtract(10 - i, 'weeks').format('MMM D'));
+    }
+    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0];
+    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0]
+    $scope.subscriberChange = (($scope.subscriberCount - $scope.subscriberCompare) / $scope.subscriberCompare) * 100;
+  };
+
   $scope.$watch('podcastStats', function (newValue) {
     if (!newValue || !newValue.historical) return;
     $scope.subscriberChart.data[0] = [];
@@ -63,9 +76,11 @@ angular.module('Bethel.podcast')
       $scope.subscriberChart.data[0].push(subscribers);
       $scope.subscriberChart.labels.push(moment(String(week), 'YYYYw').format('MMM D'));
     });
-    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-2)[0];
+    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-2)[0] || 0;
     $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-3)[0];
     $scope.subscriberChange = (($scope.subscriberCount - $scope.subscriberCompare) / $scope.subscriberCompare) * 100;
+
+    $ctrl.populateDemo();
   }, true);
 
   $scope.uploadThumbnail = function($files) {
@@ -104,7 +119,7 @@ angular.module('Bethel.podcast')
         sailsSocket.post('/podcastmedia', {
           name: fileName,
           date: file.lastModifiedDate,
-          url: 'http://cloud.bethel.io/' + encodeURI(fileMeta.key),
+          url: 'http://cloud.bethel.io/' + $scope.uploadEpisode.bucket + '/' + encodeURI(file.name),
           size: file.size,
           podcast: $scope.id,
           type: 'cloud'

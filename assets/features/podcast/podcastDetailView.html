@@ -7,13 +7,23 @@
   </div>
   <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" ng-if="podcast.source === 1" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
     <md-tooltip>Upload Episode</md-tooltip>
-    <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+    <md-icon>add</md-icon>
   </button>
 </md-toolbar>
 
 <md-content class="main-content" layout="row" layout-wrap>
 
-  <div class="statistics" flex="100" layout="row" layout-padding>
+  <div class="overlay" flex="60" offset="20" layout-padding layout-margin layout-align="center center" ng-if="isDemo">
+    <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" layout-align="center center">
+      <h3>Welcome to your new podcast!</h3>
+      <span>You'll see real stats here when you have subscribers.</span>
+      <span ng-if="podcast.source === 1">Go ahead, upload some episodes and when you're ready...</span>
+      <span ng-if="podcast.source === 2">Your episodes will sync with Vimeo shortly...</span>
+      <md-button class="md-primary" ng-click="submitPodcast($event)" ng-if="subscriberCount < 1 || isDemo">Submit to iTunes</md-button>
+    </md-whiteframe>
+  </div>
+
+  <div class="statistics" flex="100" layout="row" layout-padding ng-class="{ 'demo': isDemo }">
     <div flex="30">
       <h3>Last Week:</h3>
       <md-card>
@@ -28,7 +38,6 @@
           <small>{{ subscriberChange > 1 ? 'increase' : 'decrease' }}</small>
         </md-card-content>
       </md-card>
-      <md-button class="md-primary" ng-click="submitPodcast($event)" ng-if="subscriberCount < 1">Submit to iTunes</md-button>
     </div>
     <div flex="70">
       <p>Weekly Podcast Audience Since {{ subscriberChart.labels[0] }}</p>
