@@ -1,46 +1,88 @@
-<div class="dash-panel-full">
 
-  <hr>
+<md-content class="main-content">
+  <div layout="row" layout-margin>
 
-  <div class="row">
-    <div class="col-sm-12">
-      <h3>User Management: </h3>
+    <div flex="30" class="contact-card">
+      <div layout="column" layout-align="center center" layout-padding>
+        <img ng-src="{{user.avatar}}" height="100" width="100" class="avatar">
+
+        <h1 ng-bind="user.name"></h1>
+        <div layout="row" layout-align="center center">
+          <div class="basic-info">
+            <i class="material-icons">mail</i>
+            <p ng-bind="user.email"></p>
+          </div>
+        </div>
+        <div layout="row" layout-align="center center">
+          <div class="basic-info">
+            <i class="material-icons">phone</i>
+            <p>954-123-1234</p>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <md-whiteframe flex class="md-whiteframe-z1 md-padding contact-info" layout="column">
+<!-- 
+      <md-fab-speed-dial md-direction="right" class="md-scale">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-hue-3 md-button md-default-theme">
+            <i class="material-icons">menu</i>
+          </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          <md-button aria-label="Lock Unlock" class="md-fab md-raised md-mini" ng-click="lockUnlock()">
+            <i class="material-icons" ng-bind="user.isLocked ? 'lock_open' : 'lock'"></i>
+            <md-tooltip>{{user.isLocked ? 'Unlock' : 'Lock'}} Account</md-tooltip>
+          </md-button>
+          <md-button aria-label="Masquerade" class="md-fab md-raised md-mini">
+            <i class="material-icons">group</i>
+            <md-tooltip>Masquerade</md-tooltip>
+          </md-button>
+          <md-button aria-label="Password Reset" class="md-fab md-raised md-mini">
+            <i class="material-icons">vpn_key</i>
+            <md-tooltip>Reset Password</md-tooltip>
+          </md-button>
+          <md-button aria-label="" class="md-fab md-raised md-mini">
+            <i class="material-icons">mail</i>
+            <md-tooltip>Send Invite</md-tooltip>
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+-->
+      <md-button class="md-icon-button edit" aria-label="Edit">
+        <i class="material-icons">edit</i>
+      </md-button>
+
+      <h3>User Details</h3>
+
+      <md-input-container>
+        <label>Email</label>
+        <input ng-model="user.email" type="text" disabled>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Member Since</label>
+        <input ng-model="user.createdAt" type="text" disabled>
+      </md-input-container>
+
+      <md-input-container ng-if="user.lastLogin">
+        <label>Last Login</label>
+        <input ng-model="user.lastLogin" type="text" disabled>
+      </md-input-container>
+
+      <div layout="row" layout-align="space-around center">
+        <md-input-container ng-if="user.inviteCode" flex>
+          <label>Invite Code</label>
+          <input ng-model="user.inviteCode" type="text" disabled>
+        </md-input-container>
+        <div>
+          <md-button class=" md-primary">Send Invite</md-button>
+        </div>
+      </div>
+
+    </md-whiteframe>
+
   </div>
-
-  <div class="row user-management-row">
-    <div class="col-md-3">
-      <button data-ng-click="lockUnlock()" class="btn btn-primary">
-        <i class="fa" data-ng-class="user.isLocked ? 'fa-unlock' : 'fa-lock'"></i>
-        <span data-ng-bind="user.isLocked ? 'Unlock' : 'Lock'"></span> User Account
-      </button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn btn-primary"><i class="fa fa-key"></i>Masquerade as User</button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn btn-primary"><i class="fa fa-shield"></i>Reset User Password</button>
-    </div>
-    <div class="col-md-3">
-      <button class="btn btn-primary" ng-click="sendInviteEmail()"><i ng-class="{'fa-circle-o-notch fa-spin': emailSending, 'fa-check':emailSending === false, 'fa-envelope': emailSending === undefined}" class="fa"></i>Send Invite Email</button>
-    </div>
-  </div>
-
-  <hr>
-
-  <div class="row">
-    <div class="col-md-2">
-      <img ng-src="{{user.avatar}}" height="100" width="100" class="pull-left"/>
-    </div>
-
-    <div class="col-md-9">
-      <h1 data-ng-bind="user.name"></h1>
-      <p data-ng-bind="user.inviteCode"></p>
-      <p data-ng-bind="user.email"></p>
-      <p><a data-ng-bind="user.ministry.name" data-ng-href="/#/staff/ministry/{{user.ministry.id}}"></a></p>
-      <p ng-show="user.lastLogin">Last Login:
-        <span data-ng-bind="user.lastLogin | date: format: medium"></span>
-      </p>
-    </div>
-  </div>
-</div>
+</md-content>
