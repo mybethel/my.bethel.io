@@ -23,7 +23,7 @@
     </div>
 
     <md-whiteframe flex class="md-whiteframe-z1 md-padding contact-info" layout="column">
-<!-- 
+<!--
       <md-fab-speed-dial md-direction="right" class="md-scale">
         <md-fab-trigger>
           <md-button aria-label="menu" class="md-fab md-hue-3 md-button md-default-theme">
@@ -51,9 +51,6 @@
         </md-fab-actions>
       </md-fab-speed-dial>
 -->
-      <md-button class="md-icon-button edit" aria-label="Edit">
-        <i class="material-icons">edit</i>
-      </md-button>
 
       <h3>User Details</h3>
 
@@ -78,9 +75,15 @@
           <input ng-model="user.inviteCode" type="text" disabled>
         </md-input-container>
         <div>
-          <md-button class=" md-primary">Send Invite</md-button>
+          <md-button class="md-primary" ng-click="sendInviteEmail()" ng-bind="emailSending ? 'Sending...' : 'Send Invite'">
+          </md-button>
         </div>
       </div>
+
+      <md-input-container ng-if="user.invited">
+        <label>Invite Sent</label>
+        <input ng-model="user.invited" ng-trim="false" type="text" disabled>
+      </md-input-container>
 
     </md-whiteframe>
 

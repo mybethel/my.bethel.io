@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', '$filter', 'sailsSocket', '$timeout',
-  function ($scope, $stateParams, $location, $filter, sailsSocket, $timeout) {
+.controller('staffUserDetailController', ['$scope', '$stateParams', '$location', '$filter', 'sailsSocket', '$timeout', '$mdToast',
+  function ($scope, $stateParams, $location, $filter, sailsSocket, $timeout, $mdToast) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
@@ -15,14 +15,19 @@ angular.module('Bethel.staff')
     }
   });
 
-  $ctrl.init = function() {
-    $scope.user = sailsSocket.populateOne('/user/' + $scope.id);
+  // TODO Make custom directive to allow filtering of ng-model property so we
+  // don't have to do this
+  $ctrl.populateUser = function(user) {
+    user.createdAt = $filter('date')(user.createdAt);
+    user.lastLogin = $filter('date')(user.lastLogin);
+    user.invited = $filter('date')(user.invited);
+
+    $scope.user = user;
   };
 
-  $scope.$watch('user.createdAt', function (createdAt) {
-    $scope.user.createdAt = $filter('date')(createdAt);
-    $scope.user.lastLogin = $filter('date')($scope.user.lastLogin);
-  });
+  $ctrl.init = function() {
+    sailsSocket.get('/user/' + $scope.id).then($ctrl.populateUser);
+  };
 
   $ctrl.setLockedStatus = function(updatedUser, status) {
     $scope.user.isLocked = updatedUser.isLocked;
@@ -33,6 +38,20 @@ angular.module('Bethel.staff')
   };
 
   $ctrl.getEmailConfirmation = function(response, status) {
+    var message = "Invite Email Sent.";
+
+    if (response.error) {
+      message = response.error;
+    } else {
+      $scope.user.invited = $filter('date')(response.invited);
+    }
+
+    $mdToast.show(
+      $mdToast.simple()
+        .content(message)
+        .position('bottom right')
+        .hideDelay(3000)
+    );
     $scope.emailSending = false;
   };
 
@@ -40,14 +59,6 @@ angular.module('Bethel.staff')
     $scope.emailSending = true;
     sailsSocket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
   };
-
-  $scope.$watch('emailSending', function() {
-    if ($scope.emailSending === false) {
-      $timeout(function () {
-        delete $scope.emailSending;
-      }, 3000);
-    }
-  });
 
   $ctrl.init();
 
