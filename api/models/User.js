@@ -49,6 +49,10 @@ module.exports = {
       type: 'boolean'
     },
 
+    invited: {
+      type: 'date'
+    },
+
     hasRole: function(roleName) {
 
       if (!this.roles || this.roles.indexOf(roleName) == -1) {
