@@ -6,7 +6,7 @@
       <div layout="column" layout-align="center center" layout-padding>
         <img ng-src="https://images.bethel.io/images/{{ ministry.image ? ministry.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=150&amp;h=150&amp;modified={{ ministry.updatedAt }}" alt="{{ ministry.name }}" class="avatar"/>
         <h2 ng-bind="ministry.name"></h2>
-        <md-button class="md-primary" ng-if="ministry.url" ng-href="ministry.url">Visit Website</md-button>
+        <md-button class="md-primary" ng-if="ministry.url" ng-href="{{ministry.url}}" target="blank">Visit Website</md-button>
       </div>
     </div>
 
