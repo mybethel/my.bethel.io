@@ -1,11 +1,12 @@
 angular.module('Bethel.staff')
 
-.controller('staffMinistryDetailController', ['$scope', '$stateParams', '$location', 'sailsSocket',
-  function ($scope, $stateParams, $location, sailsSocket) {
+.controller('staffMinistryDetailController', ['$scope', '$stateParams', '$location', '$filter', 'sailsSocket',
+  function ($scope, $stateParams, $location, $filter, sailsSocket) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 1;
   $scope.id = $stateParams.ministryId;
+  $scope.ministry = {};
 
   $scope.$watch(function() {
     return $scope.id;
@@ -15,8 +16,13 @@ angular.module('Bethel.staff')
     }
   });
 
+  $ctrl.populateMinistry = function(ministry) {
+    ministry.createdAt = $filter('date')(ministry.createdAt);
+    $scope.ministry = ministry;
+  }
+
   $ctrl.init = function() {
-    $scope.ministry = sailsSocket.populateOne('/ministry/' + $scope.id);
+    sailsSocket.get('/ministry/' + $scope.id).then($ctrl.populateMinistry);
   };
 
   $ctrl.init();

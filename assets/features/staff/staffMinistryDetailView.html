@@ -1,4 +1,35 @@
-<div class="dash-panel-full">
-  <h1>Detailed Ministry View</h1>
-  <p>name: {{ministry.name}}</p>
-</div>
+
+<md-content class="main-content">
+  <div layout="row" layout-margin>
+
+    <div flex="30" class="ministry-card">
+      <div layout="column" layout-align="center center" layout-padding>
+        <img ng-src="https://images.bethel.io/images/{{ ministry.image ? ministry.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=150&amp;h=150&amp;modified={{ ministry.updatedAt }}" alt="{{ ministry.name }}" class="avatar"/>
+        <h2 ng-bind="ministry.name"></h2>
+        <md-button class="md-primary" ng-if="ministry.url" ng-href="ministry.url">Visit Website</md-button>
+      </div>
+    </div>
+
+    <md-whiteframe flex class="md-whiteframe-z1 md-padding ministry-info" layout="column">
+
+      <h3>Ministry Details</h3>
+
+      <md-input-container ng-if="ministry.email">
+        <label>Email</label>
+        <input ng-model="ministry.email" type="text" disabled>
+      </md-input-container>
+
+      <md-input-container>
+        <label>Created</label>
+        <input ng-model="ministry.createdAt" type="text" disabled>
+      </md-input-container>
+
+      <md-input-container ng-if="ministry.description">
+        <label>Description</label>
+        <textarea ng-model="ministry.description" columns="1" rows="3" disabled></textarea>
+      </md-input-container>
+
+    </md-whiteframe>
+
+  </div>
+</md-content>

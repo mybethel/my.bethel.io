@@ -39,13 +39,10 @@ md-dialog.user-create, md-dialog.ministry-create {
 .contact-card {
   .avatar {
     border-radius: 50px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
   }
 
-  p.subtle {
-    color: rgba(0,0,0,0.54);
-  }
-
-  h1 {
+  h2 {
     margin-bottom: 10px;
     text-align: center;
   }
@@ -66,7 +63,33 @@ md-dialog.user-create, md-dialog.ministry-create {
   }
 }
 
-.contact-info {
+.ministry-card {
+  .avatar {
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  }
+
+  h2 {
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .basic-info {
+    padding-bottom: 15px;
+
+    p {
+      margin: 0;
+      display: inline-block;
+    }
+
+    i {
+      color: rgba(0,0,0,0.54);
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+.contact-info, .ministry-info {
 
   .md-input[disabled] {
     color: #000;
