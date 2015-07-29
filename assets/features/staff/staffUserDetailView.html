@@ -6,7 +6,7 @@
       <div layout="column" layout-align="center center" layout-padding>
         <img ng-src="{{user.avatar}}" height="100" width="100" class="avatar">
         <h1 ng-bind="user.name"></h1>
-        <md-button class="md-primary" ui-sref="staff.detailedMinistry({ ministryId: user.ministry.id })">{{user.ministry.name}}</md-button>
+        <md-button class="md-primary button-wrap" ui-sref="staff.detailedMinistry({ ministryId: user.ministry.id })">{{user.ministry.name}}</md-button>
       </div>
     </div>
 
