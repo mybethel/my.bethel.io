@@ -12,6 +12,9 @@ Sails.load({
     responses: false,
     session: false,
     views: false
+  },
+  log: {
+    level: 'verbose'
   }
 }, function(err, sails) {
   VimeoStorageSync.sync().then(function() { process.exit(); });
