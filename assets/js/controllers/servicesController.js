@@ -1,4 +1,4 @@
-angular.module('Bethel.dashboard')
+angular.module('Bethel.user')
 
 .controller('ServicesController', function ($scope, $modal) {
 
