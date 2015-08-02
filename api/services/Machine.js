@@ -6,6 +6,9 @@ exports.create = function(script, dyno) {
       heroku.dynos().create({
         command: './workers/' + script + '.js',
         size: dyno,
+      }, function(err, dynos) {
+        console.error(err);
+        console.log(dynos);
       });
 
 };
