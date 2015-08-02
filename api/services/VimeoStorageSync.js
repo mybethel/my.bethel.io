@@ -31,6 +31,11 @@ vimeo.sync = function(refreshAll) {
       });
     });
 
+    Promise.onPossiblyUnhandledRejection(function(err) {
+      sails.log.error(error);
+      resolve();
+    });
+
   });
 };
 
