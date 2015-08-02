@@ -64,7 +64,9 @@ describe('Dashboard', function() {
         return el === true;
       });
     }).then(function() {
-      expect(element(by.css('.panel.me h3 span')).isPresent()).to.be(true);
+      element(by.css('.panel.me h3 span')).isPresent().then(function (el) {
+        expect(el).to.be(true);
+      });
     });
 
   });
