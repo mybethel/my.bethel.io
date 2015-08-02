@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 var Sails = require('sails');
 Sails.load({
+  environment: 'production',
   hooks: {
     blueprints: false,
     csrf: false,

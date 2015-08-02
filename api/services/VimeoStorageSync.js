@@ -14,6 +14,17 @@ vimeo.sync = function(refreshAll) {
     this.refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
     sails.log.info('Syncing Vimeo storage...');
 
+    Promise.onPossiblyUnhandledRejection(function(err) {
+      sails.log.error(error);
+      resolve();
+    });
+
+    if (!Podcast) {
+      sails.log.error('Sails failed to bootstrap: Podcast undefined.');
+      sails.log.error(sails.config.connections);
+      resolve();
+    }
+
     Podcast.find({ source: 2 }).populate('service').exec(function (err, podcasts) {
       if (err) {
         sails.log.error(err);
@@ -29,11 +40,6 @@ vimeo.sync = function(refreshAll) {
         sails.log.info('Vimeo sync completed in ' + (end - start) + 'ms.');
         resolve();
       });
-    });
-
-    Promise.onPossiblyUnhandledRejection(function(err) {
-      sails.log.error(error);
-      resolve();
     });
 
   });
