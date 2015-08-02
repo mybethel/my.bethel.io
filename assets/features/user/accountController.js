@@ -1,5 +1,5 @@
 angular.module('Bethel.user')
-.controller('userAccountController', ['$scope', '$mdToast', 'sailsSocket',
+.controller('accountController', ['$scope', '$mdToast', 'sailsSocket',
   function ($scope, $mdToast, sailsSocket) {
 
   var savedAlert = $mdToast.simple()
