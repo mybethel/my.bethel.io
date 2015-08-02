@@ -5,7 +5,7 @@ exports.init = function(options) {
     return;
 
   Cron.create('0 */6 * * * *', function() {
-    Machine.create('vimeoSync', '1X');
+    Machine.create('vimeoSync', 'Standard-1X');
   });
 
 };
