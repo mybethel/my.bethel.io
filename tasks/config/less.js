@@ -10,20 +10,15 @@
  * For usage docs see:
  * 		https://github.com/gruntjs/grunt-contrib-less
  */
-module.exports = function(grunt) {
-
-	grunt.config.set('less', {
-		dev: {
-			options: {
-				paths: ['assets/components', 'assets/features']
-			},
-			files: {
-				'.tmp/public/styles/app.css': 'assets/styles/app.less',
-				'.tmp/public/styles/vjs-embed.css': 'assets/styles/vjs-embed.less',
-				'.tmp/public/styles/embed.css': 'assets/styles/embed.less'
-			}
+module.exports = {
+	dev: {
+		options: {
+			paths: ['assets/components', 'assets/features']
+		},
+		files: {
+			'.tmp/public/styles/app.css': 'assets/styles/app.less',
+			'.tmp/public/styles/vjs-embed.css': 'assets/styles/vjs-embed.less',
+			'.tmp/public/styles/embed.css': 'assets/styles/embed.less'
 		}
-	});
-
-	grunt.loadNpmTasks('grunt-contrib-less');
+	}
 };

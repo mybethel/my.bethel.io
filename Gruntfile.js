@@ -51,31 +51,45 @@ module.exports = function(grunt) {
   }
 
   /**
-   * Invokes the function from a Grunt configuration module with
-   * a single argument - the `grunt` object.
+   * Loads the function from a Grunt configuration module. If the module is a
+   * function, it will be invoked with a single argument - the `grunt` object.
+   * Otherwise, the value returned by the module will be used to call
+   * `grunt.config.set` or `grunt.registerTask` with the module name.
    */
-  function invokeConfigFn(tasks) {
-    for (var taskName in tasks) {
-      if (tasks.hasOwnProperty(taskName)) {
-        tasks[taskName](grunt);
+  function invokeConfig(mode) {
+    var tasks = loadTasks('./tasks/' + mode);
+    for (var task in tasks) {
+      if (tasks.hasOwnProperty(task)) {
+        if (typeof tasks[task] === 'function') {
+          tasks[task](grunt);
+          continue;
+        }
+
+        if (mode === 'config') {
+          grunt.config.set(task, tasks[task]);
+        } else if (mode === 'register') {
+          grunt.registerTask(task, tasks[task]);
+        }
       }
     }
   }
 
+  // Run task functions to configure Grunt.
+  invokeConfig('config');
 
-
-
-  // Load task functions
-  var taskConfigurations = loadTasks('./tasks/config'),
-    registerDefinitions = loadTasks('./tasks/register');
-
-  // (ensure that a default task exists)
-  if (!registerDefinitions.default) {
-    registerDefinitions.default = function (grunt) { grunt.registerTask('default', []); };
+  try {
+    require('load-grunt-tasks')(grunt);
+  } catch (e) {
+    grunt.log.error('Could not find `load-grunt-tasks` module.');
+    grunt.log.error('Perhaps you forgot to run `npm install`?');
+    return;
   }
 
-  // Run task functions to configure Grunt.
-  invokeConfigFn(taskConfigurations);
-  invokeConfigFn(registerDefinitions);
+  invokeConfig('register');
+
+  // (ensure that a default task exists)
+  if (!grunt.task.exists('default')) {
+    grunt.registerTask('default', []);
+  }
 
 };

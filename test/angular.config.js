@@ -3,7 +3,6 @@ module.exports = function(config) {
     basePath: './../',
     frameworks: ['jasmine'],
     files: require('../tasks/pipeline').jsFilesToTest.concat([
-      'assets/components/angular/angular.js',
       'assets/components/angular-mocks/angular-mocks.js',
       'test/angular/*.js'
     ]),
