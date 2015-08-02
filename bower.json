@@ -8,6 +8,7 @@
   ],
   "private": true,
   "dependencies": {
+    "angular": "~1.4",
     "angular-chart.js": "~0.7.2",
     "angular-dom": "master",
     "angular-google-maps": "~2.0.11",
