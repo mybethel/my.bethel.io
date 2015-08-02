@@ -8,7 +8,7 @@ angular.module('Bethel.user', ['uiGmapgoogle-maps'])
       templateUrl: 'features/user/userDashboardView.html'
     })
     .state('settings', {
-      url: '/settings/:page?',
+      url: '/settings/:page',
       templateUrl: 'features/user/settingsView.html',
       controller: 'settingsController'
     });
