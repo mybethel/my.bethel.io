@@ -21,7 +21,8 @@ angular.module('Bethel.user')
     }
   }
 
-  $scope.currentTab = $scope.userTabs[$stateParams.page].index;
+  if ($stateParams.page)
+    $scope.currentTab = $scope.userTabs[$stateParams.page].index;
 
   // Ensure that the location in the address bar is always correct.
   $scope.updateLocation = function(tab) {
