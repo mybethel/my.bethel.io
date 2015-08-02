@@ -13,7 +13,6 @@ angular.module('Bethel', [
   'angularMoment',
   'pascalprecht.translate',
   'Bethel.user',
-  'Bethel.dashboard',
   'Bethel.media',
   'Bethel.podcast',
   'Bethel.staff',

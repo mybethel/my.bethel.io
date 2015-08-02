@@ -5,12 +5,16 @@ angular.module('Bethel.user', ['uiGmapgoogle-maps'])
   $stateProvider
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'features/user/userDashboardView.html'
+      templateUrl: 'features/user/dashboardView.html'
     })
     .state('settings', {
       url: '/settings/:page',
       templateUrl: 'features/user/settingsView.html',
       controller: 'settingsController'
+    })
+    .state('beta', {
+      url: '/beta',
+      templateUrl: 'features/user/betaView.html'
     });
 
   uiGmapGoogleMapApiProvider.configure({

@@ -1,4 +1,4 @@
-angular.module('Bethel.dashboard')
+angular.module('Bethel.user')
 
 .controller('LocationEditController', function ($rootScope, $scope, $state, $stateParams) {
 
