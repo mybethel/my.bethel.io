@@ -1,0 +1,20 @@
+<md-subheader>Ministry Locations</md-subheader>
+<md-whiteframe class="md-whiteframe-z1 locations-list" layout="column" ng-controller="locationsController">
+  <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
+    <ui-gmap-markers models="locations" coords="'loc'" fit="true" icon="'pin'"></ui-gmap-markers>
+  </ui-gmap-google-map>
+  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="showWizard($event)">
+    <md-tooltip>New Location</md-tooltip>
+    <md-icon>add</md-icon>
+  </md-button>
+  <md-list>
+    <md-list-item class="md-2-line" ng-cloak ng-repeat="location in locations">
+      <md-icon>location_on</md-icon>
+      <div class="md-list-item-text">
+        <h3>{{ location.name }}</h3>
+        <p>{{ location.address | addressShort }}</p>
+      </div>
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-whiteframe>

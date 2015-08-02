@@ -105,14 +105,3 @@ angular.module('Bethel', [
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
-
-function findIndexByPropertyValue(arr, property, value) {
-  var index = null;
-  for (var i in arr) {
-    if (arr[i][property] === value) {
-      index = i;
-      break;
-    }
-  }
-  return index;
-}
