@@ -25,11 +25,11 @@ module.exports = function(grunt) {
       includeAll = require('sails/node_modules/include-all');
     }
     catch(e1) {
-      console.error('Could not find `include-all` module.');
-      console.error('Skipping grunt tasks...');
-      console.error('To fix this, please run:');
-      console.error('npm install include-all --save`');
-      console.error();
+      grunt.log.error('Could not find `include-all` module.');
+      grunt.log.error('Skipping grunt tasks...');
+      grunt.log.error('To fix this, please run:');
+      grunt.log.error('`npm install include-all --save`');
+      grunt.log.error();
 
       grunt.registerTask('default', []);
       return;
@@ -74,22 +74,27 @@ module.exports = function(grunt) {
     }
   }
 
+
+
+
   // Run task functions to configure Grunt.
   invokeConfig('config');
-
-  try {
-    require('load-grunt-tasks')(grunt);
-  } catch (e) {
-    grunt.log.error('Could not find `load-grunt-tasks` module.');
-    grunt.log.error('Perhaps you forgot to run `npm install`?');
-    return;
-  }
-
   invokeConfig('register');
 
   // (ensure that a default task exists)
   if (!grunt.task.exists('default')) {
     grunt.registerTask('default', []);
+  }
+
+  // Dynamically load all registered Grunt tasks.
+  try {
+    require('load-grunt-tasks')(grunt);
+  } catch (e) {
+    grunt.log.error('Could not find `load-grunt-tasks` module.');
+    grunt.log.error('Dynamically registered modules require this module...');
+    grunt.log.error('To fix this, please run:');
+    grunt.log.error('`npm install load-grunt-tasks --save`');
+    return;
   }
 
 };
