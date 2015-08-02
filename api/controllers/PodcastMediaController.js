@@ -24,7 +24,7 @@ module.exports = {
   },
 
   refresh: function(req, res) {
-    VimeoStorageSync.sync(true);
+    Machine.create('vimeoSync', '1X');
     res.send(200);
   },
 
