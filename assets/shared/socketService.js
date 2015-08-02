@@ -63,4 +63,44 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     $rootScope.sailsSocket._csrf = response._csrf;
   });
 
+  var findIndexById = function(arr, value) {
+    angular.forEach(arr, function(value, index) {
+      if (value.id === value) return index;
+    });
+    return null;
+  };
+
+  this.sync = function(scope, model) {
+    $rootScope.$on('sailsSocket:' + model, function (ev, data) {
+
+      // Example messages:
+      //   {model: "task", verb: "created", data: Object, id: 25}
+      //   {model: "task", verb: "updated", data: Object, id: 3}
+      //   {model: "task", verb: "destroyed", id: 20}
+
+      switch(data.verb) {
+
+        case 'created':
+          scope.unshift(data.data);
+          break;
+
+        case 'destroyed':
+          var deleteIndex = findIndexById(scope, data.id);
+          if (deleteIndex !== null) {
+            scope.splice(deleteIndex, 1);
+          }
+          break;
+
+        case 'updated':
+          var updateIndex = findIndexById(scope, data.id);
+          if (updateIndex !== null) {
+            angular.extend(scope[updateIndex], data.data);
+          }
+          break;
+
+      }
+      $rootScope.$apply();
+    });
+  };
+
 }]);

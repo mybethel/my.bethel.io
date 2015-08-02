@@ -1,16 +1,11 @@
-angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps'])
+angular.module('Bethel.dashboard', ['ui.router'])
 
-.config(function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state('beta', {
       url: '/beta',
       templateUrl: 'templates/dashboard/beta.html'
-    })
-    .state('dashboard', {
-      url: '/dashboard',
-      templateUrl: 'features/user/userDashboardView.html',
-      controller: 'DashboardController'
     })
     .state('dashboard.location', {
       url: '/locations',
@@ -36,11 +31,5 @@ angular.module('Bethel.dashboard', ['ui.router', 'uiGmapgoogle-maps'])
       templateUrl: 'templates/dashboard/services.html',
       controller: 'ServicesController'
     });
-
-  uiGmapGoogleMapApiProvider.configure({
-    key: 'AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg',
-    v: '3.17',
-    libraries: 'places'
-  });
 
 });

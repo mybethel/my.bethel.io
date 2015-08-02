@@ -32,7 +32,6 @@ var jsFilesToInject = [
   'components/moment/min/moment.min.js',
 
   // Angular dependencies
-  'components/angular/angular.min.js',
   'components/angular-ui-router/release/angular-ui-router.min.js',
   'components/angulartics/dist/angulartics.min.js',
   'components/angulartics/dist/angulartics-ga.min.js',

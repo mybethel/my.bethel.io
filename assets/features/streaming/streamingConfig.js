@@ -1,6 +1,6 @@
 angular.module('Bethel.streaming', ['ui.router'])
-
-.config(['$stateProvider', '$urlRouterProvider', 'uiGmapGoogleMapApiProvider', function ($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+.config(['$stateProvider', '$urlRouterProvider',
+  function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state('streaming', {
