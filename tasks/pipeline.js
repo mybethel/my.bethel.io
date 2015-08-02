@@ -21,6 +21,10 @@ var cssFilesToInject = [
   'styles/app.css',
 ];
 
+var testDependencies = [
+  'components/angular/angular.js',
+]
+
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
@@ -92,7 +96,7 @@ var templateFilesToInject = [
 module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
   return '.tmp/public/' + path;
 });
-module.exports.jsFilesToTest = jsFilesToInject.map(function(path) {
+module.exports.jsFilesToTest = testDependencies.concat(jsFilesToInject).map(function(path) {
   return 'assets/' + path;
 });
 module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
