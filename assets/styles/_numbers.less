@@ -1,0 +1,220 @@
+/**
+ * MATERIAL NUMBERS
+ * Credit: http://rktaiwala.in/mn/
+ * Modified for LESS and slight changes to Material styling.
+ */
+.digit {
+  width:100px;
+  height:125px;
+  display: inline-block;
+  position: relative;
+  margin: 10px;
+  &:before,
+  .portion:before {
+    background: #212121;
+    position: absolute;
+    content: " ";
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .14), 0 4px 5px 0 rgba(0, 0, 0, .098), 0 1px 10px 0 rgba(0, 0, 0, .084);
+  }
+  &:after,
+  .portion:after {
+    background: #eee;
+    position: absolute;
+    content: " ";
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .14), 0 2px 2px 0 rgba(0, 0, 0, .098), 0 1px 5px 0 rgba(0, 0, 0, .084);
+  }
+
+
+  &.zero {
+    width: 125px;
+    &:before {
+      top: 0;
+      width: 120px;
+      height: 60px;
+      z-index: 8;
+      border-radius: 100px 100px 0 0;
+    }
+    &:after {
+      bottom: 0;
+      width: 120px;
+      height: 60px;
+      z-index: 7;
+      bottom: -25;
+      border-radius: 0 0 100px 100px;
+    }
+  }
+
+  &.one {
+    &:before {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      right: 20px;
+      z-index: 2;
+    }
+    &:after {
+      width: 40px;
+      height: 125px;
+      right: 0;
+    }
+  }
+
+  &.two {
+    &:before {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    &:after {
+      width: 50px;
+      height: 100px;
+      border-radius: 0px 50px 50px 0;
+      right: 0;
+      z-index: 1;
+    }
+    .portion:before {
+      width: 100px;
+      height: 30px;
+      border-radius: 0%;
+      bottom: 0;
+      z-index: 2;
+    }
+  }
+
+  &.three {
+    &:before {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      z-index: 2;
+    }
+    &:after {
+      width: 30px;
+      height: 60px;
+      border-radius: 0px 50px 50px 0;
+      right: 25px;
+      z-index: 4;
+    }
+    .portion:before {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      bottom: 0;
+      z-index: 2;
+    }
+    .portion:after {
+      width: 40px;
+      height: 80px;
+      border-radius: 0px 50px 50px 0;
+      right: 15px;
+      z-index: 3;
+      bottom: 0;
+    }
+  }
+
+  &.four {
+    &:before {
+      width: 40px;
+      height: 80px;
+      z-index: 2;
+    }
+    &:after {
+      width: 40px;
+      height: 125px;
+      right: 15px;
+      z-index: 3;
+    }
+  }
+
+  &.five {
+    &:before {
+      width: 90px;
+      height: 30px;
+      z-index: 2;
+    }
+    .portion:before {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      top: 30px;
+      z-index: 2;
+    }
+    .portion:after {
+      width: 45px;
+      height: 90px;
+      border-radius: 0px 50px 50px 0;
+      right: 0;
+      z-index: 3;
+      bottom: 0;
+    }
+  }
+
+  &.six {
+    &:before {
+      width: 40px;
+      height: 80px;
+      left: 0;
+      z-index: 4;
+    }
+    &:after {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      left: 0;
+      z-index: 3;
+      bottom: 0px;
+    }
+  }
+
+  &.seven {
+    &:before {
+      width: 90px;
+      height: 40px;
+      left: 0;
+      z-index: 4;
+    }
+    &:after {
+      width: 40px;
+      height: 120px;
+      right: 0;
+      z-index: 3;
+      bottom: 0;
+    }
+  }
+
+  &.eight {
+    &:before {
+      width: 75px;
+      height: 75px;
+      border-radius: 50px;
+      left: 12.5%;
+      z-index: 4;
+    }
+    &:after {
+      width: 100px;
+      height: 100px;
+      border-radius: 50px;
+      left: 0;
+      z-index: 3;
+      bottom: 0;
+    }
+  }
+
+  &.nine {
+    &:before {
+      width: 95px;
+      height: 95px;
+      border-radius: 50px;
+      left: 0;
+      z-index: 4;
+    }
+    &:after {
+      width: 40px;
+      height: 120px;
+      right: 0;
+      z-index: 4;
+      bottom: 0;
+    }
+  }
+}

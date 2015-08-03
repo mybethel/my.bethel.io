@@ -45,7 +45,7 @@ module.exports = {
 
         episode.url = episode.url.replace('http://cloud.bethel.io', 'https://s3.amazonaws.com/cloud.bethel.io');
         res.view({
-          layout: 'none',
+          layout: 'ajax',
           episode: episode,
           podcast: episode.podcast
         });

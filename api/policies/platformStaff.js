@@ -2,7 +2,7 @@
  * platformStaff
  *
  * @module      :: Policy
- * @description :: Restricts certain routes access to bethel Staff
+ * @description :: Restricts certain routes access to Bethel Staff
  * @docs        :: http://sailsjs.org/#!documentation/policies
  *
  */
@@ -12,6 +12,6 @@ module.exports = function(req, res, next) {
     return next();
   }
 
-  return res.redirect('/');
+  return res.forbidden();
 
 };
