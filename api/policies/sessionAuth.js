@@ -9,12 +9,13 @@
  */
 module.exports = function(req, res, next) {
 
-  // User is allowed, proceed to the next policy, 
+  // User is allowed, proceed to the next policy,
   // or if this is the last policy, the controller
   if (req.session.authenticated) {
     return next();
   }
 
   // User is not allowed, redirect to the login page
-  return res.send(401, {auth: 'Please login at http://my.bethel.io/#/login'});
+  return res.forbidden('You need to login first!');
+
 };

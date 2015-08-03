@@ -29,12 +29,13 @@ angular.module('Bethel', [
     urlTemplate: '/i18n/{part}/{lang}.json'
   });
 
-  $urlRouterProvider.otherwise('/dashboard');
-
   $mdThemingProvider.definePalette('brandBlue', $mdThemingProvider.extendPalette('blue', {
     '500': '1591b5',
     '800': '106982'
   }));
+
+  if (!window.__minimal)
+    $urlRouterProvider.otherwise('/dashboard');
 
   $mdThemingProvider.theme('default')
     .primaryPalette('brandBlue')
@@ -47,6 +48,8 @@ angular.module('Bethel', [
 })
 
 .controller('AppCtrl', ['$rootScope', '$state', 'sailsSocket', function ($scope, $state, sailsSocket) {
+
+  if (window.__minimal) return;
 
   $scope.redirect = '';
   $scope.navLinks = [
@@ -70,8 +73,6 @@ angular.module('Bethel', [
   $scope.updateSession = function() {
     sailsSocket.get('/session/current').then(function (response) {
       $scope.authCheck = true;
-      if (response.auth) return;
-
       $scope.user = response.user;
       $scope.ministry = response.ministry;
       $scope.isAdmin = response.isAdmin;
