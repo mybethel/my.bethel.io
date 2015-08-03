@@ -127,12 +127,13 @@ angular.module('Bethel.podcast')
           // Call the endpoint to generate metadata.
           sailsSocket.get('/podcastmedia/meta/' + podcast.id);
           $scope.init();
+          $scope.uploading = false;
         });
 
       });
   };
 
-  $scope.editMedia = function(id) {
+  $scope.editMedia = function(event, id) {
     $mdDialog.show({
       clickOutsideToClose: true,
       templateUrl: 'features/podcast/podcastMediaView.html',
