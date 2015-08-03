@@ -3,12 +3,15 @@
   <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
     <ui-gmap-markers models="locations" coords="'loc'" fit="true" icon="'pin'"></ui-gmap-markers>
   </ui-gmap-google-map>
-  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="showWizard($event)">
+  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="locationForm($event)">
     <md-tooltip>New Location</md-tooltip>
     <md-icon>add</md-icon>
   </md-button>
   <md-list>
-    <md-list-item class="md-2-line" ng-cloak ng-repeat="location in locations">
+    <md-list-item ng-cloak ng-if="locations.length < 1">
+      <p>Add your ministry locations using the <md-icon>add</md-icon> button to the right!</p>
+    </md-list-item>
+    <md-list-item class="md-2-line" ng-cloak ng-click="locationForm($event, location.id)" ng-repeat="location in locations | orderBy: 'name'">
       <md-icon>location_on</md-icon>
       <div class="md-list-item-text">
         <h3>{{ location.name }}</h3>

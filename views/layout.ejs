@@ -51,7 +51,7 @@
           <form name="userLoginForm" ng-submit="login(credentials)">
 
             <md-input-container>
-              <md-icon class="name">person</md-icon>
+              <md-icon>person</md-icon>
               <input autocorrect="off" autocapitalize="off" name="email" ng-model="credentials.name" placeholder="Email" required spellcheck="false" type="email" />
               <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched">
                 <div ng-message="required || email">A valid e-mail address is required.</div>
@@ -60,7 +60,7 @@
             </md-input-container>
 
             <md-input-container>
-              <md-icon class="name">lock</md-icon>
+              <md-icon>lock</md-icon>
               <input autocorrect="off" autocapitalize="off" name="password" ng-model="credentials.pass" placeholder="Password" required spellcheck="false" type="password" />
               <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched">
                 <div ng-message="required">A password is required.</div>

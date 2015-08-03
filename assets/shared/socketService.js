@@ -63,21 +63,21 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     $rootScope.sailsSocket._csrf = response._csrf;
   });
 
-  var findIndexById = function(arr, value) {
+  var findIndexById = function(arr, id) {
+    var found = null;
     angular.forEach(arr, function(value, index) {
-      if (value.id === value) return index;
+      if (value.id == id) found = index;
     });
-    return null;
+    return found;
   };
 
   this.sync = function(scope, model) {
-    $rootScope.$on('sailsSocket:' + model, function (ev, data) {
-
-      // Example messages:
-      //   {model: "task", verb: "created", data: Object, id: 25}
-      //   {model: "task", verb: "updated", data: Object, id: 3}
-      //   {model: "task", verb: "destroyed", id: 20}
-
+    // Example messages:
+    //   {model: "task", verb: "created", data: Object, id: 25}
+    //   {model: "task", verb: "updated", data: Object, id: 3}
+    //   {model: "task", verb: "destroyed", id: 20}
+    io.socket.on(model, function (data) {
+      console.log(data);
       switch(data.verb) {
 
         case 'created':
@@ -97,6 +97,8 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
             angular.extend(scope[updateIndex], data.data);
           }
           break;
+
+        default: return console.log('Unhandled socket action: ' + data.verb);
 
       }
       $rootScope.$apply();

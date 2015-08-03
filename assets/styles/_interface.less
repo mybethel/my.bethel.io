@@ -1,6 +1,6 @@
 body,
 md-content.main-content,
-md-list.md-default-theme md-list-item button {
+md-list.md-default-theme md-list-item div button {
   background-color: #f4f6f8;
 }
 
@@ -21,8 +21,12 @@ md-tabs {
   }
   &.tall {
     md-tabs-canvas,
-    md-tab-item {
+    md-tab-item,
+    md-pagination-wrapper {
       height: 64px;
+    }
+    md-tabs-content-wrapper {
+      top: 65px !important;
     }
     .md-tab {
       padding-top: 20px;

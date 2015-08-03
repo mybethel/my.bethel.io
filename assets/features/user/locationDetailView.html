@@ -1,0 +1,35 @@
+<md-dialog flex="50">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>{{ new ? 'Create' : 'Edit' }} Ministry Location</h2>
+    </div>
+  </md-toolbar>
+  <md-dialog-content>
+
+    <div layout="row">
+      <md-input-container flex>
+        <label>Location name</label>
+        <input type="text" ng-model="location.name" class="focus">
+      </md-input-container>
+      <div style="padding-top:15px;">
+        <md-checkbox ng-model="location.default" aria-label="Main Location">Main Location</md-checkbox>
+      </div>
+    </div>
+
+    <md-input-container>
+      <label>Description</label>
+      <textarea ng-model="location.description" columns="1" rows="3"></textarea>
+    </md-input-container>
+
+    <md-input-container>
+      <label>Address</label>
+      <input type="text" ng-model="location.address">
+    </md-input-container>
+
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">Cancel</md-button>
+    <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
+  </div>
+</md-dialog>

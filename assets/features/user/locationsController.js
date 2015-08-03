@@ -1,11 +1,12 @@
 angular.module('Bethel.user')
 .filter('addressShort', function() {
   return function(address) {
-    return address.split(',').slice(0, -2).join(',');
+    var short = address.split(',').slice(0, -2).join(',');
+    return short || address;
   }
 })
-.controller('locationsController', ['$scope', 'sailsSocket',
-  function ($scope, sailsSocket) {
+.controller('locationsController', ['$scope', '$mdDialog', 'sailsSocket',
+  function ($scope, $mdDialog, sailsSocket) {
 
   $scope.locations = sailsSocket.populateMany('location/ministry');
   sailsSocket.sync($scope.locations, 'location');
@@ -35,5 +36,16 @@ angular.module('Bethel.user')
       $scope.locations[index].pin = 'https://s3.amazonaws.com/static.bethel.io/images/pin.png';
     });
   }, true);
+
+  $scope.locationForm = function(event, id) {
+    $mdDialog.show({
+      clickOutsideToClose: true,
+      controller: 'locationDetailController',
+      focusOnOpen: false,
+      locals: { locationId: id },
+      targetEvent: event,
+      templateUrl: 'features/user/locationDetailView.html'
+    });
+  }
 
 }]);

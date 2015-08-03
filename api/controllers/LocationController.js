@@ -1,5 +1,5 @@
 /**
- * LocationController.js 
+ * LocationController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -20,7 +20,8 @@ module.exports = {
     Location.find({ministry: findById}, function foundLocations(err, locations) {
       if (err) return res.serverError(err);
 
-      Location.watch(req.socket);
+      Location.watch(req);
+      Location.subscribe(req, _.pluck(locations, 'id'));
 
       res.send(locations);
     });
@@ -70,9 +71,9 @@ module.exports = {
     Location.findOne(req.param('id'), function foundLocation(err, location) {
       if (err) res.send(err, 500);
       if (!location) res.send(404);
-    
+
       res.send(200, location);
     });
   }
-	
+
 };
