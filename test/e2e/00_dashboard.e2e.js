@@ -64,8 +64,8 @@ describe('Dashboard', function() {
         return el === true;
       });
     }).then(function() {
-      element(by.css('.panel.me h3 span')).getText().then(function (text) {
-        expect(text).to.equal('Jayne Cobb');
+      element(by.css('.panel.me h3 span')).isPresent().then(function (el) {
+        expect(el).to.be(true);
       });
     });
 

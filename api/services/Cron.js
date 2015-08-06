@@ -4,10 +4,13 @@ exports.init = function(options) {
   if (sails.config.cron && sails.config.cron.disabled === true)
     return;
 
-  var vimeoSync = require('cron').CronJob;
+  Cron.create('0 */6 * * * *', function() {
+    Machine.create('vimeoSync', 'Standard-1X');
+  });
 
-  new vimeoSync('0 */6 * * * *', function() {
-    VimeoStorageSync.sync();
-  }, null, true, 'America/New_York');
+};
 
+exports.create = function(frequency, cb) {
+  var CronJob = require('cron').CronJob;
+  new CronJob(frequency, cb, null, true, 'America/New_York');
 };

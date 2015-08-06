@@ -1,5 +1,5 @@
 /**
- * PodcastMediaController.js 
+ * PodcastMediaController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -24,8 +24,7 @@ module.exports = {
   },
 
   refresh: function(req, res) {
-    S3StorageSync.sync();
-    VimeoStorageSync.sync(true);
+    Machine.create('vimeoSync', 'Standard-1X');
     res.send(200);
   },
 
@@ -54,5 +53,5 @@ module.exports = {
       });
     });
   }
-	
+
 };
