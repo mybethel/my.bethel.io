@@ -46,6 +46,7 @@ module.exports.policies = {
   },
 
   podcastmedia: {
+    'stat': true,
     'subscribe': true,
     'related': true
   },
