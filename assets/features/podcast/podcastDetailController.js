@@ -31,30 +31,17 @@ angular.module('Bethel.podcast')
     });
 
     $scope.podcastStats = sailsSocket.populateOne('podcast/subscribers/' + $scope.id);
-
   };
 
   $scope.init();
+
+  sailsSocket.editable($scope, 'podcast', ['name', 'service', 'sourceMeta', 'tags', 'description']);
 
   io.socket.on('podcast', function (message) {
     if (message.verb !== 'updated' || message.id !== $scope.podcast.id)
       return;
     $scope.init();
   });
-
-  $scope.$watch('podcast', function (newValue, oldValue) {
-    if (!newValue || !oldValue) return;
-
-    sailsSocket.put('/podcast/' + $scope.id, {
-      name: newValue.name,
-      service: newValue.service,
-      sourceMeta: newValue.sourceMeta,
-      tags: newValue.tags,
-      description: newValue.description,
-    }).then(function() {
-      $scope.$parent.init();
-    });
-  }, true);
 
   $ctrl.populateDemo = function() {
     $scope.isDemo = ($scope.subscriberCount < 1);
