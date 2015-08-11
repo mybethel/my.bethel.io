@@ -8,16 +8,11 @@ var vimeo = {};
 vimeo.refreshAll = false;
 
 vimeo.sync = function(refreshAll) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
 
     var start = new Date().getTime();
     this.refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
     sails.log.info('Syncing Vimeo storage...');
-
-    Promise.onPossiblyUnhandledRejection(function(err) {
-      sails.log.error(err);
-      resolve();
-    });
 
     if (!Podcast) {
       sails.log.error('Sails failed to bootstrap: Podcast undefined.');
@@ -99,7 +94,7 @@ vimeo.syncOne = function(podcastId) {
 vimeo.queryApi = function(podcast) {
   vimeo.fixMissingUrl(podcast);
 
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     sails.log.info(podcast.id + ': Querying Vimeo API.');
     var queryHeaders = { 'Authorization': 'Bearer ' + podcast.service.accessToken };
 
@@ -113,7 +108,7 @@ vimeo.queryApi = function(podcast) {
     }, function (error, body, statusCode, headers) {
       if (error || (statusCode === 304 && !vimeo.refreshAll) || statusCode !== 200 || (!body && !body.data)) {
         sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
-        return reject();
+        return resolve();
       }
 
       if (body.total > body.page * body.per_page) {
@@ -135,7 +130,7 @@ vimeo.queryApi = function(podcast) {
 };
 
 vimeo.getResultsPage = function(user, podcast, page, headers) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     VimeoAPI.request({
       path: user + '/videos?per_page=50&page=' + page,
       headers: headers
@@ -151,7 +146,7 @@ vimeo.getResultsPage = function(user, podcast, page, headers) {
 };
 
 vimeo.processPage = function(results, podcast) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     var videosToProcess = [];
 
     results.data.forEach(function(video) {
@@ -171,10 +166,10 @@ vimeo.processPage = function(results, podcast) {
 };
 
 vimeo.podcastMediaUpsert = function(video, podcast) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     var videoId = video.uri.toString().replace('/videos/', '');
 
-    if (!videoId) return reject();
+    if (!videoId) return resolve();
 
     var videoTags = [];
     if (video.tags) {
