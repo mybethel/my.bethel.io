@@ -88,37 +88,62 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     return found;
   };
 
-  this.sync = function(scope, model) {
+  this.sync = function(scope, model, cb) {
+    if (Array.isArray(scope)) {
+      return this.syncMany(scope, model, cb);
+    }
+
+    this.syncOne(scope, model, cb);
+  };
+
+  this.syncOne = function(scope, model, cb) {
+    io.socket.on(model, function (message) {
+      if (scope.id !== message.id || message.verb !== 'updated')
+        return;
+
+      for (field in message.data) {
+        if (field == '_csrf') continue;
+        scope[field] = message.data[field];
+      }
+
+      $rootScope.$apply();
+      cb();
+    });
+  };
+
+  this.syncMany = function(scope, model, cb) {
     // Example messages:
     //   {model: "task", verb: "created", data: Object, id: 25}
     //   {model: "task", verb: "updated", data: Object, id: 3}
     //   {model: "task", verb: "destroyed", id: 20}
-    io.socket.on(model, function (data) {
-      console.log(data);
-      switch(data.verb) {
+    io.socket.on(model, function (message) {
+
+      switch(message.verb) {
 
         case 'created':
-          scope.unshift(data.data);
+          if (findIndexById(scope, message.id) !== null) return;
+          scope.unshift(message.data);
           break;
 
         case 'destroyed':
-          var deleteIndex = findIndexById(scope, data.id);
+          var deleteIndex = findIndexById(scope, message.id);
           if (deleteIndex !== null) {
             scope.splice(deleteIndex, 1);
           }
           break;
 
         case 'updated':
-          var updateIndex = findIndexById(scope, data.id);
+          var updateIndex = findIndexById(scope, message.id);
           if (updateIndex !== null) {
-            angular.extend(scope[updateIndex], data.data);
+            angular.extend(scope[updateIndex], message.data);
           }
           break;
 
-        default: return console.log('Unhandled socket action: ' + data.verb);
+        default: return console.log('Unhandled socket action: ' + message.verb);
 
       }
       $rootScope.$apply();
+      cb();
     });
   };
 
