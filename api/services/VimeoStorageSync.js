@@ -28,7 +28,7 @@ vimeo.sync = function(refreshAll) {
     Podcast.find({ source: 2 }).populate('service').exec(function (err, podcasts) {
       if (err) {
         sails.log.error(err);
-        return reject();
+        return resolve();
       }
 
       podcasts = podcasts.map(function(podcast) {
@@ -76,17 +76,24 @@ vimeo.fixMissingUrl = function(podcast) {
   });
 }
 
-vimeo.syncOne = function(podcast, service) {
+vimeo.syncOne = function(podcastId) {
+  return new Promise(function(resolve) {
 
-  Podcast.findOne(podcast).populate('service').exec(function (err, podcast) {
-    if (!podcast.service || !podcast.sourceMeta) {
-      sails.log.error(podcast.id + ': Vimeo account or tags not defined.');
-      return;
-    }
+    Podcast.findOne(podcastId).populate('service').exec(function (err, podcast) {
+      if (!podcast) {
+        sails.log.error(podcastId + ': Podcast not found.');
+        return resolve();
+      }
 
-    vimeo.queryApi(podcast);
+      if (!podcast.service || !podcast.sourceMeta) {
+        sails.log.error(podcast.id + ': Vimeo account or tags not defined.');
+        return resolve();
+      }
+
+      vimeo.queryApi(podcast).then(resolve);
+    });
+
   });
-
 };
 
 vimeo.queryApi = function(podcast) {
