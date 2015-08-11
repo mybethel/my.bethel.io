@@ -22,26 +22,19 @@ angular.module('Bethel.podcast')
     }
   };
 
-  $scope.init = function() {
-    sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
-      $scope.podcast = data.podcast;
-      $scope.thumbnailS3 = data.s3form;
+  sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
+    $scope.podcast = data.podcast;
+    $scope.thumbnailS3 = data.s3form;
+    $scope.uploadEpisode = data.uploadEpisode;
+
+    sailsSocket.sync($scope.podcast, 'podcast', function() {
       $scope.thumbnailUploading = false;
-      $scope.uploadEpisode = data.uploadEpisode;
     });
-
-    $scope.podcastStats = sailsSocket.populateOne('podcast/subscribers/' + $scope.id);
-  };
-
-  $scope.init();
-
-  sailsSocket.editable($scope, 'podcast', ['name', 'service', 'sourceMeta', 'tags', 'description']);
-
-  io.socket.on('podcast', function (message) {
-    if (message.verb !== 'updated' || message.id !== $scope.podcast.id)
-      return;
-    $scope.init();
+    sailsSocket.sync($scope.podcast.media, 'podcastmedia');
+    sailsSocket.editable($scope, 'podcast', ['name', 'service', 'sourceMeta', 'tags', 'description']);
   });
+
+  $scope.podcastStats = sailsSocket.populateOne('podcast/subscribers/' + $scope.id);
 
   $ctrl.populateDemo = function() {
     $scope.isDemo = ($scope.subscriberCount < 1);
@@ -113,7 +106,6 @@ angular.module('Bethel.podcast')
         }).then(function (podcast) {
           // Call the endpoint to generate metadata.
           sailsSocket.get('/podcastmedia/meta/' + podcast.id);
-          $scope.init();
           $scope.uploading = false;
         });
 

@@ -151,6 +151,7 @@ module.exports = {
       if (err) return next(err);
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
+      Podcast.subscribe(req, podcast.id);
 
       Service.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
         res.send({
