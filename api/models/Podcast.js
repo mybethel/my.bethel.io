@@ -121,7 +121,7 @@ module.exports = {
       }
 
       if (values.source === 2) {
-        VimeoStorageSync.syncOne(values.id, values.service);
+        Machine.create('vimeoSyncNew', 'Standard-1X', values.id);
       }
 
       next();

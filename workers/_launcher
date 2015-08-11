@@ -20,5 +20,5 @@ Sails.load({
     level: 'verbose'
   }
 }, function(err, sails) {
-  worker.run(function() { process.exit(); });
+  worker.run(function() { process.exit(); }, program.args[1]);
 });
