@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+var program = require('commander').usage('<input>').parse(process.argv);
+var worker = require('./' + program.args[0]);
+
+var Sails = require('sails');
+Sails.load({
+  environment: 'production',
+  hooks: {
+    blueprints: false,
+    csrf: false,
+    cors: false,
+    grunt: false,
+    i18n: false,
+    request: false,
+    responses: false,
+    session: false,
+    views: false
+  },
+  log: {
+    level: 'verbose'
+  }
+}, function(err, sails) {
+  worker.run(function() { process.exit(); });
+});
