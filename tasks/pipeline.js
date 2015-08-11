@@ -54,7 +54,7 @@ var jsFilesToInject = [
   'components/Chart.js/src/Chart.Core.js',
   'components/Chart.js/src/Chart.Line.js',
   'components/angular-chart.js/dist/angular-chart.min.js',
-  'components/angular-dom/dist/angularDom.min.js',
+  'components/angular-dom/dist/angular-dom.min.js',
 
   // User interface
   'components/angular-moment/angular-moment.min.js',
