@@ -7,10 +7,6 @@ before_install:
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
-env:
-  global:
-  - secure: BIz7SQaL5YBUj1SQsYPrlQpBkbovU3cd/QavHn+gap/EBi8LslxdJRfD7Rag1DjSoI9nCMTf4sFFHsijlI1/px9SvYGLw1jeqwbtv5woNOPoIeBeyp9Tk30n1u6RYLdNfjPQW9cUrVfiAAcwuS2FJEEJrvMIxiQqtvpkpxjscSA=
-  - secure: SWZQ7qD+YB92SUSqx1lyZ83m3MrMtV3Ef6ruaXh3/O0ajM3gU6qtMq5gv3UxvpibMpVAXvtlQ9kVHqkgMrGqqan6Mt/+eE1p1UlLZpUDcpWbHUGOfCnAXYc7rsDw/fzwnLZDXoam+FQIhcONTCdnQDchrc6PpGTsFSwsDfQJJxE=
 cache:
   directories:
   - node_modules
