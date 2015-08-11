@@ -3,9 +3,30 @@
     min-height: 49px;
   }
 
-  md-toolbar .back:hover {
-    background-color: rgba(158,158,158,0.4);
+.search-box {
+
+  background-color: #fff;
+  border-width: 0 0 1px;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.12);
+
+  md-input-container {
+    padding-bottom: 0;
   }
+
+  md-icon {
+    color: grey;
+  }
+
+  input {
+    border: none;
+  }
+
+}
+
+md-toolbar .back:hover {
+  background-color: rgba(158,158,158,0.4);
+}
 
 md-dialog.user-create, md-dialog.ministry-create {
 
@@ -42,7 +63,7 @@ md-dialog.user-create, md-dialog.ministry-create {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
   }
 
-  h2 {
+  h1 {
     margin-bottom: 10px;
     text-align: center;
   }

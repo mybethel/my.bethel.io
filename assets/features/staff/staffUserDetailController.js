@@ -29,7 +29,7 @@ angular.module('Bethel.staff')
     sailsSocket.get('/user/' + $scope.id).then($ctrl.populateUser);
   };
 
-  $ctrl.setLockedStatus = function(updatedUser, status) {
+  $ctrl.setLockedStatus = function(updatedUser) {
     $scope.user.isLocked = updatedUser.isLocked;
   };
 
@@ -37,7 +37,7 @@ angular.module('Bethel.staff')
     sailsSocket.get('/user/lockUnlock/' + $scope.id).then($ctrl.setLockedStatus);
   };
 
-  $ctrl.getEmailConfirmation = function(response, status) {
+  $ctrl.getEmailConfirmation = function(response) {
     var message = "Invite Email Sent.";
 
     if (response.error) {

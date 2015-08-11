@@ -1,20 +1,17 @@
+<div layout="row" layout-wrap>
+  <div flex="50" flex-sm="100">
+    <md-tabs md-border-bottom md-selected="tabIndex" md-center-tabs="false" class="staffTabs">
+      <md-tab label="people" ui-sref=".users"></md-tab>
+      <md-tab label="ministries" ui-sref=".ministry"></md-tab>
+    </md-tabs>
+  </div>
 
-<md-tabs md-border-bottom md-selected="tabIndex" class="staffTabs">
-  <md-tab label="people" ui-sref=".users"></md-tab>
-  <md-tab label="ministries" ui-sref=".ministry"></md-tab>
-</md-tabs>
-
-<!--
-<div layout="row">
-  <div flex offset="60">
-    <md-input-container class="md-icon-float staff-search-box">
-      <label>Search</label>
-      <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
-      <input ng-model="searchText" type="text">
+  <div flex="50" flex-sm="100" layout-padding class="search-box">
+    <md-input-container md-no-float>
+      <md-icon class="material-icons">search</md-icon>
+      <input ng-model="searchText" type="text" placeholder="Search">
     </md-input-container>
   </div>
 </div>
--->
 
-<div class="panel-body" layout="column" ui-view layout-fill flex>
-</div>
+<div class="panel-body" layout="column" ui-view flex></div>
