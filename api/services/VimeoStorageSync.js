@@ -15,7 +15,7 @@ vimeo.sync = function(refreshAll) {
     sails.log.info('Syncing Vimeo storage...');
 
     Promise.onPossiblyUnhandledRejection(function(err) {
-      sails.log.error(error);
+      sails.log.error(err);
       resolve();
     });
 
@@ -170,21 +170,27 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
     if (!videoId) return reject();
 
     var videoTags = [];
-    video.tags.forEach(function(tag) {
-      videoTags.push(tag.name);
-    });
+    if (video.tags) {
+      video.tags.forEach(function(tag) {
+        videoTags.push(tag.name);
+      });
+    }
 
     var videoThumbnail = '';
-    video.pictures.sizes.forEach(function(picture) {
-      if (picture.width === 200)
-        videoThumbnail = picture.link;
-    });
+    if (video.pictures.sizes) {
+      video.pictures.sizes.forEach(function(picture) {
+        if (picture.width === 200)
+          videoThumbnail = picture.link;
+      });
+    }
 
     var videoUrl = '';
-    video.files.forEach(function(file) {
-      if (file.quality === 'sd')
-        videoUrl = file.link_secure;
-    });
+    if (video.files) {
+      video.files.forEach(function(file) {
+        if (file.quality === 'sd')
+          videoUrl = file.link_secure;
+      });
+    }
 
     PodcastMedia.findOrCreate({
       uuid: videoId,
