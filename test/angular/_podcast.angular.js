@@ -18,9 +18,8 @@ window.test.podcast = function() {
           });
           return deferred.promise;
         });
-        scope.init();
+        ctrl.init();
         expect(sailsSocket.get).toHaveBeenCalledWith('/podcast/edit/2');
-        scope.$digest();
       });
 
     });
