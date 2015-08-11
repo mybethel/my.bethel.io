@@ -63,6 +63,23 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     $rootScope.sailsSocket._csrf = response._csrf;
   });
 
+  this.editable = function(scope, what, editableFields) {
+    scope.$watch(what, function (newValue, oldValue) {
+      if (!newValue || !oldValue) return;
+      var payload = {};
+
+      for (var i = 0, len = editableFields.length; i < len; i++) {
+        var field = editableFields[i];
+        if (newValue[field] === oldValue[field]) continue;
+        payload[field] = newValue[field];
+      }
+
+      if (Object.keys(payload).length <= 0) return;
+      payload._csrf = $rootScope.sailsSocket._csrf;
+      io.socket.put('/' + what + '/' + scope[what].id, payload);
+    }, true);
+  };
+
   var findIndexById = function(arr, id) {
     var found = null;
     angular.forEach(arr, function(value, index) {
