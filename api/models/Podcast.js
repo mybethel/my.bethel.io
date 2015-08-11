@@ -121,7 +121,7 @@ module.exports = {
       }
 
       if (values.source === 2) {
-        Machine.create('vimeoSyncNew', 'Standard-1X', values.id);
+        Machine.create('vimeoSyncOne', 'Hobby', values.id);
       }
 
       next();
