@@ -305,16 +305,30 @@ window.test.staff = function() {
 
         expect(scope.id).toEqual('543b2b0b06ee1cb56414cbc4');
         sailsSocket = injector.get('sailsSocket');
-        spyOn(sailsSocket, 'populateOne').and.callFake(function() {
-          return {id: 1, name: 'Francisco'}
+        $q = injector.get('$q');
+        scope.user = {};
+
+        spyOn(sailsSocket, 'get').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({name: 'Francisco'});
+          return deferred.promise;
         });
 
         ctrl.init();
-        expect(sailsSocket.populateOne).toHaveBeenCalledWith('/user/543b2b0b06ee1cb56414cbc4');
         scope.$digest();
-
+        expect(sailsSocket.get).toHaveBeenCalledWith('/user/543b2b0b06ee1cb56414cbc4');
         expect(scope.user.name).toEqual('Francisco');
       });
+
+      it('populates user on init', function() {
+        var detailedUser = {name: 'OneUser'};
+
+        scope.user = {};
+
+        ctrl.populateUser(detailedUser);
+        expect(scope.user.name).toEqual(detailedUser.name);
+      });
+
 
       it('redirects if invalid user id provided', function() {
         $location = injector.get('$location');
@@ -354,13 +368,27 @@ window.test.staff = function() {
         expect(scope.user.isLocked).toEqual(true);
       });
 
-      it('changes email confirmation status after send', function() {
-        scope.emailSending = true;
-        ctrl.getEmailConfirmation();
+      it('alerts user after successful invite email sent', function() {
+        var response = {invited: new Date()};
+        scope.user = {};
+
+        ctrl.getEmailConfirmation(response);
+        expect(scope.user.invited).toBeDefined();
+        expect(scope.emailSending).toBe(false);
+      });
+
+      it('alerts user after failed invite email', function() {
+        var response = {error: 'There was a problem sending the invite email.'};
+        scope.user = {};
+
+        ctrl.getEmailConfirmation(response);
+        expect(scope.user.invited).toBeUndefined();
         expect(scope.emailSending).toBe(false);
       });
 
       it('requests email sending through sockets', function() {
+        var response = {error: 'There was a problem sending the invite email.'};
+
         sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
 
@@ -369,25 +397,21 @@ window.test.staff = function() {
           deferred.resolve();
           return deferred.promise;
         });
+
+        spyOn(ctrl, 'getEmailConfirmation').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve(response);
+          return deferred.promise;
+        });
+
         scope.sendInviteEmail();
         expect(scope.emailSending).toBe(true);
         scope.$digest();
 
         expect(sailsSocket.get).toHaveBeenCalled();
-        expect(scope.emailSending).toEqual(false);
+        expect(ctrl.getEmailConfirmation).toHaveBeenCalled();
       });
 
-      it('watches emailSending status and removes from scope', function() {
-        $timeout = injector.get('$timeout');
-        scope.emailSending = true;
-        scope.$apply();
-        expect(scope.emailSending).toBe(true);
-
-        scope.emailSending = false;
-        scope.$apply();
-        $timeout.flush();
-        expect(scope.emailSending).toBeUndefined();
-      });
     });
 
     describe('staffMinistryDetailController', function() {
@@ -397,18 +421,21 @@ window.test.staff = function() {
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(1);
         expect(scope.ministry).toBeDefined();
+        $q = injector.get('$q');
 
         expect(scope.id).toEqual('5574d437484aee280fa67fc2');
         sailsSocket = injector.get('sailsSocket');
-        spyOn(sailsSocket, 'populateOne').and.callFake(function() {
-          return {id: '5574d437484aee280fa67fc2', name: 'Francisco\s Ministry'}
+        spyOn(sailsSocket, 'get').and.callFake(function() {
+          var deferred = $q.defer();
+          deferred.resolve({id: '5574d437484aee280fa67fc2', name: 'Francisco\'s Ministry'});
+          return deferred.promise;
         });
 
         ctrl.init();
-        expect(sailsSocket.populateOne).toHaveBeenCalledWith('/ministry/5574d437484aee280fa67fc2');
+        expect(sailsSocket.get).toHaveBeenCalledWith('/ministry/5574d437484aee280fa67fc2');
         scope.$digest();
 
-        expect(scope.ministry.name).toEqual('Francisco\s Ministry');
+        expect(scope.ministry.name).toEqual('Francisco\'s Ministry');
       });
 
       it('redirects if invalid ministry id provided', function() {
