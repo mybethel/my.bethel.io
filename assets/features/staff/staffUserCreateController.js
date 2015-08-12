@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserCreateController', ['$scope', '$timeout', '$location', 'sailsSocket', '$mdDialog', 'ministries',
-  function ($scope, $timeout, $location, sailsSocket, $mdDialog, ministries) {
+.controller('staffUserCreateController', ['$scope', '$timeout', 'sailsSocket', '$mdDialog', 'ministries',
+  function ($scope, $timeout, sailsSocket, $mdDialog, ministries) {
 
   $ctrl = this;
   $scope.ministries = ministries;

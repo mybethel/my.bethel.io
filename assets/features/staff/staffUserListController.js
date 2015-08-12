@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
-.controller('staffUserListController', ['$scope', '$stateParams', '$state', '$location', 'sailsSocket', '$mdDialog',
-  function ($scope, $stateParams, $state, $location, sailsSocket, $mdDialog) {
+.controller('staffUserListController', ['$scope', '$state', '$location', 'sailsSocket', '$mdDialog',
+  function ($scope, $state, $location, sailsSocket, $mdDialog) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
