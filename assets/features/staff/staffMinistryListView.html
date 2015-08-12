@@ -1,0 +1,39 @@
+
+<button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" style="overflow: hidden;" aria-label="Create Ministry"  ng-click="showCreateMinistry($event)">
+  <md-tooltip>Create Ministry</md-tooltip>
+  <md-icon md-svg-icon="icons/ic_add_24px.svg"></md-icon>
+</button>
+
+<md-content>
+  <md-list flex>
+    <md-list-item layout="row">
+
+      <div class="md-list-item-text" flex>
+        <strong class="clickable" ng-click="orderByField='name'; reverseSort = !reverseSort">Name</strong>
+      </div>
+      <div class="md-list-item-text" flex>
+        <strong>User Count</strong>
+      </div>
+      <div class="md-list-item-text" flex>
+        <strong class="clickable" ng-click="orderByField='createdAt'; reverseSort = !reverseSort">Date Created</strong>
+      </div>
+
+    </md-list-item>
+
+    <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="ministry in ministries | orderBy: orderByField: reverseSort | filter:searchText" ng-click="detailedMinistryTransition(ministry.id)">
+
+      <div class="md-list-item-text" flex>
+        <h3>{{ ministry.name }}</h3>
+      </div>
+      <div class="md-list-item-text" flex>
+        <p>{{ ministry.users ? ministry.users.length : 0 }}</p>
+      </div>
+      <div class="md-list-item-text" flex>
+        <p>{{ ministry.createdAt | date : M/d/yyyy }}</p>
+      </div>
+
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+
+</md-content>

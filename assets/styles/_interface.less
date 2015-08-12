@@ -81,6 +81,14 @@ button.md-button {
   }
 }
 
+// Overriding md-button style to force wrapping
+a.md-button.button-wrap {
+  white-space: normal;
+  line-height: 20px;
+  min-height: 0px;
+  padding: 8px 6px;
+}
+
 h2.md-subheader.md-default-theme {
   background-color: transparent;
 }
@@ -149,4 +157,26 @@ md-whiteframe {
 
 md-backdrop.md-dialog-backdrop.md-default-theme.md-opaque {
   background: rgba(0,0,0,0.4);
+}
+
+.clickable-row {
+  cursor: pointer;
+
+  &:hover {
+    background-color: #e1e1e1;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+md-fab-speed-dial {
+  md-fab-trigger button {
+    font-size: 40px !important;
+  }
+
+  md-fab-actions button {
+    font-size: 40px !important;
+  }
 }

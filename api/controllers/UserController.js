@@ -57,6 +57,7 @@ module.exports = {
 
       var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+','-').replace('/','_'),
           inviteUrl = sails.getBaseurl() + '/invite/' + inviteCode,
+          currentDate = new Date(),
           templateVariables = [
             {name: 'inviteUrl', content: inviteUrl},
             {name: 'userName', content: user.name},
@@ -74,10 +75,13 @@ module.exports = {
         mergeVars: templateVariables,
       }).exec({
         error: function (err) {
-          return res.serverError(err);
+          return res.send({error: 'There was a problem sending the invite email.'});
         },
         success: function () {
-          return res.ok();
+          User.update(user.id, {invited: currentDate}, function (err, updatedUser) {
+            if (err) return res.serverError(err);
+            return res.ok(updatedUser[0]);
+          });
         },
       });
 
@@ -110,14 +114,10 @@ module.exports = {
     var isLocked;
 
     User.findOne(req.param('id')).exec(function (err, user) {
-      if (err) {
-        return next(err);
-      }
+      if (err) return next(err);
 
       User.update(user.id, {isLocked: !user.isLocked}, function (err, updatedUser) {
-        if (err) {
-          return res.serverError(err);
-        }
+        if (err) return res.serverError(err);
 
         res.send(updatedUser[0]);
 

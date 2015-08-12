@@ -1,0 +1,27 @@
+<md-dialog flex="50" class="ministry-create wizard">
+
+  <form name="createMinistry" ng-submit="createNewMinistry()" novalidate>
+
+    <md-dialog-content class="sticky-container">
+      <md-toolbar>
+        <h1>Create a New Ministry</h1>
+      </md-toolbar>
+      <div class="new-ministry-form">
+        <md-input-container>
+          <label>New Ministry Name</label>
+          <input class="focus" name="name" type="text" ng-model="newMinistry.name" required />
+          <div ng-messages="!createMinistry.name.$untouched && createMinistry.name.$error">
+            <div ng-message="required">Name is required.</div>
+          </div>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+
+    <div class="md-actions" layout="row">
+      <span flex></span>
+      <md-button ng-click="cancel()">Cancel</md-button>
+      <md-button type="submit" ng-disabled="createMinistry.$invalid" class="md-primary">Create</md-button>
+    </div>
+
+  </form>
+</md-dialog>
