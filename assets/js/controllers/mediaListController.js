@@ -1,6 +1,8 @@
 angular.module('Bethel.media')
 
-.controller('MediaListController', function ($scope, $rootScope, $state, $upload) {
+.controller('MediaListController', function ($scope, $rootScope, $state, $upload, $location) {
+
+
 
   // Show the "All Media" collection by default.
   if ($state.is('media')) {
@@ -8,6 +10,10 @@ angular.module('Bethel.media')
   }
 
   $scope.init = function() {
+    // Remove this once media section is out of beta,
+    // this is just in case  someone manually tries to go to /media
+    $location.path('/dashboard').replace();
+
     io.socket.get('/media/browser/' + $scope.filterByCollection, function (data) {
       $scope.$apply(function() {
         $scope.collections = data.collections;
