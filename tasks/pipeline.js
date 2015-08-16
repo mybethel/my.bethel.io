@@ -36,6 +36,7 @@ var jsFilesToInject = [
   'components/moment/min/moment.min.js',
 
   // Angular dependencies
+  'components/angular-animate/angular-animate.min.js',
   'components/angular-ui-router/release/angular-ui-router.min.js',
   'components/angulartics/dist/angulartics.min.js',
   'components/angulartics/dist/angulartics-ga.min.js',
@@ -48,7 +49,6 @@ var jsFilesToInject = [
   'components/angular-ui-select/dist/select.min.js',
   'components/angular-ui-utils/ui-utils.min.js',
   'components/angular-material/angular-material.min.js',
-  'components/angular-animate/angular-animate.min.js',
   'components/angular-aria/angular-aria.min.js',
   'components/angular-messages/angular-messages.min.js',
   'components/Chart.js/src/Chart.Core.js',

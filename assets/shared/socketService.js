@@ -70,7 +70,11 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
 
       for (var i = 0, len = editableFields.length; i < len; i++) {
         var field = editableFields[i];
-        if (newValue[field] === oldValue[field]) continue;
+
+        if (angular.isUndefined(newValue[field]) || angular.isUndefined(oldValue[field]) || newValue[field].toString() == oldValue[field].toString()) {
+          continue;
+        }
+
         payload[field] = newValue[field];
       }
 
@@ -107,7 +111,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
       }
 
       $rootScope.$apply();
-      cb();
+      if (typeof cb === 'function') cb();
     });
   };
 
@@ -143,7 +147,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
 
       }
       $rootScope.$apply();
-      cb();
+      if (typeof cb === 'function') cb();
     });
   };
 
