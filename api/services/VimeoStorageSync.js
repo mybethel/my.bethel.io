@@ -194,6 +194,8 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
       });
     }
 
+    var createdAtDate = new Date();
+
     PodcastMedia.findOrCreate({
       uuid: videoId,
       podcast: podcast.id
@@ -209,6 +211,14 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
       podcast: podcast.id
     }, function podcastMediaCreated(err, media) {
       if (err) sails.log.error(err);
+
+      if (Date(media.createdAt) >= createdAtDate) {
+        PodcastMedia.publishCreate(media);
+      }
+      else {
+        PodcastMedia.publishUpdate(media.id, media);
+      }
+
       resolve();
     });
   });
