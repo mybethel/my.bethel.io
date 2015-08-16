@@ -111,7 +111,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
       }
 
       $rootScope.$apply();
-      cb();
+      if (typeof cb === 'function') cb();
     });
   };
 
@@ -147,7 +147,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
 
       }
       $rootScope.$apply();
-      cb();
+      if (typeof cb === 'function') cb();
     });
   };
 
