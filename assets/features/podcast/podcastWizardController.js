@@ -57,6 +57,11 @@ angular.module('Bethel.podcast')
 
   $scope.createPodcast = function() {
     $scope.newPodcast.ministry = $scope.$root.ministry;
+
+    if ($scope.newPodcast.sourceMeta) {
+      $scope.newPodcast.sourceMeta = $scope.newPodcast.sourceMeta.split(/ ?, ?/);
+    }
+
     sailsSocket.post('/podcast', $scope.newPodcast).then($mdDialog.hide);
   };
 
