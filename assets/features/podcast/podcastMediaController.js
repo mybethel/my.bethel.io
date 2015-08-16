@@ -2,6 +2,10 @@ angular.module('Bethel.podcast')
 .controller('podcastMediaController', ['$scope', '$mdDialog', 'mediaId', '$sce', 'sailsSocket', '$http', '$filter',
   function ($scope, $mdDialog, mediaId, $sce, sailsSocket, $http, $filter) {
 
+  $scope.media = {
+    date: new Date()
+  };
+
   sailsSocket.get('/podcastmedia/' + mediaId).then(function (data) {
     if (data.date) data.date = $filter('date')(data.date, 'mediumDate', 'UTC');
     $scope.media = data;
