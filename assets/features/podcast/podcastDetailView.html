@@ -17,8 +17,8 @@
     <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" layout-align="center center">
       <h3>Welcome to your new podcast!</h3>
       <span>You'll see real stats here when you have subscribers.</span>
-      <span ng-if="podcast.source === 1">Go ahead, upload some episodes and when you're ready...</span>
-      <span ng-if="podcast.source === 2">Your episodes will sync with Vimeo shortly...</span>
+      <span ng-if="podcast.source === 1 && podcast.media.length < 1">Go ahead, upload some episodes and when you're ready...</span>
+      <span ng-if="podcast.source === 2 && !podcast.lastSync">Your episodes will sync with Vimeo shortly...</span>
       <md-button class="md-primary" ng-click="submitPodcast($event)" ng-if="subscriberCount < 1 || isDemo">Submit to iTunes</md-button>
     </md-whiteframe>
   </div>
@@ -50,14 +50,15 @@
     <md-subheader class="md-no-sticky">
       <ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize>
       <span ng-if="uploading"> (1 uploading)</span>
-      <span ng-if="podcast.source === 2"> from Vimeo account <strong>{{ podcast.service.name }}</strong></span>
+      <span ng-if="podcast.source === 2"> from Vimeo account <strong>{{ podcast.service.name }}</strong>. <em>Last sync: <span am-time-ago="podcast.lastSync" ng-if="podcast.lastSync"></span><span ng-if="!podcast.lastSync">in progress</span></em></span>
     </md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout>
       <md-list class="episodes" flex="100">
         <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
         <md-list-item ng-if="podcast.media.length < 1">
           <p ng-if="!uploading && podcast.source === 1">Upload your first podcast episode now!</p>
-          <p ng-if="podcast.source === 2">We're pulling your videos from Vimeo now! They'll appear here shortly.</p>
+          <p ng-if="podcast.source === 2 && !podcast.lastSync">We're pulling your videos from Vimeo now! They'll appear here shortly.</p>
+          <p ng-if="podcast.source === 2 && podcast.lastSync">No videos matching the tags you've entered were found. Just uploaded a video? Your video will show up on the next sync.</p>
           <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
         </md-list-item>
         <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="media in podcast.media | orderBy : 'date' : true">
