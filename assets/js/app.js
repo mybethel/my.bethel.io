@@ -34,7 +34,7 @@ angular.module('Bethel', [
     '800': '106982'
   }));
 
-  if (!window.__minimal)
+  if (!window.__minimal && !window.__anonymous)
     $urlRouterProvider.otherwise('/dashboard');
 
   $mdThemingProvider.theme('default')
