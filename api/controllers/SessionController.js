@@ -43,7 +43,7 @@ module.exports = {
 
         if (!user.ministry)
           return res.send({ success: 'welcome' });
-        
+
         Ministry.findOneById(user.ministry, function foundMinistry(err, ministry) {
           if (err) return next(err);
 
