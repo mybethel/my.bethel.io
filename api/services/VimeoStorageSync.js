@@ -123,7 +123,17 @@ vimeo.queryApi = function(podcast) {
         processApiResults.push(vimeo.getResultsPage(podcast.service.user, podcast, i, queryHeaders));
       }
 
-      Promise.all(processApiResults).then(resolve);
+      Promise.all(processApiResults).then(function() {
+
+        // Update the last sync date on the podcast and inform all listening sockets.
+        Podcast.update(podcast.id, { lastSync: new Date() }).exec(function(err, updatedPodcast) {
+          if (err) return sails.log.error(err);
+          Podcast.publishUpdate(updatedPodcast[0].id, { lastSync: updatedPodcast[0].lastSync });
+        });
+
+        resolve();
+
+      });
     });
 
   });

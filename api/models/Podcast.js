@@ -84,6 +84,10 @@ module.exports = {
       return 'http://cdn.bethel.io/' + size + '/DefaultPodcaster.png';
     },
 
+    lastSync: {
+      type: 'date'
+    }
+
 	},
 
   moveThumbnail: function(temporaryImage, id, cb) {
