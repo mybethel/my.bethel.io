@@ -1,5 +1,5 @@
 angular.module('Bethel.user')
-.controller('LoginController', function ($scope, authService) {
+.controller('LoginController', function ($scope, authService, sailsSocket) {
 
   $scope.invitedUser = {};
 
@@ -30,10 +30,9 @@ angular.module('Bethel.user')
 
   $scope.signup = function (invitedUser) {
 
-    io.socket.post('/session/create', {name: invitedUser.email, pass: invitedUser.inviteCode, _csrf: $scope.$root._csrf}, function (response) {
+    sailsSocket.post('/session/create', {name: invitedUser.email, pass: invitedUser.inviteCode}).then(function (response) {
 
-      invitedUser._csrf = $scope.$root._csrf;
-      io.socket.put('/user/' + invitedUser.id, invitedUser, function (response) {
+      sailsSocket.put('/user/' + invitedUser.id, invitedUser).then(function (response) {
         window.location.replace('/#/dasboard');
       });
 
