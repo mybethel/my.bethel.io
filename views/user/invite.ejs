@@ -9,7 +9,7 @@
 
       <md-card-content>
 
-        <form name="userInviteForm" ng-submit="signup(invitedUser)">
+        <form name="userInviteForm" ng-submit="signup(invitedUser)" novalidate>
 
           <md-input-container>
             <label>Name</label>
@@ -21,13 +21,7 @@
 
           <md-input-container>
             <label>Email</label>
-            <input autocorrect="off" autocapitalize="off" name="email" ng-model="invitedUser.email" required spellcheck="false" type="email" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }"
-            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"/>
-            <div ng-messages="userInviteForm.email.$error" ng-if="userInviteForm.email.$touched">
-              <div ng-message="required || email">A valid e-mail address is required.</div>
-              <div ng-message="pattern">Invalid email address.</div>
-              <div ng-message="loginValid">No account was found with this e-mail address.</div>
-            </div>
+            <input name="email" ng-model="invitedUser.email" type="email" disabled/>
           </md-input-container>
 
           <div layout="row" layout-align="space-between center">
@@ -39,17 +33,19 @@
               </div>
             </md-input-container>
             <div>
-              <a href="" ng-click="showPass = !showPass">{{showPass ? 'Hide' : 'Show'}}</a>
+              <md-button type="button" class="md-icon-button" ng-click="showPass = !showPass" nosubmit>
+                <md-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</md-icon>
+              </md-button>
             </div>
           </div>
 
           <md-input-container>
             <label>Invite Code</label>
-            <input autocorrect="off" autocapitalize="off" name="inviteCode" ng-model="invitedUser.inviteCode" spellcheck="false" type="text" disabled required />
+            <input autocorrect="off" autocapitalize="off" name="inviteCode" ng-model="invitedUser.inviteCode" spellcheck="false" type="text" disabled />
           </md-input-container>
 
           <div layout="row">
-            <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" flex>
+            <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" flex ng-disabled="userInviteForm.$invalid">
               Let's Go
             </md-button>
           </div>
@@ -61,7 +57,7 @@
       <md-divider></md-divider>
 
       <md-card-footer>
-        <a class="panel-footer" href="/">Already a member? &nbsp;<span>Log In</span></a>
+        <a href="/">Already a member? &nbsp;<span>Log In</span></a>
       </md-card-footer>
 
     </md-card>
