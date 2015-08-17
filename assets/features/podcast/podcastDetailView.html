@@ -56,7 +56,7 @@
       <md-list class="episodes" flex="100">
         <md-progress-linear md-mode="determinate" ng-if="uploading && uploadProgress < 100" value="{{ uploadProgress }}"></md-progress-linear>
         <md-list-item ng-if="podcast.media.length < 1">
-          <p ng-if="!uploading && podcast.source === 1">Upload your first podcast episode now!</p>
+          <p ng-if="!uploading && podcast.source === 1">Upload your first podcast episode using the <md-icon>add</md-icon> button above!</p>
           <p ng-if="podcast.source === 2 && !podcast.lastSync">We're pulling your videos from Vimeo now! They'll appear here shortly.</p>
           <p ng-if="podcast.source === 2 && podcast.lastSync">No videos matching the tags you've entered were found. Just uploaded a video? Your video will show up on the next sync.</p>
           <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
