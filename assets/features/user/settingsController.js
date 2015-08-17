@@ -11,9 +11,9 @@ angular.module('Bethel.user')
       index: 1,
       label: 'locations'
     },
-    'services': {
+    'integrations': {
       index: 2,
-      label: 'connected accounts'
+      label: 'integrations'
     },
     'billing': {
       index: 3,

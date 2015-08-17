@@ -1,0 +1,16 @@
+<md-subheader>Configured Integrations</md-subheader>
+<md-whiteframe class="md-whiteframe-z1" layout="column" ng-controller="integrationsController">
+  <md-list>
+    <md-list-item ng-cloak ng-if="integrations.length < 1">
+      <p>Integrations connect Bethel with other accounts you're already using. Click one of the logos above to get started!</p>
+    </md-list-item>
+    <md-list-item class="md-2-line" ng-cloak ng-click="integrationForm($event, integration.id)" ng-repeat="integration in integrations | orderBy: 'name'">
+      <md-icon>extension</md-icon>
+      <div class="md-list-item-text">
+        <h3>{{ integration.name }}</h3>
+        <p>{{ integration.provider }}</p>
+      </div>
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-whiteframe>
