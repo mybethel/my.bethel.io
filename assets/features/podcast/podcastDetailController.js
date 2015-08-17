@@ -25,6 +25,7 @@ angular.module('Bethel.podcast')
   $ctrl.init = function() {
     sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
       $scope.podcast = data.podcast;
+      $scope.feed = 'http://podcast.bethel.io/' + data.podcast.id + '.xml';
       $scope.thumbnailS3 = data.s3form;
       $scope.uploadEpisode = data.uploadEpisode;
 
@@ -123,18 +124,6 @@ angular.module('Bethel.podcast')
       targetEvent: event,
       locals: { mediaId: id },
       controller: 'podcastMediaController'
-    });
-  };
-
-  $scope.submitPodcast = function(event) {
-    $mdDialog.show({
-      clickOutsideToClose: true,
-      templateUrl: 'features/podcast/podcastSubmitView.html',
-      targetEvent: event,
-      locals: { id: $scope.id },
-      controller: function submitPodcastDialog($scope, id) {
-        $scope.feed = 'http://podcast.bethel.io/' + id + '.xml';
-      }
     });
   };
 

@@ -15,11 +15,15 @@
 
   <div class="overlay" flex="60" offset="20" layout-padding layout-margin layout-align="center center" ng-if="isDemo">
     <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" layout-align="center center">
-      <h3>Welcome to your new podcast!</h3>
+      <h3 class="light">Welcome to your new podcast!</h3>
       <span>You'll see real stats here when you have subscribers.</span>
       <span ng-if="podcast.source === 1 && podcast.media.length < 1">Go ahead, upload some episodes and when you're ready...</span>
       <span ng-if="podcast.source === 2 && !podcast.lastSync">Your episodes will sync with Vimeo shortly...</span>
-      <md-button class="md-primary" ng-click="submitPodcast($event)" ng-if="subscriberCount < 1 || isDemo">Submit to iTunes</md-button>
+      <md-input-container>
+        <label>Podcast feed URL</label>
+        <input onclick="this.select();" ng-model="feed" readonly type="text" />
+      </md-input-container>
+      <md-button class="md-primary" href="https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/publishPodcast" ng-if="subscriberCount < 1 || isDemo" target="_blank">Submit to iTunes</md-button>
     </md-whiteframe>
   </div>
 
