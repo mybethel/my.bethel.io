@@ -14,7 +14,15 @@ angular.module('Bethel.user')
     $scope.location = sailsSocket.populateOne('location/' + locationId);
   }
 
+  $scope.$watch('addressDetails', function (newValue) {
+    if (!newValue || !newValue.geometry) return;
+    $scope.location.longitude = newValue.geometry.location.lng();
+    $scope.location.latitude = newValue.geometry.location.lat()
+  });
+
   $scope.save = function() {
+    if (!$scope.locationDetail.$invalid) return;
+
     var method =  'post',
         endpoint = '/location';
 
@@ -28,6 +36,8 @@ angular.module('Bethel.user')
       default: $scope.location.default,
       description: $scope.location.description,
       address: $scope.location.address,
+      longitude: $scope.location.longitude,
+      latitude: $scope.location.latitude,
       ministry: $scope.$root.ministry
     }).then(function() {
       $mdDialog.hide();
