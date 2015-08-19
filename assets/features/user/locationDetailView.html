@@ -1,5 +1,5 @@
-<form name="locationDetail">
-<md-dialog flex="50">
+<md-dialog flex="50" class="location-create">
+  <form name="locationDetail">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2>{{ new ? 'Create' : 'Edit' }} Ministry Location</h2>
@@ -22,8 +22,9 @@
       <textarea ng-model="location.description" columns="1" rows="3"></textarea>
     </md-input-container>
 
-    <md-input-container>
-      <label>Address</label>
+    <md-input-container class="address" ng-class="location.latitude && location.longitude ? 'location-on' : 'location-off'">
+      <md-icon ng-if="location.latitude && location.longitude">location_on</md-icon>
+      <md-icon ng-if="!location.latitude || !location.longitude">location_off</md-icon>
       <input type="text" ng-model="location.address" details="addressDetails" address-autocomplete required />
     </md-input-container>
 
@@ -33,5 +34,5 @@
     <md-button type="button" ng-click="cancel()">Cancel</md-button>
     <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
   </div>
+  </form>
 </md-dialog>
-</form>
