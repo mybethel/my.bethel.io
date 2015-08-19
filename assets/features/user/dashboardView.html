@@ -1,4 +1,4 @@
-<div layout="column" flex>
+<div layout="column" flex ng-controller="dashboardController">
 
 <md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
@@ -19,7 +19,7 @@
   <md-whiteframe class="md-whiteframe-z1 md-padding welcome-modal" layout="column">
     <div layout="row">
       <div flex="40">
-        <h2>Welcome, {{ user.name }}</h2>
+        <h2 class="light">Welcome, {{ user.name }}</h2>
         <p>Thanks for joining us!</p>
         <p>Feedback? Need help? <a href="mailto:help@bethel.io">Talk to us</a>.</p>
       </div>
@@ -58,6 +58,35 @@
       </div>
     </div>
   </md-whiteframe>
+
+  <div layout="row" equalize="md-whiteframe">
+
+    <div layout="column" flex="40">
+      <md-whiteframe class="md-whiteframe-z1 stats teaser" layout layout-align="center center">
+        <div>
+          <md-icon>insert_chart</md-icon>
+          <h3 class="light">Statistics Coming Soon!</h3>
+        </div>
+      </md-whiteframe>
+    </div>
+
+    <div layout="column" flex="60">
+        <md-whiteframe class="md-whiteframe-z1 platform-updates" layout>
+          <md-list>
+            <md-list-item class="md-2-line" ng-click="loadUpdate(update)" ng-cloak ng-repeat="update in platformUpdates">
+              <md-icon>mode_comment</md-icon>
+              <div class="md-list-item-text">
+                <h3>{{ update.title }}</h3>
+                <p am-time-ago="update.publishedDate"></p>
+                <p class="snippet">{{ update.contentSnippet }}</p>
+              </div>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+          </md-list>
+        </md-whiteframe>
+    </div>
+
+  </div>
 
 </md-content>
 
