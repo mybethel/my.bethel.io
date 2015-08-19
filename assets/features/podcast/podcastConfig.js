@@ -10,8 +10,8 @@ angular.module('Bethel.podcast', ['Bethel.util', 'chart.js', 'mgo-angular-wizard
       templateUrl: 'features/podcast/podcastListView.html',
       controller: 'podcastListController'
     })
-    .state('podcast.view', {
-      url: '/:podcastId',
+    .state('podcastView', {
+      url: '/podcast/:podcastId',
       templateUrl: 'features/podcast/podcastDetailView.html',
       controller: 'podcastDetailController'
     });

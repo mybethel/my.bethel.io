@@ -19,7 +19,7 @@ angular.module('Bethel.podcast')
   });
 
   $scope.view = function(podcast) {
-    $state.go('podcast.view', { podcastId: podcast });
+    $state.go('podcastView', { podcastId: podcast });
   };
 
   $ctrl.getSubscriberCount = function(podcast) {
