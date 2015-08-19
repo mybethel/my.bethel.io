@@ -1,4 +1,4 @@
-angular.module('Bethel.podcast').directive('subscribers', ['$timeout', function ($timeout) {
+angular.module('Bethel.util').directive('subscribers', ['$timeout', function ($timeout) {
   return {
     scope: { history: '@' },
     link: function(scope, element, attrs) {
