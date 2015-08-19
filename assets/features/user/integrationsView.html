@@ -5,8 +5,11 @@
     <md-subheader>Configured Integrations</md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout="column">
       <md-list>
-        <md-list-item ng-cloak ng-if="integrations.length < 1">
-          <p>Integrations connect Bethel with other accounts you're already using. Click one of the logos to the right to get started!</p>
+        <md-list-item ng-if="integrations.length < 1">
+          <div>
+            <p>Integrations connect Bethel with other accounts you're already using.</p>
+            <p>Click one of the logos to the right to get started!</p>
+          </div>
         </md-list-item>
         <md-list-item class="md-2-line" ng-cloak ng-click="integrationForm($event, integration.id)" ng-repeat="integration in integrations | orderBy: 'name'">
           <md-icon>extension</md-icon>
