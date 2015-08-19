@@ -28,7 +28,7 @@ module.exports = {
     },
 
     loc: {
-      type: 'array'
+      type: 'array' // [ longitude, latitude ]
     },
 
     times: {

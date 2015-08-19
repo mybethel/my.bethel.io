@@ -33,6 +33,7 @@ angular.module('Bethel.user')
     if (!newValue) return;
     // @todo: Different icons depending on the type of location.
     angular.forEach(newValue, function(value, index) {
+      if (!value.loc) $scope.locations[index].loc = [];
       $scope.locations[index].pin = 'https://s3.amazonaws.com/static.bethel.io/images/pin.png';
     });
   }, true);
