@@ -17,19 +17,20 @@
       </div>
     </div>
 
-    <md-input-container>
-      <label>Description</label>
-      <textarea ng-model="location.description" columns="1" rows="3"></textarea>
-    </md-input-container>
-
     <md-input-container class="address" ng-class="location.latitude && location.longitude ? 'location-on' : 'location-off'">
       <md-icon ng-if="location.latitude && location.longitude">location_on</md-icon>
       <md-icon ng-if="!location.latitude || !location.longitude">location_off</md-icon>
       <input type="text" ng-model="location.address" details="addressDetails" address-autocomplete required />
     </md-input-container>
 
+    <md-input-container>
+      <label>Description</label>
+      <textarea ng-model="location.description" columns="1" rows="3"></textarea>
+    </md-input-container>
+
   </md-dialog-content>
   <div class="md-actions" layout="row">
+    <md-button class="muted" href="mailto:help@bethel.io">Need Help?</md-button>
     <span flex></span>
     <md-button type="button" ng-click="cancel()">Cancel</md-button>
     <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
