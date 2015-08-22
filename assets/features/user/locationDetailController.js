@@ -26,12 +26,7 @@ angular.module('Bethel.user')
     var method =  'post',
         endpoint = '/location';
 
-    if (locationId) {
-      method = 'put';
-      endpoint = '/location/' + locationId;
-    }
-
-    sailsSocket[method](endpoint, {
+    var locationPayload = {
       name: $scope.location.name,
       default: $scope.location.default,
       description: $scope.location.description,
@@ -39,7 +34,15 @@ angular.module('Bethel.user')
       longitude: $scope.location.longitude,
       latitude: $scope.location.latitude,
       ministry: $scope.$root.ministry
-    }).then(function() {
+    };
+
+    if (locationId) {
+      method = 'put';
+      endpoint = '/location/' + locationId;
+      delete(locationPayload.ministry);
+    }
+
+    sailsSocket[method](endpoint, locationPayload).then(function() {
       $mdDialog.hide();
     }, function(err) {
       console.error(err);
