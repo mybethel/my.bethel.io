@@ -66,6 +66,9 @@ module.exports = {
       return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
     User.findOne(req.session.User.id, function (err, user) {
+      if (err || !user)
+        return res.forbidden({ error: 'Please login at http://my.bethel.io' });
+
       res.send({
         user: user,
         ministry: req.session.Ministry,
