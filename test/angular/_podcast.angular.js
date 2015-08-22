@@ -40,7 +40,7 @@ window.test.podcast = function() {
         $state = injector.get('$state');
         spyOn($state, 'go');
         scope.view(1);
-        expect($state.go).toHaveBeenCalledWith('podcast.view', { podcastId: 1 });
+        expect($state.go).toHaveBeenCalledWith('podcastView', { podcastId: 1 });
       });
 
       it('gets subscriber statistics for each podcast.', function() {
