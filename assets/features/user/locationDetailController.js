@@ -21,7 +21,7 @@ angular.module('Bethel.user')
   });
 
   $scope.save = function() {
-    if (!$scope.locationDetail.$invalid) return;
+    if ($scope.locationDetail.$invalid) return;
 
     var method =  'post',
         endpoint = '/location';
