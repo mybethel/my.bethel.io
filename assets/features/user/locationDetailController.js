@@ -14,6 +14,12 @@ angular.module('Bethel.user')
     $scope.location = sailsSocket.populateOne('location/' + locationId);
   }
 
+  $scope.$watch('location.loc', function(newValue) {
+    if (!newValue || !Array.isArray(newValue)) return;
+    $scope.location.longitude = newValue[0];
+    $scope.location.latitude = newValue[1];
+  });
+
   $scope.$watch('addressDetails', function (newValue) {
     if (!newValue || !newValue.geometry) return;
     $scope.location.longitude = newValue.geometry.location.lng();
