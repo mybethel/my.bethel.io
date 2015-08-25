@@ -52,6 +52,10 @@ module.exports.http = {
       return next();
     },
 
+    poweredBy: function(req, res, next) {
+      res.header('X-Powered-By', 'Bethel Technologies');
+      next();
+    },
 
 
   /***************************************************************************
