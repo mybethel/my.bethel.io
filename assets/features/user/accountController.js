@@ -8,7 +8,7 @@ angular.module('Bethel.user')
                       .hideDelay(3000);
 
   $scope.$watch('user', function(newValue, oldValue) {
-    if (newValue === oldValue) return;
+    if (newValue === oldValue || !oldValue) return;
 
     var updatedUser = {
       name: newValue.name,
