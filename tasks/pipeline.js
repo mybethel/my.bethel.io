@@ -22,6 +22,7 @@ var cssFilesToInject = [
 ];
 
 var testDependencies = [
+  'components/socket.io-client/socket.io.js',
   'components/angular/angular.js',
 ]
 
