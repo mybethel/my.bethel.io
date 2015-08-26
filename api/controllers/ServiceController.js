@@ -1,5 +1,5 @@
 /**
- * ServiceController.js 
+ * ServiceController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -36,8 +36,7 @@ module.exports = {
         'accessToken': token.access_token,
         'scope': token.scope,
         'link': token.user.link,
-        'name': token.user.name,
-        'picture': token.user.pictures[0].link
+        'name': token.user.name
       }, function(err, user) {
         if (err) sails.log.error(err);
 
@@ -79,5 +78,5 @@ module.exports = {
       });
     });
   }
-	
+
 };
