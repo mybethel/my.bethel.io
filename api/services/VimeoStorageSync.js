@@ -49,7 +49,7 @@ vimeo.fixMissingUrl = function(podcast) {
     media.forEach(function (video) {
       VimeoAPI.request({
         path: '/videos/' + video.uuid,
-        headers: queryHeaders
+        headers:  { 'Authorization': 'Bearer ' + podcast.service.accessToken }
       }, function (error, body, statusCode, headers) {
         if (!body || !body.files) {
           sails.log.error('Vimeo API returned status code ' + statusCode + ' for video ' + video.uuid + '.');
