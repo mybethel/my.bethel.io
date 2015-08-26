@@ -10,5 +10,6 @@ before_script:
 cache:
   directories:
   - node_modules
+  - assets/components
 services:
   - mongodb
