@@ -27,6 +27,14 @@ module.exports = {
 
   models: {
     connection: 'local'
-  }
+  },
+
+  session: {
+    adapter: 'memory'
+  },
+
+  sockets: {
+    adapter: 'memory'
+  },
 
 };
