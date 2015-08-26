@@ -37,7 +37,7 @@ exports.removeTemp = function(bucketName, fileName, newId) {
   s3.copyObject(params, function(err, data) {
     if (err) {
       deferred.reject(new Error(err));
-    } else {        
+    } else {
       var params = {
         Bucket: 'cloud.bethel.io',
         Key: bucketName + '/tmp/' + fileName
@@ -89,7 +89,7 @@ signature = function(policy) {
 
 policy = function(bucketName) {
   var s3Policy = {
-    expiration: moment.utc().add('minutes', 30).format('YYYY-MM-DDTHH:mm:ss\\Z'),
+    expiration: moment.utc().add(30, 'minutes').format('YYYY-MM-DDTHH:mm:ss\\Z'),
     conditions: [
       { bucket: 'cloud.bethel.io' },
       { acl: 'public-read' },
