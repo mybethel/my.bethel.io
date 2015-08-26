@@ -2,19 +2,19 @@
   <div layout="column" flex="50" layout-padding>
       <md-subheader>About You</md-subheader>
       <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-        <form layout-padding flex>
+        <form autocomplete="off" layout-padding flex>
           <md-input-container>
             <label>Your name</label>
             <input ng-model="user.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
           </md-input-container>
           <md-input-container>
             <label>Your E-mail</label>
-            <input ng-model="user.email" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+            <input autocomplete="off" ng-model="user.email" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
           </md-input-container>
           <div layout="row">
             <md-input-container flex>
               <label>Change Password</label>
-              <input ng-model="user.password" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" type="{{ showPassword ? 'text' : 'password' }}" />
+              <input autocomplete="off" ng-model="user.password" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" type="{{ showPassword ? 'text' : 'password' }}" />
             </md-input-container>
             <div style="padding-top:15px;">
               <md-checkbox ng-model="showPassword" aria-label="Show">Show</md-checkbox>
