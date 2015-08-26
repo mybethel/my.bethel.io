@@ -11,7 +11,7 @@
  */
 module.exports = {
   dist: {
-    src: ['.tmp/public/concat/production.js'],
-    dest: '.tmp/public/min/production.min.js'
+    src: ['.tmp/public/concat/frontend.js'],
+    dest: '.tmp/public/min/frontend.min.js'
   }
 };

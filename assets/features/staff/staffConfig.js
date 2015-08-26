@@ -1,6 +1,6 @@
 angular.module('Bethel.staff', ['ui.router', 'ngSanitize', 'ui.select'])
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
   $stateProvider
     .state('staff', {
@@ -29,4 +29,4 @@ angular.module('Bethel.staff', ['ui.router', 'ngSanitize', 'ui.select'])
       controller: 'staffMinistryDetailController'
     });
 
-});
+}]);

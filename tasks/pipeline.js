@@ -24,14 +24,9 @@ var cssFilesToInject = [
 var testDependencies = [
   'components/socket.io-client/socket.io.js',
   'components/angular/angular.js',
-]
+];
 
-// Client-side javascript files to inject in order
-// (uses Grunt-style wildcard/glob/splat expressions)
-var jsFilesToInject = [
-  // Load sails.io before everything else
-  'js/dependencies/sails.io.js',
-
+var libraryDependencies = [
   // Global libraries
   'components/lodash/dist/lodash.min.js',
   'components/moment/min/moment.min.js',
@@ -64,7 +59,13 @@ var jsFilesToInject = [
 
   // Media player elements
   'components/videojs/dist/video-js/video.js',
+];
 
+// Client-side javascript files to inject in order
+// (uses Grunt-style wildcard/glob/splat expressions)
+var jsFilesToInject = [
+  // Load sails.io before everything else
+  'js/dependencies/sails.io.js',
   'shared/sharedConfig.js',
   'shared/**/*.js',
   'js/configuration/*.js',
@@ -100,7 +101,15 @@ module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
 module.exports.jsFilesToTest = testDependencies.concat(jsFilesToInject).map(function(path) {
   return 'assets/' + path;
 });
-module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
+
+module.exports.librariesToInject = libraryDependencies.map(function(path) {
+  return '.tmp/public/' + path;
+});
+module.exports.frontendToInject = jsFilesToInject.map(function(path) {
+  return '.tmp/public/' + path;
+});
+
+module.exports.jsFilesToInject = libraryDependencies.concat(jsFilesToInject).map(function(path) {
   return '.tmp/public/' + path;
 });
 module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {

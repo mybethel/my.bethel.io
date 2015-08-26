@@ -3,7 +3,7 @@ angular.module('Bethel.media', [
   'angularFileUpload'
 ])
 
-.config(function ($stateProvider, $translatePartialLoaderProvider) {
+.config(['$stateProvider', '$translatePartialLoaderProvider', function ($stateProvider, $translatePartialLoaderProvider) {
 
   $translatePartialLoaderProvider.addPart('media');
 
@@ -29,4 +29,4 @@ angular.module('Bethel.media', [
       controller: 'MediaViewController'
     });
 
-});
+}]);

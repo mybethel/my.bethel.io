@@ -22,7 +22,7 @@ angular.module('Bethel', [
   'ui.utils'
 ])
 
-.config(function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {
+.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {
 
   $translateProvider.preferredLanguage('en');
   $translateProvider.useLoader('$translatePartialLoader', {
@@ -41,7 +41,7 @@ angular.module('Bethel', [
     .primaryPalette('brandBlue')
     .accentPalette('blue-grey');
 
-})
+}])
 
 .run(function() {
   videojs.options.flash.swf = 'https://static.bethel.io/libraries/video-js/video-js.swf';

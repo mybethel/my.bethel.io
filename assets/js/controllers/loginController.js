@@ -1,5 +1,5 @@
 angular.module('Bethel.user')
-.controller('LoginController', function ($scope, authService, sailsSocket) {
+.controller('LoginController', ['$scope', 'authService', 'sailsSocket', function ($scope, authService, sailsSocket) {
 
   $scope.invitedUser = {};
 
@@ -46,4 +46,4 @@ angular.module('Bethel.user')
     $scope.userLoginForm.password.$setValidity('loginValid', !error.pass);
   });
 
-});
+}]);
