@@ -94,7 +94,7 @@ var templateFilesToInject = [
 module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
   return '.tmp/public/' + path;
 });
-module.exports.jsFilesToTest = testDependencies.concat(jsFilesToInject).map(function(path) {
+module.exports.jsFilesToTest = testDependencies.concat(libraryDependencies).concat(jsFilesToInject).map(function(path) {
   return 'assets/' + path;
 });
 
