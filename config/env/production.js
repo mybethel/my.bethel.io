@@ -44,13 +44,6 @@ module.exports = {
     connection: 'mongo'
   },
 
-  sockets: {
-    host: 'aws-us-east-1-portal.6.dblayer.com',
-    port: 10593,
-    db: '0',
-    pass: process.env.REDIS_PASS,
-  },
-
   /***************************************************************************
    * Set the log level in production environment to "warn"                   *
    ***************************************************************************/

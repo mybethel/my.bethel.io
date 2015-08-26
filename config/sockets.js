@@ -13,7 +13,12 @@
 module.exports.sockets = {
 
   serveClient: true,
+
   adapter: 'socket.io-redis',
+  host: 'aws-us-east-1-portal.6.dblayer.com',
+  port: 10593,
+  db: 0,
+  pass: process.env.REDIS_PASS,
 
 
  /***************************************************************************
