@@ -1,4 +1,5 @@
-<md-dialog flex="50">
+<md-dialog flex="50" class="location-create">
+  <form name="locationDetail">
   <md-toolbar>
     <div class="md-toolbar-tools">
       <h2>{{ new ? 'Create' : 'Edit' }} Ministry Location</h2>
@@ -9,27 +10,36 @@
     <div layout="row">
       <md-input-container flex>
         <label>Location name</label>
-        <input type="text" ng-model="location.name" class="focus">
+        <input type="text" name="name" ng-model="location.name" class="focus" required />
+        <div ng-messages="!locationDetail.name.$untouched && locationDetail.name.$error">
+          <div ng-message="required">Location name is required.</div>
+        </div>
       </md-input-container>
       <div style="padding-top:15px;">
         <md-checkbox ng-model="location.default" aria-label="Main Location">Main Location</md-checkbox>
       </div>
     </div>
 
+    <md-input-container class="address" ng-class="location.latitude && location.longitude ? 'location-on' : 'location-off'">
+      <md-icon ng-if="location.latitude && location.longitude">location_on</md-icon>
+      <md-icon ng-if="!location.latitude || !location.longitude">location_off</md-icon>
+      <input type="text" name="address" ng-model="location.address" details="addressDetails" address-autocomplete required />
+      <div ng-messages="!locationDetail.address.$untouched && locationDetail.address.$error">
+        <div ng-message="required">A valid address is required.</div>
+      </div>
+    </md-input-container>
+
     <md-input-container>
       <label>Description</label>
       <textarea ng-model="location.description" columns="1" rows="3"></textarea>
     </md-input-container>
 
-    <md-input-container>
-      <label>Address</label>
-      <input type="text" ng-model="location.address">
-    </md-input-container>
-
   </md-dialog-content>
   <div class="md-actions" layout="row">
+    <md-button class="muted" href="mailto:help@bethel.io">Need Help?</md-button>
     <span flex></span>
-    <md-button ng-click="cancel()">Cancel</md-button>
+    <md-button type="button" ng-click="cancel()">Cancel</md-button>
     <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
   </div>
+  </form>
 </md-dialog>

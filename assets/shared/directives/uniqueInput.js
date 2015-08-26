@@ -3,7 +3,7 @@
  * See: http://weblogs.asp.net/dwahlin/building-a-custom-angularjs-unique-value-directive
  **/
 
-angular.module('Bethel')
+angular.module('Bethel.util')
   .directive('unique', ['sailsSocket', function (sailsSocket) {
   return {
     restrict: 'A',

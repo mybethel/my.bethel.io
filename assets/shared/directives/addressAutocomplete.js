@@ -3,8 +3,10 @@
  * Credit to: https://gist.github.com/kirschbaum/fcac2ff50f707dae75dc
  * Uses the angular-google-maps module asynchronous Google Maps loader.
  **/
+angular.module('Bethel.util')
+.directive('addressAutocomplete', ['uiGmapGoogleMapApi',
+  function(uiGmapGoogleMapApi) {
 
-angular.module('Bethel').directive('addressAutocomplete', ['uiGmapGoogleMapApi', function(uiGmapGoogleMapApi) {
   return {
     require: 'ngModel',
     scope: {
@@ -23,10 +25,11 @@ angular.module('Bethel').directive('addressAutocomplete', ['uiGmapGoogleMapApi',
         maps.event.addListener(scope.gPlace, 'place_changed', function() {
           scope.$apply(function() {
             scope.details = scope.gPlace.getPlace();
-            model.$setViewValue(element.val());                
+            model.$setViewValue(element.val());
           });
         });
       });
     }
   };
+
 }]);
