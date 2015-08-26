@@ -129,9 +129,9 @@ vimeo.queryApi = function(podcast) {
         Podcast.update(podcast.id, { lastSync: new Date() }).exec(function(err, updatedPodcast) {
           if (err) return sails.log.error(err);
           Podcast.publishUpdate(updatedPodcast[0].id, { lastSync: updatedPodcast[0].lastSync });
-        });
 
-        resolve();
+          resolve();
+        });
 
       });
     });
