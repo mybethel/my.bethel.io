@@ -13,7 +13,7 @@
 module.exports = {
 	libraries: {
 		src: require('../pipeline').librariesToInject,
-		dest: '.tmp/public/concat/libraries.js'
+		dest: '.tmp/public/concat/libraries.js',
 	},
 	frontend: {
 		src: require('../pipeline').frontendToInject,

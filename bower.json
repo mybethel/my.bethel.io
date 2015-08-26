@@ -20,7 +20,6 @@
     "angular-translate": "~2.5.2",
     "angular-translate-loader-partial": "~2.5.2",
     "angular-ui-router": "~0.2.13",
-    "angular-ui-select": "~0.9.6",
     "angular-ui-utils": "~0.2.2",
     "angular-wizard": "~0.4.2",
     "angulartics": "~0.17.1",

@@ -2,10 +2,6 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
 
   if (!io.socket) throw new Error('Missing required `sails.io.js` dependency.');
 
-  if (io.sails.environment === 'production') {
-    io.socket.url = 'http://io.bethel.io';
-  }
-
   $rootScope.sailsSocket = {
     _csrf: '',
     outstanding: 0

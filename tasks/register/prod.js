@@ -3,6 +3,7 @@ module.exports = [
   'concat',
   'uglify',
   'concat:prod',
+  'comments',
   'cssmin',
   'sails-linker:prodJs',
   'sails-linker:prodStyles',

@@ -3,6 +3,7 @@ module.exports = [
 	'concat',
 	'uglify',
 	'concat:prod',
+	'comments',
 	'cssmin',
 	'linkAssetsBuildProd',
 	'clean:build',

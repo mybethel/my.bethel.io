@@ -15,9 +15,6 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'components/animate.css/animate.min.css',
-  'components/angular-material/angular-material.min.css',
-  'components/angular-chart.js/dist/angular-chart.css',
   'styles/app.css',
 ];
 
@@ -42,7 +39,6 @@ var libraryDependencies = [
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
   'components/angular-wizard/dist/angular-wizard.min.js',
   'components/angular-sanitize/angular-sanitize.min.js',
-  'components/angular-ui-select/dist/select.min.js',
   'components/angular-ui-utils/ui-utils.min.js',
   'components/angular-material/angular-material.min.js',
   'components/angular-aria/angular-aria.min.js',
