@@ -220,7 +220,7 @@ module.exports = {
   },
 
   subscribers: function(req, res) {
-    var statsDate = Number(moment().subtract('week', 1).format('GGGGWW'));
+    var statsDate = Number(moment().subtract(1, 'week').format('GGGGWW'));
 
     Stats.find({ object: req.param('id'), type: 'podcast' }).sort('date desc').limit(24).exec(function (err, historical) {
       var historicalStats = {};

@@ -24,7 +24,7 @@ exports.registerHit = function(objectType, objectId) {
 }
 
 exports.generateGraphData = function(objectType, objectId, weeksBack) {
-  var startDate = Number(moment().subtract('week', weeksBack).format('GGGGWW')),
+  var startDate = Number(moment().subtract(weeksBack, 'week').format('GGGGWW')),
         endDate = Number(moment().format('GGGGWW'));
 
   // TODO: filter only stat rows between start and end date.

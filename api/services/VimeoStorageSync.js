@@ -99,7 +99,7 @@ vimeo.queryApi = function(podcast) {
     var queryHeaders = { 'Authorization': 'Bearer ' + podcast.service.accessToken };
 
     if (!vimeo.refreshAll) {
-      queryHeaders['If-Modified-Since'] = moment().subtract('minutes', 6).toString();
+      queryHeaders['If-Modified-Since'] = moment().subtract(6, 'minutes').toString();
     }
 
     VimeoAPI.request({
