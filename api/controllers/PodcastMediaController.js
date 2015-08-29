@@ -7,6 +7,19 @@
 
 module.exports = {
 
+  download: function(req, res) {
+    PodcastMedia.findOne(req.param('id')).exec(function (err, media) {
+      if (err) return next(err);
+
+      var statistics = Analytics.buildPayload(req, {
+        medium: 'podcast'
+      });
+      Analytics.registerHit('podcastmedia', req.param('id'), statistics);
+
+      res.redirect(media.url);
+    });
+  },
+
   subscribe: function(req, res) {
     PodcastMedia.find(function foundPodcast(err, media) {
       if (err) return next(err);
