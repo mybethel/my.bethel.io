@@ -10,6 +10,11 @@ angular.module('Bethel.user')
   $scope.$watch('user', function (newValue, oldValue) {
     if (newValue === oldValue) return;
 
+    // if (newValue.email === oldValue.email) {
+    //   console.log('invalid? ', $scope.editUser.email.$invalid);
+    //   $scope.editUser.email.$setValidity('unique', true);
+    // }
+
     var updatedUser = {
       name: newValue.name,
       email: newValue.email
@@ -19,9 +24,11 @@ angular.module('Bethel.user')
       updatedUser.password = newValue.password;
     }
 
-    sailsSocket.put('/user/' + newValue.id, updatedUser).then(function() {
-      $mdToast.show(savedAlert);
-    });
+    if ($scope.editUser.$valid) {
+      sailsSocket.put('/user/' + newValue.id, updatedUser).then(function() {
+        $mdToast.show(savedAlert);
+      });
+    }
   }, true);
 
   $scope.$watch('ministry', function (newValue, oldValue) {

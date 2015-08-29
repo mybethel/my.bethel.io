@@ -2,14 +2,29 @@
   <div layout="column" flex="50" layout-padding>
     <md-subheader>About You</md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <form layout-padding flex>
+      <form name="editUser" layout-padding flex>
         <md-input-container>
           <label>Your name</label>
-          <input ng-model="user.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <input name="name" ng-model="user.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" required/>
+          <div ng-messages="!editUser.name.$untouched && editUser.name.$error">
+            <div ng-message="required">Your name is required.</div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>Your E-mail</label>
-          <input ng-model="user.email" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <input
+            name="email"
+            ng-model="user.email"
+            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+            ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+            unique='{"model": "user", "id": "{{user.id}}" }'
+            required
+          />
+          <div ng-messages="!editUser.email.$untouched && editUser.email.$error">
+            <div ng-message="required">Your e-mail is required.</div>
+            <div ng-message="pattern">Invalid email address.</div>
+            <div ng-message="unique">Email address already in use.</div>
+          </div>
         </md-input-container>
         <div layout="row">
           <md-input-container flex>
@@ -26,7 +41,7 @@
   <div layout="column" flex="50" layout-padding>
     <md-subheader>Your Ministry</md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <form name="editMinistry" ng-submit="saveMinistry(editMinistry)" layout-padding flex>
+      <form name="editMinistry" layout-padding flex>
         <md-input-container>
           <label>Ministry Name</label>
           <input name="name" ng-model="ministry.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" required/>
@@ -42,7 +57,7 @@
             ng-model="ministry.email"
             ng-model-options="{updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
             pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-            />
+          />
           <div ng-messages="!editMinistry.email.$untouched && editMinistry.email.$error">
             <div ng-message="pattern">Invalid email address.</div>
           </div>

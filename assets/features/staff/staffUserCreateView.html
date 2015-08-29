@@ -25,7 +25,7 @@
             ng-model="newUser.email"
             ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0 } }"
             pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-            unique="user"
+            unique='{"model": "user"}'
             required>
           <div ng-messages="!createUser.email.$untouched && createUser.email.$error">
             <div ng-message="required">Email is required.</div>
