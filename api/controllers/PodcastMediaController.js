@@ -19,7 +19,10 @@ module.exports = {
   },
 
   stat: function(req, res) {
-    Analytics.registerHit('podcastmedia', req.param('id'));
+    var statistics = Analytics.buildPayload(req, {
+      medium: 'embed'
+    });
+    Analytics.registerHit('podcastmedia', req.param('id'), statistics);
     res.ok(req.param('id'));
   },
 

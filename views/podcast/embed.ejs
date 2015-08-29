@@ -54,7 +54,7 @@
       height: '100%',
     });
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open('GET', 'https://my.bethel.io/podcastmedia/stat/<%= episode.id %>', true);
+    xmlHttp.open('GET', '/podcastmedia/stat/<%= episode.id %>', true);
     xmlHttp.send();
   </script>
 </body>

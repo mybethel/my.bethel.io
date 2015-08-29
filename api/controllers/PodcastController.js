@@ -206,7 +206,8 @@ module.exports = {
       if (err) return res.serverError(err);
       if (!podcast) return res.notFound();
 
-      Analytics.registerHit('podcast', req.param('id'));
+      var statistics = Analytics.buildPayload(req);
+      Analytics.registerHit('podcast', req.param('id'), statistics);
 
       res.header('Content-Type', 'text/xml; charset=UTF-8');
 
