@@ -65,13 +65,13 @@ module.exports = {
     if (!req.session.User)
       return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
-    User.findOne(req.session.User.id, function (err, user) {
+    User.findOne(req.session.User.id).populate('ministry').exec(function (err, user) {
       if (err || !user)
         return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
       res.send({
         user: user,
-        ministry: req.session.Ministry,
+        ministry: user.ministry,
         isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
       });
     });

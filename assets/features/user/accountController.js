@@ -7,7 +7,7 @@ angular.module('Bethel.user')
                       .position('bottom right')
                       .hideDelay(3000);
 
-  $scope.$watch('user', function(newValue, oldValue) {
+  $scope.$watch('user', function (newValue, oldValue) {
     if (newValue === oldValue) return;
 
     var updatedUser = {
@@ -22,6 +22,22 @@ angular.module('Bethel.user')
     sailsSocket.put('/user/' + newValue.id, updatedUser).then(function() {
       $mdToast.show(savedAlert);
     });
+  }, true);
+
+  $scope.$watch('ministry', function (newValue, oldValue) {
+    if (newValue === oldValue) return;
+
+    var updatedMinistry = {
+      name: newValue.name,
+      email: newValue.email,
+      locality: newValue.locality
+    };
+
+    if ($scope.editMinistry.$valid) {
+      sailsSocket.put('/ministry/' + newValue.id, updatedMinistry).then(function () {
+        $mdToast.show(savedAlert);
+      });
+    }
   }, true);
 
   // Prevent the password from staying in scope.

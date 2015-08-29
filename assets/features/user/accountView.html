@@ -1,39 +1,51 @@
 <div layout="row" ng-controller="accountController">
   <div layout="column" flex="50" layout-padding>
-      <md-subheader>About You</md-subheader>
-      <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-        <form layout-padding flex>
-          <md-input-container>
-            <label>Your name</label>
-            <input ng-model="user.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+    <md-subheader>About You</md-subheader>
+    <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
+      <form layout-padding flex>
+        <md-input-container>
+          <label>Your name</label>
+          <input ng-model="user.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+        </md-input-container>
+        <md-input-container>
+          <label>Your E-mail</label>
+          <input ng-model="user.email" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+        </md-input-container>
+        <div layout="row">
+          <md-input-container flex>
+            <label>Change Password</label>
+            <input ng-model="user.password" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" type="{{ showPassword ? 'text' : 'password' }}" />
           </md-input-container>
-          <md-input-container>
-            <label>Your E-mail</label>
-            <input ng-model="user.email" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-          </md-input-container>
-          <div layout="row">
-            <md-input-container flex>
-              <label>Change Password</label>
-              <input ng-model="user.password" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" type="{{ showPassword ? 'text' : 'password' }}" />
-            </md-input-container>
-            <div style="padding-top:15px;">
-              <md-checkbox ng-model="showPassword" aria-label="Show">Show</md-checkbox>
-            </div>
+          <div style="padding-top:15px;">
+            <md-checkbox ng-model="showPassword" aria-label="Show">Show</md-checkbox>
           </div>
-        </form>
-      </md-whiteframe>
+        </div>
+      </form>
+    </md-whiteframe>
   </div>
   <div layout="column" flex="50" layout-padding>
     <md-subheader>Your Ministry</md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <form layout-padding flex>
+      <form name="editMinistry" ng-submit="saveMinistry(editMinistry)" layout-padding flex>
         <md-input-container>
           <label>Ministry Name</label>
-          <input ng-model="ministry.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <input name="name" ng-model="ministry.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" required/>
+          <div ng-messages="!editMinistry.name.$untouched && editMinistry.name.$error">
+            <div ng-message="required">Ministry name is required.</div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>Public E-mail</label>
-          <input ng-model="ministry.email" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <input
+            type="email"
+            name="email"
+            ng-model="ministry.email"
+            ng-model-options="{updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+            pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+            />
+          <div ng-messages="!editMinistry.email.$untouched && editMinistry.email.$error">
+            <div ng-message="pattern">Invalid email address.</div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>City and State/Province</label>
