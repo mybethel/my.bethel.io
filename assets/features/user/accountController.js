@@ -7,8 +7,13 @@ angular.module('Bethel.user')
                       .position('bottom right')
                       .hideDelay(3000);
 
-  $scope.$watch('user', function(newValue, oldValue) {
+  $scope.$watch('user', function (newValue, oldValue) {
     if (newValue === oldValue) return;
+
+    // if (newValue.email === oldValue.email) {
+    //   console.log('invalid? ', $scope.editUser.email.$invalid);
+    //   $scope.editUser.email.$setValidity('unique', true);
+    // }
 
     var updatedUser = {
       name: newValue.name,
@@ -19,9 +24,27 @@ angular.module('Bethel.user')
       updatedUser.password = newValue.password;
     }
 
-    sailsSocket.put('/user/' + newValue.id, updatedUser).then(function() {
-      $mdToast.show(savedAlert);
-    });
+    if ($scope.editUser.$valid) {
+      sailsSocket.put('/user/' + newValue.id, updatedUser).then(function() {
+        $mdToast.show(savedAlert);
+      });
+    }
+  }, true);
+
+  $scope.$watch('ministry', function (newValue, oldValue) {
+    if (newValue === oldValue) return;
+
+    var updatedMinistry = {
+      name: newValue.name,
+      email: newValue.email,
+      locality: newValue.locality
+    };
+
+    if ($scope.editMinistry.$valid) {
+      sailsSocket.put('/ministry/' + newValue.id, updatedMinistry).then(function () {
+        $mdToast.show(savedAlert);
+      });
+    }
   }, true);
 
   // Prevent the password from staying in scope.
