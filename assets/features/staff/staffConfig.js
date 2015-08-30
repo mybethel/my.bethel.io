@@ -1,4 +1,4 @@
-angular.module('Bethel.staff', ['ui.router', 'ngSanitize'])
+angular.module('Bethel.staff', ['ui.router'])
 
 .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

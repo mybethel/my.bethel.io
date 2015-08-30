@@ -18,8 +18,7 @@ angular.module('Bethel', [
   'Bethel.staff',
   'Bethel.streaming',
   'Bethel.util',
-  'bethel.dom',
-  'ui.utils'
+  'bethel.dom'
 ])
 
 .config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {

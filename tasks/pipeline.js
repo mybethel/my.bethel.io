@@ -25,36 +25,30 @@ var testDependencies = [
 
 var libraryDependencies = [
   // Global libraries
+  'components/Chart.js/src/Chart.Core.js',
+  'components/Chart.js/src/Chart.Line.js',
   'components/lodash/dist/lodash.min.js',
   'components/moment/min/moment.min.js',
+  'components/videojs/dist/video-js/video.js',
 
   // Angular dependencies
   'components/angular-animate/angular-animate.min.js',
-  'components/angular-ui-router/release/angular-ui-router.min.js',
-  'components/angulartics/dist/angulartics.min.js',
-  'components/angulartics/dist/angulartics-ga.min.js',
-  'components/angular-http-auth/src/http-auth-interceptor.js',
-  'components/angular-google-maps/dist/angular-google-maps.min.js',
-  'components/angular-translate/angular-translate.min.js',
-  'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
-  'components/angular-wizard/dist/angular-wizard.min.js',
-  'components/angular-sanitize/angular-sanitize.min.js',
-  'components/angular-ui-utils/ui-utils.min.js',
-  'components/angular-material/angular-material.min.js',
   'components/angular-aria/angular-aria.min.js',
-  'components/angular-messages/angular-messages.min.js',
-  'components/Chart.js/src/Chart.Core.js',
-  'components/Chart.js/src/Chart.Line.js',
   'components/angular-chart.js/dist/angular-chart.min.js',
   'components/angular-dom/dist/angular-dom.min.js',
-
-  // User interface
+  'components/angular-google-maps/dist/angular-google-maps.min.js',
+  'components/angular-http-auth/src/http-auth-interceptor.js',
+  'components/angular-material/angular-material.min.js',
+  'components/angular-messages/angular-messages.min.js',
   'components/angular-moment/angular-moment.min.js',
+  'components/angular-translate/angular-translate.min.js',
+  'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+  'components/angular-ui-router/release/angular-ui-router.min.js',
+  'components/angular-wizard/dist/angular-wizard.min.js',
+  'components/angulartics/dist/angulartics.min.js',
+  'components/angulartics/dist/angulartics-ga.min.js',
   'components/ng-file-upload/angular-file-upload.min.js',
   'components/ng-file-upload/angular-file-upload-shim.min.js',
-
-  // Media player elements
-  'components/videojs/dist/video-js/video.js',
 ];
 
 // Client-side javascript files to inject in order
