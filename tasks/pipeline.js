@@ -55,7 +55,7 @@ var libraryDependencies = [
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
   // Load sails.io before everything else
-  'js/dependencies/sails.io.js',
+  'shared/sails.io.js',
   'shared/sharedConfig.js',
   'shared/**/*.js',
   'js/configuration/*.js',
@@ -64,6 +64,7 @@ var jsFilesToInject = [
   'features/**/*Controller.js',
   'js/filters/*.js',
   'js/**/*.js',
+  'app.js'
 ];
 
 
