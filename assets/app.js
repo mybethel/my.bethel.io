@@ -84,16 +84,9 @@ angular.module('Bethel', [
     });
   };
 
-  $scope.updateCsrf = function() {
-    sailsSocket.get('/csrfToken').then(function (response) {
-      $scope._csrf = response._csrf;
-    });
-  };
-
   // Update current session on load or login.
   $scope.updateSession();
   $scope.$on('event:auth-loginConfirmed', $scope.updateSession);
-  $scope.$on('$stateChangeSuccess', $scope.updateCsrf);
 
   $scope.toggleNav = function() {
     $scope.collapseNav = !$scope.collapseNav;

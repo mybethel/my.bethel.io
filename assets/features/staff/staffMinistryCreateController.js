@@ -5,10 +5,10 @@ angular.module('Bethel.staff')
 
   $scope.createNewMinistry = function() {
 
-    sailsSocket.post('/ministry', {name: $scope.newMinistry.name, _csrf: $scope.$root._csrf})
-    .then(function (data) {
-      $mdDialog.hide(data);
-    });
+    sailsSocket.post('/ministry', { name: $scope.newMinistry.name })
+      .then(function (data) {
+        $mdDialog.hide(data);
+      });
 
   };
 
@@ -21,5 +21,3 @@ angular.module('Bethel.staff')
   });
 
 }]);
-
-

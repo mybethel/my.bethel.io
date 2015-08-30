@@ -4,8 +4,7 @@ angular.module('Bethel.user')
   $scope.invitedUser = {};
 
   $scope.login = function (credentials) {
-    credentials._csrf = $scope.$root._csrf;
-    io.socket.post('/session/create', credentials, function (response) {
+    sailsSocket.post('/session/create', credentials, function (response) {
       if (angular.isDefined(response.error)) {
         // Shake the login dialogue to indicate login wasn't successful.
         angular.element(document.querySelector('#login-signup'))
@@ -15,13 +14,11 @@ angular.module('Bethel.user')
           });
 
         // Set the error scope to associate an error with a field.
-        return $scope.$apply(function() { $scope.error = response.error; });
+        return $scope.error = response.error;
       }
 
-      $scope.$root.$apply(function() {
-        $scope.$root.user = response.user;
-        $scope.$root.ministry = response.ministry;
-      });
+      $scope.$root.user = response.user;
+      $scope.$root.ministry = response.ministry;
 
       // Confirm that login was sucessful.
       authService.loginConfirmed();
@@ -30,7 +27,7 @@ angular.module('Bethel.user')
 
   $scope.signup = function (invitedUser) {
 
-    sailsSocket.post('/session/create', {name: invitedUser.email, pass: invitedUser.inviteCode}).then(function (response) {
+    sailsSocket.post('/session/create', { name: invitedUser.email, pass: invitedUser.inviteCode }).then(function (response) {
 
       sailsSocket.put('/user/' + invitedUser.id, invitedUser).then(function (response) {
         window.location.replace('/#/dasboard');

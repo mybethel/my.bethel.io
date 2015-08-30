@@ -35,14 +35,7 @@ angular.module('Bethel.staff')
     }
 
     if (!$scope.newUser.ministry) {
-
-      var ministryToCreate = {
-            name: $scope.searchText,
-            _csrf: $scope.$root._csrf
-          };
-
-      sailsSocket.post('/ministry', ministryToCreate).then($ctrl.populateMinistries);
-
+      sailsSocket.post('/ministry', { name: $scope.searchText }).then($ctrl.populateMinistries);
     } else {
       $scope.createNewUser();
     }
@@ -61,7 +54,6 @@ angular.module('Bethel.staff')
 
     var newUser = $scope.newUser;
 
-    newUser._csrf = $scope.$root._csrf;
     newUser.isLocked = false;
 
     if (createdMinistry) {
@@ -83,5 +75,3 @@ angular.module('Bethel.staff')
   };
 
 }]);
-
-
