@@ -1,5 +1,4 @@
 angular.module('Bethel.util', [
-  'angularFileUpload',
   'angulartics',
   'angulartics.google.analytics',
   'angularMoment',
@@ -7,6 +6,7 @@ angular.module('Bethel.util', [
   'http-auth-interceptor',
   'ngMaterial',
   'ngMessages',
+  'ngFileUpload',
   'pascalprecht.translate',
   'ui.router',
 ]);

@@ -47,8 +47,8 @@ var libraryDependencies = [
   'components/angular-wizard/dist/angular-wizard.min.js',
   'components/angulartics/dist/angulartics.min.js',
   'components/angulartics/dist/angulartics-ga.min.js',
-  'components/ng-file-upload/angular-file-upload.min.js',
-  'components/ng-file-upload/angular-file-upload-shim.min.js',
+  'components/ng-file-upload/ng-file-upload.min.js',
+  'components/ng-file-upload/ng-file-upload-shim.min.js',
 ];
 
 // Client-side javascript files to inject in order

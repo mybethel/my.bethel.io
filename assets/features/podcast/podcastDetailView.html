@@ -5,7 +5,7 @@
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
   </div>
-  <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ng-file-select="onFileSelect($files)" ng-if="podcast.source === 1" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
+  <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ngf-select="onFileSelect($files)" ng-if="podcast.source === 1" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
     <md-tooltip>Upload Episode</md-tooltip>
     <md-icon>add</md-icon>
   </button>
@@ -92,7 +92,7 @@
     <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="100%" />
 
     <div layout="row" layout-align="center center" ng-hide="thumbnailUploading">
-      <button class="md-primary md-button md-default-theme" ng-file-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg">Upload New Image</button>
+      <button class="md-primary md-button md-default-theme" ngf-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg">Upload New Image</button>
     </div>
 
     <div layout="row" layout-align="center center" ng-show="thumbnailUploading">

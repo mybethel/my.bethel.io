@@ -1,5 +1,5 @@
 angular.module('Bethel.util')
-.service('upload', ['$upload', function ($upload) {
+.service('upload', ['Upload', function ($upload) {
 
   /**
    * Upload the specified file to S3 using the $upload service.
@@ -9,7 +9,7 @@ angular.module('Bethel.util')
    */
   this.s3 = function(destination, file) {
     return $upload.upload({
-      data: {
+      fields: {
         acl: 'public-read',
         AWSAccessKeyId: destination.key,
         key: destination.bucket + '/' + file.name,
