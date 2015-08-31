@@ -29,7 +29,7 @@ module.exports = {
         });
       }
 
-      Media.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, media) {
+      Media.find({ministry: req.session.Ministry.id}, function foundMedia(err, media) {
 
         if (media && media.length > 0) {
           media.forEach(function(media) {

@@ -9,7 +9,7 @@ angular.module('Bethel.staff')
 
   $scope.$watch(function() {
     return $scope.id;
-  }, function (newValue, oldValue) {
+  }, function (newValue) {
     if (!newValue || !newValue.match(/^[0-9a-fA-F]{24}$/)) {
       $location.path('/staff/user').replace();
     }
@@ -38,7 +38,7 @@ angular.module('Bethel.staff')
   };
 
   $ctrl.getEmailConfirmation = function(response) {
-    var message = "Invite Email Sent.";
+    var message = 'Invite Email Sent.';
 
     if (response.error) {
       message = response.error;

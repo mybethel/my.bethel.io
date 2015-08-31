@@ -28,8 +28,7 @@ module.exports = {
         req.session.User = user;
 
         var currentDate = new Date();
-        User.update(user.id, {lastLogin: currentDate}, function (err, user) {
-
+        User.update(user.id, { lastLogin: currentDate }, function (err) {
           if (err) {
             req.session.flash = {
               err: err
@@ -61,7 +60,7 @@ module.exports = {
     });
   },
 
-  current: function(req, res, next) {
+  current: function(req, res) {
     if (!req.session.User)
       return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
@@ -77,9 +76,8 @@ module.exports = {
     });
   },
 
-  destroy: function(req, res, next) {
+  destroy: function(req, res) {
     req.session.destroy();
-
     return res.redirect('/');
   }
 

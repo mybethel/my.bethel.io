@@ -1,7 +1,7 @@
-angular.module('Bethel.util').directive('subscribers', ['$timeout', function ($timeout) {
+angular.module('Bethel.util').directive('subscribers', [function() {
   return {
     scope: { history: '@' },
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
       scope.max = 0;
       scope.$watch('history', function (history) {
         if (angular.isUndefined(history) || typeof history !== 'string' || history === '')

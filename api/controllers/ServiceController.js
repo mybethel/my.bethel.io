@@ -19,7 +19,7 @@ module.exports = {
     }
 
     // Construct and store the access token based on the Vimeo response.
-    VimeoAPI.accessToken(req.query.code, redirectUrl, function (err, token, status, headers) {
+    VimeoAPI.accessToken(req.query.code, redirectUrl, function (err, token) {
       if (err) return next(err);
 
       if (req.query.state !== req.session.Ministry.id.toString('base64') || typeof token.access_token === 'undefined')
@@ -37,7 +37,7 @@ module.exports = {
         'scope': token.scope,
         'link': token.user.link,
         'name': token.user.name
-      }, function(err, user) {
+      }, function(err) {
         if (err) sails.log.error(err);
 
         res.redirect('/#/dashboard/accounts');
@@ -45,7 +45,7 @@ module.exports = {
     });
   },
 
-  youtube: function(req, res, next) {
+  youtube: function(req, res) {
     var OAuth2 = require('googleapis').auth.OAuth2;
     var oauth2Client = new OAuth2(sails.config.services.youtube.key, sails.config.services.youtube.secret, 'https://my.bethel.io/service/youtube/authorized');
 

@@ -1,6 +1,5 @@
 angular.module('Bethel.staff', ['ui.router'])
-
-.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', function ($stateProvider) {
 
   $stateProvider
     .state('staff', {

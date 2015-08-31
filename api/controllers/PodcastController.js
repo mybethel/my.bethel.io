@@ -10,7 +10,7 @@ var moment = require('moment'),
     request = require('request'),
     async = require('async');
 
-function finishMediaImport(id, ministry) {
+function finishMediaImport(id) {
   console.log('Finished import for podcast ' + id);
 }
 
@@ -165,15 +165,14 @@ module.exports = {
   },
 
   destroy: function(req, res) {
-    Podcast.destroy(req.param('id'), function deletedPodcast(err, podcast) {
+    Podcast.destroy(req.param('id'), function deletedPodcast(err) {
       if (err) sails.log.error(err);
 
-      PodcastMedia.destroy({podcast: req.param('id')}, function deletedPodcastMedia(err, podcastMedia) {
+      PodcastMedia.destroy({podcast: req.param('id')}, function deletedPodcastMedia(err) {
         if (err) sails.log.error(err);
 
         res.redirect('/podcasts');
       });
-
     });
   },
 

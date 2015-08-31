@@ -74,10 +74,10 @@ module.exports = {
         fromName: 'Bethel',
         mergeVars: templateVariables,
       }).exec({
-        error: function (err) {
+        error: function() {
           return res.send({error: 'There was a problem sending the invite email.'});
         },
-        success: function () {
+        success: function() {
           User.update(user.id, {invited: currentDate}, function (err, updatedUser) {
             if (err) return res.serverError(err);
             return res.ok(updatedUser[0]);
@@ -111,12 +111,10 @@ module.exports = {
 
   lockUnlock: function (req, res) {
 
-    var isLocked;
-
     User.findOne(req.param('id')).exec(function (err, user) {
       if (err) return next(err);
 
-      User.update(user.id, {isLocked: !user.isLocked}, function (err, updatedUser) {
+      User.update(user.id, { isLocked: !user.isLocked }, function (err, updatedUser) {
         if (err) return res.serverError(err);
 
         res.send(updatedUser[0]);

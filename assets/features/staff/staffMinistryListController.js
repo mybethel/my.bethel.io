@@ -3,7 +3,6 @@ angular.module('Bethel.staff')
 .controller('staffMinistryListController',['$scope', '$state', '$location', 'sailsSocket', '$mdDialog',
   function ($scope, $state, $location, sailsSocket, $mdDialog) {
 
-  var $ctrl = this;
   $scope.$parent.tabIndex = 1;
   $scope.orderByField = 'createdAt';
 

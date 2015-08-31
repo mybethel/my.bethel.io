@@ -1,5 +1,5 @@
 
-exports.init = function(options) {
+exports.init = function() {
 
   if (sails.config.cron && sails.config.cron.disabled === true)
     return;

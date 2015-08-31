@@ -3,9 +3,9 @@ angular.module('Bethel.staff')
 .controller('staffUserCreateController', ['$scope', '$timeout', 'sailsSocket', '$mdDialog', 'ministries',
   function ($scope, $timeout, sailsSocket, $mdDialog, ministries) {
 
-  $ctrl = this;
+  var $ctrl = this;
   $scope.ministries = ministries;
-  $scope.searchText = "";
+  $scope.searchText = '';
   $scope.newUser = {};
 
   $scope.$watch('searchText', function (searchText) {
@@ -16,7 +16,7 @@ angular.module('Bethel.staff')
     }
   });
 
-  $ctrl.populateMinistries = function(createdMinistry, status) {
+  $ctrl.populateMinistries = function(createdMinistry) {
     $scope.ministries.push(createdMinistry);
     $scope.createNewUser(createdMinistry);
   };
@@ -42,12 +42,9 @@ angular.module('Bethel.staff')
 
   };
 
-  $ctrl.handleNewUser = function(response, status) {
-    if (response.invalidAttributes) {
-      return;
-    } else {
-      $mdDialog.hide(response);
-    }
+  $ctrl.handleNewUser = function(response) {
+    if (response.invalidAttributes) return;
+    $mdDialog.hide(response);
   };
 
   $scope.createNewUser = function(createdMinistry) {

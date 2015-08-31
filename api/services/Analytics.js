@@ -4,8 +4,8 @@ var Keen = require('keen-js'),
 exports.buildPayload = function(req, payload) {
   payload = payload || {};
 
-  payload.ip_address = req.ip,
-  payload.user_agent = req.headers['user-agent']
+  payload.ip_address = req.ip;
+  payload.user_agent = req.headers['user-agent'];
 
   return payload;
 };
@@ -14,7 +14,7 @@ exports.registerHit = function(objectType, objectId, properties) {
   var currentDate = Number(moment().format('GGGGWW'));
 
   var client = new Keen(sails.config.keen);
-  client.addEvent(objectType, Analytics.keenParse(properties, objectId), function(err, response) {
+  client.addEvent(objectType, Analytics.keenParse(properties, objectId), function(err) {
     if (err) return sails.log.error('Statistics logging failed to Keen.io', err);
   });
 
@@ -27,7 +27,7 @@ exports.registerHit = function(objectType, objectId, properties) {
         count: 1,
         type: objectType,
         object: objectId,
-      }, function statsTrackingCreated(err, stat) {
+      }, function statsTrackingCreated(err) {
         if (err) return sails.log.error('Creating stats: ' + err);
       })
     } else {
@@ -67,9 +67,6 @@ exports.keenParse = function(properties, objectId) {
 }
 
 exports.generateGraphData = function(objectType, objectId, weeksBack) {
-  var startDate = Number(moment().subtract(weeksBack, 'week').format('GGGGWW')),
-        endDate = Number(moment().format('GGGGWW'));
-
   // TODO: filter only stat rows between start and end date.
   Stats.find().sort('date asc').where({object: objectId, type: objectType}, function foundStats(err, weeklyStats) {
     if (err) return sails.log.error('Finding stats: ' + err);

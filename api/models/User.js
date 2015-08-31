@@ -56,7 +56,7 @@ module.exports = {
 
     hasRole: function(roleName) {
 
-      if (!this.roles || this.roles.indexOf(roleName) == -1) {
+      if (!this.roles || this.roles.indexOf(roleName) === -1) {
         return false;
       }
 
@@ -107,7 +107,7 @@ module.exports = {
         .replace('+','-')
         .replace('/','_');
 
-      User.update(values.id, { password: values.password }, function userUpdated(err, user) {
+      User.update(values.id, { password: values.password }, function userUpdated(err) {
         if (err) return next(err);
 
         next();

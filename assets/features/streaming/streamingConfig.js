@@ -1,6 +1,5 @@
 angular.module('Bethel.streaming', ['ui.router'])
-.config(['$stateProvider', '$urlRouterProvider',
-  function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', function ($stateProvider) {
 
   $stateProvider
     .state('streaming', {

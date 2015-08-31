@@ -72,7 +72,7 @@ angular.module('Bethel.podcast')
     $scope.thumbnailUploading = true;
 
     upload.s3($scope.thumbnailS3, $files[0])
-      .success(function (data, status, headers, config) {
+      .success(function() {
         sailsSocket.put('/podcast/' + $scope.id, {
           id: $scope.id,
           temporaryImage: $files[0].name

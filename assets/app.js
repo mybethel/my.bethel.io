@@ -79,7 +79,7 @@ angular.module('Bethel', [
       if (response.isAdmin) {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
       }
-    }, function (error) {
+    }, function() {
       $scope.authCheck = true;
     });
   };

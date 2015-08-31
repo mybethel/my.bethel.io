@@ -71,7 +71,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
       for (var i = 0, len = editableFields.length; i < len; i++) {
         var field = editableFields[i];
 
-        if (angular.isUndefined(newValue[field]) || angular.isUndefined(oldValue[field]) || newValue[field].toString() == oldValue[field].toString()) {
+        if (angular.isUndefined(newValue[field]) || angular.isUndefined(oldValue[field]) || newValue[field].toString() === oldValue[field].toString()) {
           continue;
         }
 
@@ -87,7 +87,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
   var findIndexById = function(arr, id) {
     var found = null;
     angular.forEach(arr, function(value, index) {
-      if (value.id == id) found = index;
+      if (value.id === id) found = index;
     });
     return found;
   };
@@ -106,8 +106,10 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
         return;
 
       for (field in message.data) {
-        if (field == '_csrf') continue;
-        scope[field] = message.data[field];
+        if (message.data.hasOwnProperty(field)) {
+          if (field === '_csrf') continue;
+          scope[field] = message.data[field];
+        }
       }
 
       $rootScope.$apply();

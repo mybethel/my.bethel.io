@@ -34,20 +34,19 @@ exports.removeTemp = function(bucketName, fileName, newId) {
 
   var deferred = Q.defer();
 
-  s3.copyObject(params, function(err, data) {
+  s3.copyObject(params, function(err) {
     if (err) {
-      deferred.reject(new Error(err));
-    } else {
-      var params = {
-        Bucket: 'cloud.bethel.io',
-        Key: bucketName + '/tmp/' + fileName
-      };
-      s3.deleteObject(params, function(err, data) {
-        if (err) console.log(err, err.stack);
-      });
-
-      deferred.resolve(bucketName.replace('images/', '') + '/' + newId + '.' + extension);
+      return deferred.reject(new Error(err));
     }
+    var params = {
+      Bucket: 'cloud.bethel.io',
+      Key: bucketName + '/tmp/' + fileName
+    };
+    s3.deleteObject(params, function(err) {
+      if (err) sails.log.error(err, err.stack);
+    });
+
+    deferred.resolve(bucketName.replace('images/', '') + '/' + newId + '.' + extension);
   });
 
   return deferred.promise;
@@ -60,7 +59,7 @@ exports.transport = function(fileUrl, bucketName, key, callback) {
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
     return callback('S3Upload:transport no AWS credentials set');
 
-  var UploadStreamObject = new Uploader(
+  new Uploader(
     {
       accessKeyId: sails.config.aws.accessKeyId,
       secretAccessKey: sails.config.aws.secretAccessKey,
@@ -73,7 +72,7 @@ exports.transport = function(fileUrl, bucketName, key, callback) {
     function (err, uploadStream) {
       if (err) return callback(err);
 
-      uploadStream.on('uploaded', function (data) {
+      uploadStream.on('uploaded', function() {
         sails.log.info('Finished uploading ' + fileUrl + ' to ' + bucketName + '/' + key);
         return callback();
       });

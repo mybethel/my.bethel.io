@@ -50,7 +50,7 @@ vimeo.fixMissingUrl = function(podcast) {
       VimeoAPI.request({
         path: '/videos/' + video.uuid,
         headers:  { 'Authorization': 'Bearer ' + podcast.service.accessToken }
-      }, function (error, body, statusCode, headers) {
+      }, function (error, body, statusCode) {
         if (!body || !body.files) {
           sails.log.error('Vimeo API returned status code ' + statusCode + ' for video ' + video.uuid + '.');
           return;
@@ -58,7 +58,7 @@ vimeo.fixMissingUrl = function(podcast) {
 
         body.files.forEach(function(file) {
           if (file.quality === 'sd') {
-            PodcastMedia.update(video.id, { url: file.link_secure }, function podcastUpdated(err, updatedMedia) {
+            PodcastMedia.update(video.id, { url: file.link_secure }, function podcastUpdated(err) {
               if (err)
                 return sails.log.error(err);
 
@@ -105,14 +105,15 @@ vimeo.queryApi = function(podcast) {
     VimeoAPI.request({
       path: podcast.service.user + '/videos?per_page=50',
       headers: queryHeaders
-    }, function (error, body, statusCode, headers) {
+    }, function (error, body, statusCode) {
       if (error || (statusCode === 304 && !vimeo.refreshAll) || statusCode !== 200 || (!body && !body.data)) {
         sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
         return resolve();
       }
 
+      var totalPages = 0;
       if (body.total > body.page * body.per_page) {
-        var totalPages = Math.ceil((body.total - (body.page * body.per_page)) / body.per_page);
+        totalPages = Math.ceil((body.total - (body.page * body.per_page)) / body.per_page);
       }
 
       sails.log.info(podcast.id + ': Found ' + totalPages + ' total pages of videos.');
@@ -144,7 +145,7 @@ vimeo.getResultsPage = function(user, podcast, page, headers) {
     VimeoAPI.request({
       path: user + '/videos?per_page=50&page=' + page,
       headers: headers
-    }, function (error, body, statusCode, headers) {
+    }, function (error, body, statusCode) {
       if (error || statusCode !== 200 || (!body && !body.data)) {
         sails.log.error(podcast.id + ': Vimeo API returned status code ' + statusCode + '.');
         return resolve();
