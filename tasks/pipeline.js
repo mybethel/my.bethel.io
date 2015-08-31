@@ -58,12 +58,8 @@ var jsFilesToInject = [
   'shared/sails.io.js',
   'shared/sharedConfig.js',
   'shared/**/*.js',
-  'js/configuration/*.js',
   'features/**/*Config.js',
-  'js/controllers/*.js',
   'features/**/*Controller.js',
-  'js/filters/*.js',
-  'js/**/*.js',
   'app.js'
 ];
 

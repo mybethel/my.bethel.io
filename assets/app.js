@@ -4,21 +4,11 @@
  * @type {angular.Module}
  */
 angular.module('Bethel', [
-  'http-auth-interceptor',
-  'ngMaterial',
-  'ngMessages',
-  'ui.router',
-  'angulartics',
-  'angulartics.google.analytics',
-  'angularMoment',
-  'pascalprecht.translate',
+  'Bethel.util',
   'Bethel.user',
-  'Bethel.media',
   'Bethel.podcast',
   'Bethel.staff',
-  'Bethel.streaming',
-  'Bethel.util',
-  'bethel.dom'
+  'Bethel.streaming'
 ])
 
 .config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {
