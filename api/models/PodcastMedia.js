@@ -84,6 +84,11 @@ module.exports = {
       values.referenceId = values.connect.match(/.*\[id:(\d+)\]/)[1];
     }
 
+    if (values.date) {
+      values.date = new Date(values.date);
+      values.date.setHours(11, 41, 00);
+    }
+
     next();
   },
 
