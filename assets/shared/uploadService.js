@@ -7,7 +7,8 @@ angular.module('Bethel.util')
    * @param {object} destination S3 keys and bucket information.
    * @param {file} file The file object as selected by the user.
    */
-  this.s3 = function(destination, file) {
+  this.s3 = function(destination, file, filename) {
+    filename = filename || file.name
     return $upload.upload({
       fields: {
         acl: 'public-read',

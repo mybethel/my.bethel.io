@@ -133,10 +133,10 @@ module.exports = {
   },
 
   beforeUpdate: function(values, next) {
-    Podcast.moveThumbnail(values.temporaryImage, values.id, function (thumbnail) {
+    Podcast.moveThumbnail(values.temporaryImage, values.podcastId, function (thumbnail) {
       if (thumbnail) {
         values.image = thumbnail;
-        Podcast.publishUpdate(values.id);
+        Podcast.publishUpdate(values.podcastId);
       }
       delete values.temporaryImage;
       next();

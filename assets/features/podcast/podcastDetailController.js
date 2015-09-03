@@ -69,12 +69,13 @@ angular.module('Bethel.podcast')
   }, true);
 
   $scope.uploadThumbnail = function($files) {
+    if (!$files || $files.length < 1) return;
     $scope.thumbnailUploading = true;
 
     upload.s3($scope.thumbnailS3, $files[0])
       .success(function() {
         sailsSocket.put('/podcast/' + $scope.id, {
-          id: $scope.id,
+          podcastId: $scope.id,
           temporaryImage: $files[0].name
         });
       });
@@ -83,6 +84,7 @@ angular.module('Bethel.podcast')
   // Triggered when a file is chosen for upload.
   // On supported browsers, multiple files may be chosen.
   $scope.onFileSelect = function($files) {
+    if (!$files || $files.length < 1) return;
     for (var i = 0; i < $files.length; i++) {
       $scope.createPodcastMedia($files[i]);
     }

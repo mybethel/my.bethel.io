@@ -36,6 +36,7 @@ exports.removeTemp = function(bucketName, fileName, newId) {
 
   s3.copyObject(params, function(err) {
     if (err) {
+      sails.log.error(err);
       return deferred.reject(new Error(err));
     }
     var params = {
