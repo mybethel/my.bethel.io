@@ -2,8 +2,8 @@ angular.module('Bethel.podcast')
 .run(function() {
   Chart.defaults.global.colours[0] = '#455a64';
 })
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket',
-  function ($scope, $state, $stateParams, upload, $mdDialog, sailsSocket) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket', 'notifyService',
+  function ($scope, $state, $stateParams, upload, $mdDialog, sailsSocket, notifyService) {
 
   var $ctrl = this;
   $scope.id = $stateParams.podcastId;
@@ -33,7 +33,9 @@ angular.module('Bethel.podcast')
         $scope.thumbnailUploading = false;
       });
       sailsSocket.sync($scope.podcast.media, 'podcastmedia');
-      sailsSocket.editable($scope, 'podcast', ['name', 'service', 'sourceMeta', 'tags', 'description']);
+      sailsSocket.editable($scope, 'podcast', ['name', 'service', 'sourceMeta', 'tags', 'description'], function() {
+        notifyService.showCommon('saved');
+      });
     });
   };
 

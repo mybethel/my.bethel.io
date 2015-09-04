@@ -63,7 +63,8 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
     $rootScope.sailsSocket._csrf = response._csrf;
   });
 
-  this.editable = function(scope, what, editableFields) {
+  this.editable = function(scope, what, editableFields, cb) {
+    cb = cb || function(){}
     scope.$watch(what, function (newValue, oldValue) {
       if (!newValue || !oldValue) return;
       var payload = {};
@@ -80,7 +81,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
 
       if (Object.keys(payload).length <= 0) return;
       payload._csrf = $rootScope.sailsSocket._csrf;
-      io.socket.put('/' + what + '/' + scope[what].id, payload);
+      io.socket.put('/' + what + '/' + scope[what].id, payload, cb);
     }, true);
   };
 
