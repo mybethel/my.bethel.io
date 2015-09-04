@@ -1,11 +1,6 @@
 angular.module('Bethel.user')
-.controller('accountController', ['$scope', '$mdToast', 'sailsSocket',
-  function ($scope, $mdToast, sailsSocket) {
-
-  var savedAlert = $mdToast.simple()
-                      .content('Your changes have been saved!')
-                      .position('bottom right')
-                      .hideDelay(3000);
+.controller('accountController', ['$scope', 'notifyService', 'sailsSocket',
+  function ($scope, notifyService, sailsSocket) {
 
   $scope.$watch('user', function (newValue, oldValue) {
     if (newValue === oldValue) return;
@@ -26,7 +21,7 @@ angular.module('Bethel.user')
 
     if ($scope.editUser.$valid) {
       sailsSocket.put('/user/' + newValue.id, updatedUser).then(function() {
-        $mdToast.show(savedAlert);
+        notifyService.showCommon('saved');
       });
     }
   }, true);
@@ -42,7 +37,7 @@ angular.module('Bethel.user')
 
     if ($scope.editMinistry.$valid) {
       sailsSocket.put('/ministry/' + newValue.id, updatedMinistry).then(function () {
-        $mdToast.show(savedAlert);
+        notifyService.showCommon('saved');
       });
     }
   }, true);
