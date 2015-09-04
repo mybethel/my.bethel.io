@@ -72,7 +72,7 @@ angular.module('Bethel.util').service('sailsSocket', ['$q', '$rootScope', functi
       for (var i = 0, len = editableFields.length; i < len; i++) {
         var field = editableFields[i];
 
-        if (angular.isUndefined(newValue[field]) || angular.isUndefined(oldValue[field]) || newValue[field].toString() === oldValue[field].toString()) {
+        if (angular.isUndefined(newValue[field]) || (angular.isDefined(oldValue[field]) && newValue[field].toString() === oldValue[field].toString())) {
           continue;
         }
 
