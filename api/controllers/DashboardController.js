@@ -12,10 +12,10 @@ module.exports = {
   },
 
   stats: function(req, res) {
-    if (!req.session.Ministry)
+    if (!req.session.ministry)
       return res.forbidden('Your account is not associated with a ministry.');
 
-    Podcast.find({ministry: req.session.Ministry.id}, function foundPodcasts(err, podcasts) {
+    Podcast.find({ ministry: req.session.ministry }, function foundPodcasts(err, podcasts) {
       if (err) res.send(err, 500);
 
       var allPodcasts = [],
@@ -29,7 +29,7 @@ module.exports = {
         });
       }
 
-      Media.find({ministry: req.session.Ministry.id}, function foundMedia(err, media) {
+      Media.find({ ministry: req.session.ministry }, function foundMedia(err, media) {
 
         if (media && media.length > 0) {
           media.forEach(function(media) {

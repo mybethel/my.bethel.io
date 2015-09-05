@@ -64,6 +64,12 @@ module.exports = {
 
     },
 
+    loginSuccess: function() {
+      User.update(this.id, { lastLogin: new Date() }, function (err) {
+        if (err) sails.log.error(err);
+      });
+    },
+
     toJSON: function() {
       var obj = this.toObject();
 

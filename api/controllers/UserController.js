@@ -32,7 +32,7 @@ module.exports = {
     var inviteCode = req.param('inviteCode'),
         userId = new Buffer(inviteCode.replace('-','+').replace('_','/'), 'base64').toString('hex');
 
-    if (req.session.User) {
+    if (req.session.user) {
       return res.redirect('/');
     }
 
@@ -93,18 +93,10 @@ module.exports = {
     User.update(req.param('id'), req.params.all(), function userUpdated(err, user) {
       if (err) return res.badRequest(err);
 
-      if (user[0] && user[0].id === req.session.User.id) {
-        req.session.User = user[0];
-
-        Ministry.findOne(user[0].ministry, function foundMinistry(err, ministry) {
-          if (err) return next(err);
-
-          if (ministry) {
-            req.session.Ministry = ministry;
-          }
-
-          return res.send(user);
-        });
+      if (user[0] && user[0].id === req.session.user) {
+        req.session.user = user[0].id;
+        req.session.ministry = user.ministry;
+        return res.send(user);
       }
     });
   },

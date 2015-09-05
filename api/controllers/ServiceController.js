@@ -14,7 +14,7 @@ module.exports = {
 
     // If this is not a response from Vimeo, redirect the user to request permission.
     if (req.param('id') !== 'authorized') {
-      var url = VimeoAPI.buildAuthorizationEndpoint(redirectUrl, ['public', 'private'], req.session.Ministry.id.toString('base64'));
+      var url = VimeoAPI.buildAuthorizationEndpoint(redirectUrl, ['public', 'private'], req.session.ministry.toString('base64'));
       return res.redirect(url);
     }
 
@@ -22,16 +22,16 @@ module.exports = {
     VimeoAPI.accessToken(req.query.code, redirectUrl, function (err, token) {
       if (err) return next(err);
 
-      if (req.query.state !== req.session.Ministry.id.toString('base64') || typeof token.access_token === 'undefined')
+      if (req.query.state !== req.session.ministry.toString('base64') || typeof token.access_token === 'undefined')
         return res.forbidden('Invalid access token response from Vimeo.');
 
       Service.findOrCreate({
         'provider': 'vimeo',
-        'ministry': req.session.Ministry.id,
+        'ministry': req.session.ministry,
         'user': token.user.uri
       }, {
         'provider': 'vimeo',
-        'ministry': req.session.Ministry.id,
+        'ministry': req.session.ministry,
         'user': token.user.uri,
         'accessToken': token.access_token,
         'scope': token.scope,
@@ -53,7 +53,7 @@ module.exports = {
       var url = oauth2Client.generateAuthUrl({
         access_type: 'offline',
         scope: sails.config.services.youtube.scope,
-        state: req.session.Ministry.id
+        state: req.session.ministry
       });
 
       return res.redirect(url);
@@ -64,10 +64,10 @@ module.exports = {
 
       Service.findOrCreate({
         'provider': 'youtube',
-        'ministry': req.session.Ministry.id,
+        'ministry': req.session.ministry,
       }, {
         'provider': 'youtube',
-        'ministry': req.session.Ministry.id,
+        'ministry': req.session.ministry,
         'accessToken': token.access_token,
         'refreshToken': token.refresh_token,
         'expires': token.expiry_date,

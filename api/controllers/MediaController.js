@@ -1,5 +1,5 @@
 /**
- * MediaController.js 
+ * MediaController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
@@ -10,10 +10,10 @@ var AWS = require('aws-sdk');
 module.exports = {
 
   browser: function (req, res) {
-    if (!req.session.Ministry)
+    if (!req.session.ministry)
       return res.forbidden('Your account is not associated with a ministry.');
 
-    var criteria = { ministry: req.session.Ministry.id };
+    var criteria = { ministry: req.session.ministry };
     if (req.param('id') !== 'all') criteria.or = [{ tags: req.param('id')}, { type: 'collection'}];
 
     Media.find().where(criteria).exec(function (err, results) {
@@ -28,7 +28,7 @@ module.exports = {
           collections.push(result);
           if (req.param('id') !== 'all' && result.id === req.param('id')) {
             selectedCollection = result;
-          } 
+          }
           return false;
         }
         return true;
@@ -37,17 +37,17 @@ module.exports = {
         media: results,
         collections: collections,
         selectedCollection: selectedCollection,
-        upload: S3Upload.prepare('media/' + req.session.Ministry.id)
+        upload: S3Upload.prepare('media/' + req.session.ministry)
       });
 
     });
   },
 
   collections: function (req, res) {
-    if (!req.session.Ministry)
+    if (!req.session.ministry)
       return res.forbidden('Your account is not associated with a ministry.');
 
-    Media.find().where({ ministry: req.session.Ministry.id, type: 'collection', name : {'contains' : req.param('id')} }).exec(function (err, results) {
+    Media.find().where({ ministry: req.session.ministry, type: 'collection', name : {'contains' : req.param('id')} }).exec(function (err, results) {
       var collections = [];
 
       Media.watch(req.socket);
@@ -65,7 +65,7 @@ module.exports = {
       return res.serverError('A valid media ID and transcoding profile is required.');
 
     Media.findOne(req.param('id')).exec(function (err, media) {
-      if (req.session.Ministry.id !== media.ministry)
+      if (req.session.ministry !== media.ministry)
         return res.forbidden('Media transcoding can only be requested by the clip owner.');
 
       VideoEncoding.transcode(media).usingProfile(req.param('profile')).exec(function (err, createdJob) {
@@ -132,7 +132,7 @@ module.exports = {
       }, function(err, data) {
         if (err)
           return res.serverError(err);
-        
+
         Media.update(req.param('id'), {
           size: data.ContentLength
         }, function mediaUpdated(err) {
@@ -145,5 +145,5 @@ module.exports = {
 
     });
   }
-	
+
 };

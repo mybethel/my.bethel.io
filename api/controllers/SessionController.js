@@ -11,9 +11,11 @@ module.exports = {
     if (!req.param('name') || !req.param('pass'))
       return res.forbidden({ error: { name: true, pass: true } });
 
-    User.findOneByEmail(req.param('name'), function foundUser(err, user) {
-      if (err) console.log(err);
-      if (err) return next(err);
+    User.findOneByEmail(req.param('name')).exec(function foundUser(err, user) {
+      if (err) {
+        sails.log.error(err);
+        return next(err);
+      }
 
       if (!user)
         return res.forbidden({ error: { name: true } });
@@ -25,46 +27,26 @@ module.exports = {
           return res.forbidden({ error: { pass: true } });
 
         req.session.authenticated = true;
-        req.session.User = user;
+        req.session.user = user.id;
+        req.session.ministry = user.ministry;
+        req.session.isAdmin = user.hasRole('ROLE_SUPER_ADMIN');
 
-        var currentDate = new Date();
-        User.update(user.id, { lastLogin: currentDate }, function (err) {
-          if (err) {
-            req.session.flash = {
-              err: err
-            };
-          }
-        });
+        user.loginSuccess();
 
-        if (user.roles && user.roles.indexOf('ROLE_SUPER_ADMIN') > -1) {
-          req.session.isAdmin = true;
-        }
-
-        if (!user.ministry)
-          return res.send({ success: 'welcome' });
-
-        Ministry.findOneById(user.ministry, function foundMinistry(err, ministry) {
-          if (err) return next(err);
-
-          if (ministry) {
-            req.session.Ministry = ministry;
-          }
-
-          return res.send({
-            user: user,
-            ministry: ministry,
-            isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
-          });
+        return res.send({
+          user: user,
+          ministry: user.ministry,
+          isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
         });
       });
     });
   },
 
   current: function(req, res) {
-    if (!req.session.User)
+    if (!req.session.user)
       return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
-    User.findOne(req.session.User.id).populate('ministry').exec(function (err, user) {
+    User.findOne(req.session.user).populate('ministry').exec(function (err, user) {
       if (err || !user)
         return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 

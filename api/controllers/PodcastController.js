@@ -54,10 +54,10 @@ module.exports = {
   },
 
   list: function (req, res) {
-    if (!req.param('id') && typeof req.session.Ministry === 'undefined')
+    if (!req.param('id') && typeof req.session.ministry === 'undefined')
       return res.badRequest('ministry id required');
 
-    var ministryId = (req.param('id')) ? req.param('id') : req.session.Ministry.id;
+    var ministryId = (req.param('id')) ? req.param('id') : req.session.ministry;
     var query = Podcast.find({ ministry: ministryId });
 
     if (req.param('episodes'))
@@ -123,7 +123,7 @@ module.exports = {
             description: feed.description[0],
             tags: feed['itunes:keywords'][0],
             copyright: feed.copyright[0],
-            ministry: req.session.Ministry.id,
+            ministry: req.session.ministry,
           }, function podcastCreated(err, podcast) {
             if (err)
               return res.send(503, err);
@@ -136,7 +136,7 @@ module.exports = {
                 Podcast.update(podcast.id, {image: '/podcast' + podcast.id + '.' + podcastImageExtension});
               }
 
-              processMediaImport(podcast.id, podcast.import, req.session.Ministry.id);
+              processMediaImport(podcast.id, podcast.import, req.session.ministry);
             });
 
             res.redirect('/podcast/show/' + podcast.id);
@@ -148,12 +148,12 @@ module.exports = {
 
   edit: function (req, res) {
     Podcast.findOne(req.param('id')).populate('media').populate('service').exec(function foundPodcast(err, podcast) {
-      if (err) return next(err);
+      if (err || !podcast.id) return next(err);
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
       Podcast.subscribe(req, podcast.id);
 
-      Service.find({provider: 'vimeo', ministry: req.session.Ministry.id}, function foundServices(err, services) {
+      Service.find({ provider: 'vimeo', ministry: req.session.ministry }, function foundServices(err, services) {
         res.send({
           s3form: uploadForm,
           uploadEpisode: S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id),
@@ -165,14 +165,25 @@ module.exports = {
   },
 
   destroy: function(req, res) {
-    Podcast.destroy(req.param('id'), function deletedPodcast(err) {
-      if (err) sails.log.error(err);
+    Podcast.findOne(req.param('id')).exec(function foundPodcast(err, podcast) {
 
-      PodcastMedia.destroy({podcast: req.param('id')}, function deletedPodcastMedia(err) {
-        if (err) sails.log.error(err);
+      if (err || podcast.ministry !== req.session.ministry) {
+        return res.forbidden();
+      }
 
-        res.redirect('/podcasts');
+      Podcast.destroy(req.param('id'), function deletedPodcast(err) {
+        if (err) {
+          sails.log.error(err);
+          return res.serverError(err);
+        }
+
+        PodcastMedia.destroy({ podcast: req.param('id') }, function deletedPodcastMedia(err) {
+          if (err) sails.log.error(err);
+
+          res.redirect('/podcasts');
+        });
       });
+
     });
   },
 
@@ -181,7 +192,7 @@ module.exports = {
       if (err) return next(err);
 
       // Verify that the user has access to view this page.
-      if (podcast.ministry.id !== req.session.Ministry.id)
+      if (podcast.ministry.id !== req.session.ministry)
         return res.forbidden('You must be a member of the ministry to edit this podcast.');
 
       // If this is an audio podcast show the upload form.
