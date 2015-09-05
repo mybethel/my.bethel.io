@@ -79,9 +79,9 @@ module.exports = {
   },
 
   beforeUpdate: function(values, next) {
-    if (values.connect) {
-      values.reference = values.connect;
-      values.referenceId = values.connect.match(/.*\[id:(\d+)\]/)[1];
+    if (values.reference) {
+      values.reference = values.reference;
+      values.referenceId = values.reference.match(/.*\[id:(\d+)\]/)[1];
     }
 
     if (values.date) {

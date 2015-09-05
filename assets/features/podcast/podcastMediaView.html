@@ -15,6 +15,21 @@
         <input type="text" ng-model="media.date">
       </md-input-container>
 
+      <md-autocomplete
+          md-selected-item="media.reference"
+          md-search-text="seriesSearchText"
+          md-items="item in getSeries(seriesSearchText)"
+          md-item-text="item"
+          ng-if="ministry.url"
+          placeholder="{{ 'PODCAST.MEDIA.PLAYER_HELP' | translate }}">
+        <md-item-template>
+          <span md-highlight-text="seriesSearchText" md-highlight-flags="^i">{{ item }}</span>
+        </md-item-template>
+        <md-not-found>
+          No matches found for "{{ seriesSearchText }}".
+        </md-not-found>
+      </md-autocomplete>
+
       <md-input-container>
         <label>{{ 'PODCAST.MEDIA.DESCRIPTION' | translate }}</label>
         <textarea ng-model="media.description" columns="1" rows="3"></textarea>
