@@ -115,6 +115,10 @@ angular.module('Bethel.podcast')
         }).then(function (podcast) {
           // Call the endpoint to generate metadata.
           sailsSocket.get('/podcastmedia/meta/' + podcast.id);
+          // Ensures older browsers or slow connections don't miss the socket publish.
+          sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
+            $scope.podcast.media = data.podcast.media;
+          });
           $scope.uploading = false;
         });
 
