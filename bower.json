@@ -23,6 +23,7 @@
     "angulartics": "~0.17.1",
     "animate.css": "~3.2.0",
     "ng-file-upload": "~7.0.15",
+    "outdated-browser": "~1.1.1",
     "videojs": "~4.11.4"
   },
   "devDependencies": {

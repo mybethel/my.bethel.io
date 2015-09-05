@@ -18,6 +18,13 @@
 </head>
 
 <body layout="row">
+
+  <div id="outdated">
+    <h6>Your browser is out of date!</h6>
+    <p>You'll need a more recent browser to use Bethel. Click below for a few suggestions... <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+  </div>
+
   <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak ng-if="user" layout-fill>
     <md-toolbar class="md-hue-2">
       <h1 class="md-toolbar-tools">Bethel</h1>
@@ -39,11 +46,17 @@
 
   <%- body %>
 
+  <script src="/components/outdated-browser/outdatedbrowser/outdatedbrowser.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
   <!--SCRIPTS-->
   <script src="/concat/production.js"></script>
   <!--SCRIPTS END-->
+
+  <script>
+    function browserCheck(a){var b=window.onload;window.onload='function'!=typeof window.onload?a:function(){b&&b();a()}}
+    browserCheck(function(){outdatedBrowser({bgColor:'#f25648',color:'#fff',lowerThan:'flex',languagePath:''})});
+  </script>
 
 </body>
 
