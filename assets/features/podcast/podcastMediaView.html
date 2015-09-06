@@ -20,7 +20,7 @@
           md-search-text="seriesSearchText"
           md-items="item in getSeries(seriesSearchText)"
           md-item-text="item"
-          ng-if="ministry.url"
+          ng-if="$root.ministry.url"
           placeholder="{{ 'PODCAST.MEDIA.PLAYER_HELP' | translate }}">
         <md-item-template>
           <span md-highlight-text="seriesSearchText" md-highlight-flags="^i">{{ item }}</span>
