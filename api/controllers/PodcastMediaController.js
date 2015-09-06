@@ -16,6 +16,7 @@ module.exports = {
       });
       Analytics.registerHit('podcastmedia', req.param('id'), statistics);
 
+      media.url = media.url.replace('#', '%23').replace('?', '%3F');
       res.redirect(media.url);
     });
   },

@@ -35,10 +35,10 @@
   </div>
   <div class="extras">
     <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %><a href="<%= podcast.embedSettings.feedUrl %>"><i class="fa fa-fw fa-rss"></i></a><br /><% } %>
-    <a href="<%= episode.url %>" download><i class="fa fa-fw fa-cloud-download"></i></a>
+    <a href="/podcastmedia/download/<%= episode.id %>" download><i class="fa fa-fw fa-cloud-download"></i></a>
   </div>
   <audio id="embedded" class="video-js vjs-embed-skin audio-player" data-setup="{}">
-    <source src="<%= episode.url %>" type="audio/mp3" />
+    <source src="/podcastmedia/download/<%= episode.id %>" type="audio/mp3" />
   </audio>
   <script src="/components/videojs/dist/video-js/video.js"></script>
   <script>
