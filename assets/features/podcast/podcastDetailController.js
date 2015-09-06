@@ -25,6 +25,7 @@ angular.module('Bethel.podcast')
   $ctrl.init = function() {
     sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
       $scope.podcast = data.podcast;
+      $scope.podcastTags = (Array.isArray(data.podcast.tags)) ? data.podcast.tags.join(', ') : '';
       $scope.feed = 'http://podcast.bethel.io/' + data.podcast.id + '.xml';
       $scope.thumbnailS3 = data.s3form;
       $scope.uploadEpisode = data.uploadEpisode;
@@ -134,5 +135,10 @@ angular.module('Bethel.podcast')
       controller: 'podcastMediaController'
     });
   };
+
+  $scope.$watch('podcastTags', function(newValue) {
+    if (angular.isUndefined(newValue)) return;
+    $scope.podcast.tags = newValue.split(/ ?, ?/);
+  })
 
 }]);
