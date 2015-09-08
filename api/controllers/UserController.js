@@ -56,7 +56,7 @@ module.exports = {
       if (!user) return res.serverError('No user found with that id');
 
       var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+','-').replace('/','_'),
-          inviteUrl = sails.getBaseurl() + '/invite/' + inviteCode,
+          inviteUrl = req.headers['origin'] + '/invite/' + inviteCode,
           currentDate = new Date(),
           templateVariables = [
             {name: 'inviteUrl', content: inviteUrl},
