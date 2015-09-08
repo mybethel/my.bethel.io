@@ -16,7 +16,11 @@ module.exports = {
       });
       Analytics.registerHit('podcastmedia', req.param('id'), statistics);
 
-      media.url = media.url.replace('#', '%23').replace('?', '%3F');
+      if (media.url.indexOf('cloud.bethel.io') !== -1) {
+        // Encode hashtags or question marks in uploaded file names.
+        media.url = media.url.replace('#', '%23').replace('?', '%3F');
+      }
+
       res.redirect(media.url);
     });
   },
