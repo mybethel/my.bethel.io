@@ -93,11 +93,7 @@ module.exports = {
     User.update(req.param('id'), req.params.all(), function userUpdated(err, user) {
       if (err) return res.badRequest(err);
 
-      if (user[0] && user[0].id === req.session.user) {
-        req.session.user = user[0].id;
-        req.session.ministry = user.ministry;
-        return res.send(user);
-      }
+      return res.send(user);
     });
   },
 
