@@ -41,7 +41,7 @@ module.exports = {
   },
 
   refresh: function(req, res) {
-    Machine.create('vimeoSync', 'Hobby');
+    Machine.create('vimeoSync', 'Standard 1X');
     res.send(200);
   },
 
