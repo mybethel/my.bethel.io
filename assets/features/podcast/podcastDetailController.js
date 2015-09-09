@@ -45,7 +45,7 @@ angular.module('Bethel.podcast')
   $scope.podcastStats = sailsSocket.populateOne('podcast/subscribers/' + $scope.id);
 
   $ctrl.populateDemo = function() {
-    $scope.isDemo = ($scope.subscriberCount < 1);
+    $scope.isDemo = ($scope.subscriberCount < 1 || $scope.subscriberChart.data[0].length < 3);
     if (!$scope.isDemo) return;
     for (var i = 0; i < 10; i++) {
       $scope.subscriberChart.data[0].push(Math.round((i * 10) + (Math.random() * 30)));
