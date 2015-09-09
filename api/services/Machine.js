@@ -1,3 +1,6 @@
+var Heroku = require('heroku-client'),
+    herokuClient = new Heroku({ token: process.env.HEROKU_API_TOKEN }).apps(process.env.HEROKU_APP);
+
 exports.create = function(script, dyno, arg) {
 
   if (!process.env.HEROKU_API_TOKEN || !process.env.HEROKU_APP) {
@@ -9,14 +12,11 @@ exports.create = function(script, dyno, arg) {
     return;
   }
 
-  var Heroku = require('heroku-client'),
-      heroku = new Heroku({ token: process.env.HEROKU_API_TOKEN }).apps(process.env.HEROKU_APP);
-
   if (process.env.HEROKU_APP === 'bethel-staging') {
     dyno = 'Free';
   }
 
-  heroku.dynos().create({
+  herokuClient.dynos().create({
     command: './workers/_launcher ' + script + ' ' + arg,
     size: dyno,
   }, function(err, result) {

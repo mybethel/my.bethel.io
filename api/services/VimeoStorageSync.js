@@ -8,17 +8,19 @@ var vimeo = {};
 vimeo.refreshAll = false;
 
 vimeo.sync = function(refreshAll) {
+
+  vimeo.refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
+
+  if (!Podcast) {
+    sails.log.error('Sails failed to bootstrap: Podcast undefined.');
+    sails.log.error(sails.config.connections);
+    resolve();
+  }
+
   return new Promise(function(resolve) {
 
     var start = new Date().getTime();
-    this.refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
     sails.log.info('Syncing Vimeo storage...');
-
-    if (!Podcast) {
-      sails.log.error('Sails failed to bootstrap: Podcast undefined.');
-      sails.log.error(sails.config.connections);
-      resolve();
-    }
 
     Podcast.find({ source: 2 }).populate('service').exec(function (err, podcasts) {
       if (err) {

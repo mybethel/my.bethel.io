@@ -1,3 +1,4 @@
+var CronJob = require('cron').CronJob;
 
 exports.init = function() {
 
@@ -11,6 +12,5 @@ exports.init = function() {
 };
 
 exports.create = function(frequency, cb) {
-  var CronJob = require('cron').CronJob;
   new CronJob(frequency, cb, null, true, 'America/New_York');
 };
