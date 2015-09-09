@@ -9,7 +9,7 @@ exports.mimeTypeFromUrl = function(url) {
   if (url.indexOf('.mp4') !== -1) {
     return 'video/mp4';
   }
-  
+
   if (url.indexOf('.m4a') !== -1) {
     return 'audio/x-m4a';
   }
@@ -20,5 +20,29 @@ exports.mimeTypeFromUrl = function(url) {
 
   if (url.indexOf('.mov') !== -1) {
     return 'video/quicktime';
+  }
+}
+
+exports.extensionFromUrl = function(url) {
+  if (!url) return;
+
+  if (url.indexOf('.mp3') !== -1) {
+    return '.mp3';
+  }
+
+  if (url.indexOf('.mp4') !== -1) {
+    return '.mp4';
+  }
+
+  if (url.indexOf('.m4a') !== -1) {
+    return '.m4a';
+  }
+
+  if (url.indexOf('.m4v') !== -1) {
+    return '.m4v';
+  }
+
+  if (url.indexOf('.mov') !== -1) {
+    return '.mov';
   }
 }
