@@ -21,7 +21,7 @@ module.exports = {
         media.url = media.url.replace('#', '%23').replace('?', '%3F');
       }
 
-      res.redirect(media.url);
+      return res.redirect(media.url);
     });
   },
 
@@ -41,7 +41,7 @@ module.exports = {
       medium: 'embed'
     });
     Analytics.registerHit('podcastmedia', req.param('id'), statistics);
-    res.ok(req.param('id'));
+    return res.ok(req.param('id'));
   },
 
   refresh: function(req, res) {

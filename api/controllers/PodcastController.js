@@ -221,7 +221,7 @@ module.exports = {
 
       res.header('Content-Type', 'text/xml; charset=UTF-8');
 
-      res.view({
+      return res.view({
         layout: 'rss',
         podcast: podcast,
         ministry: podcast.ministry,

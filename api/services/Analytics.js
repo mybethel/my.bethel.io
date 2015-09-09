@@ -1,5 +1,6 @@
 var Keen = require('keen-js'),
-    moment = require('moment');
+    moment = require('moment'),
+    client = new Keen(sails.config.keen);
 
 exports.buildPayload = function(req, payload) {
   payload = payload || {};
@@ -13,7 +14,6 @@ exports.buildPayload = function(req, payload) {
 exports.registerHit = function(objectType, objectId, properties) {
   var currentDate = Number(moment().format('GGGGWW'));
 
-  var client = new Keen(sails.config.keen);
   client.addEvent(objectType, Analytics.keenParse(properties, objectId), function(err) {
     if (err) return sails.log.error('Statistics logging failed to Keen.io', err);
   });
