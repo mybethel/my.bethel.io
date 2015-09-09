@@ -32,7 +32,7 @@
       <%= media.description %>
     </description><% } %><% if (media.duration) { %>
     <itunes:duration><%= media.duration %></itunes:duration><% } %>
-    <enclosure url="http://my.bethel.io/podcastmedia/download/<%= media.id %>?.<%= PodcastHelper.extensionFromUrl(media.url) %>" length="<% if (media.size) { %><%= media.size %><% } else { %>0<% } %>" type="<%= PodcastHelper.mimeTypeFromUrl(media.url) %>"/>
+    <enclosure url="http://my.bethel.io/podcastmedia/download/<%= media.id %>?<%= PodcastHelper.extensionFromUrl(media.url) %>" length="<% if (media.size) { %><%= media.size %><% } else { %>0<% } %>" type="<%= PodcastHelper.mimeTypeFromUrl(media.url) %>"/>
     <itunes:explicit>no</itunes:explicit>
     <itunes:block>no</itunes:block>
   </item>
