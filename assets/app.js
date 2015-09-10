@@ -46,7 +46,7 @@ angular.module('Bethel', [
     { title: 'Dashboard', icon: 'dashboard', url: 'dashboard' },
     { title: 'Podcasting', icon: 'mic', url: 'podcast' },
     { title: 'Media', icon: 'play_circle_filled', url: 'beta' },
-    { title: 'Mobile App', icon: 'phone_iphone', url: 'beta' },
+    { title: 'Mobile App', icon: 'phone_iphone', url: 'mobile', restricted: true },
     { title: 'Volunteers', icon: 'people', url: 'beta' },
     { title: 'Live Streaming', icon: 'videocam', url: 'streaming' },
     { title: 'Giving', icon: 'attach_money', url: 'beta' },
@@ -107,6 +107,17 @@ angular.module('Bethel', [
       });
     });
 
+  $scope.$on('$locationChangeStart', function(event, newUrl) {
+    delete $scope.navActive;
+    for (var i = 0; i < $scope.navLinks.length; i++) {
+      if ($scope.navLinks[i].url === 'beta') {
+        continue;
+      }
+      if (newUrl.indexOf($scope.navLinks[i].url) !== -1) {
+        $scope.navActive = $scope.navLinks[i].url;
+        break;
+      }
+    }
   });
 
 }]);
