@@ -13,7 +13,7 @@
     "angular-dom": "master",
     "angular-google-maps": "~2.2",
     "angular-http-auth": "~1.2.2",
-    "angular-material": "0.10.1",
+    "angular-material": "0.11.0",
     "angular-messages": "~1.4.0",
     "angular-moment": "~0.10.2",
     "angular-sails-socket": "~0.1.1",

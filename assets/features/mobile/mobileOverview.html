@@ -1,0 +1,12 @@
+<md-toolbar aria-hidden="false">
+  <div class="md-toolbar-tools">
+    <h2>Mobile App</h2>
+  </div>
+</md-toolbar>
+
+<md-tabs flex md-border-bottom class="tall" md-selected="currentTab" md-stretch-tabs="always">
+  <md-tab ng-repeat="(id, tab) in userTabs" md-on-select="updateLocation(id)">
+    <md-tab-label><md-icon>{{ tab.icon }}</md-icon> &nbsp; {{ tab.label }}</md-tab-label>
+    <md-content class="md-padding" ng-include="'/features/mobile/' + id + 'View.html'"></md-content>
+  </md-tab>
+</md-tabs>

@@ -1,0 +1,11 @@
+<md-card>
+  <md-list ng-controller="mobileLocationsController">
+    <md-subheader class="md-no-sticky">Enabled Campuses</md-subheader>
+    <md-list-item ng-repeat="location in locations | orderBy: 'default'">
+      <md-icon ng-if="!location.default">location_on</md-icon>
+      <md-icon ng-if="location.default">star</md-icon>
+      <p>{{ location.name }} <small ng-if="location.default"><em>(Main Location)</em></small></p>
+      <md-switch class="md-primary"></md-switch>
+    </md-list-item>
+  </md-list>
+</md-card>

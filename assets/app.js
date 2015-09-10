@@ -6,6 +6,7 @@
 angular.module('Bethel', [
   'Bethel.util',
   'Bethel.user',
+  'Bethel.mobile',
   'Bethel.podcast',
   'Bethel.staff',
   'Bethel.streaming'
@@ -72,6 +73,7 @@ angular.module('Bethel', [
       };
 
       if (response.isAdmin && $scope.navLinks[0].title !== 'Staff') {
+        $scope.navLinks[3].url = 'mobile';
         $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
       }
     }, function() {
