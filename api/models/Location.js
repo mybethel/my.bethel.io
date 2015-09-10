@@ -7,7 +7,7 @@
 
 module.exports = {
 
-	attributes: {
+  attributes: {
 
     name: {
       type: 'string',
@@ -15,6 +15,10 @@ module.exports = {
     },
 
     default: {
+      type: 'boolean'
+    },
+
+    active: {
       type: 'boolean'
     },
 
@@ -40,7 +44,7 @@ module.exports = {
       required: true
     }
 
-	},
+  },
 
   beforeCreate: function(values, next) {
     delete values.id;
