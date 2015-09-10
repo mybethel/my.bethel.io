@@ -1,1 +1,1 @@
-web: NODE_ENV=production forever app.js --prod
+web: forever app.js --prod -c "node --max-old-space-size=400"
