@@ -1,6 +1,15 @@
+<div layout="row" class="teaser">
+  <div flex="60" offset="10">
+    <h2 class="light">Enabled Campuses</h2>
+    <p>Campuses you enable here will show up in your mobile app. Users that have location enabled will automatically load the correct campus based on their location.</p>
+    <p>If you need to add or remove campuses, you can do this <a href="/#/settings/locations">from your settings page</a>.</p>
+  </div>
+  <div flex="20" class="illustration" layout-align="center end">
+    <img src="/images/devices/iphone-locations.png" />
+  </div>
+</div>
 <md-card>
   <md-list ng-controller="mobileLocationsController">
-    <md-subheader class="md-no-sticky">Enabled Campuses</md-subheader>
     <md-list-item ng-repeat="location in locations | orderBy: 'default'">
       <md-icon ng-if="!location.default">location_on</md-icon>
       <md-icon ng-if="location.default">star</md-icon>
