@@ -37,7 +37,6 @@
     "machinepack-mandrill": "^0.5.0",
     "machinepack-passwords": "^2.3.0",
     "moment": "^2.10.3",
-    "offworld-heapdumper": "^0.1.0",
     "q": "^1.4.1",
     "qs": "^0.6.6",
     "rc": "^0.3.3",
@@ -87,8 +86,8 @@
     "postunit": "node ./test/report.js"
   },
   "engines": {
-    "node": "0.12.x",
-    "npm": "2.1.x"
+    "node": "4.x",
+    "npm": "2.14.x"
   },
   "main": "app.js",
   "repository": {
