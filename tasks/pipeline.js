@@ -41,6 +41,7 @@ var libraryDependencies = [
   'components/angular-material/angular-material.min.js',
   'components/angular-messages/angular-messages.min.js',
   'components/angular-moment/angular-moment.min.js',
+  'components/angular-sails-socket/dist/angular-sails-socket.min.js',
   'components/angular-translate/angular-translate.min.js',
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
   'components/angular-ui-router/release/angular-ui-router.min.js',
