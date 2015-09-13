@@ -139,6 +139,29 @@ angular.module('Bethel.podcast')
   $scope.$watch('podcastTags', function(newValue) {
     if (angular.isUndefined(newValue)) return;
     $scope.podcast.tags = newValue.split(/ ?, ?/);
-  })
+  });
+
+  $scope.viewPodcastUrl = function($event) {
+    var parentEl = angular.element(document.querySelector('.main-content'));
+
+    $mdDialog.show({
+      clickOutsideToClose: true,
+      parent: parentEl,
+      targetEvent: $event,
+      templateUrl: 'features/podcast/podcastPublishView.html',
+      locals: {feed: $scope.feed, unpublished: $scope.isDemo},
+      controller: PublishPodcastController
+    });
+
+    function PublishPodcastController($scope, $mdDialog, feed, unpublished) {
+
+      $scope.feed = feed;
+      $scope.unpublished = unpublished;
+
+      $scope.close = function() {
+        $mdDialog.hide();
+      }
+    }
+  }
 
 }]);
