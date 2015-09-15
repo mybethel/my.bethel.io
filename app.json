@@ -30,6 +30,6 @@
     "ZENCODER": {
       "description": "Zencoder: API key for media encoding and conversion.",
       "required": true
-    },
+    }
   }
 }
