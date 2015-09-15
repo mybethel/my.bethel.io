@@ -23,6 +23,10 @@
       "description": "MongoHQ: Password for production database.",
       "required": true
     },
+    "REDIS_PASS": {
+      "description": "Redis: Password for session and socket storage.",
+      "required": true
+    },
     "VIMEO": {
       "description": "Vimeo: API key for syncing of video feeds.",
       "required": true
