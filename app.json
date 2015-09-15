@@ -1,0 +1,35 @@
+{
+  "name": "Bethel Platform",
+  "description": "The Bethel platform to power the digital church..",
+  "repository": "https://github.com/mybethel/my.bethel.io",
+  "env": {
+    "AWS_KEY": {
+      "description": "Amazon Web Services: API key.",
+      "required": true
+    },
+    "AWS_SECRET": {
+      "description": "Amazon Web Services: API secret.",
+      "required": true
+    },
+    "KEEN_READ": {
+      "description": "Keen: Read-only API key for analytic access.",
+      "required": true
+    },
+    "MANDRILL_KEY": {
+      "description": "Mandrill: API key for sending of mail.",
+      "required": true
+    },
+    "MONGO_PASS": {
+      "description": "MongoHQ: Password for production database.",
+      "required": true
+    },
+    "VIMEO": {
+      "description": "Vimeo: API key for syncing of video feeds.",
+      "required": true
+    },
+    "ZENCODER": {
+      "description": "Zencoder: API key for media encoding and conversion.",
+      "required": true
+    },
+  }
+}
