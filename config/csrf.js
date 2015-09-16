@@ -39,9 +39,7 @@
 
 module.exports.csrf = {
   origin: [
-    'http://localhost:1337',
     'http://my.bethel.io',
-    'https://my.bethel.io',
-    'http://bethel-staging.herokuapp.com'
+    'https://my.bethel.io'
   ].join(',')
 };
