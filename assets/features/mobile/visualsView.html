@@ -1,9 +1,9 @@
 <div layout="row">
   <div flex="60">
     <md-card>
-      <img src="http://getbethel.com/images/hero/sanctuary.jpg">
+      <img ng-src="{{ ministry.poster | imageResize : 1200 : 650 : 'default_poster.jpg' }}">
       <md-card-content style="margin-top:-150px;">
-        <img ng-src="https://images.bethel.io/images/{{ ministry.image ? ministry.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=200&amp;h=200" alt="{{ ministry.name }}" style="float:left;margin-right:20px;" />
+        <img ng-src="{{ ministry.image | imageResize : 200 : 200 : 'DefaultPodcaster.png' }}" alt="{{ ministry.name }}" style="float:left;margin-right:20px;" />
         <h2 style="margin-top:97px;color:#FFF">{{ ministry.name }}</h2>
         <md-button class="md-raised" style="margin-left:0;">Change Ministry Logo</md-button>
         <md-button class="md-raised">Update Cover Image</md-button>
@@ -25,7 +25,7 @@
           <p>Channel Icon (AppleTV)</p>
           <img src="/images/devices/tvos-icon.png" style="width:67px;border-radius:5px" />
         </md-list-item>
-        <md-divider style="margin-top:19px"></md-divider>
+        <md-divider style="margin-top:20px"></md-divider>
         <md-list-item>
           <p><em>Enable stand-alone app to customize?</em></p>
           <md-switch class="md-primary" style="margin-right:0"></md-switch>
