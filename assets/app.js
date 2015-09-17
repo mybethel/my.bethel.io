@@ -12,7 +12,8 @@ angular.module('Bethel', [
   'Bethel.streaming'
 ])
 
-.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {
+.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', '$compileProvider',
+  function ($urlRouterProvider, $translateProvider, $mdThemingProvider, $compileProvider) {
 
   $translateProvider.preferredLanguage('en');
   $translateProvider.useLoader('$translatePartialLoader', {
@@ -30,6 +31,8 @@ angular.module('Bethel', [
   $mdThemingProvider.theme('default')
     .primaryPalette('brandBlue')
     .accentPalette('blue-grey');
+
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto):/);
 
 }])
 
