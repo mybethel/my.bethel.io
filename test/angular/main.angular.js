@@ -10,6 +10,7 @@ var setupController = function(controllerName, params) {
     q = $q;
 
     httpBackend = $httpBackend;
+    httpBackend.whenGET(/csrfToken/).respond(200, { _csrf: 'abcd1234' });
     httpBackend.whenGET(/i18n/).respond(200);
     httpBackend.whenGET(/templates\/|View\.html/).respond(200);
     httpBackend.whenGET(/templates\/|features\/.*\.html/).respond(200);
