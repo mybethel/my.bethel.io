@@ -42,7 +42,9 @@ module.exports.policies = {
   podcast: {
     'feed': true,
     'embed': true,
-    'list': true
+    'list': true,
+    'update': 'ministrySession',
+    'destroy': 'ministrySession'
   },
 
   podcastmedia: {
