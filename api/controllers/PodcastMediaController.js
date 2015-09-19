@@ -8,8 +8,11 @@
 module.exports = {
 
   download: function(req, res) {
-    PodcastMedia.findOne(req.param('id')).exec(function (err, media) {
-      if (err) return next(err);
+    var mediaId = req.param('id').split('.').shift();
+    PodcastMedia.findOne(mediaId).exec(function (err, media) {
+      if (err) return res.serverError(err);
+
+      if (!media) return res.notFound();
 
       var statistics = Analytics.buildPayload(req, {
         medium: 'podcast'

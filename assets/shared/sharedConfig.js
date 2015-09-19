@@ -3,6 +3,7 @@ angular.module('Bethel.util', [
   'angulartics.google.analytics',
   'angularMoment',
   'bethel.dom',
+  'bethel.sailsSocket',
   'http-auth-interceptor',
   'ngMaterial',
   'ngMessages',
