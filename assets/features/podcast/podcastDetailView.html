@@ -11,6 +11,11 @@
         <md-icon>more_vert</md-icon>
       </md-button>
       <md-menu-content>
+        <md-menu-item ng-if="podcast.source === 1">
+          <md-button ng-click="openFileSelector()">
+            <md-icon>add</md-icon>Upload Episode
+          </md-button>
+        </md-menu-item>
         <md-menu-item>
           <md-button ng-click="viewPodcastUrl($event)"><md-icon>link</md-icon>View Podast Url</md-button>
         </md-menu-item>

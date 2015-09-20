@@ -93,6 +93,10 @@ angular.module('Bethel.podcast')
     }
   };
 
+  $scope.openFileSelector = function () {
+    angular.element(document.querySelector('.upload-button'))[0].click();
+  };
+
   $scope.createPodcastMedia = function(file) {
 
     var fileExt = file.name.split('.').pop(),
@@ -150,18 +154,22 @@ angular.module('Bethel.podcast')
       targetEvent: $event,
       templateUrl: 'features/podcast/podcastPublishView.html',
       locals: {feed: $scope.feed, unpublished: $scope.isDemo},
-      controller: PublishPodcastController
+      controller: 'publishPodcastController'
     });
-
-    function PublishPodcastController($scope, $mdDialog, feed, unpublished) {
-
-      $scope.feed = feed;
-      $scope.unpublished = unpublished;
-
-      $scope.close = function() {
-        $mdDialog.hide();
-      }
-    }
   }
 
 }]);
+
+angular.module('Bethel.podcast')
+.controller('publishPodcastController', ['$scope', '$mdDialog', 'feed', 'unpublished',
+  function ($scope, $mdDialog, feed, unpublished) {
+
+  $scope.feed = feed;
+  $scope.unpublished = unpublished;
+
+  $scope.close = function() {
+    $mdDialog.hide();
+  }
+
+}]);
+
