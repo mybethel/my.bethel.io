@@ -8,6 +8,12 @@
         <md-button class="md-raised" style="margin-left:0;">Change Ministry Logo</md-button>
         <md-button class="md-raised">Update Cover Image</md-button>
       </md-card-content>
+      <md-card-content>
+        <md-input-container>
+          <label>Ministry Description</label>
+          <textarea ng-model="podcast.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="3" md-maxlength="4000"></textarea>
+        </md-input-container>
+      </md-card-content>
     </md-card>
   </div>
   <div flex="40">
