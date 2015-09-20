@@ -12,12 +12,12 @@
       </md-button>
       <md-menu-content>
         <md-menu-item ng-if="podcast.source === 1">
-          <md-button ng-click="openFileSelector()">
+          <button class="md-button" ng-click="openFileSelector()">
             <md-icon>add</md-icon>Upload Episode
-          </md-button>
+          </button>
         </md-menu-item>
         <md-menu-item>
-          <md-button ng-click="viewPodcastUrl($event)"><md-icon>link</md-icon>View Podast Url</md-button>
+          <button class="md-button" ng-click="viewPodcastUrl($event)"><md-icon>link</md-icon>Podcast Feed URL</class="md-button" button>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
