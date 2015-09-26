@@ -1,18 +1,18 @@
 <md-dialog flex="50" class="podcast-media">
   <md-dialog-content class="sticky-container">
 
-    <iframe data-ng-src="{{ media.url }}" width="600" height="140" frameborder="0"></iframe>
+    <iframe ng-src="{{ media.url }}" width="600" height="140" frameborder="0"></iframe>
 
     <div layout-padding>
 
       <md-input-container>
         <label>{{ 'PODCAST.MEDIA.TITLE' | translate }}</label>
-        <input type="text" ng-model="media.name">
+        <input type="text" disabled="{{ vimeo }}" ng-model="media.name" />
       </md-input-container>
 
       <md-input-container>
         <label>Episode Date</label>
-        <input type="text" ng-model="media.date">
+        <input type="text" ng-model="media.date" />
       </md-input-container>
 
       <md-autocomplete
@@ -32,7 +32,7 @@
 
       <md-input-container>
         <label>{{ 'PODCAST.MEDIA.DESCRIPTION' | translate }}</label>
-        <textarea ng-model="media.description" columns="1" rows="3"></textarea>
+        <textarea disabled="{{ vimeo }}" ng-model="media.description" columns="1" rows="3"></textarea>
       </md-input-container>
 
       <div class="form-group" data-ng-if="ministry.url">

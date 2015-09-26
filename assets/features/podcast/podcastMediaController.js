@@ -3,6 +3,7 @@ angular.module('Bethel.podcast')
   function ($scope, $mdDialog, mediaId, $sce, sailsSocket, $http, $filter) {
 
   sailsSocket.get('/podcastmedia/' + mediaId).then(function (data) {
+    if (data.podcast.source === 2) $scope.vimeo = true;
     if (data.date) data.date = $filter('date')(data.date, 'mediumDate', 'UTC');
     $scope.media = data;
     $scope.media.url = $sce.trustAsResourceUrl('/podcast/embed/episode/' + data.id);
