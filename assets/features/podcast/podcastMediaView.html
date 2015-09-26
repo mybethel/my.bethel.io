@@ -6,7 +6,7 @@
     <div layout-padding>
 
       <md-input-container>
-        <label>{{ 'PODCAST.MEDIA.TITLE' | translate }}</label>
+        <label>{{ 'PODCAST.MEDIA.TITLE' | translate }}<span ng-if="vimeo"> (syncing from Vimeo)</span></label>
         <input type="text" disabled="{{ vimeo }}" ng-model="media.name" />
       </md-input-container>
 
@@ -31,7 +31,7 @@
       </md-autocomplete>
 
       <md-input-container>
-        <label>{{ 'PODCAST.MEDIA.DESCRIPTION' | translate }}</label>
+        <label>{{ 'PODCAST.MEDIA.DESCRIPTION' | translate }}<span ng-if="vimeo"> (syncing from Vimeo)</span></label>
         <textarea disabled="{{ vimeo }}" ng-model="media.description" columns="1" rows="3"></textarea>
       </md-input-container>
 
