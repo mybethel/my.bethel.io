@@ -39,7 +39,44 @@ var SearchScreen = {
     var selectedElement = event.target;
     var uuid = selectedElement.getAttribute('uuid');
 
-    Channel.load(uuid);
+    if (uuid) {
+      Channel.load(uuid);
+      return;
+    }
+
+    var action = event.target.getAttribute('action');
+
+    if (typeof SearchScreen[action] !== 'function') {
+      console.log('Unable to find action: ' + action, SearchScreen[action]);
+      return;
+    }
+
+    SearchScreen[action](event);
+  },
+
+  submitChurch: function() {
+    var submitText = `Tell your church you'd like to see them here! Any church can be listed
+for absolutely no cost; we'll even help with the setup process!
+Contact us at hello@bethel.io for more details.`;
+
+    var submitTemplate = `<?xml version="1.0" encoding="UTF-8" ?>
+      <document>
+        <alertTemplate>
+          <title>Can't find your church?</title>
+          <description>` + submitText + `</description>
+          <button>
+            <text>Done</text>
+          </button>
+        </alertTemplate>
+      </document>`
+
+    var parser = new DOMParser();
+    submitTemplate = parser.parseFromString(submitTemplate, 'application/xml');
+    submitTemplate.addEventListener('select', function() {
+      navigationDocument.dismissModal();
+    });
+
+    navigationDocument.presentModal(submitTemplate);
   }
 
 };

@@ -38,7 +38,8 @@ module.exports = {
       if (!req.param('id')) {
         res.view('mobile/partials/results', {
           layout: 'none',
-          ministries: results
+          ministries: results,
+          term: req.query.search
         });
         return;
       }

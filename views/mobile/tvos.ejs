@@ -5,23 +5,26 @@
       .roundedImageCorners {
         itml-img-treatment: corner-small;
       }
+      .toolsList {
+        margin: -150 0;
+      }
     </style>
   </head>
   <searchTemplate>
     <searchField id="search" />
     <collectionList>
-      <shelf>
-        <header>
-          <title>My Favorites</title>
-        </header>
+      <list class="toolsList">
         <section>
+          <listItemLockup action="showFavorites">
+            <title>Show my favorites</title>
+          </listItemLockup>
+          <listItemLockup action="submitChurch">
+            <title>Can't find your church?</title>
+          </listItemLockup>
         </section>
-      </shelf>
+      </list>
       <separator></separator>
       <grid>
-        <header>
-          <title>Search Results</title>
-        </header>
         <%- partial('partials/results') %>
       </grid>
     </collectionList>
