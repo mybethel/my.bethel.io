@@ -17,16 +17,29 @@ module.exports = {
   },
 
   channel: function(req, res) {
-    var query = {
+    var query = req.param('id') || {
       name: {
         contains: req.query.search
       }
     };
 
     Ministry.find(query).exec(function (err, results) {
-      res.view('mobile/partials/results', {
-        layout: 'none',
-        ministries: results
+
+      // Search results only need the ministry object.
+      if (!req.param('id')) {
+        res.view('mobile/partials/results', {
+          layout: 'none',
+          ministries: results
+        });
+        return;
+      }
+
+      PodcastMedia.find({ url: { contains: '.mp4' }}).limit(10).exec(function (err, allMedia) {
+        res.view({
+          layout: 'none',
+          ministry: results[0],
+          episodes: allMedia
+        });
       });
     });
   }

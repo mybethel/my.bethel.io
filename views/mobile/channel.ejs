@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<document>
+  <head>
+    <style>
+      .darkBackgroundColor {
+        background-color: #292929;
+      }
+    </style>
+  </head>
+  <stackTemplate theme="dark" class="darkBackgroundColor">
+    <identityBanner>
+      <background>
+        <img src="https://images.bethel.io/images/default_poster.jpg?crop=faces&amp;fit=crop&amp;w=1920&amp;h=360" width="1920" height="360" />
+      </background>
+      <title><%= ministry.name %></title>
+      <row>
+        <buttonLockup>
+          <badge src="resource://button-rate" />
+          <title>Favorite</title>
+        </buttonLockup>
+        <buttonLockup>
+          <badge src="resource://button-more" />
+          <title>More Info</title>
+        </buttonLockup>
+      </row>
+    </identityBanner>
+    <collectionList>
+      <shelf>
+        <header>
+          <title>Most Recent</title>
+        </header>
+        <section>
+          <% _.each(episodes, function(episode) { %>
+          <lockup>
+            <img src="<%= episode.thumbnail %>" width="308" height="231" />
+            <title><%= episode.name %></title>
+          </lockup>
+          <% }); %>
+        </section>
+      </shelf>
+      <shelf>
+        <header>
+          <title>Past Series</title>
+        </header>
+        <section>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_1_square.jpg" width="308" height="231" />
+            <title>Title 1</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_2_square.jpg" width="308" height="231" />
+            <title>Title 2</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_3_square.jpg" width="308" height="231" />
+            <title>Title 3</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_4_square.jpg" width="308" height="231" />
+            <title>Title 4</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_5_square.jpg" width="308" height="231" />
+            <title>Title 5</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_6_square.jpg" width="308" height="231" />
+            <title>Title 6</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_7_square.jpg" width="308" height="231" />
+            <title>Title 7</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_8_square.jpg" width="308" height="231" />
+            <title>Title 8</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_9_square.jpg" width="308" height="231" />
+            <title>Title 9</title>
+          </lockup>
+          <lockup>
+            <img src="${this.BASEURL}resources/images/italy/italy_10_square.jpg" width="308" height="231" />
+            <title>Title 10</title>
+          </lockup>
+        </section>
+      </shelf>
+    </collectionList>
+  </stackTemplate>
+</document>

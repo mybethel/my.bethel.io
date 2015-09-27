@@ -36,6 +36,7 @@ var SearchScreen = {
   init: function() {
     var self = this;
     navigationDocument.pushDocument(this.doc);
+    this.doc.addEventListener('select', this.select);
 
     var searchField = this.doc.getElementById('search');
     this.kb = searchField.getFeature('Keyboard');
@@ -56,6 +57,15 @@ var SearchScreen = {
       // all the content which produces a rather un-polished flash on-screen.
       resultsArea.parentNode.innerHTML = template;
     }, 'text');
+  },
+
+  select: function(event) {
+    var selectedElement = event.target;
+    var uuid = selectedElement.getAttribute('uuid');
+
+    getDocument('mobile/channel/' + uuid, function(template) {
+      navigationDocument.pushDocument(template);
+    });
   }
 
 };
