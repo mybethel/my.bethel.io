@@ -60,16 +60,8 @@ var Channel = {
   },
 
   goLive: function(event) {
-    var media = new MediaItem();
-    media.url = 'http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/appleman.m3u8';
-    media.type = 'video';
-
-    var playlist = new Playlist();
-    playlist.push(media);
-
-    var player = new Player();
-    player.playlist = playlist;
-    player.play();
+    var media = new Playback('http://vevoplaylist-live.hls.adaptive.level3.net/vevo/ch1/appleman.m3u8');
+    media.start();
   },
 
   moreInfo: function(event) {
@@ -77,17 +69,8 @@ var Channel = {
   },
 
   playEpisode: function(event) {
-    var media = new MediaItem();
-    media.url = event.target.getAttribute('episode');
-    media.type = 'video';
-    // @todo: Assign other properties such as title and poster image.
-
-    var playlist = new Playlist();
-    playlist.push(media);
-
-    var player = new Player();
-    player.playlist = playlist;
-    player.play();
+    var media = new Playback(event.target.getAttribute('episode'));
+    media.start();
   }
 
 };
