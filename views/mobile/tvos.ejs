@@ -3,14 +3,7 @@
     <searchField id="search" />
     <collectionList>
       <grid>
-        <section id="results">
-          <% _.each(ministries, function(ministry) { %>
-          <lockup>
-            <img src="path to images on your server/Car_Movie_250x375_A.png" width="520" height="340" />
-            <title><%= ministry.name %></title>
-          </lockup>
-          <% }); %>
-        </section>
+        <%- partial('partials/results') %>
       </grid>
     </collectionList>
   </searchTemplate>

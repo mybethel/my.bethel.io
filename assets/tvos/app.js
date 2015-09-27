@@ -1,9 +1,11 @@
-function getDocument(url, cb) {
+function getDocument(url, cb, type) {
+  type = type || 'document';
   url = 'http://localhost:1337/' + url
   var templateXHR = new XMLHttpRequest();
-  templateXHR.responseType = 'document';
+  templateXHR.responseType = type;
   templateXHR.addEventListener('load', function() {
-    cb(templateXHR.responseXML);
+    var response = (type == 'document') ? templateXHR.responseXML : templateXHR.responseText
+    cb(response);
   }, false);
   templateXHR.open('GET', url, true);
   templateXHR.send();
@@ -32,16 +34,28 @@ var SearchScreen = {
   },
 
   init: function() {
+    var self = this;
     navigationDocument.pushDocument(this.doc);
 
     var searchField = this.doc.getElementById('search');
     this.kb = searchField.getFeature('Keyboard');
-    this.kb.onTextChange = this.search();
+    this.kb.onTextChange = function() {
+      self.search(self);
+    }
   },
 
-  search: function() {
-    var searchText = this.kb.text;
-    var resultsArea = this.doc.getElementById('results');
+  search: function(self) {
+    var searchText = encodeURI(self.kb.text);
+    var resultsArea = self.doc.getElementById('results');
+
+    console.log(searchText, resultsArea)
+
+    getDocument('mobile/channel?search=' + searchText, function(template) {
+      // @todo: Need to add logic to only remove elements that don't exist in
+      // the search results and add new entries. Currently this just replaces
+      // all the content which produces a rather un-polished flash on-screen.
+      resultsArea.parentNode.innerHTML = template;
+    }, 'text');
   }
 
 };

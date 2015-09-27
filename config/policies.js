@@ -45,7 +45,7 @@ module.exports.policies = {
   },
 
   mobile: {
-    'tvos': true
+    '*': true
   },
 
   podcast: {
