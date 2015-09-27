@@ -15,6 +15,12 @@ var Channel = {
   init: function() {
     var self = this;
     navigationDocument.pushDocument(this.doc);
+    this.doc.addEventListener('select', this.select);
+  },
+
+  select: function(event) {
+    var selectedElement = event.target;
+    console.log(selectedElement.getAttribute('action'));
   }
 
 };

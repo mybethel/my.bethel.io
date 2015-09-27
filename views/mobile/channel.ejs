@@ -5,6 +5,12 @@
       .darkBackgroundColor {
         background-color: #292929;
       }
+      .roundedImageCorners {
+        itml-img-treatment: corner-small;
+      }
+      .customBadgeLayout {
+        margin: 0 0 5 0;
+      }
     </style>
   </head>
   <stackTemplate theme="dark" class="darkBackgroundColor">
@@ -14,11 +20,11 @@
       </background>
       <title><%= ministry.name %></title>
       <row>
-        <buttonLockup>
+        <buttonLockup action="favorite">
           <badge src="resource://button-rate" />
           <title>Favorite</title>
         </buttonLockup>
-        <buttonLockup>
+        <buttonLockup action="moreInfo">
           <badge src="resource://button-more" />
           <title>More Info</title>
         </buttonLockup>
@@ -38,50 +44,42 @@
           <% }); %>
         </section>
       </shelf>
+      <separator>
+        <button action="browseMode">
+          <text style="color:#fff">Past Series <badge class="customBadgeLayout" src="resource://button-dropdown" width="31" height="14" /></text>
+        </button>
+      </separator>
       <shelf>
-        <header>
-          <title>Past Series</title>
-        </header>
         <section>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_1_square.jpg" width="308" height="231" />
-            <title>Title 1</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_1_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_2_square.jpg" width="308" height="231" />
-            <title>Title 2</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_2_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_3_square.jpg" width="308" height="231" />
-            <title>Title 3</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_3_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_4_square.jpg" width="308" height="231" />
-            <title>Title 4</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_4_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_5_square.jpg" width="308" height="231" />
-            <title>Title 5</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_5_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_6_square.jpg" width="308" height="231" />
-            <title>Title 6</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_6_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_7_square.jpg" width="308" height="231" />
-            <title>Title 7</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_7_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_8_square.jpg" width="308" height="231" />
-            <title>Title 8</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_8_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_9_square.jpg" width="308" height="231" />
-            <title>Title 9</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_9_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_10_square.jpg" width="308" height="231" />
-            <title>Title 10</title>
+            <img src="${this.BASEURL}resources/images/italy/italy_10_square.jpg" width="548" height="340" class="roundedImageCorners" />
           </lockup>
         </section>
       </shelf>
