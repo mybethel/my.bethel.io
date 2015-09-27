@@ -8,30 +8,36 @@
  * [concat](https://github.com/gruntjs/grunt-contrib-concat)
  *
  * For usage docs see:
- * 		https://github.com/gruntjs/grunt-contrib-concat
+ *     https://github.com/gruntjs/grunt-contrib-concat
  */
+var Pipeline = require('../pipeline');
+
 module.exports = {
-	libraries: {
-		src: require('../pipeline').librariesToInject,
-		dest: '.tmp/public/concat/libraries.js',
-	},
-	frontend: {
-		src: require('../pipeline').frontendToInject,
-		dest: '.tmp/public/concat/frontend.js'
-	},
-	js: {
-		src: require('../pipeline').jsFilesToInject,
-		dest: '.tmp/public/concat/production.js'
-	},
-	css: {
-		src: require('../pipeline').cssFilesToInject,
-		dest: '.tmp/public/concat/production.css'
-	},
-	prod: {
-		src: [
-			'.tmp/public/concat/libraries.js',
-			'.tmp/public/min/frontend.min.js'
-		],
-		dest: '.tmp/public/min/production.min.js'
-	}
+  libraries: {
+    src: Pipeline.librariesToInject,
+    dest: '.tmp/public/concat/libraries.js',
+  },
+  frontend: {
+    src: Pipeline.frontendToInject,
+    dest: '.tmp/public/concat/frontend.js'
+  },
+  js: {
+    src: Pipeline.jsFilesToInject,
+    dest: '.tmp/public/concat/production.js'
+  },
+  tvos: {
+    src: Pipeline.tvOS,
+    dest: '.tmp/public/tvOS.js'
+  },
+  css: {
+    src: Pipeline.cssFilesToInject,
+    dest: '.tmp/public/concat/production.css'
+  },
+  prod: {
+    src: [
+      '.tmp/public/concat/libraries.js',
+      '.tmp/public/min/frontend.min.js'
+    ],
+    dest: '.tmp/public/min/production.min.js'
+  }
 };
