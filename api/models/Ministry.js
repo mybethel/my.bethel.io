@@ -19,6 +19,10 @@ module.exports = {
       type: 'text'
     },
 
+    subtitle: {
+      type: 'string'
+    },
+
     email: {
       type: 'email'
     },

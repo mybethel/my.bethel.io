@@ -8,4 +8,10 @@ angular.module('Bethel.mobile')
     sailsSocket.put('/ministry/' + $scope.ministry.id, { description: newValue });
   });
 
+  $scope.$watch('ministry.subtitle', function(newValue, oldValue) {
+    if (newValue === oldValue) return;
+
+    sailsSocket.put('/ministry/' + $scope.ministry.id, { subtitle: newValue });
+  });
+
 }]);
