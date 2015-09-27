@@ -1,4 +1,4 @@
-<div layout="row">
+<div layout="row" ng-controller="visualsController">
   <div flex="60">
     <md-card>
       <img ng-src="{{ ministry.poster | imageResize : 1200 : 650 : 'default_poster.jpg' }}">
@@ -11,7 +11,7 @@
       <md-card-content>
         <md-input-container>
           <label>Ministry Description</label>
-          <textarea ng-model="podcast.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="3" md-maxlength="4000"></textarea>
+          <textarea ng-model="ministry.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="3" md-maxlength="4000"></textarea>
         </md-input-container>
       </md-card-content>
     </md-card>
