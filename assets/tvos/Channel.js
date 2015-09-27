@@ -19,8 +19,44 @@ var Channel = {
   },
 
   select: function(event) {
-    var selectedElement = event.target;
-    console.log(selectedElement.getAttribute('action'));
+    var action = event.target.getAttribute('action');
+
+    if (typeof Channel[action] !== 'function') {
+      console.log('Unable to find action: ' + action, Channel[action]);
+      return;
+    }
+
+    Channel[action](event);
+  },
+
+  favorite: function(event) {
+    var favorites = localStorage.getItem('favorites');
+
+    if (favorites) {
+      favorites = favorites.split(',');
+    } else {
+      favorites = [];
+    }
+
+    var currentFavorite = favorites.indexOf(this.uuid);
+    var icon;
+
+    if (currentFavorite === -1) {
+      favorites.push(this.uuid);
+      icon = 'resource://button-rated';
+    } else {
+      delete favorites[currentFavorite]
+      icon = 'resource://button-rate';
+    }
+
+    this.doc.getElementById('favorite-badge').setAttribute('src', icon);
+
+    if (favorites.length > 0) {
+      favorites = favorites.join(',');
+      localStorage.setItem('favorites', favorites);
+    } else {
+      localStorage.removeItem('favorites');
+    }
   }
 
 };
