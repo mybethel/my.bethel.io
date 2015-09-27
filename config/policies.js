@@ -44,6 +44,10 @@ module.exports.policies = {
     'destroy': 'ministryOwned'
   },
 
+  mobile: {
+    'tvos': true
+  },
+
   podcast: {
     'feed': true,
     'embed': true,
