@@ -59,6 +59,10 @@ var Channel = {
     }
   },
 
+  moreInfo: function(event) {
+    Detail.load(Channel.uuid);
+  },
+
   playEpisode: function(event) {
     var media = new MediaItem();
     media.url = event.target.getAttribute('episode');

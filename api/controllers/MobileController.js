@@ -16,6 +16,15 @@ module.exports = {
     });
   },
 
+  detail: function(req, res) {
+    Ministry.find(req.param('id')).exec(function (err, results) {
+      res.view({
+        layout: 'none',
+        ministry: results[0]
+      });
+    });
+  },
+
   channel: function(req, res) {
     var query = req.param('id') || {
       name: {
