@@ -37,7 +37,7 @@
         </header>
         <section>
           <% _.each(episodes, function(episode) { %>
-          <lockup>
+          <lockup action="playEpisode" episode="<%= episode.url %>">
             <img src="<%= episode.thumbnail %>" width="308" height="231" />
             <title><%= episode.name %></title>
           </lockup>

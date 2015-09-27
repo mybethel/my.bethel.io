@@ -57,6 +57,19 @@ var Channel = {
     } else {
       localStorage.removeItem('favorites');
     }
+  },
+
+  playEpisode: function(event) {
+    var media = new MediaItem();
+    media.url = event.target.getAttribute('episode');
+    // @todo: Assign other properties such as title and poster image.
+
+    var playlist = new Playlist();
+    playlist.push(media);
+
+    var player = new Player();
+    player.playlist = playlist;
+    player.play();
   }
 
 };
