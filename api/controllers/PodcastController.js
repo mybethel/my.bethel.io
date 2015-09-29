@@ -167,9 +167,7 @@ module.exports = {
   destroy: function(req, res) {
     Podcast.findOne(req.param('id')).exec(function foundPodcast(err, podcast) {
 
-      if (err || podcast.ministry !== req.session.ministry) {
-        return res.forbidden();
-      }
+      if (err) return res.serverError(err);
 
       Podcast.destroy(req.param('id'), function deletedPodcast(err) {
         if (err) {
@@ -177,10 +175,11 @@ module.exports = {
           return res.serverError(err);
         }
 
+        // @TODO: Destroy media stored in S3 if podcast media is hosted on Bethel Cloud
         PodcastMedia.destroy({ podcast: req.param('id') }, function deletedPodcastMedia(err) {
           if (err) sails.log.error(err);
 
-          res.redirect('/podcasts');
+          res.redirect('/#/podcast');
         });
       });
 
