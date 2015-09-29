@@ -8,12 +8,11 @@ angular.module('Bethel.podcast')
     sliderColor: '#FFF'
   };
 
-  $scope.mediaId = mediaId;
   $scope.mediaUrl = $sce.trustAsResourceUrl('/podcast/embed/episode/' + mediaId);
 
   $scope.$watch('embedSettings', function(newValue, oldValue) {
     if (!newValue || newValue == oldValue) return;
-    console.log(newValue);
+    sailsSocket.put('/podcast/' + podcastId, { embedSettings: $scope.embedSettings }).then($scope.refreshPreview);
   }, true);
 
   $scope.refreshPreview = function() {
