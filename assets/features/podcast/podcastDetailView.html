@@ -72,7 +72,7 @@
           </div>
           <div class="episode-tools" flex="30">
             <md-button class="md-mini md-primary" ng-click="editMedia($event, media.id)">Edit</md-button>
-            <md-button ng-disabled="true" class="md-mini">Embed</md-button>
+            <md-button class="md-mini" ng-click="embedMedia($event, media.id)">Embed</md-button>
           </div>
           <md-divider ng-if="!$last"></md-divider>
         </md-list-item>

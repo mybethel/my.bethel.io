@@ -1,0 +1,19 @@
+<md-dialog flex="50" class="podcast-media">
+  <md-dialog-content class="sticky-container">
+
+    <iframe ng-src="{{ mediaUrl }}" width="600" height="140" frameborder="0"></iframe>
+
+    <div layout-padding>
+
+      <textarea class="code">
+&lt;iframe src=&quot;{{ mediaUrl }}&quot; width=&quot;600&quot; height=&quot;140&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
+      </textarea>
+
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">Cancel</md-button>
+    <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
+  </div>
+</md-dialog>
