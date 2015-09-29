@@ -10,22 +10,28 @@
       <md-subheader class="md-no-sticky" style="margin-top:20px">Visual Theming</md-subheader>
 
       <div layout="row" layout-align="center center">
-        <md-input-container flex="30">
+        <md-input-container flex="20">
           <label>Text Color</label>
           <input type="text" ng-model="embedSettings.textColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
           <div class="color-picker" style="background-color:{{ embedSettings.textColor }}"></div>
         </md-input-container>
 
-        <md-input-container flex="30" style="margin-left:20px">
+        <md-input-container flex="20" style="margin-left:20px">
           <label>Control Color</label>
           <input type="text" ng-model="embedSettings.controlColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
           <div class="color-picker" style="background-color:{{ embedSettings.controlColor }}"></div>
         </md-input-container>
 
-        <md-input-container flex="30" style="margin-left:20px">
+        <md-input-container flex="20" style="margin-left:20px">
           <label>Slider Color</label>
           <input type="text" ng-model="embedSettings.sliderColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
           <div class="color-picker" style="background-color:{{ embedSettings.sliderColor }}"></div>
+        </md-input-container>
+
+        <md-input-container flex="25" style="margin-left:20px">
+          <label>Background</label>
+          <input type="text" ng-model="embedSettings.backgroundColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="background-color:{{ embedSettings.backgroundColor }}"></div>
         </md-input-container>
       </div>
 

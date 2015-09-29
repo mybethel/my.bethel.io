@@ -6,7 +6,11 @@
   <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/font-awesome.min.css">
   <style>
     #embed-frame #embedded.audio-player {
+<% if (podcast.embedSettings && podcast.embedSettings.backgroundColor) { %>
+      background: <%= podcast.embedSettings.backgroundColor %>
+<% } else { %>
       background-image: url('https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=200&h=200&blur=150');
+<% } %>
     }
 <% if (podcast.embedSettings) { %>
     .meta, .meta small, .extras a {
