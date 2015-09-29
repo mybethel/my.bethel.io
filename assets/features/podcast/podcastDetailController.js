@@ -141,7 +141,7 @@ angular.module('Bethel.podcast')
       clickOutsideToClose: true,
       templateUrl: 'features/podcast/podcastEmbedView.html',
       targetEvent: event,
-      locals: { mediaId: id },
+      locals: { mediaId: id, podcastId: $scope.id, embedSettings: $scope.podcast.embedSettings },
       controller: 'podcastEmbedController'
     });
   };

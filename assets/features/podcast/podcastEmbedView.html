@@ -1,19 +1,39 @@
 <md-dialog flex="50" class="podcast-media">
   <md-dialog-content class="sticky-container">
 
-    <iframe ng-src="{{ mediaUrl }}" width="600" height="140" frameborder="0"></iframe>
+    <iframe ng-src="{{ mediaUrl }}" width="600" height="140" frameborder="0" id="embed-preview"></iframe>
 
     <div layout-padding>
 
-      <textarea class="code">
-&lt;iframe src=&quot;{{ mediaUrl }}&quot; width=&quot;600&quot; height=&quot;140&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;
-      </textarea>
+      <textarea class="code">&lt;iframe src=&quot;//my.bethel.io{{ mediaUrl }}&quot; width=&quot;600&quot; height=&quot;140&quot; frameborder=&quot;0&quot;&gt;&lt;/iframe&gt;</textarea>
+
+      <md-subheader class="md-no-sticky" style="margin-top:20px">Visual Theming</md-subheader>
+
+      <div layout="row" layout-align="center center">
+        <md-input-container flex="30">
+          <label>Text Color</label>
+          <input type="text" ng-model="embedSettings.textColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="background-color:{{ embedSettings.textColor }}"></div>
+        </md-input-container>
+
+        <md-input-container flex="30" style="margin-left:20px">
+          <label>Control Color</label>
+          <input type="text" ng-model="embedSettings.controlColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="background-color:{{ embedSettings.controlColor }}"></div>
+        </md-input-container>
+
+        <md-input-container flex="30" style="margin-left:20px">
+          <label>Slider Color</label>
+          <input type="text" ng-model="embedSettings.sliderColor" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="background-color:{{ embedSettings.sliderColor }}"></div>
+        </md-input-container>
+      </div>
 
     </div>
   </md-dialog-content>
   <div class="md-actions" layout="row">
     <span flex></span>
-    <md-button ng-click="cancel()">Cancel</md-button>
-    <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
+    <md-button ng-click="refreshPreview()">Refresh Preview</md-button>
+    <md-button ng-click="done()" class="md-primary">Done</md-button>
   </div>
 </md-dialog>

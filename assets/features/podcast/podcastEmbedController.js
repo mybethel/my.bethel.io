@@ -1,15 +1,26 @@
 angular.module('Bethel.podcast')
-.controller('podcastEmbedController', ['$scope', '$mdDialog', 'mediaId', '$sce', 'sailsSocket',
-  function ($scope, $mdDialog, mediaId, $sce, sailsSocket) {
+.controller('podcastEmbedController', ['$scope', 'embedSettings', '$mdDialog', 'mediaId', 'podcastId', '$sce', 'sailsSocket',
+  function ($scope, embedSettings, $mdDialog, mediaId, podcastId, $sce, sailsSocket) {
+
+  $scope.embedSettings = embedSettings || {
+    textColor: '#FFF',
+    controlColor: '#FFF',
+    sliderColor: '#FFF'
+  };
 
   $scope.mediaId = mediaId;
   $scope.mediaUrl = $sce.trustAsResourceUrl('/podcast/embed/episode/' + mediaId);
 
-  $scope.save = function() {
-    $mdDialog.hide();
+  $scope.$watch('embedSettings', function(newValue, oldValue) {
+    if (!newValue || newValue == oldValue) return;
+    console.log(newValue);
+  }, true);
+
+  $scope.refreshPreview = function() {
+    document.getElementById('embed-preview').contentWindow.location.reload();
   };
 
-  $scope.cancel = function() {
+  $scope.done = function() {
     $mdDialog.cancel();
   };
 
