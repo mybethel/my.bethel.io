@@ -45,7 +45,7 @@ var Channel = {
       favorites.push(this.uuid);
       icon = 'resource://button-rated';
     } else {
-      delete favorites[currentFavorite]
+      favorites.splice(currentFavorite, 1);
       icon = 'resource://button-rate';
     }
 
