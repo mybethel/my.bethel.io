@@ -30,8 +30,18 @@ md-whiteframe.welcome-modal {
 }
 
 md-whiteframe.platform-updates {
-  .md-list-item-text p.snippet {
-    font-weight: normal;
+  md-list {
+    padding: 0;
+  }
+  md-list-item,
+  md-list-item button {
+    height: auto !important;
+  }
+  .md-list-item-text {
+    padding: 16px 0;
+    p.snippet {
+      font-weight: normal;
+    }
   }
 }
 

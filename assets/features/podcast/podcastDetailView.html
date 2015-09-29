@@ -1,6 +1,3 @@
-<div layout="row" flex style="max-height: 100%;">
-<div layout="column" flex style="max-height: 100%;">
-
 <md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
@@ -13,8 +10,8 @@
 
 <md-content class="main-content" layout="row" layout-wrap>
 
-  <div class="overlay" flex="60" offset="20" layout-padding layout-margin layout-align="center center" ng-if="isDemo">
-    <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" layout-align="center center">
+  <div class="overlay" flex layout="row" layout-align="center center" layout-margin layout-padding ng-if="isDemo" style="width:100%">
+    <md-whiteframe class="md-whiteframe-z2 md-padding" flex="60" layout="column" layout-align="center center">
       <h3 class="light">Welcome to your new podcast!</h3>
       <span>Real stats will appear when we have a few weeks of data.</span>
       <span ng-if="podcast.source === 1 && podcast.media.length < 1">Go ahead, upload some episodes and when you're ready...</span>
@@ -83,11 +80,9 @@
 
 </md-content>
 
-</div>
+<md-sidenav class="md-sidenav-right md-whiteframe-z1" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-is-open="1 == 1" layout-fill flex="30">
 
-<md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-is-open="1 == 1" layout-fill flex="30">
-
-  <md-content flex>
+  <md-content flex layout="column">
 
     <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="100%" />
 
@@ -127,5 +122,3 @@
   </md-content>
 
 </md-sidenav>
-
-</div>
