@@ -54,6 +54,10 @@ var SearchScreen = {
     SearchScreen[action](event);
   },
 
+  showFavorites: function() {
+    Favorite.showAll();
+  },
+
   submitChurch: function() {
     var submitText = `Tell your church you'd like to see them here! Any church can be listed
 for absolutely no cost; we'll even help with the setup process!
