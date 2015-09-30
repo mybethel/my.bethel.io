@@ -8,16 +8,24 @@
 
     <md-menu md-position-mode="target-right target">
       <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Podcast Options">
-        <md-icon>more_vert</md-icon>
+        <md-icon md-menu-origin>more_vert</md-icon>
       </md-button>
-      <md-menu-content>
+      <md-menu-content width="4">
         <md-menu-item ng-if="podcast.source === 1">
-          <button class="md-button" ng-click="openFileSelector()" ng-disabled="uploading">
-            <md-icon>add</md-icon>{{ uploading ? 'Upload in Progress' : 'Upload Episode' }}
-          </button>
+          <md-button ng-click="openFileSelector()" ng-disabled="uploading">
+            <div layout="row">
+              <p flex>{{ uploading ? 'Upload in Progress' : 'Upload Episode' }}</p>
+              <md-icon md-menu-align-target style="margin: auto 3px auto 0;">add</md-icon>
+            </div>
+          </md-button>
         </md-menu-item>
         <md-menu-item>
-          <button class="md-button" ng-click="viewPodcastUrl($event)"><md-icon>link</md-icon>Podcast Feed URL</class="md-button" button>
+          <md-button ng-click="viewPodcastUrl($event)">
+            <div layout="row">
+              <p flex>Podcast Feed URL</p>
+              <md-icon md-menu-align-target style="margin: auto 3px auto 0;">link</md-icon>
+            </div>
+          </md-button>
         </md-menu-item>
       </md-menu-content>
     </md-menu>
