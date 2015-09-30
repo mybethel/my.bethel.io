@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 var program = require('commander').usage('<input>').parse(process.argv);
 var worker = require('./' + program.args[0]);
+var tripwire = require('tripwire');
+
+process.on('uncaughtException', function (e) {
+  console.error('WOKER: Event loop blocked for longer than 100 seconds.');
+  process.exit(1);
+});
+
+tripwire.resetTripwire(100000);
 
 var Sails = require('sails');
 Sails.load({
