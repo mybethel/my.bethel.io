@@ -67,7 +67,7 @@ Contact us at hello@bethel.io for more details.`;
       <document>
         <alertTemplate>
           <title>Can't find your church?</title>
-          <description>` + submitText + `</description>
+          <description>${ submitText }</description>
           <button>
             <text>Done</text>
           </button>

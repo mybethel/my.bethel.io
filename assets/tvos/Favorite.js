@@ -18,7 +18,7 @@ Once you've favorited a church it will appear here.`;
       <document>
         <alertTemplate>
           <title>Access your favorites here</title>
-          <description>` + message + `</description>
+          <description>${ message }</description>
           <button>
             <text>Done</text>
           </button>
