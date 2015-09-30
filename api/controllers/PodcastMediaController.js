@@ -21,7 +21,7 @@ module.exports = {
 
       if (media.url.indexOf('cloud.bethel.io') !== -1) {
         // Encode hashtags or question marks in uploaded file names.
-        media.url = media.url.replace('#', '%23').replace('?', '%3F').replace('+', '%2B');
+        media.url = media.url.replace(/#/g, '%23').replace(/\?/g, '%3F').replace(/\+/g, '%2B');
       }
 
       return res.redirect(media.url);
