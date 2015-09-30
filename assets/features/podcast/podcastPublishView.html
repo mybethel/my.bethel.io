@@ -1,0 +1,24 @@
+<md-dialog flex="50" class="publish-podcast-view">
+  <md-dialog-content class="sticky-container">
+
+    <md-content layout="column" layout-margin>
+      <div flex>
+        <h3>Podcast Feed URL</h3>
+      </div>
+      <div flex>
+        <md-input-container>
+          <input onclick="this.select();" ng-model="feed" readonly type="text" />
+        </md-input-container>
+        <small ng-if="!unpublished">It looks like you've already submitted this podcast to iTunes. Click <a href="https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/publishPodcast" target="_blank">here</a> to submit it again.</small>
+      </div>
+    </md-content>
+
+  </md-dialog-content>
+
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="close()">Close</md-button>
+    <md-button class="md-primary" href="https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/publishPodcast" ng-if="unpublished" target="_blank">Submit to iTunes</md-button>
+  </div>
+
+</md-dialog>

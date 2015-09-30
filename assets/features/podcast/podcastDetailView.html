@@ -1,14 +1,36 @@
 <div layout="row" flex style="max-height: 100%;">
 <div layout="column" flex style="max-height: 100%;">
 
-<md-toolbar aria-hidden="false">
+<md-toolbar aria-hidden="false" class="podcast-toolbar">
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
+    <span flex></span>
+
+    <md-menu md-position-mode="target-right target">
+      <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="Podcast Options">
+        <md-icon md-menu-origin>more_vert</md-icon>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item ng-if="podcast.source === 1">
+          <md-button ng-click="openFileSelector()" ng-disabled="uploading">
+            <div layout="row">
+              <p flex>{{ uploading ? 'Upload in Progress' : 'Upload Episode' }}</p>
+              <md-icon md-menu-align-target style="margin: auto 3px auto 0;">add</md-icon>
+            </div>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="viewPodcastUrl($event)">
+            <div layout="row">
+              <p flex>Podcast Feed URL</p>
+              <md-icon md-menu-align-target style="margin: auto 3px auto 0;">link</md-icon>
+            </div>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
   </div>
-  <button class="md-fab md-fab-top-right md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ngf-select="onFileSelect($files)" ng-if="podcast.source === 1" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
-    <md-tooltip>Upload Episode</md-tooltip>
-    <md-icon>add</md-icon>
-  </button>
 </md-toolbar>
 
 <md-content class="main-content" layout="row" layout-wrap>
@@ -49,15 +71,20 @@
     </div>
   </div>
 
-  <div flex="100" layout-padding layout-align="top center">
-
+  <div flex="100" layout-padding layout-align="top center" class="episodes">
     <md-subheader class="md-no-sticky">
       <ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize>
       <span ng-if="uploading"> (1 uploading)</span>
       <span ng-if="podcast.source === 2"> from Vimeo account <strong>{{ podcast.service.name }}</strong>. <em>Last sync: <span am-time-ago="podcast.lastSync" ng-if="podcast.lastSync"></span><span ng-if="!podcast.lastSync">in progress</span></em></span>
     </md-subheader>
+
+    <button class="upload-button md-fab md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ngf-select="onFileSelect($files)" ng-if="podcast.source === 1 && !uploading" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
+      <md-tooltip md-direction="left">Upload Episode</md-tooltip>
+      <md-icon>add</md-icon>
+    </button>
+
     <md-whiteframe class="md-whiteframe-z1" layout>
-      <md-list class="episodes" flex="100">
+      <md-list class="episode-list" flex="100">
         <md-progress-linear md-mode="determinate" ng-if="uploading" value="{{ uploadProgress }}"></md-progress-linear>
         <md-list-item ng-if="podcast.media.length < 1">
           <p ng-if="!uploading && podcast.source === 1">Upload your first podcast episode using the <md-icon>add</md-icon> button above!</p>
