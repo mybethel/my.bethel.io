@@ -148,7 +148,7 @@ module.exports = {
 
   edit: function (req, res) {
     Podcast.findOne(req.param('id')).populate('media').populate('service').exec(function foundPodcast(err, podcast) {
-      if (err || !podcast.id) return next(err);
+      if (err || !podcast || !podcast.id) return next(err);
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
       Podcast.subscribe(req, podcast.id);
