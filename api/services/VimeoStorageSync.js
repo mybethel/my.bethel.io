@@ -180,6 +180,8 @@ vimeo.processPage = function(results, podcast) {
 
 vimeo.podcastMediaUpsert = function(video, podcast) {
   return new Promise(function(resolve) {
+    if (!video) return resolve();
+
     var videoId = video.uri.toString().replace('/videos/', '');
 
     if (!videoId) return resolve();
@@ -192,7 +194,7 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
     }
 
     var videoThumbnail = '';
-    if (video.pictures.sizes) {
+    if (video.pictures && video.pictures.sizes) {
       video.pictures.sizes.forEach(function(picture) {
         if (picture.width === 200)
           videoThumbnail = picture.link;
