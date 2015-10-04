@@ -165,6 +165,11 @@ vimeo.processPage = function(results, podcast) {
     results.data.forEach(function(video) {
       if (!video.tags) return;
 
+      if (video.privacy && video.privacy.view !== 'anybody') {
+        sails.log.warn('Ignoring private video ' + video.uri, video.privacy);
+        return;
+      }
+
       video.tags.forEach(function(tag) {
         if (podcast.sourceMeta.toString().toLowerCase().indexOf(tag.name.toLowerCase()) === -1)
           return;
