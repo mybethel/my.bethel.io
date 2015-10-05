@@ -7,7 +7,7 @@
       Currently, a single "Sermon Series" playlist is available; support for multiple playlists are coming soon!</p>
   </div>
 </div>
-<div layout="row">
+<div layout="row" ng-controller="mobileMediaController">
   <div flex="60">
     <md-card class="media-playlist">
       <md-card-content>
@@ -51,15 +51,27 @@
         <h3 class="light" style="margin-bottom:0;">Connected Media</h3>
       </md-card-content>
       <md-list>
-        <md-list-item ng-click="connect()">
+        <md-list-item>
           <md-icon>headset</md-icon>
           <p>Audio</p>
-          <md-button>Connect</md-button>
+          <md-input-container style="margin-right: 10px;">
+            <label>Connect</label>
+            <md-select ng-model="connected.audio">
+              <md-option ng-repeat="podcast in podcasts" value="{{ podcast.id }}" ng-show="{{ podcast.type == 1 }}">{{ podcast.name }}</md-option>
+              <md-option value="PODCAST_NEW">New audio podcast...</md-option>
+            </md-select>
+          </md-input-container>
         </md-list-item>
-        <md-list-item ng-click="connect()">
+        <md-list-item>
           <md-icon>ondemand_video</md-icon>
           <p>Video</p>
-          <md-button>Connect</md-button>
+          <md-input-container style="margin-right: 10px;">
+            <label>Connect</label>
+            <md-select ng-model="connected.audio">
+              <md-option ng-repeat="podcast in podcasts" value="{{ podcast.id }}" ng-show="{{ podcast.type == 2 }}">{{ podcast.name }}</md-option>
+              <md-option value="PODCAST_NEW">New video podcast...</md-option>
+            </md-select>
+          </md-input-container>
         </md-list-item>
         <md-list-item ng-click="connect()" ng-disabled="true">
           <md-icon>language</md-icon>
