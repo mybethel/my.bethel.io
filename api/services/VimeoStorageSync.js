@@ -166,7 +166,7 @@ vimeo.processPage = function(results, podcast) {
       if (!video.tags) return;
 
       if (video.privacy && video.privacy.view !== 'anybody') {
-        sails.log.warn('Ignoring private video ' + video.uri, video.privacy);
+        sails.log.warn('Ignoring private video ' + video.uri);
         return;
       }
 
