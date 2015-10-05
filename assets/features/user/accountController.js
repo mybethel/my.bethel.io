@@ -32,7 +32,8 @@ angular.module('Bethel.user')
     var updatedMinistry = {
       name: newValue.name,
       email: newValue.email,
-      locality: newValue.locality
+      locality: newValue.locality,
+      url: newValue.url
     };
 
     if ($scope.editMinistry.$valid) {
