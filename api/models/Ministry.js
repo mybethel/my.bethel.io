@@ -39,7 +39,15 @@ module.exports = {
       type: 'string'
     },
 
-  	users: {
+    cms: {
+      type: 'boolean'
+    },
+
+    url: {
+      type: 'string',
+    },
+
+    users: {
       collection: 'user',
       via: 'ministry'
     },
