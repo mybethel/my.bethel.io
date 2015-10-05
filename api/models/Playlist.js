@@ -17,6 +17,14 @@ module.exports = {
       model: 'playlist'
     },
 
+    podcastAudio: {
+      model: 'podcast'
+    },
+
+    podcastVideo: {
+      model: 'podcast'
+    },
+
     description: {
       type: 'text'
     },

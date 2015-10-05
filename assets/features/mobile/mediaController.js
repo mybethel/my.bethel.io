@@ -1,6 +1,6 @@
 angular.module('Bethel.mobile').controller('mobileMediaController', MobileMedia);
 
-function MobileMedia($scope, sailsSocket) {
+function MobileMedia($scope, notifyService, sailsSocket) {
 
   $scope.podcasts = sailsSocket.populateMany('podcast', { 'ministry': $scope.$root.ministry.id });
 
@@ -14,6 +14,10 @@ function MobileMedia($scope, sailsSocket) {
     $scope.playlist = {
       new: true
     };
+  });
+
+  sailsSocket.editable($scope, 'playlist', ['podcastAudio', 'podcastVideo'], function() {
+    notifyService.showCommon('saved');
   });
 
   $scope.$watch('playlist', function(newValue, oldValue) {
@@ -34,4 +38,4 @@ function MobileMedia($scope, sailsSocket) {
 
 }
 
-MobileMedia.$inject = ['$scope', 'sailsSocket'];
+MobileMedia.$inject = ['$scope', 'notifyService', 'sailsSocket'];
