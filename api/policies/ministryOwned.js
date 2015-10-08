@@ -17,7 +17,7 @@ module.exports = function(req, res, next) {
 
     if (err) return res.badRequest();
 
-    if (object.ministry !== req.session.ministry) {
+    if (object.id !== req.session.ministry && object.ministry !== req.session.ministry) {
       return res.forbidden();
     }
 
