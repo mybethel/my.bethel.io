@@ -60,6 +60,18 @@ angular.module('Bethel.staff')
     sailsSocket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
   };
 
+  $scope.masquerade = function() {
+
+    sailsSocket.post('/session/masquerade', {user: $scope.user, ministry: $scope.user.ministry, isMasquerading: true}).then(function () {
+      $scope.$root.user = $scope.user;
+      $scope.$root.ministry = $scope.user.ministry;
+    });
+
+    if (!$scope.$root.isMasquerading) {
+      $scope.$root.isMasquerading = {ministry: $scope.$root.ministry, user: $scope.$root.user};
+    }
+  };
+
   $ctrl.init();
 
 }]);

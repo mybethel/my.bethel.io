@@ -65,6 +65,7 @@ angular.module('Bethel', [
       $scope.user = response.user;
       $scope.ministry = response.ministry;
       $scope.isAdmin = response.isAdmin;
+      $scope.isMasquerading = response.isMasquerading;
 
       if (response.isAdmin) {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
@@ -80,6 +81,17 @@ angular.module('Bethel', [
 
   $scope.toggleNav = function() {
     $scope.collapseNav = !$scope.collapseNav;
+  };
+
+  $scope.endMasquerade = function() {
+    var previousSession = $scope.isMasquerading;
+    previousSession.isMasquerading = false;
+
+    sailsSocket.post('/session/masquerade', previousSession).then(function () {
+      $scope.user = previousSession.user;
+      $scope.ministry = previousSession.ministry;
+      $scope.isMasquerading = null;
+    });
   };
 
 }]);

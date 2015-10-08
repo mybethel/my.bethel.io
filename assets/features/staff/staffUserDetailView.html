@@ -12,7 +12,12 @@
 
     <md-whiteframe flex class="md-whiteframe-z1 md-padding contact-info" layout="column">
 
-      <h3>User Details</h3>
+      <div layout="row" layout-align="space-between center">
+        <h3 flex>User Details</h3>
+        <div>
+          <md-button class="md-primary md-raised" ng-click="masquerade()">Masquerade</md-button>
+        </div>
+      </div>
 
       <md-input-container>
         <label>Email</label>

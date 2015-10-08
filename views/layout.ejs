@@ -19,13 +19,23 @@
 
 <body layout="row">
 
+<!-- Position this better -->
+<div ng-if="isMasquerading" layout="row" layout-align="space-between center">
+  <p flex="70">Masquerading as {{user.name}} from {{user.ministry.name}}</p>
+  <div flex="20">
+    <md-button class="md-raised" ng-click="endMasquerade()">End Masquerade</md-button>
+  </div>
+  <div flex="10"></div>
+</div>
+
+<section layout="row" flex>
   <div id="outdated">
     <h6>Your browser is out of date!</h6>
     <p>You'll need a more recent browser to use Bethel. Click below for a few suggestions... <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
   </div>
 
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak ng-if="user" layout-fill>
+  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak ng-if="user">
     <md-toolbar class="md-hue-2">
       <h1 class="md-toolbar-tools">Bethel</h1>
     </md-toolbar>
@@ -57,6 +67,7 @@
     function browserCheck(a){var b=window.onload;window.onload='function'!=typeof window.onload?a:function(){b&&b();a()}}
     browserCheck(function(){outdatedBrowser({bgColor:'#f25648',color:'#fff',lowerThan:'flex',languagePath:''})});
   </script>
+</section>
 
 </body>
 
