@@ -2,6 +2,14 @@ angular.module('Bethel.mobile').controller('mobileMediaController', MobileMedia)
 
 function MobileMedia($scope, notifyService, sailsSocket) {
 
+  this.populateMedia = function() {
+    sailsSocket.get('/playlist/' + $scope.playlist.id).then(function(media) {
+      console.log(media);
+    });
+  };
+
+  var $ctrl = this;
+
   $scope.podcasts = sailsSocket.populateMany('podcast', { 'ministry': $scope.$root.ministry.id });
 
   // Populate the playlist for this ministry.
@@ -22,6 +30,8 @@ function MobileMedia($scope, notifyService, sailsSocket) {
 
   $scope.$watch('playlist', function(newValue, oldValue) {
     if (!newValue) return;
+
+    $ctrl.populateMedia();
 
     // If this is a new playlist, create it now.
     if (newValue.new) {
