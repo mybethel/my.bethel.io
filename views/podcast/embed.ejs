@@ -35,7 +35,7 @@
 <body id="embed-frame">
 
   <audio id="embedded" class="video-js vjs-bethel-skin" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls height="140" poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="auto">
-    <source src="/podcastmedia/download/<%= episode.id %>" type="audio/mp3" />
+    <source src="/podcastmedia/download/<%= episode.id %>?embed" type="audio/mp3" />
     <p class="vjs-no-js">Please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
   </audio>
 
@@ -87,9 +87,6 @@
         this.controlBar.addChild('DownloadButton');
         this.controlBar.addChild('FeedButton');
       });
-      var xmlHttp = new XMLHttpRequest();
-      xmlHttp.open('GET', '/podcastmedia/stat/<%= episode.id %>', true);
-      xmlHttp.send();
     })()
   </script>
 </body>

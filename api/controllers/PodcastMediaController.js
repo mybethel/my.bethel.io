@@ -8,14 +8,14 @@
 module.exports = {
 
   download: function(req, res) {
+    var embed = (typeof req.query.embed !== 'undefined');
     var mediaId = req.param('id').split('.').shift();
     PodcastMedia.findOne(mediaId).exec(function (err, media) {
       if (err) return res.serverError(err);
-
       if (!media) return res.notFound();
 
       var statistics = Analytics.buildPayload(req, {
-        medium: 'podcast'
+        medium: embed ? 'embed' : 'podcast'
       });
       Analytics.registerHit('podcastmedia', req.param('id'), statistics);
 
@@ -24,7 +24,12 @@ module.exports = {
         media.url = media.url.replace(/#/g, '%23').replace(/\?/g, '%3F').replace(/\+/g, '%2B');
       }
 
-      return res.redirect(media.url);
+      if (embed) {
+        return res.redirect(media.url);
+      }
+
+      res.header('Content-Disposition', 'attachment');
+      return require('request').get(media.url).pipe(res);
     });
   },
 
@@ -37,14 +42,6 @@ module.exports = {
 
       res.send(200);
     });
-  },
-
-  stat: function(req, res) {
-    var statistics = Analytics.buildPayload(req, {
-      medium: 'embed'
-    });
-    Analytics.registerHit('podcastmedia', req.param('id'), statistics);
-    return res.ok(req.param('id'));
   },
 
   refresh: function(req, res) {
