@@ -1,0 +1,146 @@
+@import url(https://fonts.googleapis.com/css?family=Material+Icons|Lato:400,300,100);
+
+$small-devices: "max-width: 420px";
+
+html, body {
+  font-family: 'Lato', sans-serif;
+  height: 100%;
+  margin: 0;
+}
+
+.meta {
+  color: #FFF;
+  left: 155px;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  @media ($small-devices) {
+    left: 15px;
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: 300;
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    @media ($small-devices) {
+      font-size: 20px;
+      margin-bottom: 5px;
+      margin-top: 15px;
+      margin-right: 0;
+      overflow: hidden;
+    }
+  }
+  h2 {
+    font-size: 16px;
+    font-weight: 400;
+    margin-top: 0;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    @media ($small-devices) {
+      font-size: 14px;
+    }
+    small {
+      font-size: 12px;
+      @media ($small-devices) {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+.extras {
+  position: absolute;
+  top: 23px;
+  right: 15px;
+  z-index: 1;
+  @media ($small-devices) {
+    top: 96px;
+    right: 62px;
+    br { display: none; }
+  }
+  a {
+    font-size: 1.3em;
+    color: white;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.video-js.vjs-bethel-skin {
+  background-size: cover;
+  color: #FFF;
+  font-size: 10px;
+  outline: none;
+  width: 100%;
+
+  &.vjs-audio {
+    height: 140px;
+    .vjs-poster {
+      background-position: top left;
+
+      @media ($small-devices) {
+        background-position: bottom right;
+        background-size: 40px;
+      }
+    }
+    .vjs-control-bar {
+      background: transparent;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      left: 140px;
+      width: -moz-calc(100% - 140px);
+      width: -webkit-calc(100% - 140px);
+      width: calc(100% - 140px);
+
+      @media ($small-devices) {
+        height: 4em;
+        left: 0;
+        width: -moz-calc(100% - 40px);
+        width: -webkit-calc(100% - 40px);
+        width: calc(100% - 40px);
+        .vjs-mouse-display,
+        .vjs-remaining-time,
+        .vjs-play-progress,
+        .vjs-volume-menu-button {
+          display: none;
+        }
+      }
+    }
+    .vjs-slider {
+      border-radius: 5px;
+    }
+    .vjs-control {
+      &.vjs-play-control:before {
+        font-size: 2.3em;
+        line-height: 1.4em;
+        @media ($small-devices) {
+          font-size: 3em;
+          line-height: 1.4em;
+        }
+      }
+      &.vjs-download-button,
+      &.vjs-subscribe-button {
+        width: 3em;
+      }
+      &.vjs-download-button:before,
+      &.vjs-subscribe-button:before {
+        font-family: 'Material Icons';
+        @media ($small-devices) {
+          font-size: 2em;
+          line-height: 2.1em;
+        }
+      }
+      &.vjs-download-button:before {
+        content: '\e2C4';
+      }
+      &.vjs-subscribe-button:before {
+        content: '\e03D';
+      }
+    }
+  }
+}

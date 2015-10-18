@@ -27,9 +27,9 @@ var libraryDependencies = [
   // Global libraries
   'components/Chart.js/src/Chart.Core.js',
   'components/Chart.js/src/Chart.Line.js',
-  'components/lodash/dist/lodash.min.js',
+  'components/lodash/lodash.min.js',
   'components/moment/min/moment.min.js',
-  'components/videojs/dist/video-js/video.js',
+  'components/videojs/dist/video.min.js',
 
   // Angular dependencies
   'components/angular-animate/angular-animate.min.js',
@@ -42,6 +42,7 @@ var libraryDependencies = [
   'components/angular-messages/angular-messages.min.js',
   'components/angular-moment/angular-moment.min.js',
   'components/angular-sails-socket/dist/angular-sails-socket.min.js',
+  'components/angular-simple-logger/dist/angular-simple-logger.min.js',
   'components/angular-translate/angular-translate.min.js',
   'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
   'components/angular-ui-router/release/angular-ui-router.min.js',
