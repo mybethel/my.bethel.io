@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Material+Icons|Lato:400,300,100);
+@import url('https://fonts.googleapis.com/css?family=Material+Icons|Lato:400,300,100');
 
 $small-devices: "max-width: 420px";
 
@@ -100,6 +100,9 @@ html, body {
 
   &.vjs-audio {
     height: 140px;
+    .vjs-big-play-button {
+      display: none;
+    }
     .vjs-poster {
       background-position: top left;
 
