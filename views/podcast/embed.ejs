@@ -33,6 +33,7 @@
   </style>
 </head>
 <body id="embed-frame">
+<% if (podcast.type == 1) { %>
 
   <audio id="embedded" class="video-js vjs-bethel-skin" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls height="140" poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="auto">
     <source src="/podcastmedia/download/<%= episode.id %>?embed" type="audio/mp3" />
@@ -43,6 +44,15 @@
     <h1><%= episode.name %></h1>
     <h2><%= podcast.name %><br /><small><%= episode.date.toLocaleDateString() %></small></h2>
   </div>
+
+<% } else { %>
+
+  <video id="embedded" class="video-js vjs-bethel-skin" controls<% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %> feed="<%= podcast.embedSettings.feedUrl %>"<% } %>>
+    <source src="/podcastmedia/download/<%= episode.id %>?embed" type="video/mp4" />
+    <p class="vjs-no-js">Please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </video>
+
+<% } %>
 
   <script src="/components/videojs/dist/video.min.js"></script>
   <script>
@@ -79,7 +89,6 @@
 
       videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
       videojs('embedded', {
-        bigPlayButton: false,
         controlBar: {
           fullscreenToggle: false
         }

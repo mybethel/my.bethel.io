@@ -73,8 +73,30 @@ html, body {
   background-size: cover;
   color: #FFF;
   font-size: 10px;
+  height: 100%;
   outline: none;
   width: 100%;
+
+  .vjs-control {
+    &.vjs-download-button,
+    &.vjs-subscribe-button {
+      width: 3em;
+    }
+    &.vjs-download-button:before,
+    &.vjs-subscribe-button:before {
+      font-family: 'Material Icons';
+      @media ($small-devices) {
+        font-size: 2em;
+        line-height: 2.1em;
+      }
+    }
+    &.vjs-download-button:before {
+      content: '\e2C4';
+    }
+    &.vjs-subscribe-button:before {
+      content: '\e03D';
+    }
+  }
 
   &.vjs-audio {
     height: 140px;
@@ -122,24 +144,6 @@ html, body {
           font-size: 3em;
           line-height: 1.4em;
         }
-      }
-      &.vjs-download-button,
-      &.vjs-subscribe-button {
-        width: 3em;
-      }
-      &.vjs-download-button:before,
-      &.vjs-subscribe-button:before {
-        font-family: 'Material Icons';
-        @media ($small-devices) {
-          font-size: 2em;
-          line-height: 2.1em;
-        }
-      }
-      &.vjs-download-button:before {
-        content: '\e2C4';
-      }
-      &.vjs-subscribe-button:before {
-        content: '\e03D';
       }
     }
   }
