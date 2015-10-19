@@ -60,6 +60,10 @@ module.exports = {
       type: 'array'
     },
 
+    variants: {
+      type: 'json'
+    },
+
     podcast: {
       model: 'podcast'
     }

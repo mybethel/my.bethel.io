@@ -198,48 +198,60 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
       });
     }
 
-    var videoThumbnail = '';
+    var videoThumbnail = '', thumbSize = 0;
     if (video.pictures && video.pictures.sizes) {
       video.pictures.sizes.forEach(function(picture) {
-        if (picture.width === 200)
+        if (picture.width > thumbSize) {
+          thumbSize = picture.width;
           videoThumbnail = picture.link;
+        }
       });
     }
+
+    var videoVariants = {};
 
     var videoUrl = '';
     if (video.files) {
       video.files.forEach(function(file) {
+        videoVariants[file.quality] = file.link_secure;
+
         if (file.quality === 'sd')
           videoUrl = file.link_secure;
       });
     }
 
-    var createdAtDate = new Date();
-
-    PodcastMedia.findOrCreate({
-      uuid: videoId,
-      podcast: podcast.id
-    }, {
+    var payload = {
       name: video.name,
-      date: new Date(video.created_time),
       description: video.description,
       tags: videoTags,
       duration: video.duration,
       thumbnail: videoThumbnail,
       url: videoUrl,
-      uuid: videoId,
-      podcast: podcast.id
-    }, function podcastMediaCreated(err, media) {
-      if (err) sails.log.error(err);
+      variants: videoVariants
+    };
 
-      if (Date(media.createdAt) >= createdAtDate) {
+    // First we attempt to update a record with the latest data if it exists.
+    PodcastMedia.update({ uuid: videoId, podcast: podcast.id }, payload, function podcastMediaUpdate(err, media) {
+
+      // If no error and a media object is returned, the media already exists.
+      if (!err && media) {
+        PodcastMedia.publishUpdate(media[0].id, payload);
+        return resolve();
+      }
+
+      // Otherwise, we need to create a new one. A few additional attributes are
+      // added here to ensure that subsequent update calls find this media.
+      payload.date = new Date(video.created_time);
+      payload.uuid = videoId;
+      payload.podcast = podcast.id;
+
+      PodcastMedia.create(payload, function podcastMediaCreated(err, media) {
+        if (err) sails.log.error(err);
+
         PodcastMedia.publishCreate(media);
-      }
-      else {
-        PodcastMedia.publishUpdate(media.id, media);
-      }
+        resolve();
+      });
 
-      resolve();
     });
   });
 };
