@@ -10,22 +10,22 @@
   }
 
   if (background) {
-    embedStyles += '#embed-frame #embedded.vjs-bethel-skin {' + background + '}';
+    embedStyles += '#embedded.vjs-bethel-skin{' + background + '}';
   }
 
   if (podcast.embedSettings) {
     if (podcast.embedSettings.textColor) {
-      embedStyles += '.meta,.meta small,.extras a {color:' + podcast.embedSettings.textColor + ' !important;}';
+      embedStyles += '.meta,.meta small,.extras a{color:' + podcast.embedSettings.textColor + ';}';
     }
 
     if (podcast.embedSettings.controlColor) {
-      embedStyles += '.video-js.vjs-bethel-skin {color:' + podcast.embedSettings.controlColor + ' !important;}';
+      embedStyles += '.video-js.vjs-bethel-skin{color:' + podcast.embedSettings.controlColor + ';}';
       embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-play-progress,.video-js.vjs-bethel-skin .vjs-volume-level,.video-js.vjs-bethel-skin .vjs-mouse-display,.video-js.vjs-bethel-skin .vjs-mouse-display:after'
       embedStyles += '{background:' + podcast.embedSettings.controlColor + '}'
     }
 
     if (podcast.embedSettings.sliderColor) {
-      embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-progress-holder {background:' + podcast.embedSettings.sliderColor + '}';
+      embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-progress-holder{background:' + podcast.embedSettings.sliderColor + '}';
     }
   }
 %>
@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="/styles/embed.css" />
   <style><%- embedStyles %></style>
 </head>
-<body id="embed-frame">
+<body>
 
   <<%= podcast.type %> id="embedded" class="video-js vjs-bethel-skin" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="auto">
     <source src="/podcastmedia/download/<%= episode.id %>?embed" type="<%= PodcastHelper.mimeTypeFromUrl(episode.url) %>" />
@@ -52,48 +52,6 @@
 <% } %>
 
   <script src="/components/videojs/dist/video.min.js"></script>
-  <script>
-    (function(){
-      var VJSButton = videojs.getComponent('Button');
-
-      var DownloadButton = videojs.extend(VJSButton, {
-        constructor: function(player, options) {
-          VJSButton.call(this, player, options);
-          this.controlText('Download');
-          this.addClass('vjs-download-button');
-        },
-        handleClick: function() {
-          window.location.href = '/podcastmedia/download/<%= episode.id %>';
-        }
-      });
-
-      var FeedButton = videojs.extend(VJSButton, {
-        feedUrl: '',
-        constructor: function(player, options) {
-          if (!player.options().feed) return;
-          feedUrl = player.options().feed;
-          VJSButton.call(this, player, options);
-          this.controlText('Subscribe');
-          this.addClass('vjs-subscribe-button');
-        },
-        handleClick: function() {
-          window.open(this.feedUrl, '_blank');
-        }
-      });
-
-      videojs.registerComponent('FeedButton', FeedButton);
-      videojs.registerComponent('DownloadButton', DownloadButton);
-
-      videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
-      videojs('embedded', {
-        controlBar: {
-          fullscreenToggle: false
-        }
-      }, function() {
-        this.controlBar.addChild('DownloadButton');
-        this.controlBar.addChild('FeedButton');
-      });
-    })()
-  </script>
+  <script src="/min/embed.min.js"></script>
 </body>
 </html>

@@ -24,6 +24,6 @@ module.exports = {
 		files: ['assets/**/*', 'tasks/pipeline.js', '!**/node_modules/**', '!**/components/**'],
 
 		// When assets are changed:
-		tasks: ['syncAssets', 'concat', 'linkAssets']
+		tasks: ['syncAssets', 'concat', 'uglify', 'linkAssets']
 	}
 };
