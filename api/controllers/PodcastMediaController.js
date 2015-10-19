@@ -25,7 +25,8 @@ module.exports = {
       }
 
       if (embed) {
-        return res.redirect(media.url);
+        var embedUrl = (media.variants && media.variants.hls) ? media.variants.hls : media.url;
+        return res.redirect(embedUrl);
       }
 
       res.header('Content-Disposition', 'attachment');

@@ -40,7 +40,11 @@
 <body>
 
   <<%= podcast.type %> id="embedded" class="video-js vjs-bethel-skin" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="none">
+<% if (!episode.variants && !episode.variants.hls) { %>
     <source src="/podcastmedia/download/<%= episode.id %>?embed" type="<%= PodcastHelper.mimeTypeFromUrl(episode.url) %>" />
+<% } else { %>
+    <source src="/podcastmedia/download/<%= episode.id %>?embed" type="application/x-mpegURL" />
+<% } %>
     <p class="vjs-no-js">Please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
   </<%= podcast.type %>>
 
