@@ -64,7 +64,10 @@
         </md-input-container>
         <md-input-container>
           <label>Website URL</label>
-          <input ng-model="ministry.url" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <input name="url" ng-model="ministry.url" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" pattern="^https?:\/\/[a-zA-Z0-9_.+-]+.[a-zA-Z0-9_.+-]+$" />
+          <div ng-messages="!editMinistry.url.$untouched && editMinistry.url.$error">
+            <div ng-message="pattern">Your website must start with http:// or https://.</div>
+          </div>
         </md-input-container>
         <md-input-container>
           <label>City and State/Province</label>
