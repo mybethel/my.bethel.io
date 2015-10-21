@@ -8,17 +8,15 @@
  * dependencies, mixins, variables, resets, etc. before other stylesheets)
  *
  * For usage docs see:
- * 		https://github.com/gruntjs/grunt-contrib-less
+ *     https://github.com/gruntjs/grunt-contrib-less
  */
 module.exports = {
-	dev: {
-		options: {
-			paths: ['assets/components', 'assets/features']
-		},
-		files: {
-			'.tmp/public/styles/app.css': 'assets/styles/app.less',
-			'.tmp/public/styles/vjs-embed.css': 'assets/styles/vjs-embed.less',
-			'.tmp/public/styles/embed.css': 'assets/styles/embed.less'
-		}
-	}
+  dev: {
+    options: {
+      paths: ['assets/components', 'assets/features']
+    },
+    files: {
+      '.tmp/public/styles/app.css': 'assets/styles/app.less'
+    }
+  }
 };

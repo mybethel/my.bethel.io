@@ -1,65 +1,61 @@
+<%
+  var background, embedStyles = '';
+
+  if (podcast.type === 'video') {
+    background = 'background:#000';
+  } else if (podcast.embedSettings && podcast.embedSettings.backgroundColor) {
+    background = 'background:' + podcast.embedSettings.backgroundColor;
+  } else {
+    background = 'background-image:url(https://images.bethel.io/images/' + (podcast.image ? podcast.image : 'DefaultPodcaster.png') + '?crop=faces&fit=crop&w=200&h=200&blur=150);'
+  }
+
+  if (background) {
+    embedStyles += '#embedded.vjs-bethel-skin{' + background + '}';
+  }
+
+  if (podcast.embedSettings) {
+    if (podcast.embedSettings.textColor) {
+      embedStyles += '.meta,.meta small,.extras a{color:' + podcast.embedSettings.textColor + ';}';
+    }
+
+    if (podcast.embedSettings.controlColor) {
+      embedStyles += '.video-js.vjs-bethel-skin{color:' + podcast.embedSettings.controlColor + ';}';
+      embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-play-progress,.video-js.vjs-bethel-skin .vjs-volume-level,.video-js.vjs-bethel-skin .vjs-mouse-display,.video-js.vjs-bethel-skin .vjs-mouse-display:after'
+      embedStyles += '{background:' + podcast.embedSettings.controlColor + '}'
+    }
+
+    if (podcast.embedSettings.sliderColor) {
+      embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-progress-holder{background:' + podcast.embedSettings.sliderColor + '}';
+    }
+  }
+%>
 <!DOCTYPE html>
 <html>
 <head>
   <title><%= episode.name %> powered by Bethel</title>
+  <link rel="stylesheet" href="/components/videojs/dist/video-js.min.css" />
   <link rel="stylesheet" href="/styles/embed.css" />
-  <link rel="stylesheet" href="//s3.amazonaws.com/static.bethel.io/styles/font-awesome.min.css">
-  <style>
-    #embed-frame #embedded.audio-player {
-<% if (podcast.embedSettings && podcast.embedSettings.backgroundColor) { %>
-      background: <%= podcast.embedSettings.backgroundColor %>
-<% } else { %>
-      background-image: url('https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=200&h=200&blur=150');
-<% } %>
-    }
-<% if (podcast.embedSettings) { %>
-    .meta, .meta small, .extras a {
-      <% if (podcast.embedSettings.textColor) { %>color: <%= podcast.embedSettings.textColor %> !important;<% } %>
-    }
-    .vjs-embed-skin {
-      <% if (podcast.embedSettings.controlColor) { %>color: <%= podcast.embedSettings.controlColor %> !important;<% } %>
-    }
-    .vjs-embed-skin .vjs-progress-control .vjs-play-progress,
-    .vjs-embed-skin .vjs-volume-level {
-      <% if (podcast.embedSettings.controlColor) { %>background: <%= podcast.embedSettings.controlColor %>;<% } %>
-    }
-
-    .vjs-embed-skin .vjs-progress-control .vjs-progress-holder {
-      <% if (podcast.embedSettings.sliderColor) { %>background: <%= podcast.embedSettings.sliderColor %>;<% } %>
-    }
-<% } %>
-  </style>
+  <style><%- embedStyles %></style>
 </head>
-<body id="embed-frame">
-<% podcast.embedSettings %>
-  <img src="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" />
+<body>
+
+  <<%= podcast.type %> id="embedded" class="video-js vjs-bethel-skin" uuid="<%= episode.id %>" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="none">
+<% if (!episode.variants && !episode.variants.hls) { %>
+    <source src="/podcastmedia/download/<%= episode.id %>?embed" type="<%= PodcastHelper.mimeTypeFromUrl(episode.url) %>" />
+<% } else { %>
+    <source src="/podcastmedia/download/<%= episode.id %>?embed" type="application/x-mpegURL" />
+<% } %>
+    <p class="vjs-no-js">Please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+  </<%= podcast.type %>>
+
+<% if (podcast.type === 'audio') { %>
   <div class="meta">
     <h1><%= episode.name %></h1>
     <h2><%= podcast.name %><br /><small><%= episode.date.toLocaleDateString() %></small></h2>
   </div>
-  <div class="extras">
-    <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %><a href="<%= podcast.embedSettings.feedUrl %>"><i class="fa fa-fw fa-rss"></i></a><br /><% } %>
-    <a href="/podcastmedia/download/<%= episode.id %>" download><i class="fa fa-fw fa-cloud-download"></i></a>
-  </div>
-  <audio id="embedded" class="video-js vjs-embed-skin audio-player" data-setup="{}">
-    <source src="/podcastmedia/download/<%= episode.id %>" type="audio/mp3" />
-  </audio>
-  <script src="/components/videojs/dist/video-js/video.js"></script>
-  <script>
-    videojs.options.flash.swf = "https://static.bethel.io/libraries/video-js/video-js.swf";
-    videojs('embedded', {
-      controls: true,
-      controlBar: {
-        fullscreenToggle: false
-      },
-      autoplay: false,
-      loop: false,
-      width: '100%',
-      height: '100%',
-    });
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open('GET', '/podcastmedia/stat/<%= episode.id %>', true);
-    xmlHttp.send();
-  </script>
+<% } %>
+
+  <script src="/components/videojs/dist/video.min.js"></script>
+  <script src="/min/embed.min.js"></script>
 </body>
 </html>

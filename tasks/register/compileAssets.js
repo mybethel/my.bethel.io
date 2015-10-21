@@ -1,5 +1,7 @@
 module.exports = [
   'clean:dev',
   'less:dev',
-  'copy:dev'
+  'sass',
+  'copy:dev',
+  'uglify'
 ];
