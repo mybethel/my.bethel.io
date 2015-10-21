@@ -8,7 +8,7 @@
       this.addClass('vjs-download-button');
     },
     handleClick: function() {
-      window.location.href = '/podcastmedia/download/<%= episode.id %>';
+      window.location.href = '/podcastmedia/download/' + player.options().uuid;
     }
   });
 

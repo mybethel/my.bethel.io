@@ -39,7 +39,7 @@
 </head>
 <body>
 
-  <<%= podcast.type %> id="embedded" class="video-js vjs-bethel-skin" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="none">
+  <<%= podcast.type %> id="embedded" class="video-js vjs-bethel-skin" uuid="<%= episode.id %>" <% if (podcast.embedSettings && podcast.embedSettings.feedUrl) { %>feed="<%= podcast.embedSettings.feedUrl %>" <% } %>controls poster="https://images.bethel.io/images/<%= podcast.image ? podcast.image : 'DefaultPodcaster.png' %>?crop=faces&fit=crop&w=140&h=140" preload="none">
 <% if (!episode.variants && !episode.variants.hls) { %>
     <source src="/podcastmedia/download/<%= episode.id %>?embed" type="<%= PodcastHelper.mimeTypeFromUrl(episode.url) %>" />
 <% } else { %>
