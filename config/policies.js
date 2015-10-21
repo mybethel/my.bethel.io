@@ -39,6 +39,11 @@ module.exports.policies = {
   	'create': true
   },
 
+  ministry: {
+    'update': 'ministryOwned',
+    'destroy': 'ministryOwned'
+  },
+
   podcast: {
     'feed': true,
     'embed': true,
