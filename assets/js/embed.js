@@ -16,7 +16,7 @@
     feedUrl: '',
     constructor: function(player, options) {
       if (!player.options().feed) return;
-      feedUrl = player.options().feed;
+      this.feedUrl = player.options().feed;
       VJSButton.call(this, player, options);
       this.controlText('Subscribe');
       this.addClass('vjs-subscribe-button');
