@@ -36,7 +36,7 @@ angular.module('Bethel', [
   videojs.options.flash.swf = 'https://static.bethel.io/libraries/video-js/video-js.swf';
 })
 
-.controller('AppCtrl', ['$rootScope', '$state', 'sailsSocket', function ($scope, $state, sailsSocket) {
+.controller('AppCtrl', ['$rootScope', '$state', 'sailsSocket', '$mdToast', 'notifyService', function ($scope, $state, sailsSocket, $mdToast, notifyService) {
 
   if (window.__minimal) return;
 
@@ -65,9 +65,13 @@ angular.module('Bethel', [
       $scope.user = response.user;
       $scope.ministry = response.ministry;
       $scope.isAdmin = response.isAdmin;
-      $scope.isMasquerading = response.isMasquerading;
+      $scope.previousUser = response.previousUser;
 
-      if (response.isAdmin) {
+      notifyService.beforeNotify = function () {
+        return !$scope.previousUser;
+      };
+
+      if (response.isAdmin && $scope.navLinks[0].title !== 'Staff') {
         $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
       }
     }, function() {
@@ -83,16 +87,25 @@ angular.module('Bethel', [
     $scope.collapseNav = !$scope.collapseNav;
   };
 
-  $scope.endMasquerade = function() {
-    var previousSession = $scope.isMasquerading;
-    previousSession.isMasquerading = false;
+  $scope.$watch('previousUser', function (newValue) {
+    if (!newValue) return;
 
-    sailsSocket.post('/session/masquerade', previousSession).then(function () {
-      $scope.user = previousSession.user;
-      $scope.ministry = previousSession.ministry;
-      $scope.isMasquerading = null;
+    var toast = $mdToast.simple()
+      .content(`Masquerading as ${$scope.user.name} from ${$scope.ministry.name}`)
+      .action('End')
+      .highlightAction(false)
+      .hideDelay(false)
+      .position('bottom right');
+
+    $mdToast.show(toast).then(function (response) {
+      console.log('action ', response);
+      if (response !== 'ok') return;
+      sailsSocket.post('/session/masquerade', $scope.previousUser).then(function () {
+        window.location.reload();
+      });
     });
-  };
+
+  });
 
 }]);
 

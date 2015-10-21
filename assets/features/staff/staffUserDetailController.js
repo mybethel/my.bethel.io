@@ -61,15 +61,9 @@ angular.module('Bethel.staff')
   };
 
   $scope.masquerade = function() {
+    var previousUser = $scope.$root.previousUser || {user: $scope.$root.user, ministry: $scope.$root.ministry};
 
-    sailsSocket.post('/session/masquerade', {user: $scope.user, ministry: $scope.user.ministry, isMasquerading: true}).then(function () {
-      $scope.$root.user = $scope.user;
-      $scope.$root.ministry = $scope.user.ministry;
-    });
-
-    if (!$scope.$root.isMasquerading) {
-      $scope.$root.isMasquerading = {ministry: $scope.$root.ministry, user: $scope.$root.user};
-    }
+    sailsSocket.post('/session/masquerade', {user: $scope.user, previousUser: previousUser}).then(function () {window.location.reload();});
   };
 
   $ctrl.init();
