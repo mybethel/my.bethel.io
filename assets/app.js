@@ -91,7 +91,7 @@ angular.module('Bethel', [
     if (!newValue) return;
 
     var toast = $mdToast.simple()
-      .content(`Masquerading as ${$scope.user.name} from ${$scope.ministry.name}`)
+      .content('Masquerading as ' + $scope.user.name + ' from ' + $scope.ministry.name)
       .action('End')
       .highlightAction(false)
       .hideDelay(false)
