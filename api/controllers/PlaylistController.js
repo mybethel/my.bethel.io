@@ -8,6 +8,7 @@
 module.exports = {
 
   findOne: function(req, res) {
+    var start = Date.now();
     Playlist.findOne(req.param('id')).exec(function(err, playlist) {
       if (err || !playlist) return res.notFound();
 
@@ -43,7 +44,8 @@ module.exports = {
 
           return res.send({
             playlist: playlist,
-            media: children
+            media: children,
+            debug: Date.now() - start
           });
         });
       });

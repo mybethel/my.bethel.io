@@ -16,6 +16,11 @@ var Channel = {
     var self = this;
     navigationDocument.pushDocument(this.doc);
     this.doc.addEventListener('select', this.select);
+
+    var favorites = localStorage.getItem('favorites');
+    if (favorites.indexOf(this.uuid) >= 0) {
+      this.doc.getElementById('favorite-badge').setAttribute('src', 'resource://button-rated');
+    }
   },
 
   select: function(event) {
