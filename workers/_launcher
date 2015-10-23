@@ -3,8 +3,9 @@ var program = require('commander').usage('<input>').parse(process.argv);
 var worker = require('./' + program.args[0]);
 var tripwire = require('tripwire');
 
-process.on('uncaughtException', function (e) {
-  console.error('WOKER: Event loop blocked for longer than 100 seconds.');
+process.on('uncaughtException', function(err) {
+  console.error('WORKER: Event loop blocked for longer than 100 seconds.');
+  console.error(err);
   process.exit(1);
 });
 
