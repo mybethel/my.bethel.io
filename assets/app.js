@@ -109,6 +109,7 @@ angular.module('Bethel', [
         window.location.reload();
       });
     });
+  });
 
   $scope.$on('$locationChangeStart', function(event, newUrl) {
     delete $scope.navActive;
