@@ -60,6 +60,12 @@ angular.module('Bethel.staff')
     sailsSocket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
   };
 
+  $scope.masquerade = function() {
+    var previousUser = $scope.$root.previousUser || {user: $scope.$root.user, ministry: $scope.$root.ministry};
+
+    sailsSocket.post('/session/masquerade', {user: $scope.user, previousUser: previousUser}).then(function () {window.location.reload();});
+  };
+
   $ctrl.init();
 
 }]);

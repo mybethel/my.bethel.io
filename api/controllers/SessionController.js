@@ -53,9 +53,20 @@ module.exports = {
       res.send({
         user: user,
         ministry: user.ministry,
-        isAdmin: user.hasRole('ROLE_SUPER_ADMIN')
+        isAdmin: user.hasRole('ROLE_SUPER_ADMIN') || req.session.isAdmin,
+        previousUser: req.session.previousUser
       });
     });
+  },
+
+  masquerade: function(req, res) {
+
+    req.session.user = req.param('user').id;
+    req.session.ministry = req.param('user').ministry.id;
+    req.session.previousUser = req.param('previousUser');
+    req.session.isAdmin = true;
+
+    res.ok();
   },
 
   destroy: function(req, res) {
