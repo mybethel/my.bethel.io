@@ -25,7 +25,7 @@
   <% _.each(podcastMedia, function(media) { if (media.url) { %>
   <item>
     <title><% if (media.name) { %><%= media.name %><% } else { var filename = media.url.split('/') %><%= filename[filename.length-1] %><% } %></title>
-    <pubDate><%= media.date.toUTCString() %></pubDate>
+    <% if (media.date) { %><pubDate><%= media.date.toUTCString() %></pubDate><% } %>
     <guid isPermaLink="false"><%= req.baseUrl %>/podcastmedia/download/<%= media.id %><%= PodcastHelper.extensionFromUrl(media.url) %></guid>
     <itunes:author><%= ministry.name %></itunes:author><% if (media.description) { %>
     <description>

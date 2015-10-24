@@ -51,7 +51,7 @@
 <% if (podcast.type === 'audio') { %>
   <div class="meta">
     <h1><%= episode.name %></h1>
-    <h2><%= podcast.name %><br /><small><%= episode.date.toLocaleDateString() %></small></h2>
+    <h2><%= podcast.name %><% if (episode.date) { %><br /><small><%= episode.date.toLocaleDateString() %></small><% } %></h2>
   </div>
 <% } %>
 
