@@ -8,48 +8,29 @@
   </div>
 </div>
 <div layout="row" ng-controller="mobileMediaController">
-  <div flex="60">
-    <md-card class="media-playlist">
-      <md-card-content>
-        <h3 class="light" style="margin-bottom:0;">Sermon Series</h3>
-      </md-card-content>
-      <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="playlistAdd($event)">
-        <md-tooltip md-direction="left">Add Sermon Series</md-tooltip>
-        <md-icon>folder</md-icon>
-      </md-button>
-      <md-list>
-        <md-list-item class="md-2-line" ng-click="editSeries()">
-          <img src="http://elevationchurch.org/wp-content/uploads/2015/03/TGOJ-960x540-300x169.jpg" style="width:100px;padding-right:16px" />
+  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="playlistAdd($event)">
+    <md-tooltip md-direction="left">Add Sermon Series</md-tooltip>
+    <md-icon>folder</md-icon>
+  </md-button>
+  <div flex="60" layout-padding>
+    <md-subheader class="md-no-sticky">Sermon Series</md-subheader>
+    <md-whiteframe class="md-whiteframe-z1 media-playlist" layout>
+      <md-list layout-fill>
+        <md-list-item class="md-2-line" ng-click="editSeries()" ng-repeat="item in media">
+          <img ng-if="item.media" src="https://images.bethel.io/images/{{ item.image ? item.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=100&amp;h=60" style="padding-right:16px" />
           <div class="md-list-item-text">
-            <h3>The Genius of Jesus</h3>
-            <p>March 7 - April 5, 2015</p>
+            <h3>{{ item.name }}</h3>
+            <p ng-if="item.date">{{ item.date | date : 'MMM d, yyyy' }}</p>
+            <p ng-if="item.media">{{ item.dateStart | date : 'MMM d, yyyy' }} - {{ item.dateEnd | date : 'MMM d, yyyy' }} ({{ media.length }} Episodes)</p>
           </div>
-          <md-button class="md-mini md-primary" ng-click="editSeries()">Edit</md-button>
-        </md-list-item>
-        <md-list-item class="md-2-line" ng-click="editSeries()">
-          <img src="http://elevationchurch.org/wp-content/uploads/2015/02/MOOD-300x169.jpg" style="width:100px;padding-right:16px" />
-          <div class="md-list-item-text">
-            <h3>Moodswingers</h3>
-            <p>February 7 - March 1, 2015</p>
-          </div>
-          <md-button class="md-mini md-primary" ng-click="editSeries()">Edit</md-button>
-        </md-list-item>
-        <md-list-item class="md-2-line" ng-click="editSeries()">
-          <img src="http://elevationchurch.org/wp-content/uploads/2015/01/TPOS1-300x169.jpg" style="width:100px;padding-right:16px" />
-          <div class="md-list-item-text">
-            <h3>The Power of Same</h3>
-            <p>January 3 - January 25, 2015</p>
-          </div>
-          <md-button class="md-mini md-primary" ng-click="editSeries()">Edit</md-button>
+          <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="item.media">Edit</md-button>
         </md-list-item>
       </md-list>
-    </md-card>
+    </md-whiteframe>
   </div>
-  <div flex="40">
-    <md-card>
-      <md-card-content>
-        <h3 class="light" style="margin-bottom:0;">Connected Media</h3>
-      </md-card-content>
+  <div flex="40" layout-padding>
+    <md-subheader class="md-no-sticky">Connected Media</md-subheader>
+    <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
       <md-list>
         <md-list-item>
           <md-icon>headset</md-icon>
@@ -75,6 +56,6 @@
           <md-button ng-disabled="true">Coming Soon</md-button>
         </md-list-item>
       </md-list>
-    </md-card>
+    </md-whiteframe>
   </div>
 </div>
