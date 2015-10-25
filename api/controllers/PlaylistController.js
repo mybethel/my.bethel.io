@@ -19,6 +19,7 @@ module.exports = {
           // Associate each media with a parent playlist within the date range.
           _.each(media, function(item, itemIndex) {
             var itemDate = item.date.getTime() / 1000;
+            media[itemIndex].type = PodcastHelper.mimeTypeFromUrl(item.url).split('/').shift();
             _.each(children, function(parent, index) {
               if (itemDate >= parent.dateStart.getTime() / 1000 && itemDate <= parent.dateEnd.getTime() / 1000) {
                 if (!children[index].media) children[index].media = [];
