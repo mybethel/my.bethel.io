@@ -2,28 +2,29 @@ angular.module('Bethel.mobile').controller('mobileMediaController', MobileMedia)
 
 function MobileMedia($scope, notifyService, sailsSocket) {
 
+  this.init = function() {
+    // Populate the playlist for this ministry.
+    // @todo: Support for multiple playlists
+    sailsSocket.get('/playlist?name=Sermon+Series&ministry=' + $scope.$root.ministry.id).then(function(playlist) {
+      $scope.playlist = playlist[0];
+
+      // Create a new playlist if one isn't found.
+      if ($scope.playlist) return;
+      $scope.playlist = {
+        new: true
+      };
+    });
+  };
+
   this.populateMedia = function() {
     sailsSocket.get('/playlist/' + $scope.playlist.id).then(function(playlist) {
       $scope.media = playlist.media;
-      console.log(playlist)
     });
   };
 
   var $ctrl = this;
 
   $scope.podcasts = sailsSocket.populateMany('podcast', { 'ministry': $scope.$root.ministry.id });
-
-  // Populate the playlist for this ministry.
-  // @todo: Support for multiple playlists
-  sailsSocket.get('/playlist?name=Sermon+Series&ministry=' + $scope.$root.ministry.id).then(function(playlist) {
-    $scope.playlist = playlist[0];
-
-    // Create a new playlist if one isn't found.
-    if ($scope.playlist) return;
-    $scope.playlist = {
-      new: true
-    };
-  });
 
   sailsSocket.editable($scope, 'playlist', ['podcastAudio', 'podcastVideo'], function() {
     notifyService.showCommon('saved');
@@ -45,7 +46,13 @@ function MobileMedia($scope, notifyService, sailsSocket) {
         $ctrl.populateMedia();
       });
     }
-  })
+  });
+
+  // Bind the podcast list over socket.io for this ministry.
+  $scope.$root.$watch('ministry', function (newValue) {
+    if (!newValue || !newValue.id) return;
+    $ctrl.init();
+  });
 
 }
 
