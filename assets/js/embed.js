@@ -2,13 +2,16 @@
   var VJSButton = videojs.getComponent('Button');
 
   var DownloadButton = videojs.extend(VJSButton, {
+    uuid: '',
     constructor: function(player, options) {
+      if (!player.options().uuid) return;
+      this.uuid = player.options().uuid;
       VJSButton.call(this, player, options);
       this.controlText('Download');
       this.addClass('vjs-download-button');
     },
     handleClick: function() {
-      window.location.href = '/podcastmedia/download/' + player.options().uuid;
+      window.location.href = '/podcastmedia/download/' + this.uuid;
     }
   });
 
