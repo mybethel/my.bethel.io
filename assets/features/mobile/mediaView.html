@@ -15,7 +15,7 @@
           <div class="md-list-item-text">
             <h3>{{ item.name }}</h3>
             <p ng-if="item.date">{{ item.date | date : 'MMM d, yyyy' }}</p>
-            <p ng-if="item.media">{{ item.dateStart | date : 'MMM d, yyyy' }} - {{ item.dateEnd | date : 'MMM d, yyyy' }} ({{ media.length }} Episodes)</p>
+            <p ng-if="item.media">{{ item.dateStart | date : 'MMM d, yyyy' }} - {{ item.dateEnd | date : 'MMM d, yyyy' }} ({{ item.media.length }} Episodes)</p>
           </div>
           <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="!item.media">Add Sermon Series</md-button>
           <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="item.media">Edit</md-button>

@@ -20,11 +20,10 @@ module.exports = {
           // Associate each media with a parent playlist within the date range.
           _.each(media, function(item, itemIndex) {
             if (!item) return;
-            var itemDate = item.date.getTime() / 1000;
             media[itemIndex].type = PodcastHelper.mimeTypeFromUrl(item.url).split('/').shift();
 
             // Group audio and video media from the same date.
-            if (media[itemIndex + 1] && moment(item.date).format('MMDDYY') == moment(media[itemIndex + 1].date).format('MMDDYY')) {
+            if (media[itemIndex + 1] && moment(item.date).isBetween(moment(media[itemIndex + 1].date).subtract(1, 'days').startOf('day'), moment(media[itemIndex + 1].date).add(1, 'days').endOf('day'))) {
               media[itemIndex + 1].type = PodcastHelper.mimeTypeFromUrl(media[itemIndex + 1].url).split('/').shift();
               var mediaGrouping = {};
               mediaGrouping.date = item.date;
@@ -36,7 +35,7 @@ module.exports = {
             }
 
             _.each(children, function(parent, index) {
-              if (itemDate >= parent.dateStart.getTime() / 1000 && itemDate <= parent.dateEnd.getTime() / 1000) {
+              if (moment(item.date).isBetween(moment(parent.dateStart).startOf('day'), moment(parent.dateEnd).endOf('day'))) {
                 if (!children[index].media) children[index].media = [];
                 children[index].media.push(media[itemIndex]);
                 delete media[itemIndex];
