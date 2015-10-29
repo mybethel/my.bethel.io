@@ -234,7 +234,7 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
     PodcastMedia.update({ uuid: videoId, podcast: podcast.id }, payload, function podcastMediaUpdate(err, media) {
 
       // If no error and a media object is returned, the media already exists.
-      if (!err && media) {
+      if (!err && media && media[0]) {
         PodcastMedia.publishUpdate(media[0].id, payload);
         return resolve();
       }

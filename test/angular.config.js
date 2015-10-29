@@ -10,7 +10,7 @@ module.exports = function(config) {
       'assets/features/**/*.js': 'coverage',
       'assets/js/app.js': 'coverage',
       'assets/js/**/!(dependencies)/*.js': 'coverage',
-      'assets/shared/*.js': 'coverage'
+      'assets/shared/!(sails.io)*.js': 'coverage'
     },
     reporters: ['spec', 'coverage'],
     coverageReporter: {

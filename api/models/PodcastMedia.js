@@ -71,7 +71,6 @@ module.exports = {
 	},
 
   afterCreate: function(values, next) {
-    sails.log('create id: '+values.id);
     PodcastMedia.publishCreate({
       id: values.id,
       date: values.date,
