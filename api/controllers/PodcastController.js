@@ -234,7 +234,7 @@ module.exports = {
   subscribers: function(req, res) {
     var statsDate = Number(moment().subtract(1, 'week').format('GGGGWW'));
 
-    Stats.find({ object: req.param('id'), type: 'podcast' }).sort('date desc').limit(24).exec(function (err, historical) {
+    Stats.find({ object: req.param('id'), type: 'podcast' }).sort('date desc').skip(1).limit(24).exec(function (err, historical) {
       var historicalStats = {};
       if (historical.length >= 1) {
         historical.forEach(function(historicalStat) {
