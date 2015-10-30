@@ -40,7 +40,7 @@ module.exports = {
     },
 
     color: {
-      type: 'string'
+      type: 'json'
     },
 
     cms: {

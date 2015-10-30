@@ -1,54 +1,92 @@
 <div layout="row" ng-controller="visualsController">
-  <div flex="60">
+  <div flex="60" layout-padding>
     <md-card>
-      <img ng-src="{{ ministry.poster | imageResize : 1200 : 650 : 'default_poster.jpg' }}">
-      <md-card-content style="margin-top:-150px;">
-        <img ng-src="{{ ministry.image | imageResize : 200 : 200 : 'DefaultPodcaster.png' }}" alt="{{ ministry.name }}" style="float:left;margin-right:20px;" />
-        <h2 style="margin-top:97px;color:#FFF">{{ ministry.name }}</h2>
-        <md-button class="md-raised" style="margin-left:0;">Change Ministry Logo</md-button>
-        <md-button class="md-raised">Update Cover Image</md-button>
-      </md-card-content>
-      <md-card-content>
+      <md-card-content layout="column">
         <md-input-container>
-          <label>Ministry Subtitle</label>
+          <label>Ministry Name</label>
+          <input ng-model="ministry.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+        </md-input-container>
+        <md-input-container>
+          <label>Subtitle or Current Series</label>
           <input ng-model="ministry.subtitle" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
         </md-input-container>
         <md-input-container>
-          <label>Ministry Description</label>
-          <textarea ng-model="ministry.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="3" md-maxlength="4000"></textarea>
+          <label>About Your Ministry</label>
+          <textarea ng-model="ministry.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="5"></textarea>
         </md-input-container>
       </md-card-content>
+      <div layout="row" layout-padding>
+        <md-input-container flex="30">
+          <label>Brand Primary</label>
+          <input type="text" ng-model="ministry.color.primary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="top:8px;background-color:{{ ministry.color.primary }}"></div>
+        </md-input-container>
+
+        <md-input-container flex="30" style="margin-left:20px">
+          <label>Brand Secondary</label>
+          <input type="text" ng-model="ministry.color.secondary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="top:8px;background-color:{{ ministry.color.secondary }}"></div>
+        </md-input-container>
+
+        <md-input-container flex="40" style="margin-left:20px">
+          <label>Channel Background</label>
+          <input type="text" ng-model="ministry.color.channelBackground" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+          <div class="color-picker" style="top:8px;background-color:{{ ministry.color.channelBackground }}"></div>
+        </md-input-container>
+      </div>
     </md-card>
   </div>
-  <div flex="40">
-    <md-card>
-      <md-card-content>
-        <h3 class="light" style="margin-bottom:0;">Icons and Colors</h3>
+  <div flex="40" layout-padding>
+    <md-card class="mobile-preview-tvos">
+      <img ng-src="{{ ministry.poster | imageResize : 960 : 180 : 'default_poster.jpg' }}">
+      <md-card-content style="background-color:{{ ministry.color.channelBackground || '#292929' }};height:160px;">
+        <h4 class="title">{{ ministry.name }}</h4>
+        <p>{{ ministry.subtitle }}</p>
+        <h4>Most Recent</p>
+        <div class="tile-lockup">
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+        </div>
+        <h3 class="light" style="margin-bottom:0;text-align:center;">AppleTV Preview</h3>
       </md-card-content>
-      <md-list>
-        <md-list-item>
-          <p>Brand Colors</p>
-          <div style="width:30px;height:30px;background:#106982;border-radius:15px;margin-right: 4px;"></div>
-          <div style="width:30px;height:30px;background:#1591b5;border-radius:15px"></div>
-        </md-list-item>
-        <md-list-item>
-          <p>Channel Icon (AppleTV)</p>
-          <img src="/images/devices/tvos-icon.png" style="width:67px;border-radius:5px" />
-        </md-list-item>
-        <md-divider style="margin-top:20px"></md-divider>
-        <md-list-item>
-          <p><em>Enable stand-alone app to customize?</em></p>
-          <md-switch class="md-primary" style="margin-right:0"></md-switch>
-        </md-list-item>
-        <md-list-item style="opacity:0.6">
-          <p>iPhone and iPad</p>
-          <img src="/images/devices/ios-icon.png" style="width:40px;border-radius:10px" />
-        </md-list-item>
-        <md-list-item style="opacity:0.6">
-          <p>AppleTV</p>
-          <img src="/images/devices/tvos-icon.png" style="width:67px;border-radius:5px" />
-        </md-list-item>
-      </md-list>
+      <div class="md-actions" layout="row" layout-align="center center">
+        <md-list layout-fill>
+          <md-list-item class="md-2-line" ng-click="upload()">
+            <div class="md-list-item-text">
+              <h3>Cover Image</h3>
+              <p>Displayed on your channel page</p>
+            </div>
+            <img ng-src="{{ ministry.poster | imageResize : 77 : 43 : 'default_poster.jpg' }}" style="width:77px;" />
+          </md-list-item>
+          <md-list-item class="md-2-line" ng-click="upload()">
+            <div class="md-list-item-text">
+              <h3>Channel Icon</h3>
+              <p>Shown in search results and favorites</p>
+            </div>
+            <img src="/images/devices/tvos-icon.png" style="width:77px;border-radius:5px" />
+          </md-list-item>
+          <md-list-item class="md-2-line">
+            <md-icon>layers</md-icon>
+            <div class="md-list-item-text">
+              <h3>3D Parallax Icon</h3>
+              <p>Enhanced channel and series icons</p>
+            </div>
+            <md-switch class="md-primary" style="margin-right:0"></md-switch>
+          </md-list-item>
+          <md-list-item class="md-2-line">
+            <md-icon>smartphone</md-icon>
+            <div class="md-list-item-text">
+              <h3>Standalone App</h3>
+              <p>Your own private app in the App Store</p>
+            </div>
+            <md-switch class="md-primary" style="margin-right:0"></md-switch>
+          </md-list-item>
+        </md-list>
+      </div>
+    </md-card>
+    <md-subheader class="md-no-sticky">Stay tuned for iOS and Android coming soon!</md-subheader>
     </md-card>
   </div>
 </div>
