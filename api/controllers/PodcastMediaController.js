@@ -25,7 +25,7 @@ module.exports = {
       }
 
       if (embed) {
-        var embedUrl = (media.variants && media.variants.hls) ? media.variants.hls : media.url;
+        var embedUrl = (req.query.variant === 'hls' && media.variants && media.variants.hls) ? media.variants.hls : media.url;
         return res.redirect(embedUrl);
       }
 
