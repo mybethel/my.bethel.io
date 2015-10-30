@@ -19,7 +19,7 @@
         <img src="https://images.bethel.io/images/default_poster.jpg?crop=faces&amp;fit=crop&amp;w=1920&amp;h=360" width="1920" height="360" />
       </background>
       <title><%= ministry.name %></title>
-      <subtitle><%= ministry.subtitle %></subtitle>
+      <% if (ministry.subtitle) { %><subtitle><%= ministry.subtitle %></subtitle><% } %>
       <row>
         <buttonLockup action="goLive">
           <badge src="resource://button-preview" />
@@ -35,6 +35,7 @@
         </buttonLockup>
       </row>
     </identityBanner>
+    <% if (typeof episodes !== 'undefined') { %>
     <collectionList>
       <shelf>
         <header>
@@ -43,51 +44,29 @@
         <section>
           <% _.each(episodes, function(episode) { %>
           <lockup action="playEpisode" episode="<%= episode.url %>">
-            <img src="<%= episode.thumbnail %>" width="308" height="231" />
+            <img src="<%= episode.thumbnail %>" width="400" height="225" />
             <title><%= episode.name %></title>
           </lockup>
           <% }); %>
         </section>
       </shelf>
-      <separator>
-        <button action="browseMode">
-          <text style="color:#fff">Past Series <badge class="customBadgeLayout" src="resource://button-dropdown" width="31" height="14" /></text>
-        </button>
-      </separator>
+      <% if (typeof series !== 'undefined') { %>
+      <separator></separator>
       <shelf>
+        <header>
+          <title>Sermon Series</title>
+        </header>
         <section>
+          <% _.each(series, function(siri) { %>
           <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_1_square.jpg" width="548" height="340" class="roundedImageCorners" />
+            <img src="https://images.bethel.io/images/<%= siri.image || 'DefaultPodcaster.png' %>?crop=faces&amp;fit=crop&amp;w=548&amp;h=340" width="548" height="340" class="roundedImageCorners" />
+            <title><%= siri.name %></title>
           </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_2_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_3_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_4_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_5_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_6_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_7_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_8_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_9_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
-          <lockup>
-            <img src="${this.BASEURL}resources/images/italy/italy_10_square.jpg" width="548" height="340" class="roundedImageCorners" />
-          </lockup>
+          <% }); %>
         </section>
       </shelf>
+      <% } %>
     </collectionList>
+    <% } %>
   </stackTemplate>
 </document>

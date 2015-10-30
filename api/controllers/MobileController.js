@@ -44,6 +44,41 @@ module.exports = {
         return;
       }
 
+      function noMediaResponse() {
+        res.view({
+          layout: 'none',
+          ministry: results[0]
+        });
+      }
+
+      PlaylistBuilder.find(query).then(function(playlistId) {
+        PlaylistBuilder.from(playlistId).then(function(playlist) {
+
+          var episodes = []
+          for (var i = 0; i < 10; i++) {
+            if (playlist.media[i].type === 'video') {
+              episodes.push(playlist.media[i]);
+            } else if (playlist.media[i].video) {
+              episodes.push(playlist.media[i].video);
+            }
+          }
+
+          var series = []
+          for (var i = 0; i < 10; i++) {
+            if (playlist.media[i].media) {
+              series.push(playlist.media[i]);
+            }
+          }
+
+          res.view({
+            layout: 'none',
+            ministry: results[0],
+            episodes: episodes,
+            series: series
+          });
+        }, noMediaResponse);
+      }, noMediaResponse);
+
     });
   }
 

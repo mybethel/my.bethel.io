@@ -1,6 +1,15 @@
 var moment = require('moment'),
     Promise = require('bluebird');
 
+exports.find = function(ministryId) {
+  return new Promise(function(resolve, reject) {
+    Playlist.findOne({ ministry: ministryId, name: 'Sermon Series' }).exec(function(err, playlist) {
+      if (err || !playlist) return reject();
+      resolve(playlist.id);
+    });
+  });
+}
+
 exports.from = function(parentPlaylist) {
 
   var start = Date.now();
@@ -8,7 +17,6 @@ exports.from = function(parentPlaylist) {
   return new Promise(function(resolve, reject) {
 
     Playlist.findOne(parentPlaylist).exec(function(err, playlist) {
-      console.log(parentPlaylist, err, playlist)
       if (err || !playlist) return reject();
 
       Playlist.find({ parent: parentPlaylist }).sort('dateStart desc').exec(function(err, children) {
