@@ -44,13 +44,6 @@ module.exports = {
         return;
       }
 
-      PodcastMedia.find({ url: { contains: '.mp4' }}).limit(10).exec(function (err, allMedia) {
-        res.view({
-          layout: 'none',
-          ministry: results[0],
-          episodes: allMedia
-        });
-      });
     });
   }
 
