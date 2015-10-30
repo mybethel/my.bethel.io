@@ -11,7 +11,8 @@ angular.module('Bethel.podcast')
   $scope.uploadProgress = 0;
   $scope.editing = false;
   $scope.subscriberCount = 0;
-  $scope.subscriberChange = 0;
+  $scope.subscriberDifference = 0;
+  $scope.subscriberPercentChange = 0;
 
   $scope.subscriberChart = {
     data: [[]],
@@ -52,8 +53,9 @@ angular.module('Bethel.podcast')
       $scope.subscriberChart.labels.push(moment().subtract(10 - i, 'weeks').format('MMM D'));
     }
     $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0];
-    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0]
-    $scope.subscriberChange = (($scope.subscriberCount - $scope.subscriberCompare) / $scope.subscriberCompare) * 100;
+    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0];
+    $scope.subscriberDifference = $scope.subscriberCount - $scope.subscriberCompare;
+    $scope.subscriberPercentChange = Math.abs(($scope.subscriberDifference / $scope.subscriberCompare) * 100);
   };
 
   $scope.$watch('podcastStats', function (newValue) {
@@ -64,9 +66,10 @@ angular.module('Bethel.podcast')
       $scope.subscriberChart.data[0].push(subscribers);
       $scope.subscriberChart.labels.push(moment(String(week), 'YYYYw').format('MMM D'));
     });
-    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-2)[0] || 0;
-    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-3)[0];
-    $scope.subscriberChange = (($scope.subscriberCount - $scope.subscriberCompare) / $scope.subscriberCompare) * 100;
+    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0] || 0;
+    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0];
+    $scope.subscriberDifference = $scope.subscriberCount - $scope.subscriberCompare;
+    $scope.subscriberPercentChange = Math.abs(($scope.subscriberDifference / $scope.subscriberCompare) * 100);
 
     $ctrl.populateDemo();
   }, true);

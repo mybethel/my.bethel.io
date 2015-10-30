@@ -58,10 +58,10 @@
           <small>audience</small>
         </md-card-content>
       </md-card>
-      <md-card ng-class="subscriberChange > 1 ? 'good' : 'bad'" ng-if="subscriberChange !== 0">
+      <md-card ng-class="subscriberDifference > 0 ? 'good' : 'bad'" ng-if="subscriberPercentChange !== 0">
         <md-card-content>
-          <strong>{{ subscriberChange | number : 1 }}%</strong><br />
-          <small>{{ subscriberChange > 1 ? 'increase' : 'decrease' }}</small>
+          <strong>{{ subscriberPercentChange | number : 1 }}%</strong><br />
+          <small>{{ subscriberDifference > 0 ? 'increase' : 'decrease' }}</small>
         </md-card-content>
       </md-card>
     </div>
