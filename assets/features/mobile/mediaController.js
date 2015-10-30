@@ -28,6 +28,7 @@ function MobileMedia($scope, notifyService, sailsSocket) {
 
   sailsSocket.editable($scope, 'playlist', ['podcastAudio', 'podcastVideo'], function() {
     notifyService.showCommon('saved');
+    $ctrl.populateMedia();
   });
 
   $scope.$watch('playlist', function(newValue, oldValue) {
