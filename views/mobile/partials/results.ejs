@@ -4,7 +4,7 @@
 <section id="results">
   <% _.each(ministries, function(ministry) { %>
   <lockup uuid="<%= ministry.id %>">
-    <img src="https://images.bethel.io/images/<%= ministry.image ? ministry.image : 'DefaultPodcaster.png' %>?crop=faces&amp;fit=crop&amp;w=548&amp;h=340" width="548" height="340" class="roundedImageCorners" />
+    <img src="https://images.bethel.io/images/<%= ministry.image ? ministry.image : 'DefaultPodcaster.png' %>?crop=entropy&amp;fit=crop&amp;w=548&amp;h=340" width="548" height="340" class="roundedImageCorners" />
     <title><%= ministry.name %></title>
   </lockup>
   <% }); %>

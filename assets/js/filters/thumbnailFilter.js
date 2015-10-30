@@ -4,7 +4,7 @@ angular.module('Bethel.media').filter('thumbnail', function() {
 
     var ministry = (typeof media.ministry.id === 'undefined') ? media.ministry : media.ministry.id,
         prefix = 'https://images.bethel.io/',
-        postfix = '?crop=faces&fit=crop&w=' + width + '&h=' + height,
+        postfix = '?crop=entropy&fit=crop&w=' + width + '&h=' + height,
         thumbnail = '';
 
     if (media.status === 'STATUS_UPLOADING') return prefix + 'images/DefaultPodcaster.png' + postfix;

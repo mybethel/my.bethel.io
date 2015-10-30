@@ -8,7 +8,7 @@
         </md-list-item>
         <md-list-item class="md-2-line" ng-class="item.media ? 'playlist' : 'standalone'" ng-click="editSeries()" ng-repeat="item in media">
           <img ng-if="item.media" src="https://images.bethel.io/images/{{ item.image ? item.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=100&amp;h=60" style="padding-right:16px" />
-          <div class="media-type">
+          <div ng-if="item.type || item.audio || item.video" class="media-type">
             <md-icon ng-if="item.type == 'audio' || item.audio">headset</md-icon>
             <md-icon ng-if="item.type == 'video' || item.video">ondemand_video</md-icon>
           </div>
