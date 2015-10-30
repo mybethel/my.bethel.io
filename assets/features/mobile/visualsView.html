@@ -14,19 +14,19 @@
           <md-input-container flex="30">
             <label>Brand Primary</label>
             <input type="text" ng-model="ministry.color.primary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-            <div class="color-picker" style="top:8px;background-color:{{ ministry.color.primary }}"></div>
+            <div class="color-picker" style="top:5px;background-color:{{ ministry.color.primary }}"></div>
           </md-input-container>
 
           <md-input-container flex="30" style="margin-left:20px">
             <label>Brand Secondary</label>
             <input type="text" ng-model="ministry.color.secondary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-            <div class="color-picker" style="top:8px;background-color:{{ ministry.color.secondary }}"></div>
+            <div class="color-picker" style="top:5px;background-color:{{ ministry.color.secondary }}"></div>
           </md-input-container>
 
           <md-input-container flex="40" style="margin-left:20px">
             <label>Channel Background</label>
             <input type="text" ng-model="ministry.color.channelBackground" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-            <div class="color-picker" style="top:8px;background-color:{{ ministry.color.channelBackground }}"></div>
+            <div class="color-picker" style="top:5px;background-color:{{ ministry.color.channelBackground }}"></div>
           </md-input-container>
         </div>
         <md-input-container>
@@ -73,7 +73,7 @@
               <h3>3D Parallax Icon</h3>
               <p>Enhanced channel and series icons</p>
             </div>
-            <md-switch class="md-primary" style="margin-right:0"></md-switch>
+            <md-switch class="md-primary" style="margin-right:0" ng-click="enhancedIcon($event)" ng-disabled="ministry.enhanced" ng-model="ministry.enhanced"></md-switch>
           </md-list-item>
           <md-list-item class="md-2-line">
             <md-icon>smartphone</md-icon>

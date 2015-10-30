@@ -1,0 +1,30 @@
+<md-dialog flex="50" class="wizard">
+  <md-dialog-content class="sticky-container">
+    <md-toolbar>
+      <h1>Enhanced 3D Icons</h1>
+      <p>AppleTV-optimized channel icon and series artwork.</p>
+    </md-toolbar>
+
+    <md-content layout="row" style="background-color:#fafafa">
+      <video width="262" height="262" autoplay="" loop="" style="display: inline-block;" poster="https://developer.apple.com/tvos/human-interface-guidelines/images/overview-parallax-artwork-poster_2x.png" data-hires-status="pending">
+				<source src="https://developer.apple.com/tvos/human-interface-guidelines/images/overview-parallax-artwork.mp4" type="video/mp4">
+				<source src="https://developer.apple.com/tvos/human-interface-guidelines/images/overview-parallax-artwork.ogv" type="video/ogg">
+				<source src="https://developer.apple.com/tvos/human-interface-guidelines/images/overview-parallax-artwork.webm" type="video/webm">
+			</video>
+      <div flex="60" layout-padding>
+        <p>Enable enhanced icons to turn your channel icon and series artwork into 3D images with a subtle parallax effect on the AppleTV.</p>
+        <p>Each icon is hand created from your original layered Photoshop graphic.
+          Individual series graphics start at <b>$10</b> with discounted monthly packages available.
+          We'll start you off by converting your logo into a 3D channel icon at no cost!</p>
+      </div>
+    </md-content>
+
+  </md-dialog-content>
+
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="close()">Close</md-button>
+    <md-button class="md-primary" ng-click="contactMe()">Contact Me</md-button>
+  </div>
+
+</md-dialog>
