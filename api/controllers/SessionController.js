@@ -50,11 +50,19 @@ module.exports = {
       if (err || !user)
         return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
-      res.send({
+      var payload = {
         user: user,
         ministry: user.ministry,
         isAdmin: user.hasRole('ROLE_SUPER_ADMIN') || req.session.isAdmin,
         previousUser: req.session.previousUser
+      };
+
+      User.update(req.session.user, { lastLogin: new Date() }, function (err, user) {
+        if (err)
+          return res.forbidden({ error: 'Please login at http://my.bethel.io' });
+
+        payload.user.lastLogin = user.lastLogin;
+        res.send(payload);
       });
     });
   },
