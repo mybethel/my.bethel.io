@@ -10,30 +10,30 @@
           <label>Subtitle or Current Series</label>
           <input ng-model="ministry.subtitle" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
         </md-input-container>
+        <div layout="row">
+          <md-input-container flex="30">
+            <label>Brand Primary</label>
+            <input type="text" ng-model="ministry.color.primary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+            <div class="color-picker" style="top:8px;background-color:{{ ministry.color.primary }}"></div>
+          </md-input-container>
+
+          <md-input-container flex="30" style="margin-left:20px">
+            <label>Brand Secondary</label>
+            <input type="text" ng-model="ministry.color.secondary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+            <div class="color-picker" style="top:8px;background-color:{{ ministry.color.secondary }}"></div>
+          </md-input-container>
+
+          <md-input-container flex="40" style="margin-left:20px">
+            <label>Channel Background</label>
+            <input type="text" ng-model="ministry.color.channelBackground" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
+            <div class="color-picker" style="top:8px;background-color:{{ ministry.color.channelBackground }}"></div>
+          </md-input-container>
+        </div>
         <md-input-container>
           <label>About Your Ministry</label>
           <textarea ng-model="ministry.description" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" columns="1" rows="5"></textarea>
         </md-input-container>
       </md-card-content>
-      <div layout="row" layout-padding>
-        <md-input-container flex="30">
-          <label>Brand Primary</label>
-          <input type="text" ng-model="ministry.color.primary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-          <div class="color-picker" style="top:8px;background-color:{{ ministry.color.primary }}"></div>
-        </md-input-container>
-
-        <md-input-container flex="30" style="margin-left:20px">
-          <label>Brand Secondary</label>
-          <input type="text" ng-model="ministry.color.secondary" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-          <div class="color-picker" style="top:8px;background-color:{{ ministry.color.secondary }}"></div>
-        </md-input-container>
-
-        <md-input-container flex="40" style="margin-left:20px">
-          <label>Channel Background</label>
-          <input type="text" ng-model="ministry.color.channelBackground" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
-          <div class="color-picker" style="top:8px;background-color:{{ ministry.color.channelBackground }}"></div>
-        </md-input-container>
-      </div>
     </md-card>
   </div>
   <div flex="40" layout-padding>
