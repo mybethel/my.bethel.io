@@ -24,7 +24,12 @@ function MobileMedia($scope, notifyService, sailsSocket) {
 
   var $ctrl = this;
 
+  $scope.playlistSettings = false;
   $scope.podcasts = sailsSocket.populateMany('podcast', { 'ministry': $scope.$root.ministry.id });
+
+  $scope.playlistToggle = function() {
+    $scope.playlistSettings = !$scope.playlistSettings;
+  };
 
   sailsSocket.editable($scope, 'playlist', ['podcastAudio', 'podcastVideo'], function() {
     notifyService.showCommon('saved');

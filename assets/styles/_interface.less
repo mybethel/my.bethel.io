@@ -97,6 +97,12 @@ button.md-button {
   }
 }
 
+md-icon.bucket {
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
+}
+
 // Overriding md-button style to force wrapping
 a.md-button.button-wrap {
   white-space: normal;
@@ -224,4 +230,21 @@ md-input-container .md-input[disabled] {
       z-index: -1;
     }
   }
+}
+
+md-whiteframe > md-toolbar {
+  background-color: #FFF !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  .md-toolbar-tools {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 16px;
+    .md-button md-icon {
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
+
+md-whiteframe .settings-drawer {
+  background-color: #f0f0f0;
+  padding-top: 18px;
 }

@@ -1,67 +1,61 @@
-<div layout="row" ng-controller="mobileMediaController">
-  <div flex="60" layout-padding>
-    <md-subheader class="md-no-sticky">Sermon Series</md-subheader>
-    <md-whiteframe class="md-whiteframe-z1 media-playlist" layout>
-      <md-list layout-fill>
-        <md-list-item ng-if="media.length < 1">
-          Connect an audio or video podcast to the right to get started...
-        </md-list-item>
-        <md-list-item class="md-2-line" ng-class="item.media ? 'playlist' : 'standalone'" ng-click="editSeries()" ng-repeat="item in media">
-          <img ng-if="item.media" src="https://images.bethel.io/images/{{ item.image ? item.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=100&amp;h=60" style="padding-right:16px" />
-          <div ng-if="item.type || item.audio || item.video" class="media-type">
-            <md-icon ng-if="item.type == 'audio' || item.audio">headset</md-icon>
-            <md-icon ng-if="item.type == 'video' || item.video">ondemand_video</md-icon>
-          </div>
-          <div class="md-list-item-text">
-            <h3>{{ item.name }}</h3>
-            <p ng-if="item.date">{{ item.date | date : 'MMM d, yyyy' }}</p>
-            <p ng-if="item.media">{{ item.dateStart | date : 'MMM d, yyyy' }} - {{ item.dateEnd | date : 'MMM d, yyyy' }} ({{ item.media.length }} Episodes)</p>
-          </div>
-          <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="!item.media">Add Sermon Series</md-button>
-          <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="item.media">Edit</md-button>
-          <md-divider ng-if="!$last"></md-divider>
-        </md-list-item>
-      </md-list>
-    </md-whiteframe>
-  </div>
-  <div class="media-playlist-tools" flex="40" layout-padding>
-    <md-subheader class="md-no-sticky">Playlist Media</md-subheader>
-    <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <md-list>
-        <md-list-item>
-          <md-icon>headset</md-icon>
-          <p><span ng-if="!playlist.podcastAudio">Audio</span></p>
-          <md-input-container style="margin-top:19px">
+<div layout="row" ng-controller="mobileMediaController" layout-margin style="padding:8px">
+  <md-whiteframe class="md-whiteframe-1dp media-playlist" layout="column" layout-fill>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>Sermon Series</span>
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" aria-label="Add Sermon Series">
+          <md-icon>add</md-icon>
+        </md-button>
+        <md-button aria-label="Playlist Settings" class="md-icon-button" ng-class="{ 'md-primary': playlistSettings }" ng-click="playlistToggle()">
+          <md-icon>settings</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <div class="settings-drawer" ng-show="playlistSettings">
+      <div layout="row">
+        <div flex="33" layout="column" layout-align="center center">
+          <md-icon class="bucket">headset</md-icon>
+          <md-input-container style="margin-top:0">
             <md-select ng-model="playlist.podcastAudio.id" placeholder="Connect">
               <md-option ng-repeat="podcast in podcasts" value="{{ podcast.id }}" ng-show="{{ podcast.type == 1 }}">{{ podcast.name }}</md-option>
             </md-select>
           </md-input-container>
-        </md-list-item>
-        <md-list-item>
-          <md-icon>ondemand_video</md-icon>
-          <p><span ng-if="!playlist.podcastVideo">Video</span></p>
-          <md-input-container style="margin-top:19px">
+        </div>
+        <div flex="33" layout="column" layout-align="center center">
+          <md-icon class="bucket">ondemand_video</md-icon>
+          <md-input-container style="margin-top:0">
             <md-select ng-model="playlist.podcastVideo.id" placeholder="Connect">
               <md-option ng-repeat="podcast in podcasts" value="{{ podcast.id }}" ng-show="{{ podcast.type == 2 }}">{{ podcast.name }}</md-option>
             </md-select>
           </md-input-container>
-        </md-list-item>
-        <md-list-item ng-click="connect()" ng-disabled="true">
-          <md-icon>language</md-icon>
-          <p>Alternate Languages</p>
-          <md-button ng-disabled="true">Coming Soon</md-button>
-        </md-list-item>
-      </md-list>
-    </md-whiteframe>
-    <md-subheader class="md-no-sticky">Tips and Tricks</md-subheader>
-    <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <ul>
-        <li>Video podcast required for AppleTV compatibility.</li>
-        <li>Episodes dated within 24hrs of each other are linked.</li>
-        <li>Date and title can be edited in the podcast section.</li>
-        <li>Add a Sermon Series to group multiple weeks together.</li>
-        <li>Weeks with no sermon series are standalone episodes.</li>
-      </ul>
-    </md-whiteframe>
-  </div>
+        </div>
+        <div flex="33" layout="column" layout-align="center center">
+          <md-icon class="bucket">language</md-icon>
+          <p style="margin-top:0;margin-bottom:24px">Languages Coming Soon</p>
+        </div>
+      </div>
+      <md-divider></md-divider>
+    </div>
+    <md-list>
+      <md-subheader class="md-warn" ng-if="!playlist.podcastVideo.id">Connect a video podcast for AppleTV compatibility.</md-subheader>
+      <md-list-item class="md-2-line" ng-class="item.media ? 'playlist' : 'standalone'" ng-click="editSeries()" ng-repeat="item in media">
+        <img ng-if="item.media" src="https://images.bethel.io/images/{{ item.image ? item.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=100&amp;h=60" style="padding-right:16px" />
+        <div ng-if="item.type || item.audio || item.video" class="media-type">
+          <md-icon ng-if="item.type == 'audio' || item.audio">headset</md-icon>
+          <md-icon ng-if="item.type == 'video' || item.video">ondemand_video</md-icon>
+        </div>
+        <div class="md-list-item-text">
+          <h3>{{ item.name }}</h3>
+          <p ng-if="item.date">{{ item.date | date : 'MMM d, yyyy' }}</p>
+          <p ng-if="item.media">{{ item.dateStart | date : 'MMM d, yyyy' }} - {{ item.dateEnd | date : 'MMM d, yyyy' }} ({{ item.media.length }} Episodes)</p>
+        </div>
+        <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="!item.media">Add Sermon Series</md-button>
+        <md-button class="md-mini md-primary" ng-click="editSeries()" ng-if="item.media">Edit</md-button>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-whiteframe>
 </div>
