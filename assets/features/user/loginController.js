@@ -10,15 +10,16 @@ angular.module('Bethel.user')
 
       // Confirm that login was sucessful.
       authService.loginConfirmed();
-    }, function(error) {
+    }, function(response) {
       angular.element(document.querySelector('#login-signup'))
         .addClass('shake animated')
         .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
           angular.element(this).removeClass('shake animated');
         });
 
-      // Set the error scope to associate an error with a field.
-      return $scope.error = error;
+      if (!response.error) return;
+      $scope.userLoginForm.email.$setValidity('loginValid', !response.error.name);
+      $scope.userLoginForm.password.$setValidity('loginValid', !response.error.pass);
     });
   };
 
@@ -34,10 +35,9 @@ angular.module('Bethel.user')
 
   };
 
-  $scope.$watch('error', function (error) {
-    if (!error) return;
-    $scope.userLoginForm.email.$setValidity('loginValid', !error.name);
-    $scope.userLoginForm.password.$setValidity('loginValid', !error.pass);
+  // Reset the validity of the password field on a re-attempt.
+  $scope.$watch('credentials.pass', function() {
+    $scope.userLoginForm.password.$setValidity('loginValid', true);
   });
 
 }]);

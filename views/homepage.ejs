@@ -5,7 +5,7 @@
       <img src="/images/logo-landscape.svg" />
     </div>
 
-    <md-card layout-fill ng-show="authCheck">
+    <md-card layout-fill ng-show="authCheck" id="login-signup">
 
       <md-card-content layout="column">
 
@@ -13,7 +13,7 @@
             <md-icon>person</md-icon>
             <label>Email</label>
             <input autocorrect="off" autocapitalize="off" name="email" ng-model="credentials.name" required spellcheck="false" type="email" />
-            <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched">
+            <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched && !userLoginForm.email.$valid">
               <div ng-message="required || email">A valid e-mail address is required.</div>
               <div ng-message="loginValid">No account was found with this e-mail address.</div>
             </div>
@@ -23,17 +23,15 @@
             <md-icon>lock</md-icon>
             <label>Password</label>
             <input autocorrect="off" autocapitalize="off" name="password" ng-model="credentials.pass" required spellcheck="false" type="password" />
-            <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched">
+            <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched && !userLoginForm.password.$valid">
               <div ng-message="required">A password is required.</div>
               <div ng-message="loginValid">The password you entered was incorrect.</div>
             </div>
           </md-input-container>
 
-          <div layout="row">
-            <md-button aria-label="Log In" class="md-accent md-hue-3 md-raised" flex>
-              Log In
-            </md-button>
-          </div>
+          <md-button aria-label="Log In" class="md-accent md-hue-3 md-raised" flex type="submit">
+            Log In
+          </md-button>
 
       </md-card-content>
 
