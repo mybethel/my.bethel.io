@@ -69,8 +69,8 @@ module.exports = {
 
   show: function (req, res) {
     Location.findOne(req.param('id'), function foundLocation(err, location) {
-      if (err) res.send(err, 500);
-      if (!location) res.send(404);
+      if (err) return res.serverError(err);
+      if (!location) return res.notFound();
 
       res.send(200, location);
     });
