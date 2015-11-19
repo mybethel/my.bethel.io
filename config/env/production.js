@@ -21,7 +21,7 @@ module.exports = {
     mongo: {
       adapter: 'sails-mongo',
       database: 'mybethel',
-      host: 'candidate.12.mongolayer.com',
+      host: 'candidate.13.mongolayer.com',
       port: '10300',
       user: 'mybethel-prod',
       password: process.env.MONGO_PASS,
