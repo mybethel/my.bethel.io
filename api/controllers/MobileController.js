@@ -25,6 +25,10 @@ module.exports = {
     });
   },
 
+  favorites: function(req, res) {
+    res.view({ layout: 'none' });
+  },
+
   channel: function(req, res) {
     var query = req.param('id') || {
       name: {
@@ -54,8 +58,16 @@ module.exports = {
       PlaylistBuilder.find(query).then(function(playlistId) {
         PlaylistBuilder.from(playlistId).then(function(playlist) {
 
+          if (!playlist) {
+            return res.view({
+              layout: 'none',
+              ministry: results[0]
+            });
+          }
+
           var episodes = []
           for (var i = 0; i < 10; i++) {
+            if (!playlist.media[i]) continue;
             if (playlist.media[i].type === 'video') {
               episodes.push(playlist.media[i]);
             } else if (playlist.media[i].video) {
@@ -65,6 +77,7 @@ module.exports = {
 
           var series = []
           for (var i = 0; i < 10; i++) {
+            if (!playlist.media[i]) continue;
             if (playlist.media[i].media) {
               series.push(playlist.media[i]);
             }
