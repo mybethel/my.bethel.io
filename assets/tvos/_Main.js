@@ -13,7 +13,12 @@ function getDocument(url, cb, type) {
 }
 
 App.onLaunch = function(options) {
-  SearchScreen.load();
+  this.favorites = localStorage.getItem('favorites');
+  if (!this.favorites) {
+    SearchScreen.load();
+    return;
+  }
+  Favorite.showAll();
 }
 
 App.onExit = function() {
