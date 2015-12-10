@@ -1,4 +1,5 @@
 function Template() {
+  this.title = '';
   this.content = '';
 };
 
@@ -23,11 +24,11 @@ Template.prototype.alert = function(title, description) {
   return this;
 }
 
-Template.prototype.parade = function(title, section, relatedContent) {
+Template.prototype.parade = function(section, relatedContent) {
   this.content = `<paradeTemplate>
      <list>
         <header>
-           <title>${relatedContent}</title>
+           <title>${this.title}</title>
         </header>
         <section>
            ${section}

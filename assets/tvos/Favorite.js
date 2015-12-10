@@ -8,9 +8,7 @@ var Favorite = {
       this.showInstructions();
       return;
     }
-
-    this.favorites = this.favorites.split(',');
-    this.showFavorites();
+    getDocument(`ministry/find?id=${this.favorites}`, this.showFavorites, 'json');
   },
 
   showInstructions: function() {
@@ -25,13 +23,14 @@ Once you've favorited a church it will appear here.`;
     navigationDocument.presentModal(template);
   },
 
-  showFavorites: function() {
+  showFavorites: function(results) {
+    results = JSON.parse(results);
 
     var section = `<listItemLockup uuid="search">
        <title>Search for a Church</title>
     </listItemLockup>
-    ${this.favorites.map(function(favorite) { return `<listItemLockup>
-        <title>${favorite}</title>
+    ${results.map(function(favorite) { return `<listItemLockup uuid="${favorite.id}">
+        <title>${favorite.name}</title>
     </listItemLockup>`; }).join('')}`;
 
     var related = `<imgDeck>
@@ -39,8 +38,12 @@ Once you've favorited a church it will appear here.`;
        <img src="https://images.bethel.io/images/DefaultPodcaster.png" />
     </imgDeck>`;
 
-    var template = new Template().parade('My Favorites', section, related).render();
-    template.addEventListener('select', this.select);
+    var template = new Template();
+    template.title = 'My Favorites';
+    template.parade(section, related);
+    template = template.render();
+
+    template.addEventListener('select', Favorite.select);
     navigationDocument.pushDocument(template);
   },
 
@@ -51,6 +54,8 @@ Once you've favorited a church it will appear here.`;
     if (uuid == 'search') {
       return SearchScreen.load();
     }
+
+    Channel.load(uuid);
   }
 
 };
