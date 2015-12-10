@@ -26,21 +26,21 @@ Once you've favorited a church it will appear here.`;
   showFavorites: function(results) {
     results = JSON.parse(results);
 
-    var section = `<listItemLockup uuid="search">
-       <title>Search for a Church</title>
-    </listItemLockup>
-    ${results.map(function(favorite) { return `<listItemLockup uuid="${favorite.id}">
-        <title>${favorite.name}</title>
-    </listItemLockup>`; }).join('')}`;
-
-    var related = `<imgDeck>
-       <img src="https://images.bethel.io/images/DefaultPodcaster.png" />
-       <img src="https://images.bethel.io/images/DefaultPodcaster.png" />
-    </imgDeck>`;
+    var section = `<shelf centered="true">
+      <section>
+        ${results.map(function(favorite) { return `<lockup uuid="${favorite.id}">
+          <img src="https://images.bethel.io/images/${ favorite.image ? favorite.image : 'DefaultPodcaster.png' }?crop=center&amp;fit=crop&amp;w=548&amp;h=340" width="548" height="340" class="roundedImageCorners" />
+          <title class="showOnHover">${favorite.name}</title>
+        </lockup>`; }).join('')}
+      </section>
+    </shelf>
+    <button uuid="search">
+      <text>Search for a Church</text>
+    </button>`;
 
     var template = new Template();
     template.title = 'My Favorites';
-    template.parade(section, related);
+    template.alertDescriptive(section);
     template = template.render();
 
     template.addEventListener('select', Favorite.select);
