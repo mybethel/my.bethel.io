@@ -1,6 +1,5 @@
 var Favorite = {
 
-  favorites: [],
   template: '',
 
   buildTemplate: function(favorites) {
@@ -29,9 +28,9 @@ var Favorite = {
   },
 
   reload: function() {
-    if (this.favorites == localStorage.getItem('favorites')) return;
-    this.favorites = localStorage.getItem('favorites');
-    getDocument(`ministry/find?id=${this.favorites}`, function(results) {
+    if (App.favorites == localStorage.getItem('favorites')) return;
+    App.favorites = localStorage.getItem('favorites');
+    getDocument(`ministry/find?id=${App.favorites}`, function(results) {
       var template = Favorite.buildTemplate(results);
       navigationDocument.replaceDocument(template, Favorite.template);
       Favorite.template = template;
@@ -39,12 +38,12 @@ var Favorite = {
   },
 
   showAll: function() {
-    this.favorites = localStorage.getItem('favorites');
-    if (!this.favorites) {
+    App.favorites = localStorage.getItem('favorites');
+    if (!App.favorites) {
       this.showInstructions();
       return;
     }
-    getDocument(`ministry/find?id=${this.favorites}`, this.showFavorites, 'json');
+    getDocument(`ministry/find?id=${App.favorites}`, this.showFavorites, 'json');
   },
 
   showInstructions: function() {
@@ -69,7 +68,7 @@ Once you've favorited a church it will appear here.`;
     var uuid = selectedElement.getAttribute('uuid');
 
     if (uuid == 'search') {
-      if (_GLOBAL.mainScreen == 'search') {
+      if (App.mainScreen == 'search') {
         return navigationDocument.popDocument();
       }
       return SearchScreen.load();

@@ -25,10 +25,6 @@ module.exports = {
     src: Pipeline.jsFilesToInject,
     dest: '.tmp/public/concat/production.js'
   },
-  tvos: {
-    src: Pipeline.tvOS,
-    dest: '.tmp/public/tvOS.js'
-  },
   css: {
     src: Pipeline.cssFilesToInject,
     dest: '.tmp/public/concat/production.css'

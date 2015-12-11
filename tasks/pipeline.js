@@ -65,10 +65,6 @@ var jsFilesToInject = [
   'app.js'
 ];
 
-var tvOS = [
-  'tvos/*.js'
-];
-
 
 // Client-side HTML templates are injected using the sources below
 // The ordering of these templates shouldn't matter.
@@ -107,8 +103,4 @@ module.exports.jsFilesToInject = libraryDependencies.concat(jsFilesToInject).map
 });
 module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
   return 'assets/' + path;
-});
-
-module.exports.tvOS = tvOS.map(function(path) {
-  return '.tmp/public/' + path;
 });
