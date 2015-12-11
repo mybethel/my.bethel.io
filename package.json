@@ -2,6 +2,7 @@
   "name": "mybethel",
   "private": true,
   "version": "0.0.0",
+  "tvos": "0.1.0",
   "description": "a Sails application",
   "dependencies": {
     "async": "^1.3",

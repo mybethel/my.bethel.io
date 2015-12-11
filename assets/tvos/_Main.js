@@ -11,6 +11,22 @@ function getDocument(url, cb, type) {
   return templateXHR;
 }
 
+App.checkForUpdates = function() {
+  getDocument(`mobile/status`, function(result) {
+    result = JSON.parse(result);
+    if (!result || !result.tvos) return;
+
+    console.log(App.version, result.tvos);
+
+    if (App.version && App.version < result.tvos) {
+      console.log('New release detected...');
+      App.reload();
+    }
+
+    App.version = result.tvos;
+  }, 'json');
+};
+
 App.onLaunch = function(options) {
 
   var jsFiles = [
@@ -25,6 +41,8 @@ App.onLaunch = function(options) {
   App.mainScreen = 'favorites';
   App.baseUrl = options.BASEURL;
 
+  App.checkForUpdates();
+
   evaluateScripts(jsFiles, function(success) {
     App.favorites = localStorage.getItem('favorites');
     if (!App.favorites) {
@@ -35,6 +53,10 @@ App.onLaunch = function(options) {
     Favorite.showAll();
   });
 
+};
+
+App.onResume = function(options) {
+  App.checkForUpdates();
 };
 
 App.onExit = function() {

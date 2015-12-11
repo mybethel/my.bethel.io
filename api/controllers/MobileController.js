@@ -29,6 +29,14 @@ module.exports = {
     res.view({ layout: 'none' });
   },
 
+  status: (req, res) => {
+    var info = require('../../package.json');
+    res.send({
+      app: info.version,
+      tvos: info.tvos
+    });
+  },
+
   channel: function(req, res) {
     var query = req.param('id') || {
       name: {
