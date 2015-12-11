@@ -12,8 +12,7 @@ function getDocument(url, cb, type) {
 }
 
 App.checkForUpdates = function() {
-  getDocument(`mobile/status`, function(result) {
-    result = JSON.parse(result);
+  HTTP.json('mobile/status', function(result) {
     if (!result || !result.tvos) return;
 
     console.log(App.version, result.tvos);
@@ -24,7 +23,7 @@ App.checkForUpdates = function() {
     }
 
     App.version = result.tvos;
-  }, 'json');
+  });
 };
 
 App.onLaunch = function(options) {
@@ -33,6 +32,7 @@ App.onLaunch = function(options) {
     `${options.BASEURL}tvos/Channel.js`,
     `${options.BASEURL}tvos/Detail.js`,
     `${options.BASEURL}tvos/Favorite.js`,
+    `${options.BASEURL}tvos/HTTP.js`,
     `${options.BASEURL}tvos/Playback.js`,
     `${options.BASEURL}tvos/Search.js`,
     `${options.BASEURL}tvos/Template.js`
@@ -41,16 +41,18 @@ App.onLaunch = function(options) {
   App.mainScreen = 'favorites';
   App.baseUrl = options.BASEURL;
 
-  App.checkForUpdates();
-
   evaluateScripts(jsFiles, function(success) {
+
     App.favorites = localStorage.getItem('favorites');
+    App.checkForUpdates();
+
     if (!App.favorites) {
       App.mainScreen = 'search';
       SearchScreen.load();
       return;
     }
     Favorite.showAll();
+
   });
 
 };

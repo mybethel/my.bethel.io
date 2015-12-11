@@ -3,7 +3,6 @@ var Favorite = {
   template: '',
 
   buildTemplate: function(favorites) {
-    favorites = JSON.parse(favorites);
     var section = `<shelf centered="true">
       <section>
         ${favorites.map(function(favorite) { return `<lockup uuid="${favorite.id}">
@@ -30,11 +29,11 @@ var Favorite = {
   reload: function() {
     if (App.favorites == localStorage.getItem('favorites')) return;
     App.favorites = localStorage.getItem('favorites');
-    getDocument(`ministry/find?id=${App.favorites}`, function(results) {
+    HTTP.json(`ministry/find?id=${App.favorites}`, function(results) {
       var template = Favorite.buildTemplate(results);
       navigationDocument.replaceDocument(template, Favorite.template);
       Favorite.template = template;
-    }, 'json');
+    });
   },
 
   showAll: function() {
@@ -43,7 +42,7 @@ var Favorite = {
       this.showInstructions();
       return;
     }
-    getDocument(`ministry/find?id=${App.favorites}`, this.showFavorites, 'json');
+    HTTP.json(`ministry/find?id=${App.favorites}`, this.showFavorites);
   },
 
   showInstructions: function() {
