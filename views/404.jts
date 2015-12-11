@@ -10,11 +10,7 @@
     <md-card>
       <md-card-content>
         <h2 class="light" layout-padding>
-          <% if (typeof error !== 'undefined') { %>
-          <%= error %>
-          <% } else { %>
-          Sorry. We couldn't find that page :(
-          <% } %>
+          ${ (typeof error !== 'undefined') ? error : 'Sorry. We couldn't find that page :(' }
         </h2>
       </md-card-content>
       <md-divider></md-divider>

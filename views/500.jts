@@ -1,27 +1,23 @@
 <md-content class="main-content inverse" flex="100" layout="column" layout-align="center center">
 
   <div>
-    <div class="digit four"></div>
-    <div class="digit zero"></div>
-    <div class="digit three">
+    <div class="digit five">
       <div class="portion"></div>
     </div>
+    <div class="digit zero"></div>
+    <div class="digit zero"></div>
   </div>
 
   <div layout="row" ng-cloak>
     <md-card>
       <md-card-content>
         <h2 class="light" layout-padding>
-          <% if (typeof error !== 'undefined') { %>
-          <%= error %>
-          <% } else { %>
-          Only highly trained ninjas are allowed here.
-          <% } %>
+          ${ (typeof error !== 'undefined') ? error : 'How embarassing! Something went wrong :(' }
         </h2>
       </md-card-content>
       <md-divider></md-divider>
       <md-card-content>
-        <md-button class="md-primary strong" href="/">Log in to continue...</md-button>
+        <md-button class="md-primary strong" href="/">Back to safety...</md-button>
       </md-card-content>
     </md-card>
   </div>
