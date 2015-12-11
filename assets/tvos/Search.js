@@ -55,6 +55,9 @@ var SearchScreen = {
   },
 
   showFavorites: function() {
+    if (_GLOBAL.mainScreen == 'favorites') {
+      return navigationDocument.popDocument();
+    }
     Favorite.showAll();
   },
 

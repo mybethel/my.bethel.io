@@ -69,6 +69,9 @@ Once you've favorited a church it will appear here.`;
     var uuid = selectedElement.getAttribute('uuid');
 
     if (uuid == 'search') {
+      if (_GLOBAL.mainScreen == 'search') {
+        return navigationDocument.popDocument();
+      }
       return SearchScreen.load();
     }
 

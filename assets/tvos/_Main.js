@@ -12,9 +12,14 @@ function getDocument(url, cb, type) {
   return templateXHR;
 }
 
+var _GLOBAL = {
+  mainScreen: 'favorites'
+};
+
 App.onLaunch = function(options) {
   this.favorites = localStorage.getItem('favorites');
   if (!this.favorites) {
+    _GLOBAL.mainScreen = 'search';
     SearchScreen.load();
     return;
   }
