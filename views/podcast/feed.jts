@@ -1,21 +1,21 @@
   <title>${ podcast.name }</title>
   <link>${ (ministry.url) ? ministry.url : 'http://www.bethel.io/' }</link>
   <language>en-us</language>
-  <copyright>&#169; ${ (podcast.owner) ? podcast.owner : ministry.name }</copyright>
+  <copyright>&#169; ${ _jts.s(podcast.owner ? podcast.owner : ministry.name) }</copyright>
   <description>
     ${ podcast.description }
   </description>
   <generator>http://www.bethel.io</generator>
   <itunes:owner>
-    <itunes:name>${ (podcast.owner) ? podcast.owner : ministry.name }</itunes:name>
+    <itunes:name>${ _jts.s(podcast.owner ? podcast.owner : ministry.name) }</itunes:name>
     <itunes:email>${ ministry.email }</itunes:email>
   </itunes:owner>
   <itunes:summary>
     ${ podcast.description }
   </itunes:summary>
-  <itunes:author>${ (podcast.owner) ? podcast.owner : ministry.name }</itunes:author>
+  <itunes:author>${ _jts.s(podcast.owner ? podcast.owner : ministry.name) }</itunes:author>
   <itunes:explicit>no</itunes:explicit>
-  <itunes:image href="http://images.bethel.io/images/${ (podcast.image) ? podcast.owner : 'DefaultPodcaster.png' }?crop=faces&amp;fit=crop&amp;w=1400&amp;h=1400&amp;modified=${ encodeURI(podcast.updatedAt) }"/>
+  <itunes:image href="http://images.bethel.io/images/${ (podcast.image) ? podcast.image : 'DefaultPodcaster.png' }?crop=faces&amp;fit=crop&amp;w=1400&amp;h=1400&amp;modified=${ encodeURI(podcast.updatedAt) }"/>
   <itunes:keywords>${ (podcast.tags) ? podcast.tags : '' }</itunes:keywords>
   <itunes:category text="Religion &amp; Spirituality">
     <itunes:category text="Christianity"/>
@@ -23,12 +23,12 @@
   <itunes:new-feed-url>http://podcast.bethel.io/${ podcast.id }.xml</itunes:new-feed-url>
   <atom:link href="http://podcast.bethel.io/${ podcast.id }.xml" rel="self" type="application/rss+xml"/>
   ${ podcastMedia.map(media => !media.url ? '' : `<item>
-    <title>${ (media.name) ? media.name : media.url.split('/').pop() }</title>
+    <title>${ (media.name) ? _jts.s(media.name) : media.url.split('/').pop() }</title>
     <pubDate>${ (media.date) ? media.date.toUTCString() : new Date().toUTCString() }</pubDate>
     <guid isPermaLink="false">${ req.baseUrl }/podcastmedia/download/${ media.id }${ PodcastHelper.extensionFromUrl(media.url) }</guid>
     <itunes:author>${ (podcast.owner) ? podcast.owner : ministry.name }</itunes:author>
     <description>
-      ${ media.description }
+      ${ _jts.s(media.description) }
     </description>
     <itunes:duration>${ media.duration }</itunes:duration>
     <enclosure url="${ req.baseUrl }/podcastmedia/download/${ media.id }${ PodcastHelper.extensionFromUrl(media.url) }" length="${ (media.size) ? media.size : '0' }" type="${ PodcastHelper.mimeTypeFromUrl(media.url) }"/>
