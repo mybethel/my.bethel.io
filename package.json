@@ -10,6 +10,7 @@
     "bluebird": "^2.9.34",
     "bower": "^1.4.1",
     "commander": "^2.8.1",
+    "connect": "^3.4.0",
     "connect-mongostore": "^0.1.4",
     "connect-redis": "1.4.5",
     "cron": "^1.0",
@@ -84,8 +85,8 @@
     "postunit": "node ./test/report.js"
   },
   "engines": {
-    "node": "4.x",
-    "npm": "2.14.x"
+    "node": "5.x",
+    "npm": "3.x"
   },
   "main": "app.js",
   "repository": {
