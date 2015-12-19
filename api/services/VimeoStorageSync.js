@@ -1,4 +1,5 @@
 const moment = require('moment');
+const PromisePool = require('es6-promise-pool');
 const Vimeo = require('vimeo-api').Vimeo;
 
 function VimeoSync(refreshAll, podcastId) {
@@ -112,15 +113,14 @@ VimeoSync.prototype.queryApi = function(podcast) {
         totalPages = Math.ceil((body.total - (body.page * body.per_page)) / body.per_page);
       }
 
+      if (totalPages < 1) return resolve();
       sails.log.info(`${podcast.id}: Found ${totalPages} total pages of videos.`);
 
-      var processApiResults = [];
-      processApiResults.push(this.processPage(body, podcast));
-      for (var i = 1; i < totalPages; i++) {
-        processApiResults.push(this.getResultsPage(podcast.service.user, podcast, i, queryHeaders));
-      }
-
-      Promise.all(processApiResults).then(() => {
+      var page = 1;
+      new PromisePool(() => {
+        page++;
+        return (page < totalPages) ? this.getResultsPage(podcast.service.user, podcast, page, queryHeaders) : null;
+      }, 30).start().then(() => {
 
         // Update the last sync date on the podcast and inform all listening sockets.
         Podcast.update(podcast.id, { lastSync: new Date() }).exec((err, updatedPodcast) => {
