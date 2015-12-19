@@ -1,3 +1,3 @@
 module.exports.run = function(cb) {
-  VimeoStorageSync.sync().then(cb);
+  new VimeoStorageSync().then(cb);
 }
