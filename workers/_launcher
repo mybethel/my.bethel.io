@@ -21,6 +21,7 @@ Sails.load({
     cors: false,
     grunt: false,
     i18n: false,
+    policies: false,
     request: false,
     responses: false,
     session: false,
