@@ -8,20 +8,15 @@ angular.module('Bethel.mobile')
       icon: 'palette',
       label: 'visual appearance'
     },
-    'notification': {
-      index: 1,
-      icon: 'notifications',
-      label: 'push notifications'
-    },
-    'locations': {
-      index: 2,
-      icon: 'location_on',
-      label: 'enabled locations'
-    },
     'media': {
-      index: 3,
+      index: 1,
       icon: 'video_library',
       label: 'media player'
+    },
+    'notification': {
+      index: 2,
+      icon: 'notifications',
+      label: 'push notifications'
     }
   }
 
