@@ -1,53 +1,22 @@
 <md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
-    <h2>Live Streaming Setup</h2>
+    <h2>Live Streaming</h2>
   </div>
 </md-toolbar>
 
 <md-content class="main-content" layout-padding layout="column" flex ui-view layout-align="center center">
 
-  <div layout="row" layout-fill layout-align="center center">
-
-    <div flex="30">
-      <md-card>
-        <md-toolbar class="md-accent md-hue-2">
-          <div class="md-toolbar-tools">
-            <h2>YouTube</h2>
-          </div>
-        </md-toolbar>
-        <md-card-content>
-          <p>Low cost live event streaming best for small to medium ministries.</p>
-          <ul>
-            <li>YouTube branded live event player</li>
-            <li>Broadcast of copyrighted content restricted</li>
-          </ul>
-        </md-card-content>
-        <div class="md-actions" layout="row" layout-align="center center">
-          <md-button ng-disabled="true">Coming Soon!</md-button>
-        </div>
-      </md-card>
-    </div>
-
-    <div flex="30">
-      <md-card>
-        <md-toolbar class="md-accent md-hue-2">
-          <div class="md-toolbar-tools">
-            <h2>Bethel Cloud</h2>
-          </div>
-        </md-toolbar>
-        <md-card-content>
-          <p>Full-featured professional streaming with guaranteed quality and availability.</p>
-          <ul>
-            <li>Fully customized player and statistics</li>
-            <li>No broadcasting restrictions</li>
-          </ul>
-        </md-card-content>
-        <div class="md-actions" layout="row" layout-align="center center">
-          <md-button ng-disabled="true">Coming Soon!</md-button>
-        </div>
-      </md-card>
-    </div>
-
+  <div class="week-row" layout="row" layout-align="center center" layout-fill ng-controller="liveController">
+    <md-card ng-class="setting.enabled ? 'flex-15' : 'flex-10'" ng-repeat="(day, setting) in streamingEnabled">
+      <md-card-content>
+        <h3 class="light" ng-if="!setting.enabled">{{ day[0].toUpperCase() }}</h3>
+        <h2 class="light" ng-if="setting.enabled" style="margin-bottom:0px">{{ day[0].toUpperCase() }}</h2>
+        <md-switch class="md-primary" ng-model="setting.enabled"></md-switch>
+      </md-card-content>
+      <div class="md-actions" layout="row" layout-align="center center" ng-if="setting.enabled">
+        <md-button>Manage Times</md-button>
+      </div>
+    </md-card>
   </div>
 
 </md-content>

@@ -22,11 +22,6 @@ angular.module('Bethel.mobile')
       index: 3,
       icon: 'video_library',
       label: 'media player'
-    },
-    'live': {
-      index: 4,
-      icon: 'videocam',
-      label: 'live stream'
     }
   }
 
