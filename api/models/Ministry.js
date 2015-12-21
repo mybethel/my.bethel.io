@@ -64,6 +64,10 @@ module.exports = {
     locations: {
       collection: 'location',
       via: 'ministry'
+    },
+
+    streaming: {
+      type: 'json'
     }
 
   },

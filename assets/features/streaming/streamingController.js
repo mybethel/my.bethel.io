@@ -1,7 +1,7 @@
 angular.module('Bethel.streaming')
-.controller('streamingController', ['$scope', function ($scope) {
+.controller('streamingController', ['$scope', 'sailsSocket', 'notifyService', function ($scope, sailsSocket, notifyService) {
 
-  $scope.streamingEnabled = {
+  $scope.streamingEnabled = $scope.ministry.streaming || {
     mon: { enabled: false },
     tue: { enabled: false },
     wed: { enabled: false },
@@ -10,5 +10,12 @@ angular.module('Bethel.streaming')
     sat: { enabled: true },
     sun: { enabled: true }
   };
+
+  $scope.$watch('streamingEnabled', function(newValue, oldValue) {
+    if (!newValue || newValue === oldValue) return;
+    sailsSocket.put('/ministry/' + $scope.ministry.id, { streaming: newValue }).then(function () {
+      notifyService.showCommon('saved');
+    });
+  }, true);
 
 }]);
