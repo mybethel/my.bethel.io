@@ -2,25 +2,25 @@ angular.module('Bethel.util').directive('timepair', [function() {
 
   var now = new Date().getHours();
 
-  var generateTimes = function(startTime) {
-    var start = startTime || now,
-        times = [],
-        halfhour = (start % 1 !== 0);
+  var floatToTime = function(float) {
+    var hours = String(float).split('.').shift();
+    var minutes = (float * 60) % 60;
+    if (hours > 24) hours = hours - 24;
+    var meridiem = (hours > 11 && hours < 24) ? 'PM' : 'AM';
+    if (hours == 0) hours = 12;
+    if (hours > 12) hours = hours - 12;
+    return hours + ':' + ('0' + minutes).slice (-2) + meridiem;
+  }
 
-    if (halfhour) {
-      start -= .5;
-    }
+  var generateTimes = function(startTime, interval) {
+    var interval = interval || 0.5,
+        start = startTime || now,
+        times = [];
 
-    for (var i = 0; i < 24; i++) {
-      var rawhour = Number(start) + i;
-      if (rawhour > 24) rawhour = rawhour - 24;
-      var meridiem = (rawhour > 11 && rawhour < 24) ? 'PM' : 'AM';
-      var hour = (rawhour > 12) ? rawhour - 12 : rawhour;
-
-      if (!halfhour || (halfhour && i > 0)) {
-        times.push({ raw: rawhour, display: hour + ':00' + meridiem });
-      }
-      times.push({ raw: rawhour + .5, display: hour + ':30' + meridiem });
+    for (var i = 0; i < (1 / interval) * 24; i++) {
+      var rawhour = Number(start) + (i * interval);
+      console.log(rawhour, start)
+      times.push({ raw: rawhour, display: floatToTime(rawhour) });
     }
     return times;
   };
@@ -30,16 +30,15 @@ angular.module('Bethel.util').directive('timepair', [function() {
     scope: {
       start: '=',
       end: '=',
-      duration: '='
     },
-    replace: true,
-    link: function(scope, element) {
-      scope.startTimes = generateTimes();
+    link: function(scope, element, attrs) {
+      scope.interval = Number(attrs.interval) || .5;
+      scope.startTimes = generateTimes(null, scope.interval);
 
       scope.timepairDuration = function(index) {
-        var minutes = index * 30;
+        var minutes = index * (60 * scope.interval);
         if (minutes < 60) {
-          return minutes ? '30 mins' : '0 mins';
+          return minutes + ' mins';
         }
         var hours = minutes / 60;
         return hours > 1 ? hours + ' hrs' : '1 hr';
@@ -47,15 +46,11 @@ angular.module('Bethel.util').directive('timepair', [function() {
 
       scope.$watch('start', function(newValue) {
         scope.end = undefined;
-        scope.endTimes = generateTimes(newValue);
-      });
-
-      scope.$watch('end', function(newValue) {
-        scope.duration = 0;
+        scope.endTimes = generateTimes(newValue, scope.interval);
       });
     },
     template:
-      '<div><md-input-container>' +
+      '<md-input-container>' +
         '<label>Start</label>' +
         '<md-select ng-model="start">' +
           '<md-option ng-repeat="time in startTimes" value="{{ time.raw }}">{{ time.display }}</md-option>' +
@@ -66,6 +61,6 @@ angular.module('Bethel.util').directive('timepair', [function() {
         '<md-select ng-disabled="!start" ng-model="end">' +
           '<md-option ng-repeat="time in endTimes" value="{{ time.raw }}">{{ time.display }}<small> ({{ timepairDuration($index) }})</small></md-option>' +
         '</md-select>' +
-      '</md-input-container></div>'
+      '</md-input-container>'
   };
 }]);
