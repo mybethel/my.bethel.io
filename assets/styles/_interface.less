@@ -12,6 +12,22 @@ md-content.main-content.inverse {
   background-repeat: no-repeat;
 }
 
+.md-subheader.banner {
+  color: #fff;
+  &.info {
+    background-color: #5bc0de;
+  }
+  &.warning {
+    background-color: #f0ad4e;
+  }
+  &.danger {
+    background-color: #d9534f;
+  }
+  &.success {
+    background-color: #5cb85c;
+  }
+}
+
 md-tabs {
   .md-tab.md-active {
     md-icon {
@@ -33,6 +49,10 @@ md-tabs {
     md-tabs-content-wrapper {
       top: 65px !important;
     }
+    /*md-tab-content,
+    md-tab-content > div {
+      min-height: 100%;
+    }*/
     .md-tab {
       padding-top: 20px;
     }
