@@ -1,5 +1,6 @@
-angular.module('Bethel.streaming')
-.controller('streamingController', ['$scope', 'sailsSocket', 'notifyService', function ($scope, sailsSocket, notifyService) {
+angular.module('Bethel.streaming').controller('streamingController', StreamingController);
+
+function StreamingController($scope, $mdDialog, sailsSocket, notifyService) {
 
   $scope.streamingEnabled = $scope.ministry.streaming || {
     mon: { enabled: false },
@@ -18,4 +19,16 @@ angular.module('Bethel.streaming')
     });
   }, true);
 
-}]);
+  $scope.configure = function(event, day) {
+    $mdDialog.show({
+      clickOutsideToClose: true,
+      templateUrl: 'features/streaming/streamingDetailView.html',
+      targetEvent: event,
+      locals: { streamingDay: day },
+      controller: 'streamingDetailController'
+    });
+  }
+
+}
+
+StreamingController.$inject = ['$scope', '$mdDialog', 'sailsSocket', 'notifyService'];

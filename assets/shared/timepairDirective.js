@@ -19,7 +19,6 @@ angular.module('Bethel.util').directive('timepair', [function() {
 
     for (var i = 0; i < (1 / interval) * 24; i++) {
       var rawhour = Number(start) + (i * interval);
-      console.log(rawhour, start)
       times.push({ raw: rawhour, display: floatToTime(rawhour) });
     }
     return times;

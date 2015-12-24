@@ -14,7 +14,7 @@
         <md-switch class="md-primary" ng-model="setting.enabled"></md-switch>
       </md-card-content>
       <div class="md-actions" layout="row" layout-align="center center" ng-if="setting.enabled">
-        <md-button>Manage Times</md-button>
+        <md-button ng-click="configure($event, day)">Manage Times</md-button>
       </div>
     </md-card>
   </div>

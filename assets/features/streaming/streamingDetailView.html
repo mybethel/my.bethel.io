@@ -1,0 +1,25 @@
+<md-dialog flex="50" class="podcast-media">
+  <md-dialog-content>
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Streaming schedule on {{ day }}</h2>
+      </div>
+    </md-toolbar>
+
+    <div layout-margin layout="row">
+
+      <timepair start="pair.start" end="pair.end" interval=".25"></timepair>
+      <md-input-container flex style="margin-top:26px">
+        <label>Streaming URL</label>
+        <input type="text" ng-model="streaming.url" />
+      </md-input-container>
+
+    </div>
+  </md-dialog-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">Cancel</md-button>
+    <md-button ng-click="save()" class="md-primary">Save Changes</md-button>
+  </div>
+</md-dialog>
