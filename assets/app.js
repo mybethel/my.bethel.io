@@ -50,8 +50,8 @@ angular.module('Bethel', [
     { title: 'Podcasting', icon: 'mic', url: 'podcast' },
     { title: 'Media', icon: 'play_circle_filled', url: 'beta' },
     { title: 'Mobile App', icon: 'phone_iphone', url: 'mobile', restricted: true },
-    { title: 'Volunteers', icon: 'people', url: 'beta' },
     { title: 'Live Streaming', icon: 'videocam', url: 'streaming' },
+    { title: 'Volunteers', icon: 'people', url: 'beta' },
     { title: 'Giving', icon: 'attach_money', url: 'beta' },
     { title: 'Social Media', icon: 'thumb_up', url: 'beta' },
     { title: 'Settings', icon: 'settings', url: 'settings' }

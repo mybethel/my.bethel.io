@@ -4,11 +4,65 @@
   </div>
 </md-toolbar>
 
-<md-tabs flex md-border-bottom class="tall" md-selected="currentTab" md-stretch-tabs="always">
-  <md-tab ng-repeat="(id, tab) in userTabs" md-on-select="updateLocation(id)">
-    <md-tab-label><md-icon>{{ tab.icon }}</md-icon> &nbsp; {{ tab.label }}</md-tab-label>
-    <md-tab-body class="md-padding">
-      <div ng-include="'/features/mobile/' + id + 'View.html'"></div>
-    </md-tab-body>
-  </md-tab>
-</md-tabs>
+<md-content class="main-content" layout="row" ng-controller="mobileOverviewController">
+  <div flex="60" layout-padding style="padding-right:0">
+    <md-card>
+      <md-list class="stepper">
+        <md-list-item ng-click="toggleSection('visuals')">
+          <md-icon ng-if="section != 'visuals'">add_circle</md-icon>
+          <md-icon ng-if="section == 'visuals'">check_circle</md-icon>
+          <p>Visual appearance and branding</p>
+        </md-list-item>
+        <div ng-show="section == 'visuals'" class="collapsible" layout="column" ng-controller="visualsController" ng-include="'/features/mobile/visualsView.html'"></div>
+        <md-list-item ng-click="toggleSection('media')">
+          <md-icon ng-if="section != 'media'">add_circle</md-icon>
+          <md-icon ng-if="section == 'media'">check_circle</md-icon>
+          <p>Sermon series media player</p>
+        </md-list-item>
+        <div ng-show="section == 'media'" class="collapsible" layout="column" ng-controller="mobileMediaController" ng-include="'/features/mobile/mediaView.html'"></div>
+        <md-list-item ng-click="toggleSection('streaming')">
+          <md-icon ng-if="section != 'streaming'">add_circle</md-icon>
+          <md-icon ng-if="section == 'streaming'">check_circle</md-icon>
+          <p>Live streaming schedule</p>
+        </md-list-item>
+        <div ng-show="section == 'streaming'" class="collapsible" layout="column">
+          <p>To enable live streaming in your app, enter your service schedule in the Live Streaming tab. Need a simple streaming solution? <a href="mailto:hello@bethel.io">Contact us</a> for information on how to get involved in an early beta!</p>
+          <md-button class="md-primary" href="/#/streaming">Setup Streaming Schedule</md-button>
+        </div>
+      </md-list>
+    </md-card>
+  </div>
+  <div flex="40" layout-align="top center" layout-padding style="padding-left:0">
+    <md-card layout="row">
+      <div flex="33" layout="column" layout-align="center center">
+        <h4>Apple TV</h4>
+        <md-switch class="md-primary"></md-switch>
+        <md-button ng-click="configure($event, day)">Preview</md-button>
+      </div>
+      <div flex="33" layout="column" layout-align="center center">
+        <h4>iOS + Android</h4>
+        <md-switch class="md-primary" disabled></md-switch>
+        <md-button ng-disabled="true">Coming Soon</md-button>
+      </div>
+      <div flex="33" layout="column" layout-align="center center">
+        <h4>Standalone</h4>
+        <md-switch class="md-primary"></md-switch>
+        <md-button ng-click="configure($event, day)">Info</md-button>
+      </div>
+    </md-card>
+    <div class="statistics" layout="row" style="padding:0">
+      <md-card flex="50">
+        <md-card-content>
+          <strong class="ng-binding">521</strong><br>
+          <small>favorites</small>
+        </md-card-content>
+      </md-card>
+      <md-card flex="50">
+        <md-card-content>
+          <strong class="ng-binding">521</strong><br>
+          <small>viewers</small>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+</md-content>

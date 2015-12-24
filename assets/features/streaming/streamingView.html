@@ -8,7 +8,7 @@
   Bethel's one-click live streaming is still under development; if you already have your own live streaming service you may input your schedule below.
 </md-subheader>
 
-<md-content class="main-content" layout-padding layout="column" flex ui-view layout-align="center center" ng-controller="streamingController">
+<md-content class="main-content" layout-padding layout="column" flex layout-align="center center" ng-controller="streamingController">
 
   <div class="week-row" layout="row" layout-align="center center" layout-fill>
     <md-card ng-class="setting.enabled ? 'flex-15' : 'flex-10'" ng-repeat="(day, setting) in streamingEnabled">
