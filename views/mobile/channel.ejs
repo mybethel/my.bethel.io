@@ -3,7 +3,7 @@
   <head>
     <style>
       .darkBackgroundColor {
-        background-color: #292929;
+        background-color: <%= ministry.color.channelBackground ? ministry.color.channelBackground : '#292929' %>;
       }
       .roundedImageCorners {
         itml-img-treatment: corner-small;
@@ -19,7 +19,11 @@
   <stackTemplate theme="dark" class="darkBackgroundColor">
     <identityBanner>
       <background>
+        <% if (ministry.coverImage) { %>
+        <img src="https://images.bethel.io/images/<%= ministry.coverImage %>?crop=entropy&amp;fit=crop&amp;w=1920&amp;h=360" width="1920" height="360" />
+        <% } else { %>
         <img src="https://images.bethel.io/images/default_poster.jpg?crop=entropy&amp;fit=crop&amp;w=1920&amp;h=360" width="1920" height="360" />
+        <% } %>
       </background>
       <title><%= ministry.name %></title>
       <% if (ministry.subtitle) { %><subtitle><%= ministry.subtitle %></subtitle><% } %>
