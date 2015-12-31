@@ -22,6 +22,12 @@ Template.prototype.render = function() {
   return template;
 };
 
+Template.prototype._attributesToString = function(attributes) {
+  return Object.keys(attributes).map(function(value) {
+     return `${value}="${attributes[value]}"`
+  }).join(' ');
+};
+
 Template.prototype.alert = function(title, description) {
   this.content = `<alertTemplate>
                     <title>${title}</title>
@@ -39,6 +45,12 @@ Template.prototype.alertDescriptive = function(content) {
     ${content}
   </descriptiveAlertTemplate>`;
   return this;
+};
+
+Template.prototype.button = function(text, attributes) {
+  return `<button ${this._attributesToString(attributes)}>
+    <text>${text}</text>
+  </button>`;
 };
 
 Template.prototype.catalog = function(content) {

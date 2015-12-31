@@ -3,6 +3,7 @@ var Favorite = {
   template: '',
 
   buildTemplate: function(favorites) {
+    var template = new Template();
     var section = `<shelf centered="true">
       <section>
         ${favorites.map(function(favorite) { return `<lockup uuid="${favorite.id}">
@@ -11,11 +12,8 @@ var Favorite = {
         </lockup>`; }).join('')}
       </section>
     </shelf>
-    <button uuid="search">
-      <text>Search for a Church</text>
-    </button>`;
+    ${template.button('Search for a Church', { uuid: 'search' })}`;
 
-    var template = new Template();
     template.title = 'My Favorites';
     template.alertDescriptive(section);
     template = template.render();
