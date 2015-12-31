@@ -9,11 +9,14 @@ angular.module('Bethel.util')
    */
   this.s3 = function(destination, file, filename) {
     filename = filename || file.name
+    if (filename.indexOf('.') === -1) {
+      filename += '.' + file.name.split('.').pop();
+    }
     return $upload.upload({
       fields: {
         acl: 'public-read',
         AWSAccessKeyId: destination.key,
-        key: destination.bucket + '/' + file.name,
+        key: destination.bucket + '/' + filename,
         policy: destination.policy,
         signature: destination.signature,
         'Content-Type': file.type !== '' ? file.type : 'application/octet-stream'
