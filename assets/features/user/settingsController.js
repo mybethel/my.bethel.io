@@ -7,9 +7,9 @@ angular.module('Bethel.user')
       index: 0,
       label: 'my account'
     },
-    'locations': {
+    'ministry': {
       index: 1,
-      label: 'locations'
+      label: 'my ministry'
     },
     'integrations': {
       index: 2,

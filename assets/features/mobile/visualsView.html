@@ -5,7 +5,7 @@
     <label>Ministry Name</label>
     <input ng-model="ministry.name" ng-disabled="true" />
   </md-input-container>
-  <md-button href="#/settings/">Edit Name and Bio</md-button>
+  <md-button href="#/settings/ministry">Edit Name and Bio</md-button>
 </div>
 
 <md-input-container>
@@ -27,7 +27,7 @@
   </md-input-container>
 
   <md-input-container flex="40" style="margin-left:20px">
-    <label>Channel Background</label>
+    <label>Background</label>
     <input type="text" ng-model="ministry.color.channelBackground" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" />
     <div class="color-picker" style="top:5px;background-color:{{ ministry.color.channelBackground }}"></div>
   </md-input-container>

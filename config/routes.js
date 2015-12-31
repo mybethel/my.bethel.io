@@ -51,11 +51,6 @@ module.exports.routes = {
     action: 'map'
   },
 
-  '/mobile': {
-    controller: 'mobile',
-    action: 'manage'
-  },
-
   '/media/transcode/:id/:profile': {
     controller: 'media',
     action: 'transcode'
@@ -66,7 +61,7 @@ module.exports.routes = {
     action: 'embed'
   },
 
-  // If a request to a URL doesn't match any of the custom routes above, it is matched 
+  // If a request to a URL doesn't match any of the custom routes above, it is matched
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options
   // and examples.
 
