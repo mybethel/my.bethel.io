@@ -36,17 +36,17 @@
     <md-card layout="row">
       <div flex="33" layout="column" layout-align="center center">
         <h4>Apple TV</h4>
-        <md-switch class="md-primary"></md-switch>
+        <md-switch class="md-primary" ng-model="ministry.mobileEnabled.atv"></md-switch>
         <md-button ng-click="configure($event, day)">Preview</md-button>
       </div>
       <div flex="33" layout="column" layout-align="center center">
         <h4>iOS + Android</h4>
-        <md-switch class="md-primary" disabled></md-switch>
+        <md-switch class="md-primary" disabled ng-model="ministry.mobileEnabled.mobile"></md-switch>
         <md-button ng-disabled="true">Coming Soon</md-button>
       </div>
       <div flex="33" layout="column" layout-align="center center">
         <h4>Standalone</h4>
-        <md-switch class="md-primary"></md-switch>
+        <md-switch class="md-primary" ng-model="ministry.mobileEnabled.standalone"></md-switch>
         <md-button ng-click="configure($event, day)">Info</md-button>
       </div>
     </md-card>

@@ -12,4 +12,9 @@ angular.module('Bethel.mobile')
     $scope.section = section;
   };
 
+  $scope.$watch('ministry.mobileEnabled', function(newValue, oldValue) {
+    if (newValue === oldValue) return;
+    sailsSocket.put('/ministry/' + $scope.ministry.id, { mobileEnabled: newValue });
+  }, true);
+
 }]);

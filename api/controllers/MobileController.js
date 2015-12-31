@@ -8,7 +8,7 @@
 module.exports = {
 
   tvos: function(req, res) {
-    Ministry.find().exec(function (err, results) {
+    Ministry.find({ mobileEnabled: { atv: true }}).exec(function (err, results) {
       res.view({
         layout: 'none',
         ministries: results

@@ -70,6 +70,10 @@ module.exports = {
       via: 'ministry'
     },
 
+    mobileEnabled: {
+      type: 'json'
+    },
+
     streaming: {
       type: 'json'
     }

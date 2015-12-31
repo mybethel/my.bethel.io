@@ -3,6 +3,7 @@ angular.module('Bethel.mobile').controller('visualsController', VisualsControlle
 function VisualsController($scope, sailsSocket, upload) {
 
   $scope.$watch('ministry', function() {
+    if (typeof $scope.ministry.color !== 'object') $scope.ministry.color = {};
     sailsSocket.get('/ministry/edit/' + $scope.ministry.id).then(function(data) {
       $scope.coverUpload = data.cover;
     });
