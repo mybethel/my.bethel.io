@@ -1,36 +1,11 @@
-angular.module('Bethel.mobile')
-.controller('visualsController', ['$scope', 'sailsSocket', '$mdDialog',
-  function ($scope, sailsSocket, $mdDialog) {
+angular.module('Bethel.mobile').controller('visualsController', VisualsController);
 
+function VisualsController($scope, sailsSocket, upload) {
 
-  $scope.enhancedIcon = function(event) {
-    $mdDialog.show({
-      clickOutsideToClose: true,
-      targetEvent: event,
-      templateUrl: 'features/mobile/enhancedIconView.html',
-      controller: IconController
-    }).then(function(answer) {
-      $scope.ministry.enhanced = true;
-    }, function() {
-      $scope.ministry.enhanced = false;
+  $scope.$watch('ministry', function() {
+    sailsSocket.get('/ministry/edit/' + $scope.ministry.id).then(function(data) {
+      $scope.coverUpload = data.cover;
     });
-  }
-
-  function IconController($scope, $mdDialog) {
-    $scope.close = function() {
-      $mdDialog.cancel();
-    };
-    $scope.contactMe = function() {
-      $mdDialog.hide(true);
-    };
-  }
-
-  IconController.$inject = ['$scope', '$mdDialog'];
-
-  $scope.$watch('ministry.description', function(newValue, oldValue) {
-    if (newValue === oldValue) return;
-
-    sailsSocket.put('/ministry/' + $scope.ministry.id, { description: newValue });
   });
 
   $scope.$watch('ministry.subtitle', function(newValue, oldValue) {
@@ -45,4 +20,18 @@ angular.module('Bethel.mobile')
     sailsSocket.put('/ministry/' + $scope.ministry.id, { color: newValue });
   }, true);
 
-}]);
+  $scope.uploadCover = function($files) {
+    if (!$files || $files.length < 1) return;
+    $scope.coverUploading = true;
+
+    upload.s3($scope.coverUpload, $files[0], 'cover')
+      .then(function(response) {
+        var coverImage = response.config.fields.key.replace('images/', '');
+        $scope.ministry.coverImage = coverImage;
+        sailsSocket.put('/ministry/' + $scope.ministry.id, { coverImage: coverImage });
+      });
+  };
+
+}
+
+VisualsController.$inject = ['$scope', 'sailsSocket', 'upload'];

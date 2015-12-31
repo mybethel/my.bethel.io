@@ -17,22 +17,17 @@
 
 module.exports = {
 
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to MinistryController)
-   */
-  _config: {},
-
-  edit: function (req, res) {
-    Ministry.findOne(req.param('id'), function foundMinistry(err, ministry) {
-      if (err) res.send(err, 500);
+  edit: (req, res) => {
+    Ministry.findOne(req.param('id')).exec((err, ministry) => {
+      if (err || !ministry) return res.send(err, 500);
 
       var uploadForm = S3Upload.prepare('images/ministry/tmp');
+      var coverUpload = S3Upload.prepare(`images/ministry/${ministry.id}`);
 
-      return res.view({
+      return res.send({
         ministry: ministry,
-        s3form: uploadForm
+        s3form: uploadForm,
+        cover: coverUpload
       });
     });
   },

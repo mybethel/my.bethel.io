@@ -1,4 +1,5 @@
-<img ng-src="{{ ministry.poster | imageResize : 960 : 180 : 'default_poster.jpg' }}" style="margin: 16px 0;" />
+<img ng-src="{{ ministry.coverImage | imageResize : 960 : 180 : 'default_poster.jpg' }}" style="margin-top:16px" />
+<md-button ngf-select="uploadCover($files)" accept="image/png,image/jpg,image/jpeg">Change Cover Image</md-button>
 
 <div layout="row" layout-align="center center">
   <md-input-container flex>

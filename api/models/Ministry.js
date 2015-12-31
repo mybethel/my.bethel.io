@@ -39,6 +39,10 @@ module.exports = {
       type: 'string'
     },
 
+    coverImage: {
+      type: 'string'
+    },
+
     color: {
       type: 'json'
     },
