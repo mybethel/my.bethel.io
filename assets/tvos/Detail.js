@@ -6,7 +6,7 @@ var Detail = {
   load: function(uuid) {
     this.uuid = uuid;
     var self = this;
-    getDocument('mobile/detail/' + uuid, function(template) {
+    HTTP.getDocument('mobile/detail/' + uuid, function(template) {
       self.doc = template;
       self.init();
     });

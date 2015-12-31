@@ -6,7 +6,7 @@ var Channel = {
   load: function(uuid) {
     this.uuid = uuid;
     var self = this;
-    getDocument('mobile/channel/' + uuid, function(template) {
+    HTTP.getDocument('mobile/channel/' + uuid, function(template) {
       self.doc = template;
       self.init();
     });

@@ -5,7 +5,7 @@ var SearchScreen = {
 
   load: function() {
     var self = this;
-    getDocument('mobile/tvos', function(template) {
+    HTTP.getDocument('mobile/tvos', function(template) {
       self.doc = template;
       self.init();
     });
@@ -27,7 +27,7 @@ var SearchScreen = {
     var searchText = encodeURI(self.kb.text);
     var resultsArea = self.doc.getElementById('results');
 
-    getDocument('mobile/channel?search=' + searchText, function(template) {
+    HTTP.getDocument('mobile/channel?search=' + searchText, function(template) {
       // @todo: Need to add logic to only remove elements that don't exist in
       // the search results and add new entries. Currently this just replaces
       // all the content which produces a rather un-polished flash on-screen.
