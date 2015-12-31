@@ -24,7 +24,7 @@ function VisualsController($scope, sailsSocket, upload) {
     if (!$files || $files.length < 1) return;
     $scope.coverUploading = true;
 
-    upload.s3($scope.coverUpload, $files[0], 'cover')
+    upload.s3($scope.coverUpload, $files[0], 'cover' + Date.now())
       .then(function(response) {
         var coverImage = response.config.fields.key.replace('images/', '');
         $scope.ministry.coverImage = coverImage;
