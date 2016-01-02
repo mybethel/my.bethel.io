@@ -33,7 +33,16 @@ module.exports = {
   },
 
   find: (req, res) => {
-    Ministry.find({ id: req.param('id').split(',') }).exec((err, ministries) => {
+    if (!req.param('id')) {
+      return Ministry.find().exec((err, ministries) => res.send(ministries));
+    }
+
+    var ministryId = req.param('id');
+    if (ministryId.indexOf(',') !== -1) {
+      ministryId = req.param('id').split(',');
+    }
+
+    Ministry.find({ id: ministryId }).exec((err, ministries) => {
       if (err) return res.serverError(err);
       return res.send(ministries);
     });

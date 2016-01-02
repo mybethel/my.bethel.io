@@ -44,9 +44,10 @@ module.exports.policies = {
   },
 
   ministry: {
-    'update': 'ministryOwned',
     'destroy': 'ministryOwned',
-    'find': true
+    'find': true,
+    'findOne': true,
+    'update': 'ministryOwned'
   },
 
   mobile: {

@@ -57,8 +57,7 @@ module.exports = {
       }
 
       function noMediaResponse() {
-        res.view({
-          layout: 'none',
+        res.json({
           ministry: results[0]
         });
       }
@@ -67,10 +66,7 @@ module.exports = {
         PlaylistBuilder.from(playlistId).then(function(playlist) {
 
           if (!playlist) {
-            return res.view({
-              layout: 'none',
-              ministry: results[0]
-            });
+            return noMediaResponse();
           }
 
           var episodes = []
@@ -91,8 +87,7 @@ module.exports = {
             }
           }
 
-          res.view({
-            layout: 'none',
+          res.json({
             ministry: results[0],
             episodes: episodes,
             series: series
