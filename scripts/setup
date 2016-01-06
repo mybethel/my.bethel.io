@@ -40,13 +40,13 @@ Setup.prototype.cloneDb = function cloneDb() {
   if (!this.localConfig.connections)
     return console.warn('A local database connection must be defined.');
 
-  const dump = spawn('mongodump', ['--archive=databaseProd.archive', `--db=${app.database.db}`, `--host=${app.database.host}`, `--username=${app.database.user}`, `-p${this.remoteConfig[app.database.password]}`]);
+  const dump = spawn('mongodump', ['--archive=databaseProd.archive', `--db=${app.database.db}`, `--host=${app.database.host}`, `--username=${app.database.user}`, `-p${this.remoteConfig[app.database.password]}`, '--excludeCollection=system.users']);
   dump.on('exit', (code) => {
 
     if (code !== 0)
       return console.warn('Archive of Production database failed...');
 
-    const restore = spawn('mongorestore', ['--archive=databaseProd.archive', `--host=${this.localConfig.connections.mongo.host}:${this.localConfig.connections.mongo.port}`]);
+    const restore = spawn('mongorestore', ['--archive=databaseProd.archive', `--host=${this.localConfig.connections.local.host}:${this.localConfig.connections.local.port}`, '--drop']);
     restore.on('exit', (code) => {
       console.log('Production database copied to local.');
     });

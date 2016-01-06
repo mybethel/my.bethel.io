@@ -5,7 +5,7 @@
   "repository": "https://github.com/mybethel/my.bethel.io",
   "database": {
     "db": "mybethel",
-    "host": "c300.candidate.13.mongolayer.com:10300",
+    "host": "candidate.12.mongolayer.com:10300",
     "user": "mybethel-prod",
     "password": "MONGO_PASS"
   },
