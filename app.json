@@ -1,23 +1,34 @@
 {
   "name": "Bethel Platform",
+  "appName": "bethel",
   "description": "The Bethel platform to power the digital church..",
   "repository": "https://github.com/mybethel/my.bethel.io",
+  "database": {
+    "db": "mybethel",
+    "host": "c300.candidate.13.mongolayer.com:10300",
+    "user": "mybethel-prod",
+    "password": "MONGO_PASS"
+  },
   "env": {
     "AWS_KEY": {
       "description": "Amazon Web Services: API key.",
-      "required": true
+      "required": true,
+      "local": "aws.accessKeyId"
     },
     "AWS_SECRET": {
       "description": "Amazon Web Services: API secret.",
-      "required": true
+      "required": true,
+      "local": "aws.secretAccessKey"
     },
     "KEEN_READ": {
       "description": "Keen: Read-only API key for analytic access.",
-      "required": true
+      "required": true,
+      "local": "keen.writeKey"
     },
     "MANDRILL_KEY": {
       "description": "Mandrill: API key for sending of mail.",
-      "required": true
+      "required": true,
+      "local": "mandrill.key"
     },
     "MONGO_PASS": {
       "description": "MongoHQ: Password for production database.",
@@ -33,7 +44,8 @@
     },
     "ZENCODER": {
       "description": "Zencoder: API key for media encoding and conversion.",
-      "required": true
+      "required": true,
+      "local": "zencoder.key"
     }
   }
 }

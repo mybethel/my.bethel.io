@@ -1,0 +1,61 @@
+#!/usr/bin/env node
+
+const app = require('../app.json');
+const dot = require('dot-object');
+const fs = require('fs');
+const spawn = require('child_process').spawn;
+
+function Setup() {
+  this.remoteConfig = {};
+  this.localConfig = require('../config/local.js');
+}
+
+Setup.prototype.mergeConfig = function mergeConfig() {
+  for (var env in app.env) {
+    if (!app.env[env].local) continue;
+    dot.str(app.env[env].local, this.remoteConfig[env], this.localConfig);
+  }
+};
+
+Setup.prototype.getRemote = function getRemote() {
+  return new Promise((resolve, reject) => {
+    const heroku = spawn('heroku', ['config', '--json', `--app=${app.appName}`]);
+    heroku.stdout.on('data', (config) => {
+      config = JSON.parse(config.toString());
+      if (!config) return console.error('Unable to authenticate to Heroku.');
+      this.remoteConfig = config;
+      this.mergeConfig();
+      resolve(this.localConfig);
+    });
+  });
+};
+
+Setup.prototype.writeConfig = function writeConfig(config) {
+  var localConfig = require('path').resolve(__dirname, '../config/local.js');
+  fs.writeFileSync(localConfig, `module.exports = ${JSON.stringify(config, null, 2)}`);
+  console.log('Local configuration has been saved.');
+};
+
+Setup.prototype.cloneDb = function cloneDb() {
+  if (!this.localConfig.connections)
+    return console.warn('A local database connection must be defined.');
+
+  const dump = spawn('mongodump', ['--archive=databaseProd.archive', `--db=${app.database.db}`, `--host=${app.database.host}`, `--username=${app.database.user}`, `-p${this.remoteConfig[app.database.password]}`]);
+  dump.on('exit', (code) => {
+
+    if (code !== 0)
+      return console.warn('Archive of Production database failed...');
+
+    const restore = spawn('mongorestore', ['--archive=databaseProd.archive', `--host=${this.localConfig.connections.mongo.host}:${this.localConfig.connections.mongo.port}`]);
+    restore.on('exit', (code) => {
+      console.log('Production database copied to local.');
+    });
+
+  });
+};
+
+var setup = new Setup();
+setup.getRemote().then((config) => {
+  setup.writeConfig(config);
+  setup.cloneDb();
+});
