@@ -89,7 +89,7 @@ module.exports = {
 
     if (values.date) {
       values.date = new Date(values.date);
-      values.date.setHours(11, 41, 00);
+      values.date.setHours(11, 41, 0);
     }
 
     next();

@@ -17,7 +17,6 @@ features/   // each feature is treated as a standalone Angular app
 --------- featureController.js
 --------- featureService.js
 --------- featureView.html
-components/   // libraries and third party dependencies managed through bower
 app.module.js
 app.routes.js
 ```

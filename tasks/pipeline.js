@@ -14,48 +14,48 @@
 //
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
-var cssFilesToInject = [
-  'styles/app.css',
+var cssDependencies = [
+  '.tmp/public/styles/app.css',
 ];
 
 var testDependencies = [
-  'components/socket.io-client/socket.io.js',
-  'components/angular/angular.js',
-];
+  'socket.io-client/socket.io.js',
+  'angular/angular.js',
+].map(path => `node_modules/${path}`);
 
 var libraryDependencies = [
   // Global libraries
-  'components/Chart.js/src/Chart.Core.js',
-  'components/Chart.js/src/Chart.Line.js',
-  'components/lodash/lodash.min.js',
-  'components/moment/min/moment.min.js',
-  'components/videojs/dist/video.min.js',
+  'outdated-browser/outdatedbrowser/outdatedbrowser.min.js',
+  'chart.js/src/Chart.Core.js',
+  'chart.js/src/Chart.Line.js',
+  'lodash/lodash.js',
+  'moment/min/moment.min.js',
+  'video.js/dist/video.min.js',
 
   // Angular dependencies
-  'components/angular-animate/angular-animate.min.js',
-  'components/angular-aria/angular-aria.min.js',
-  'components/angular-chart.js/dist/angular-chart.min.js',
-  'components/angular-dom/dist/angular-dom.min.js',
-  'components/angular-google-maps/dist/angular-google-maps.min.js',
-  'components/angular-http-auth/src/http-auth-interceptor.js',
-  'components/angular-material/angular-material.min.js',
-  'components/angular-messages/angular-messages.min.js',
-  'components/angular-moment/angular-moment.min.js',
-  'components/angular-sails-socket/dist/angular-sails-socket.min.js',
-  'components/angular-simple-logger/dist/angular-simple-logger.min.js',
-  'components/angular-translate/angular-translate.min.js',
-  'components/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
-  'components/angular-ui-router/release/angular-ui-router.min.js',
-  'components/angular-wizard/dist/angular-wizard.min.js',
-  'components/angulartics/dist/angulartics.min.js',
-  'components/angulartics/dist/angulartics-ga.min.js',
-  'components/ng-file-upload/ng-file-upload.min.js',
-  'components/ng-file-upload/ng-file-upload-shim.min.js',
-];
+  'angular-animate/angular-animate.min.js',
+  'angular-aria/angular-aria.min.js',
+  'angular-chart.js/dist/angular-chart.min.js',
+  'angular-dom/dist/angular-dom.min.js',
+  'angular-google-maps/dist/angular-google-maps.min.js',
+  'angular-http-auth/src/http-auth-interceptor.js',
+  'angular-material/angular-material.min.js',
+  'angular-messages/angular-messages.min.js',
+  'angular-moment/angular-moment.min.js',
+  'angular-sails-socket/dist/angular-sails-socket.min.js',
+  'angular-simple-logger/dist/angular-simple-logger.min.js',
+  'angular-translate/dist/angular-translate.min.js',
+  'angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+  'angular-ui-router/release/angular-ui-router.min.js',
+  'angular-wizard/dist/angular-wizard.min.js',
+  'angulartics/dist/angulartics.min.js',
+  'angulartics/dist/angulartics-ga.min.js',
+  'ng-file-upload/dist/ng-file-upload-all.min.js'
+].map(path => `node_modules/${path}`);
 
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
-var jsFilesToInject = [
+var jsDependencies = [
   // Load sails.io before everything else
   'shared/sails.io.js',
   'shared/sharedConfig.js',
@@ -63,7 +63,7 @@ var jsFilesToInject = [
   'features/**/*Config.js',
   'features/**/*Controller.js',
   'app.js'
-];
+].map(path => `assets/${path}`);
 
 
 // Client-side HTML templates are injected using the sources below
@@ -75,32 +75,15 @@ var jsFilesToInject = [
 // with the linker, no problem-- you'll just want to make sure the precompiled
 // templates get spit out to the same file.  Be sure and check out `tasks/README.md`
 // for information on customizing and installing new tasks.
-var templateFilesToInject = [
+var templateDependencies = [
   'templates/**/*.html'
-];
+].map(path => `assets/${path}`);
 
-
-
-// Prefix relative paths to source files so they point to the proper locations
-// (i.e. where the other Grunt tasks spit them out, or in some cases, where
-// they reside in the first place)
-module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
-});
-module.exports.jsFilesToTest = testDependencies.concat(libraryDependencies).concat(jsFilesToInject).map(function(path) {
-  return 'assets/' + path;
-});
-
-module.exports.librariesToInject = libraryDependencies.map(function(path) {
-  return '.tmp/public/' + path;
-});
-module.exports.frontendToInject = jsFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
-});
-
-module.exports.jsFilesToInject = libraryDependencies.concat(jsFilesToInject).map(function(path) {
-  return '.tmp/public/' + path;
-});
-module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
-  return 'assets/' + path;
-});
+module.exports = {
+  cssFilesToInject: cssDependencies,
+  jsFilesToTest: testDependencies.concat(libraryDependencies).concat(jsDependencies),
+  librariesToInject: libraryDependencies,
+  frontendToInject: jsDependencies,
+  jsFilesToInject: libraryDependencies.concat(jsDependencies),
+  templateFilesToInject: templateDependencies
+};

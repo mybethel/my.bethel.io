@@ -1,6 +1,6 @@
 angular.module('Bethel.user', ['uiGmapgoogle-maps'])
 .config(['$stateProvider', 'uiGmapGoogleMapApiProvider',
-  function ($stateProvider, uiGmapGoogleMapApiProvider) {
+  function ($stateProvider, GoogleMapApiProviders) {
 
   $stateProvider
     .state('dashboard', {
@@ -17,7 +17,7 @@ angular.module('Bethel.user', ['uiGmapgoogle-maps'])
       templateUrl: 'features/user/betaView.html'
     });
 
-  uiGmapGoogleMapApiProvider.configure({
+  GoogleMapApiProviders.configure({
     key: 'AIzaSyCasoNnO-7ZHrH_NBcCU_BBed6duq8NvJg',
     v: '3.17',
     libraries: 'places'

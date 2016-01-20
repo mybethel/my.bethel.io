@@ -79,9 +79,9 @@ module.exports = {
 		},
 
 		files: {
-			'.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
-			'views/**/*.html': require('../pipeline').cssFilesToInject,
-			'views/**/*.ejs': require('../pipeline').cssFilesToInject
+			'.tmp/public/**/*.html': ['.tmp/public/concat/production.css'],
+			'views/**/*.html': ['.tmp/public/concat/production.css'],
+			'views/**/*.ejs': ['.tmp/public/concat/production.css']
 		}
 	},
 
@@ -95,9 +95,9 @@ module.exports = {
 		},
 
 		files: {
-			'.tmp/public/**/*.html': require('../pipeline').cssFilesToInject,
-			'views/**/*.html': require('../pipeline').cssFilesToInject,
-			'views/**/*.ejs': require('../pipeline').cssFilesToInject
+			'.tmp/public/**/*.html': ['.tmp/public/concat/production.css'],
+			'views/**/*.html': ['.tmp/public/concat/production.css'],
+			'views/**/*.ejs': ['.tmp/public/concat/production.css']
 		}
 	},
 

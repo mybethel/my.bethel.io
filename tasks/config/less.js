@@ -13,7 +13,11 @@
 module.exports = {
   dev: {
     options: {
-      paths: ['assets/components', 'assets/features']
+      paths: [
+        'assets/components',
+        'assets/features',
+        'node_modules'
+      ]
     },
     files: {
       '.tmp/public/styles/app.css': 'assets/styles/app.less'
