@@ -5,32 +5,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var moment = require('moment'),
-    xml2js = require('xml2js'),
-    request = require('request'),
-    async = require('async');
-
-function finishMediaImport(id) {
-  console.log('Finished import for podcast ' + id);
-}
-
-function processMediaImport(id, media, ministry) {
-  var filename = media[0].url.split('/').slice(-1);
-  sails.log.debug('Transporting ' + filename[0] + ' to s3://podcast/' + ministry + '/' + id);
-
-  S3Upload.transport(media[0].url, 'podcast/' + ministry + '/' + id, filename[0], function (err) {
-    if (err)
-      sails.log.error(err);
-
-    media.shift();
-
-    if (media && media[0]) {
-      processMediaImport(id, media, ministry);
-    } else {
-      finishMediaImport(id, ministry);
-    }
-  });
-}
+const moment = require('moment');
 
 module.exports = {
 
@@ -73,79 +48,6 @@ module.exports = {
 
   new: function (req, res) {
     res.send(S3Upload.prepare('images/podcast/tmp'));
-  },
-
-  import: function(req, res) {
-    if (!req.param('url'))
-      return res.send(403, 'no feed provided');
-
-    request(req.param('url'), function (error, response, body) {
-      if (error || response.statusCode !== 200)
-        return res.send(503, 'unable to load feed');
-
-      xml2js.parseString(body, function (err, result) {
-        // Ensure the XML feed has at least one item to import.
-        if (err || !result.rss.channel[0].item || result.rss.channel[0].item.length < 1)
-          return res.send(503, 'invalid feed');
-
-        var feed = result.rss.channel[0],
-            podcastImage = feed['itunes:image'][0].$.href,
-            podcastImageExtension = podcastImage.split('.').slice(-1),
-            media = [];
-
-        async.each(feed.item, function (item, callback) {
-          if (!item.enclosure || !item.enclosure[0])
-            return callback();
-
-          media.push({
-            name: item.title[0],
-            date: item.pubDate[0],
-            description: item['itunes:summary'][0],
-            url: item.enclosure[0].$.url,
-          });
-
-          callback();
-        }, function (err) {
-          if (err)
-            return sails.log.error(err);
-
-          var mediaUrl = media[0].url,
-              mediaType = 2;
-
-          // Determine the type of podcast from the first enclosure URL.
-          // @todo: this needs to be more flexible
-          if (mediaUrl.indexOf('.mp3') !== -1 || mediaUrl.indexOf('.m4a') !== -1)
-            mediaType = 1;
-
-          Podcast.create({
-            name: feed.title[0],
-            type: mediaType,
-            source: 1,
-            import: media,
-            description: feed.description[0],
-            tags: feed['itunes:keywords'][0],
-            copyright: feed.copyright[0],
-            ministry: req.session.ministry,
-          }, function podcastCreated(err, podcast) {
-            if (err)
-              return res.send(503, err);
-
-            // Upload the podcast thumbnail to S3.
-            S3Upload.transport(podcastImage, 'images/podcast', podcast.id + '.' + podcastImageExtension, function (err) {
-              if (err) {
-                sails.log.error('Unable to transport podcast image ' + podcastImage);
-              } else {
-                Podcast.update(podcast.id, {image: '/podcast' + podcast.id + '.' + podcastImageExtension});
-              }
-
-              processMediaImport(podcast.id, podcast.import, req.session.ministry);
-            });
-
-            res.redirect('/podcast/show/' + podcast.id);
-          });
-        });
-      });
-    });
   },
 
   edit: function (req, res) {
