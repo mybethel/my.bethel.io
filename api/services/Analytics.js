@@ -8,7 +8,7 @@ exports.registerHit = (objectType, objectId, req, properties) => {
     properties: properties,
     timestamp: new Date(),
     userAgent: req.headers['user-agent'],
-    userIp: req.ip
+    userIp: req.headers['x-forwarded-for'] || req.ip
   };
 
   if (record.properties.ministry) {
