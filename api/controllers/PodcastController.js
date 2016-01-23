@@ -69,24 +69,18 @@ module.exports = {
   },
 
   destroy: function(req, res) {
-    Podcast.findOne(req.param('id')).exec(function foundPodcast(err, podcast) {
+    Podcast.destroy(req.param('id'), function deletedPodcast(err) {
+      if (err) {
+        sails.log.error(err);
+        return res.serverError(err);
+      }
 
-      if (err) return res.serverError(err);
+      // @TODO: Destroy media stored in S3 if podcast media is hosted on Bethel Cloud
+      PodcastMedia.destroy({ podcast: req.param('id') }, function deletedPodcastMedia(err) {
+        if (err) sails.log.error(err);
 
-      Podcast.destroy(req.param('id'), function deletedPodcast(err) {
-        if (err) {
-          sails.log.error(err);
-          return res.serverError(err);
-        }
-
-        // @TODO: Destroy media stored in S3 if podcast media is hosted on Bethel Cloud
-        PodcastMedia.destroy({ podcast: req.param('id') }, function deletedPodcastMedia(err) {
-          if (err) sails.log.error(err);
-
-          res.redirect('/#/podcast');
-        });
+        res.redirect('/#/podcast');
       });
-
     });
   },
 
@@ -119,8 +113,9 @@ module.exports = {
       if (err) return res.serverError(err);
       if (!podcast) return res.notFound();
 
-      var statistics = Analytics.buildPayload(req);
-      Analytics.registerHit('podcast', req.param('id'), statistics);
+      Analytics.registerHit('podcast.feed', req.param('id'), req, {
+        ministry: podcast.ministry.id
+      });
 
       res.header('Content-Type', 'text/xml; charset=UTF-8');
 
@@ -134,28 +129,22 @@ module.exports = {
   },
 
   subscribers: function(req, res) {
-    var statsDate = Number(moment().subtract(1, 'week').format('GGGGWW'));
 
-    Stats.find({ object: req.param('id'), type: 'podcast' }).sort('date desc').skip(1).limit(24).exec(function (err, historical) {
-      var historicalStats = {};
-      if (historical.length >= 1) {
-        historical.forEach(function(historicalStat) {
-          historicalStats[historicalStat.date] = historicalStat.count;
-        });
+    Analytics.generateGraphData('podcast.feed', req.param('id')).then(function(results) {
+      var subscribers = 0;
+      for (var count in results) {
+        subscribers += results[count];
       }
-
-      Stats.findOne({ object: req.param('id'), type: 'podcast', date: statsDate }, function (err, stat) {
-        if (err) return sails.log.error('Error finding stats', err);
-
-        if (!stat) stat = { count: 0 };
-
-        return res.send({
-          podcast: req.param('id'),
-          subscribers: Math.round(stat.count/7),
-          historical: historicalStats
-        });
+      res.send({
+        podcast: req.param('id'),
+        subscribers: subscribers,
+        historical: results
       });
+    }, function(err) {
+      sails.log.error(err);
+      res.serverError(err);
     });
+
   },
 
 };

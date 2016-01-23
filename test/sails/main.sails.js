@@ -9,6 +9,9 @@ before(function (done) {
         url: 'mongodb://localhost:27017'
       }
     },
+    elasticsearch: {
+      host: 'localhost:9200'
+    },
     log: { level: 'info' },
     models: {
       migrate: 'drop',

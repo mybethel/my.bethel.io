@@ -15,6 +15,7 @@ cache:
   - assets/components
 services:
   - mongodb
+  - elasticsearch
 addons:
   apt:
     sources:

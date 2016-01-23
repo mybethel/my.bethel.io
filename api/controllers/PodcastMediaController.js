@@ -10,14 +10,14 @@ module.exports = {
   download: function(req, res) {
     var embed = (typeof req.query.embed !== 'undefined');
     var mediaId = req.param('id').split('.').shift();
-    PodcastMedia.findOne(mediaId).exec(function (err, media) {
+    PodcastMedia.findOne(mediaId).populate('podcast').exec(function (err, media) {
       if (err) return res.serverError(err);
       if (!media) return res.notFound();
 
-      var statistics = Analytics.buildPayload(req, {
-        medium: embed ? 'embed' : 'podcast'
+      Analytics.registerHit('podcast.media', req.param('id'), req, {
+        medium: embed ? 'embed' : 'podcast',
+        ministry: media.podcast.ministry
       });
-      Analytics.registerHit('podcastmedia', req.param('id'), statistics);
 
       if (media.url.indexOf('cloud.bethel.io') !== -1) {
         // Encode hashtags or question marks in uploaded file names.

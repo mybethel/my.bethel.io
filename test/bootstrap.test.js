@@ -14,6 +14,9 @@ beforeAll(function() {
           url: 'mongodb://localhost:27017'
         }
       },
+      elasticsearch: {
+        host: 'localhost:9200'
+      },
       log: { level: 'warn' },
       models: {
         migrate: 'drop',
@@ -23,7 +26,7 @@ beforeAll(function() {
     }, function (err, server) {
       sails = server;
       if (err) return deferred.reject(err);
-      
+
       setTimeout(function(){ deferred.fulfill(true); }, 5000);
     });
 
