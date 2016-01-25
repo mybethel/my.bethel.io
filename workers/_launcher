@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+var start = new Date().getTime();
 var program = require('commander').usage('<input>').parse(process.argv);
-var worker = require('./' + program.args[0]);
+var worker = require(`./${program.args[0]}`);
 var tripwire = require('tripwire');
 
 process.on('uncaughtException', function(err) {
@@ -29,5 +30,9 @@ Sails.load({
     level: 'verbose'
   }
 }, function(err, sails) {
-  worker.run(function() { process.exit(); }, program.args[1]);
+  worker.run(function() {
+    var end = new Date().getTime();
+    sails.log.info(`[machine:${program.args[0]}] ${end - start}ms.`);
+    process.exit();
+  }, program.args[1]);
 });
