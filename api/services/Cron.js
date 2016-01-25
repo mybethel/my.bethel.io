@@ -11,8 +11,10 @@ exports.init = function() {
   });
 
   // Parse CDN logs and generate invoices every day at 1:00AM.
-  Cron.create('00 00 01 * * *', function() {
-    if (!sails.config.log.logentries) return;
+  Cron.create('0 0 1 * * *', function() {
+    if (!sails.config.log.logentries) {
+      return sails.log.warn('No logentries key set, CDN usage unavaialable.');
+    }
     Machine.create('cdnUsage', 'Standard-1X');
   });
 
