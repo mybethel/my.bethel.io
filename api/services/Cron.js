@@ -12,6 +12,7 @@ exports.init = function() {
 
   // Parse CDN logs and generate invoices every day at 1:00AM.
   Cron.create('00 00 01 * * *', function() {
+    if (!sails.config.log.logentries) return;
     Machine.create('cdnUsage', 'Standard-1X');
   });
 
