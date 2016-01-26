@@ -1,0 +1,26 @@
+<div ng-controller="teamController" layout="row">
+  <md-list flex="60">
+    <md-list-item class="md-2-line" ng-repeat="person in team">
+      <img ng-src="{{ person.avatar }}" class="md-avatar" />
+      <div class="md-list-item-text" layout="column">
+        <h3>{{ person.name }}</h3>
+        <p>{{ person.email }}</p>
+      </div>
+      <md-icon ng-if="ministry.billing === person.email">attach_money</md-icon>
+      <md-icon ng-if="person.roles.indexOf('ROLE_SUPER_ADMIN') !== -1">stars</md-icon>
+    </md-list-item>
+  </md-list>
+  <md-whiteframe class="md-whiteframe-z1" flex="40" layout="column" layout-padding>
+    <md-list>
+      <md-subheader class="md-no-sticky">Ministry team settings</md-subheader>
+      <md-list-item>
+        <p>Billing contact</p>
+        <md-select ng-model="ministry.billing">
+          <md-option ng-repeat="billing in team" value="{{ billing.email }}">
+            {{ billing.email }}
+          </md-option>
+        </md-select>
+      </md-list-item>
+    </md-list>
+  </md-whiteframe>
+</div>

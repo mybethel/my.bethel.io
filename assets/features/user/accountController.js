@@ -30,9 +30,10 @@ angular.module('Bethel.user')
     if (newValue === oldValue) return;
 
     var updatedMinistry = {
-      name: newValue.name,
+      billing: newValue.billing,
       email: newValue.email,
       locality: newValue.locality,
+      name: newValue.name,
       url: newValue.url
     };
 

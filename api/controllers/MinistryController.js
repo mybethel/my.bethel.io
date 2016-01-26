@@ -29,12 +29,19 @@ module.exports = {
       if (err) res.send(err, 500);
 
       var uploadForm = S3Upload.prepare('images/ministry/tmp');
-    
+
       return res.view({
         ministry: ministry,
         s3form: uploadForm
       });
     });
   },
+
+  team: function(req, res) {
+    ministryId = req.param('id') || req.session.ministry;
+    User.find({ ministry: ministryId }).exec(function(err, users) {
+      return res.send(users);
+    });
+  }
 
 };

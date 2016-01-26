@@ -11,15 +11,19 @@ angular.module('Bethel.user')
       index: 1,
       label: 'locations'
     },
-    'integrations': {
+    'team': {
       index: 2,
+      label: 'my team'
+    },
+    'integrations': {
+      index: 3,
       label: 'integrations'
     },
     'billing': {
-      index: 3,
+      index: 4,
       label: 'subscription and billing'
     }
-  }
+  };
 
   if ($stateParams.page)
     $scope.currentTab = $scope.userTabs[$stateParams.page].index;

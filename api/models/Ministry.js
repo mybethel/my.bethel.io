@@ -19,6 +19,10 @@ module.exports = {
       type: 'text'
     },
 
+    billing: {
+      type: 'email'
+    },
+
     email: {
       type: 'email'
     },
