@@ -21,9 +21,8 @@ module.exports = {
   // 'verbose': Display calls from `.error()`, `.warn()`, `.debug()`, `.info()` to `.verbose()`
   //
   log: {
-    level: 'info'
-  },
-
-  logentries: process.env.LOGENTRIES_KEY
+    level: 'info',
+    logentries: process.env.LOGENTRIES_KEY
+  }
 
 };
