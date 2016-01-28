@@ -11,23 +11,29 @@
  * Copies all directories nd files from the .tmp/public directory into a www directory.
  *
  * For usage docs see:
- * 		https://github.com/gruntjs/grunt-contrib-copy
+ *     https://github.com/gruntjs/grunt-contrib-copy
  */
 module.exports = {
-	dev: {
-		files: [{
-			expand: true,
-			cwd: './assets',
-			src: ['**/*.!(coffee|less)'],
-			dest: '.tmp/public'
-		}]
-	},
-	build: {
-		files: [{
-			expand: true,
-			cwd: '.tmp/public',
-			src: ['**/*'],
-			dest: 'www'
-		}]
-	}
+  dev: {
+    files: [{
+      expand: true,
+      cwd: './assets',
+      src: ['**/*.!(coffee|less)'],
+      dest: '.tmp/public'
+    },
+    {
+      expand: true,
+      cwd: './node_modules/video.js/dist',
+      src: ['*.min*', '*.swf'],
+      dest: '.tmp/public/libraries'
+    }]
+  },
+  build: {
+    files: [{
+      expand: true,
+      cwd: '.tmp/public',
+      src: ['**/*'],
+      dest: 'www'
+    }]
+  }
 };
