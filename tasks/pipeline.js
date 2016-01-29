@@ -57,13 +57,13 @@ var libraryDependencies = [
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsDependencies = [
   // Load sails.io before everything else
-  'shared/sails.io.js',
-  'shared/sharedConfig.js',
-  'shared/**/*.js',
-  'features/**/*Config.js',
-  'features/**/*Controller.js',
-  'app.js'
-].map(path => `assets/${path}`);
+  'node_modules/sails.io.js/sails.io.js',
+  'assets/shared/sharedConfig.js',
+  'assets/shared/**/*.js',
+  'assets/features/**/*Config.js',
+  'assets/features/**/*Controller.js',
+  'assets/app.js'
+];
 
 
 // Client-side HTML templates are injected using the sources below

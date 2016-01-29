@@ -1,3 +1,5 @@
+io.sails.transports = ['websocket'];
+
 /**
  * The main Sails Angular app module
  *
