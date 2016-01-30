@@ -1,15 +1,31 @@
-<div layout="row" layout-padding layout-margin layout-align="center center">
+<div ng-controller="billingController">
 
-  <div flex="30">
-    <md-card>
-      <md-card-content style="text-align:center;">
-        <img src="https://avatars0.githubusercontent.com/u/7086970?v=3&amp;s=150" alt="Bethel Technologies" />
-        <p>Bethel is currently in beta. In exchange for your valuable feedback we are currently providing the platform completely free of charge.</p>
-      </md-card-content>
-      <div class="md-actions" layout="row" layout-align="center center">
-        <md-button href="mailto:hello@bethel.io">Questions?</md-button>
+  <md-card flex="40" offset="60" style="margin-bottom:20px">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>{{ billDate | date:'MMMM yyyy' }}</span>
+        </h2>
+        <span flex></span>
+        <h2 style="font-weight:bold">
+          <span>{{ currentBill.amount | currency:'$' }}</span>
+        </h2>
       </div>
-    </md-card>
-  </div>
+    </md-toolbar>
+    <md-list>
+      <md-list-item ng-repeat="(feature, usage) in currentBill.summary" style="min-height:34px">
+        <p>{{ feature }}</p>
+        <p class="md-secondary">{{ usage.amount | currency:'$' }}</p>
+      </md-list-item>
+    </md-list>
+  </md-card>
+  <md-card flex="100" style="font-size:90%">
+    <md-list>
+      <md-list-item ng-repeat="dailyUsage in currentBill.daily">
+        <p>{{ dailyUsage.createdAt | date:'MM/dd' }} - {{ dailyUsage.type }}</p>
+        <p class="md-secondary">{{ dailyUsage.amount | currency:'$':3 }}</p>
+      </md-list-item>
+    </md-list>
+  </md-card>
 
 </div>
