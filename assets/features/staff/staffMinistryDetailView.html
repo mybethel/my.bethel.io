@@ -10,26 +10,49 @@
       </div>
     </div>
 
-    <md-whiteframe flex class="md-whiteframe-z1 md-padding ministry-info" layout="column">
+    <div layout="column" flex>
+      <md-whiteframe class="md-whiteframe-z1" flex style="margin-bottom:20px">
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2>
+              <span>{{ billDate | date:'MMMM yyyy' }} Billable Usage</span>
+            </h2>
+            <span flex></span>
+            <h2 style="font-weight:bold">
+              <span>{{ currentBill.amount | currency:'$' }}</span>
+            </h2>
+          </div>
+        </md-toolbar>
+        <md-list>
+          <invoice-line-item style="min-height:34px"
+            ng-repeat="(feature, usage) in currentBill.summary"
+            amount="usage.amount"
+            type="feature">
+          </invoice-line-item>
+        </md-list>
+      </md-whiteframe>
 
-      <h3>Ministry Details</h3>
+      <md-whiteframe flex class="md-whiteframe-z1 md-padding ministry-info" layout="column">
 
-      <md-input-container ng-if="ministry.email">
-        <label>Email</label>
-        <input ng-model="ministry.email" type="text" disabled>
-      </md-input-container>
+        <h3>Ministry Details</h3>
 
-      <md-input-container>
-        <label>Created</label>
-        <input ng-model="ministry.createdAt" type="text" disabled>
-      </md-input-container>
+        <md-input-container ng-if="ministry.email">
+          <label>Email</label>
+          <input ng-model="ministry.email" type="text" disabled>
+        </md-input-container>
 
-      <md-input-container ng-if="ministry.description">
-        <label>Description</label>
-        <textarea ng-model="ministry.description" columns="1" rows="3" disabled></textarea>
-      </md-input-container>
+        <md-input-container>
+          <label>Created</label>
+          <input ng-model="ministry.createdAt" type="text" disabled>
+        </md-input-container>
 
-    </md-whiteframe>
+        <md-input-container ng-if="ministry.description">
+          <label>Description</label>
+          <textarea ng-model="ministry.description" columns="1" rows="3" disabled></textarea>
+        </md-input-container>
+
+      </md-whiteframe>
+    </div>
 
   </div>
 </md-content>

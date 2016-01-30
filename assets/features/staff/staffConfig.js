@@ -26,6 +26,10 @@ angular.module('Bethel.staff', ['ui.router'])
       url: '/ministry/:ministryId',
       templateUrl: 'features/staff/staffMinistryDetailView.html',
       controller: 'staffMinistryDetailController'
+    })
+    .state('staff.invoice', {
+      url: '/invoice',
+      templateUrl: 'features/staff/staffInvoiceView.html'
     });
 
 }]);

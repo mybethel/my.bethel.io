@@ -8,8 +8,12 @@
 module.exports = {
 
   ministry: function(req, res) {
-    var ministryId = (req.param('id')) ? req.param('id') : req.session.ministry;
-    Invoice.find({ ministry: ministryId, sort: 'createdAt DESC' }).exec(function (err, invoices) {
+    var criteria = { sort: 'createdAt DESC' };
+    if (req.param('id') !== 'all') {
+      criteria.ministry = req.param('id') ? req.param('id') : req.session.ministry;
+    }
+
+    Invoice.find(criteria).exec(function (err, invoices) {
       var total = 0;
       var summary = {};
       for (var i = 0; i < invoices.length; i++) {

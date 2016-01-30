@@ -22,6 +22,9 @@ angular.module('Bethel.staff')
   }
 
   $ctrl.init = function() {
+    $scope.billDate = new Date();
+    $scope.currentBill = sailsSocket.populateOne('invoice/ministry/' + $scope.id);
+
     sailsSocket.get('/ministry/' + $scope.id).then($ctrl.populateMinistry);
   };
 

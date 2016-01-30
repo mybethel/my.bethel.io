@@ -1,0 +1,35 @@
+<div ng-controller="staffInvoiceController">
+
+  <md-card flex="40" offset="60" style="margin-bottom:20px">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>{{ billDate | date:'MMMM yyyy' }}</span>
+        </h2>
+        <span flex></span>
+        <h2 style="font-weight:bold">
+          <span>{{ currentBill.amount | currency:'$' }}</span>
+        </h2>
+      </div>
+    </md-toolbar>
+    <md-list>
+      <invoice-line-item style="min-height:34px"
+        ng-repeat="(feature, usage) in currentBill.summary"
+        amount="usage.amount"
+        type="feature">
+      </invoice-line-item>
+    </md-list>
+  </md-card>
+  <md-card flex="100" style="font-size:90%">
+    <md-list>
+      <invoice-line-item
+        ng-repeat="dailyUsage in currentBill.daily"
+        amount="dailyUsage.amount"
+        date="dailyUsage.createdAt"
+        type="dailyUsage.type"
+        units="dailyUsage.units">
+      </invoice-line-item>
+    </md-list>
+  </md-card>
+
+</div>
