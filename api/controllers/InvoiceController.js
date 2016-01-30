@@ -4,11 +4,19 @@
  * @description :: Server-side logic for managing Invoices
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+const moment = require('moment');
 
 module.exports = {
 
   ministry: function(req, res) {
-    var criteria = { sort: 'createdAt DESC' };
+
+    var criteria = {
+      sort: 'createdAt DESC',
+      createdAt: {
+        '>=': moment().startOf('month').format(),
+        '<=': moment().endOf('month').format()
+      }
+    };
     if (req.param('id') !== 'all') {
       criteria.ministry = req.param('id') ? req.param('id') : req.session.ministry;
     }
