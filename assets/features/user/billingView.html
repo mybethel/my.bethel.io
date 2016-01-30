@@ -13,18 +13,22 @@
       </div>
     </md-toolbar>
     <md-list>
-      <md-list-item ng-repeat="(feature, usage) in currentBill.summary" style="min-height:34px">
-        <p>{{ feature }}</p>
-        <p class="md-secondary">{{ usage.amount | currency:'$' }}</p>
-      </md-list-item>
+      <invoice-line-item style="min-height:34px"
+        ng-repeat="(feature, usage) in currentBill.summary"
+        amount="usage.amount"
+        type="feature">
+      </invoice-line-item>
     </md-list>
   </md-card>
   <md-card flex="100" style="font-size:90%">
     <md-list>
-      <md-list-item ng-repeat="dailyUsage in currentBill.daily">
-        <p>{{ dailyUsage.createdAt | date:'MM/dd' }} - {{ dailyUsage.type }}</p>
-        <p class="md-secondary">{{ dailyUsage.amount | currency:'$':3 }}</p>
-      </md-list-item>
+      <invoice-line-item
+        ng-repeat="dailyUsage in currentBill.daily"
+        amount="dailyUsage.amount"
+        date="dailyUsage.createdAt"
+        type="dailyUsage.type"
+        units="dailyUsage.units">
+      </invoice-line-item>
     </md-list>
   </md-card>
 
