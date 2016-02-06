@@ -7,7 +7,7 @@
         <p>{{ person.email }}</p>
       </div>
       <md-icon ng-if="ministry.billing === person.email">attach_money</md-icon>
-      <md-icon ng-if="person.roles.indexOf('ROLE_SUPER_ADMIN') !== -1">stars</md-icon>
+      <md-icon ng-if="person.roles && person.roles.indexOf('ROLE_SUPER_ADMIN') !== -1">stars</md-icon>
     </md-list-item>
   </md-list>
   <md-whiteframe class="md-whiteframe-z1" flex="40" layout="column" layout-padding>
