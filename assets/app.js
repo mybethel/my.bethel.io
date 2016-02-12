@@ -12,7 +12,8 @@ angular.module('Bethel', [
   'Bethel.streaming'
 ])
 
-.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', 'sailsSocketProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider, sailsSocketProvider) {
+.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', '$compileProvider', 'sailsSocketProvider',
+  function ($urlRouterProvider, $translateProvider, $mdThemingProvider, $compileProvider, sailsSocketProvider) {
 
   $translateProvider.preferredLanguage('en');
   $translateProvider.useLoader('$translatePartialLoader', {
@@ -32,6 +33,8 @@ angular.module('Bethel', [
   $mdThemingProvider.theme('default')
     .primaryPalette('brandBlue')
     .accentPalette('blue-grey');
+
+  $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto):/);
 
 }])
 
@@ -112,6 +115,19 @@ angular.module('Bethel', [
       });
     });
 
+  });
+
+  $scope.$on('$locationChangeStart', function(event, newUrl) {
+    delete $scope.navActive;
+    for (var i = 0; i < $scope.navLinks.length; i++) {
+      if ($scope.navLinks[i].url === 'beta') {
+        continue;
+      }
+      if (newUrl.indexOf($scope.navLinks[i].url) !== -1) {
+        $scope.navActive = $scope.navLinks[i].url;
+        break;
+      }
+    }
   });
 
 }]);

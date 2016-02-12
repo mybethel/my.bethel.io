@@ -41,10 +41,10 @@
   </div>
 </md-toolbar>
 
-<md-content class="main-content" layout="row" layout-wrap>
+<md-content class="main-content" flex layout="row" layout-wrap>
 
-  <div class="overlay" flex="60" offset="20" layout-padding layout-margin layout-align="center center" ng-if="isDemo">
-    <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" layout-align="center center">
+  <div class="overlay" flex="100" layout-fill layout-align="center center" ng-if="isDemo">
+    <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" flex-offset="20" flex="60" layout-align="center center">
       <h3 class="light">Welcome to your new podcast!</h3>
       <span>Real stats will appear when we have a few weeks of data.</span>
       <span ng-if="podcast.source === 1 && podcast.media.length < 1">Go ahead, upload some episodes and when you're ready...</span>
@@ -120,9 +120,9 @@
 
 </div>
 
-<md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-is-open="1 == 1" layout-fill flex="30">
+<md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-is-open="1 == 1" flex="30">
 
-  <md-content flex>
+  <md-content>
 
     <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="100%" />
 
@@ -134,7 +134,7 @@
       <md-progress-circular md-diameter="24" md-mode="indeterminate"></md-progress-circular>
     </div>
 
-    <div layout-padding layout-margin>
+    <div layout="column" layout-margin>
 
       <span class="vimeo-sync" ng-if="podcast.source === 2">
         <h4>Podcast syncing with Vimeo<br />

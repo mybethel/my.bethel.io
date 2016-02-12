@@ -35,7 +35,7 @@
           Meanwhile, please use a full-size device to access Bethel.</p>
         <p>Feedback? Need help? <a href="mailto:help@bethel.io">Talk to us</a>.</p>
       </div>
-      <div offset="10" flex="50" hide-sm>
+      <div flex-offset="10" flex="50" hide-sm>
         <md-list>
           <md-list-item class="md-2-line">
             <md-button class="md-fab md-hue-2" aria-label="Locations" href="#/settings/locations">
@@ -85,14 +85,12 @@
     <div layout="column" flex="60" flex-sm="100">
         <md-whiteframe class="md-whiteframe-z1 platform-updates" layout>
           <md-list>
-            <md-list-item class="md-2-line" ng-click="loadUpdate(update)" ng-cloak ng-repeat="update in platformUpdates">
+            <md-list-item class="md-3-line" ng-click="loadUpdate(update)" ng-cloak ng-repeat="update in platformUpdates">
               <md-icon>mode_comment</md-icon>
               <div class="md-list-item-text">
-                <h3>{{ update.title }}</h3>
-                <p am-time-ago="update.publishedDate"></p>
+                <h3>{{ update.title }} <small am-time-ago="update.publishedDate"></small></h3>
                 <p class="snippet">{{ update.contentSnippet }}</p>
               </div>
-              <md-divider ng-if="!$last"></md-divider>
             </md-list-item>
           </md-list>
         </md-whiteframe>

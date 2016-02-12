@@ -1,8 +1,8 @@
 <div layout="row" ng-controller="accountController">
   <div layout="column" flex="50" layout-padding>
     <md-subheader class="md-no-sticky">About You</md-subheader>
-    <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <form name="editUser" layout-padding flex>
+    <md-whiteframe class="md-whiteframe-z1" layout-padding>
+      <form name="editUser" layout="column" flex>
         <md-input-container>
           <label>Your name</label>
           <input name="name" ng-model="user.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" required/>
@@ -41,7 +41,7 @@
   <div layout="column" flex="50" layout-padding>
     <md-subheader class="md-no-sticky">Your Ministry</md-subheader>
     <md-whiteframe class="md-whiteframe-z1" layout layout-padding>
-      <form name="editMinistry" layout-padding flex>
+      <form name="editMinistry" layout="column" flex>
         <md-input-container>
           <label>Ministry Name</label>
           <input name="name" ng-model="ministry.name" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" required/>

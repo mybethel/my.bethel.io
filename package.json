@@ -10,7 +10,7 @@
     "angular-dom": "^0.1.1",
     "angular-google-maps": "^2.2.1",
     "angular-http-auth": "^1.2.1",
-    "angular-material": "^0.10.1",
+    "angular-material": "^1.0.5",
     "angular-messages": "^1.5.0",
     "angular-moment": "^0.10.3",
     "angular-sails-socket": "^0.3.0",

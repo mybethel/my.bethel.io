@@ -13,11 +13,16 @@ md-content.main-content.inverse {
 }
 
 md-tabs {
+  .md-tab.md-active {
+    md-icon {
+      color: @brand-color;
+    }
+  }
   md-tabs-canvas {
     background: #FFF;
   }
-  md-content.md-default-theme {
-    background: transparent;
+  md-content {
+    background: transparent !important;
   }
   &.tall {
     md-tabs-canvas,
@@ -44,19 +49,30 @@ md-sidenav.md-sidenav-left {
   background-color: rgb(33,33,33);
   width: 220px !important;
   min-width: 220px !important;
+  md-list-item {
+    button {
+      border-radius: 0;
+      color: #AAA;
+      md-icon {
+        color: #DDD;
+      }
+    }
+    &:hover button,
+    &.active button {
+      color: #DDD;
+      background-color: rgba(255,255,255,0.1) !important;
+      md-icon {
+        text-shadow: 0px 1px 2px #000;
+        color: #FFF;
+      }
+    }
+  }
   h1.md-toolbar-tools {
     background: url(/images/logo-landscape.svg) 14px center no-repeat;
     background-size: 150px;
     text-indent: -9999px;
   }
-  button.md-button.md-default-theme {
-    border-radius: 0;
-    color: #aaa;
-    md-icon {
-      color: #ddd;
-    }
-  }
-  md-content.md-default-theme {
+  md-content {
     background-color: rgb(33,33,33);
   }
   md-list.md-default-theme md-list-item button {
@@ -81,6 +97,12 @@ button.md-button {
   }
 }
 
+md-icon.bucket {
+  font-size: 50px;
+  width: 50px;
+  height: 50px;
+}
+
 // Overriding md-button style to force wrapping
 a.md-button.button-wrap {
   white-space: normal;
@@ -89,7 +111,11 @@ a.md-button.button-wrap {
   padding: 8px 6px;
 }
 
-h2.md-subheader.md-default-theme {
+h2.md-subheader {
+  background-color: transparent;
+}
+
+.md-subheader {
   background-color: transparent;
 }
 
@@ -150,6 +176,10 @@ md-dialog.wizard {
   }
 }
 
+.md-subheader.compact .md-subheader-inner {
+  padding-bottom: 0;
+}
+
 md-card[ng-click]:hover {
   cursor: pointer;
 }
@@ -186,4 +216,35 @@ md-fab-speed-dial {
 
 md-input-container .md-input[disabled] {
   color: rgba(0, 0, 0, 0.54);
+}
+
+.teaser {
+  margin-bottom: -11px;
+  & > div {
+    padding-left: 10px;
+  }
+  .illustration {
+    img {
+      max-width: 100%;
+      position: relative;
+      z-index: -1;
+    }
+  }
+}
+
+md-whiteframe > md-toolbar {
+  background-color: #FFF !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  .md-toolbar-tools {
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 16px;
+    .md-button md-icon {
+      color: rgba(0, 0, 0, 0.54);
+    }
+  }
+}
+
+md-whiteframe .settings-drawer {
+  background-color: #f0f0f0;
+  padding-top: 18px;
 }
