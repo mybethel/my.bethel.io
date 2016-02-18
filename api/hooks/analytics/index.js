@@ -45,8 +45,7 @@ module.exports = function AnalyticsHook(sails) {
             type: collection[1],
             body: validQuery
           }).then(function(records) {
-            console.log(records);
-            return res.json(query.process(records));
+            return query.process(records, res);
           }, function(err) {
             return res.badRequest(err);
           });
