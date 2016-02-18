@@ -43,7 +43,7 @@ angular.module('Bethel.podcast')
 
   $ctrl.init();
 
-  $scope.podcastStats = sailsSocket.populateOne('podcast/subscribers/' + $scope.id);
+  $scope.podcastStats = sailsSocket.populateOne('_analytics/podcastSubscribers/' + $scope.id);
 
   $ctrl.populateDemo = function() {
     $scope.isDemo = ($scope.subscriberCount < 1 || $scope.subscriberChart.data[0].length < 3);
@@ -185,4 +185,3 @@ angular.module('Bethel.podcast')
   }
 
 }]);
-

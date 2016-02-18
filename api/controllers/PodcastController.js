@@ -133,9 +133,6 @@ module.exports = {
         podcast.s3form = S3Upload.prepare('podcast/' + podcast.ministry.id + '/' + podcast.id);
       }
 
-      // Generate statistics data for the analytics graph.
-      podcast.statisticsGraph = Analytics.generateGraphData('podcast', req.param('id'), 6);
-
       res.view({
         podcast: podcast,
         ministry: podcast.ministry,
@@ -162,25 +159,6 @@ module.exports = {
         podcastMedia: podcast.media
       });
     });
-  },
-
-  subscribers: function(req, res) {
-
-    Analytics.generateGraphData('podcast.feed', req.param('id')).then(function(results) {
-      var subscribers = 0;
-      for (var count in results) {
-        subscribers += results[count];
-      }
-      res.send({
-        podcast: req.param('id'),
-        subscribers: subscribers,
-        historical: results
-      });
-    }, function(err) {
-      sails.log.error(err);
-      res.serverError(err);
-    });
-
-  },
+  }
 
 };

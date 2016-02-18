@@ -26,7 +26,7 @@ module.exports = function AnalyticsHook(sails) {
   return {
     routes: {
       after: {
-        'GET /_analytics/:query/:ministryId?': (req, res) => {
+        'GET /_analytics/:query/:uuid?': (req, res) => {
           var query;
           try {
             query = require(`./queries/${req.param('query')}`);
@@ -38,6 +38,8 @@ module.exports = function AnalyticsHook(sails) {
           if (typeof validQuery !== 'object') {
             return res.badRequest(validQuery);
           }
+
+          query.uuid = req.param('uuid');
 
           var collection = query.index.split('.');
           analytics.search({

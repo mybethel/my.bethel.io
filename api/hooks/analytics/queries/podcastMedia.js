@@ -2,10 +2,8 @@ const _ = require('lodash');
 
 module.exports = {
   index: 'podcast.media',
-  ministry: null,
   process: function(records, res) {
-
-    PodcastMedia.find({ ministry: this.ministry }).then(function(allMedia) {
+    PodcastMedia.find({ ministry: this.uuid }).then(function(allMedia) {
       var top = [];
       _.each(records.aggregations.topEpisodes.buckets, function(episode) {
         if (episode.key == 'mp3' || episode.key == 'mp4') return;
@@ -29,9 +27,8 @@ module.exports = {
       });
     });
   },
-  required: ['ministryId', 'start', 'end'],
+  required: ['uuid', 'start', 'end'],
   rawQuery: function(ministryId, startDate, endDate) {
-    this.ministry = ministryId;
     return {
       size: 0,
       query: {

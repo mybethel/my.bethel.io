@@ -23,7 +23,7 @@ angular.module('Bethel.podcast')
   };
 
   $ctrl.getSubscriberCount = function(podcast) {
-    sailsSocket.get('/podcast/subscribers/' + podcast.id).then(function(response) {
+    sailsSocket.get('/_analytics/podcastSubscribers/' + podcast.id).then(function(response) {
       $scope.statistics[response.podcast] = response.subscribers;
       $scope.historicalStats[response.podcast] = response.historical;
     });
