@@ -1,5 +1,5 @@
 const moment = require('moment');
-const records = new require('elasticsearch').Client(sails.config.elasticsearch);
+const records = new require('elasticsearch').Client(Object.assign({}, sails.config.elasticsearch));
 
 exports.registerHit = (objectType, objectId, req, properties) => {
   var collection = objectType.split('.');
