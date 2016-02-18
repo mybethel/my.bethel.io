@@ -2,7 +2,7 @@ var CronJob = require('cron').CronJob;
 
 exports.init = function() {
 
-  if (sails.config.cron && sails.config.cron.disabled === true)
+  if (sails.config.cron && sails.config.cron.disabled === true || process.env.CRON_DISABLE)
     return;
 
   // Sync all Vimeo podcasts every 6 minutes.
