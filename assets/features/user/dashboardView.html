@@ -1,8 +1,20 @@
 <md-toolbar aria-hidden="false">
   <div class="md-toolbar-tools">
     <span flex></span>
-    <div class="md-toolbar-item" layout="column">
-      <a class="md-button md-default-theme" href="#/settings"><span>{{ ministry.name }}</span></a>
+    <div class="md-toolbar-item">
+      <a class="md-button md-default-theme" href="#/settings" style="margin-right:0"><span>{{ ministry.name }}</span></a>
+      <md-menu md-position-mode="target-right target">
+        <a ng-click="$mdOpenMenu($event)" class="md-button md-icon-button" style="margin-left:-10px" aria-label="Switch Ministry">
+          <md-icon md-menu-origin>arrow_drop_down</md-icon>
+        </a>
+        <md-menu-content width="4">
+          <md-menu-item ng-repeat="authMinistry in authorized">
+            <md-button ng-href="session/ministry/{{ authMinistry.id }}">
+              {{ authMinistry.name }}
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
     </div>
     <div class="md-toolbar-item" layout="column">
       <a href="/logout"><i class="material-icons md-24">exit_to_app</i></a>

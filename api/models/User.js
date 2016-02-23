@@ -30,8 +30,12 @@ module.exports = {
       type: 'string'
     },
 
-  	ministry: {
+    ministry: {
       model: 'ministry'
+    },
+
+    ministriesAuthorized: {
+      type: 'array'
     },
 
     avatar: {

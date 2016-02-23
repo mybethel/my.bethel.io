@@ -69,6 +69,10 @@ angular.module('Bethel', [
       $scope.isAdmin = response.isAdmin;
       $scope.previousUser = response.previousUser;
 
+      if ($scope.user.ministriesAuthorized && $scope.user.ministriesAuthorized.length > 0) {
+        $scope.$root.authorized = sailsSocket.populateMany('session/authorized');
+      }
+
       notifyService.beforeNotify = function () {
         return !$scope.previousUser;
       };
