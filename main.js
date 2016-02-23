@@ -12,7 +12,7 @@ pm2.connect(function() {
     script    : 'app.js',
     name      : 'bethel',
     instances : instances,
-    max_memory_restart :  `${maxMemory}M`,
+    max_memory_restart :  `${ Math.round(maxMemory * 0.8) }M`,
     args      : ['--prod'],
     env: {
       'NODE_ENV': 'production',
