@@ -29,12 +29,7 @@ module.exports = {
         return res.redirect(embedUrl);
       }
 
-      if (req.method === 'HEAD') {
-        return res.redirect(media.url);
-      }
-
-      res.header('Content-Disposition', 'attachment');
-      return require('request').get(media.url).pipe(res);
+      return res.redirect(media.url);
     });
   },
 
