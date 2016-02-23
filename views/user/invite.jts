@@ -1,7 +1,7 @@
 
 <md-content class="main-content inverse" id="login" flex layout="row" layout-align="center center">
 
-  <div flex="30" flex-sm="90" flex-md="50" flex layout="column" layout-align="center center" ng-controller="LoginController" ng-init="invitedUser = <%= invitedUser %>">
+  <div flex="30" flex-sm="90" flex-md="50" flex layout="column" layout-align="center center" ng-controller="LoginController" ng-init="invitedUser = ${ _jts.s(invitedUser) }">
 
     <img src="/images/logo-landscape.svg" />
 
