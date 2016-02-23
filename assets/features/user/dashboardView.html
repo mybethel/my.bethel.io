@@ -3,7 +3,7 @@
     <span flex></span>
     <div class="md-toolbar-item">
       <a class="md-button md-default-theme" href="#/settings" style="margin-right:0"><span>{{ ministry.name }}</span></a>
-      <md-menu md-position-mode="target-right target">
+      <md-menu md-position-mode="target-right target" ng-if="authorized && authorized.length > 0">
         <a ng-click="$mdOpenMenu($event)" class="md-button md-icon-button" style="margin-left:-10px" aria-label="Switch Ministry">
           <md-icon md-menu-origin>arrow_drop_down</md-icon>
         </a>
