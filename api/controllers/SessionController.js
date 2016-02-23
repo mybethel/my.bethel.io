@@ -82,7 +82,7 @@ module.exports = {
           previousUser: req.session.previousUser
         };
 
-        if (req.session.previousUser) return;
+        if (req.session.previousUser) return res.send(payload);
 
         User.update(req.session.user, { lastLogin: new Date() }, function (err, user) {
           if (err)
