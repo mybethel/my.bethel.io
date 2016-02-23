@@ -82,6 +82,8 @@ module.exports = {
           previousUser: req.session.previousUser
         };
 
+        if (req.session.previousUser) return;
+
         User.update(req.session.user, { lastLogin: new Date() }, function (err, user) {
           if (err)
             return res.forbidden({ error: 'Please login at http://my.bethel.io' });
