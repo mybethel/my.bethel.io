@@ -4,7 +4,8 @@ angular.module('Bethel.streaming', ['ui.router'])
   $stateProvider
     .state('streaming', {
       url: '/streaming',
-      templateUrl: 'features/streaming/streamingView.html'
+      templateUrl: 'features/streaming/streamingView.html',
+      data : { pageTitle: 'Live Streaming' }
     });
 
 }]);

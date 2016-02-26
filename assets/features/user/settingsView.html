@@ -1,4 +1,4 @@
-<md-tabs flex md-border-bottom class="tall" md-selected="currentTab">
+<md-tabs flex md-border-bottom class="tall" md-selected="currentTab" md-stretch-tabs="always">
   <md-tab ng-repeat="(id, tab) in userTabs" label="{{ tab.label }}" md-on-select="updateLocation(id)">
     <md-content class="md-padding" ng-include="'/features/user/' + id + 'View.html'"></md-content>
   </md-tab>

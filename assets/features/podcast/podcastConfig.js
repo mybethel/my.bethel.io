@@ -8,7 +8,8 @@ angular.module('Bethel.podcast', ['Bethel.util', 'chart.js', 'mgo-angular-wizard
     .state('podcast', {
       url: '/podcast',
       templateUrl: 'features/podcast/podcastListView.html',
-      controller: 'podcastListController'
+      controller: 'podcastListController',
+      data : { pageTitle: 'Podcasting' }
     })
     .state('podcastView', {
       url: '/podcast/:podcastId',

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="Bethel" ng-controller="AppCtrl">
+<html lang="en" ng-app="Bethel">
 <head>
   <meta charset="utf-8" />
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge" /><![endif]-->
@@ -17,33 +17,35 @@
   </script>
 </head>
 
-<body layout="row">
+<body layout="column" ng-controller="AppCtrl">
 
-<section layout="row" layout-fill flex>
   <div id="outdated">
     <h6>Your browser is out of date!</h6>
-    <p>You'll need a more recent browser to use Bethel. Click below for a few suggestions... <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p>You'll need a more recent browser to use Bethel. Click below for a few suggestions...
+      <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
   </div>
 
-  <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')" ng-cloak ng-if="user">
-    <md-toolbar class="md-hue-2">
-      <h1 class="md-toolbar-tools">Bethel</h1>
-    </md-toolbar>
+  <top-nav ministry="ministry" ministries="authorized" ng-if="user" title="pageTitle" user="user"></top-nav>
 
-    <md-content flex>
-      <md-list class="md-accent md-hue-3">
-        <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-class="{ 'active': navActive == link.url }" ng-cloak>
-          <md-icon>{{ link.icon }}</md-icon>
-          <p>{{ link.title }}</p>
-        </md-list-item>
-      </md-list>
-    </md-content>
-  </md-sidenav>
+  <section layout="row" layout-fill flex>
 
-  <div class="main-content" flex layout="column" ng-if="user" ui-view>
-    <!--ANGULAR VIEW-->
-  </div>
+    <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" ng-cloak ng-if="user">
+      <md-content flex>
+        <md-list class="md-accent md-hue-3">
+          <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-class="{ 'active': navActive == link.url }" ng-cloak>
+            <md-icon>{{ link.icon }}</md-icon>
+            <p>{{ link.title }}</p>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </md-sidenav>
+
+    <div class="main-content" flex layout="column" ng-if="user" ui-view>
+      <!--ANGULAR VIEW-->
+    </div>
+
+  </section>
 
   ${ body }
 
@@ -60,7 +62,6 @@
     function browserCheck(a){var b=window.onload;window.onload='function'!=typeof window.onload?a:function(){b&&b();a()}}
     browserCheck(function(){outdatedBrowser({bgColor:'#f25648',color:'#fff',lowerThan:'flex',languagePath:''})});
   </script>
-</section>
 
 </body>
 

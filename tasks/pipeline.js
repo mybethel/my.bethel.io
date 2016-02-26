@@ -60,6 +60,7 @@ var jsDependencies = [
   'assets/shared/**/*.js',
   'assets/features/**/*Config.js',
   'assets/features/**/*Controller.js',
+  'assets/interface/**.*.js',
   'assets/app.js'
 ];
 

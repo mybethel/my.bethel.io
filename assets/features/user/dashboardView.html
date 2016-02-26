@@ -1,37 +1,11 @@
-<md-toolbar aria-hidden="false">
-  <div class="md-toolbar-tools">
-    <span flex></span>
-    <div class="md-toolbar-item">
-      <a class="md-button md-default-theme" href="#/settings" style="margin-right:0"><span>{{ ministry.name }}</span></a>
-      <md-menu md-position-mode="target-right target" ng-if="authorized && authorized.length > 0">
-        <a ng-click="$mdOpenMenu($event)" class="md-button md-icon-button" style="margin-left:-10px" aria-label="Switch Ministry">
-          <md-icon md-menu-origin>arrow_drop_down</md-icon>
-        </a>
-        <md-menu-content width="4">
-          <md-menu-item ng-repeat="authMinistry in authorized">
-            <md-button ng-href="session/ministry/{{ authMinistry.id }}">
-              {{ authMinistry.name }}
-            </md-button>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </div>
-    <div class="md-toolbar-item" layout="column">
-      <a href="/logout"><i class="material-icons md-24">exit_to_app</i></a>
-    </div>
-    &nbsp;
-    <img class="avatar" data-ng-src="{{ user.avatar }}" alt="{{ user.name }}" width="64" height="64" />
-  </div>
-</md-toolbar>
-
 <md-content class="md-padding main-content" ng-controller="dashboardController">
 
   <md-whiteframe class="md-whiteframe-z1 md-padding welcome-modal" layout="column">
     <div layout="row">
       <div flex="40" flex-sm="100">
         <h2 class="light">Welcome, {{ user.name }}</h2>
-        <p hide-sm>Thanks for joining us!</p>
-        <p hide-gt-md>We're still optimizing the platform for mobile devices. Pardon our dust!
+        <p hide-sm hide-xs>Thanks for joining us!</p>
+        <p hide-gt-sm>We're still optimizing the platform for mobile devices. Pardon our dust!
           Meanwhile, please use a full-size device to access Bethel.</p>
         <p>Feedback? Need help? <a href="mailto:help@bethel.io">Talk to us</a>.</p>
       </div>

@@ -1,5 +1,5 @@
 <md-content class="main-content inverse" layout-fill id="login" layout="row" layout-align="center center" ng-cloak ng-if="!user">
-  <form flex="30" flex-sm="90" flex-md="50" layout-align="center center" name="userLoginForm" ng-controller="LoginController" ng-submit="login(credentials)">
+  <form flex="90" flex-md="40" flex-lg="30" layout-align="center center" name="userLoginForm" ng-controller="LoginController" ng-submit="login(credentials)">
 
     <div layout-fill layout="row" layout-align="center center">
       <img src="/images/logo-landscape.svg" />
@@ -9,9 +9,9 @@
 
       <md-card-content layout="column">
 
-          <md-input-container>
-            <md-icon>person</md-icon>
+          <md-input-container class="md-block">
             <label>Email</label>
+            <md-icon>person</md-icon>
             <input autocorrect="off" autocapitalize="off" name="email" ng-model="credentials.name" required spellcheck="false" type="email" />
             <div ng-messages="userLoginForm.email.$error" ng-if="userLoginForm.email.$touched && !userLoginForm.email.$valid">
               <div ng-message="required || email">A valid e-mail address is required.</div>
@@ -19,9 +19,9 @@
             </div>
           </md-input-container>
 
-          <md-input-container>
-            <md-icon>lock</md-icon>
+          <md-input-container class="md-block">
             <label>Password</label>
+            <md-icon>lock</md-icon>
             <input autocorrect="off" autocapitalize="off" name="password" ng-model="credentials.pass" required spellcheck="false" type="password" />
             <div ng-messages="userLoginForm.password.$error" ng-if="userLoginForm.password.$touched && !userLoginForm.password.$valid">
               <div ng-message="required">A password is required.</div>

@@ -1,6 +1,3 @@
-<div layout="row" flex style="max-height: 100%;">
-<div layout="column" flex style="max-height: 100%;">
-
 <md-toolbar aria-hidden="false" class="podcast-toolbar">
   <div class="md-toolbar-tools">
     <h2>{{ podcast.name }}</h2>
@@ -41,6 +38,7 @@
   </div>
 </md-toolbar>
 
+<div layout="row">
 <md-content class="main-content" flex layout="row" layout-wrap>
 
   <div class="overlay" flex="100" layout-fill layout-align="center center" ng-if="isDemo">
@@ -118,9 +116,7 @@
 
 </md-content>
 
-</div>
-
-<md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-component-id="right" md-is-locked-open="$mdMedia('gt-md')" md-is-open="1 == 1" flex="30">
+<md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-is-locked-open="$mdMedia('gt-sm')" flex="30">
 
   <md-content>
 
@@ -162,5 +158,4 @@
   </md-content>
 
 </md-sidenav>
-
 </div>

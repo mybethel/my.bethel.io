@@ -10,7 +10,8 @@ angular.module('Bethel.staff', ['ui.router'])
     .state('staff.users', {
       url: '/user',
       templateUrl: 'features/staff/staffUserListView.html',
-      controller: 'staffUserListController'
+      controller: 'staffUserListController',
+      data : { pageTitle: 'Staff' }
     })
     .state('staff.detailedUser', {
       url: '/user/:userId',
@@ -20,7 +21,8 @@ angular.module('Bethel.staff', ['ui.router'])
     .state('staff.ministry', {
       url: '/ministry',
       templateUrl: 'features/staff/staffMinistryListView.html',
-      controller: 'staffMinistryListController'
+      controller: 'staffMinistryListController',
+      data : { pageTitle: 'Staff' }
     })
     .state('staff.detailedMinistry', {
       url: '/ministry/:ministryId',
@@ -29,7 +31,8 @@ angular.module('Bethel.staff', ['ui.router'])
     })
     .state('staff.invoice', {
       url: '/invoice',
-      templateUrl: 'features/staff/staffInvoiceView.html'
+      templateUrl: 'features/staff/staffInvoiceView.html',
+      data : { pageTitle: 'Staff' }
     });
 
 }]);
