@@ -23,6 +23,12 @@ module.exports = {
     },
     {
       expand: true,
+      cwd: './node_modules/angular',
+      src: ['*.min*'],
+      dest: '.tmp/public/libraries'
+    },
+    {
+      expand: true,
       cwd: './node_modules/video.js/dist',
       src: ['*.min*', '*.swf'],
       dest: '.tmp/public/libraries'

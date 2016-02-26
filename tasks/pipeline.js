@@ -31,7 +31,6 @@ var libraryDependencies = [
   'chart.js/src/Chart.Line.js',
   'lodash/lodash.js',
   'moment/min/moment.min.js',
-  'video.js/dist/video.min.js',
 
   // Angular dependencies
   'angular-animate/angular-animate.min.js',
