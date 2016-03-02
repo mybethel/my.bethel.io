@@ -4,6 +4,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
     files: require('../tasks/pipeline').jsFilesToTest.concat([
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/video.js/dist/video.js',
       'test/angular/*.js'
     ]),
     preprocessors: {
