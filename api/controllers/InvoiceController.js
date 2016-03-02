@@ -9,12 +9,16 @@ const moment = require('moment');
 module.exports = {
 
   ministry: function(req, res) {
+    var start = moment();
+    if (req.query.back) {
+      start = start.subtract(req.query.back, 'months');
+    }
 
     var criteria = {
       sort: 'createdAt DESC',
       createdAt: {
-        '>=': moment().startOf('month').format(),
-        '<=': moment().endOf('month').format()
+        '>=': start.startOf('month').format(),
+        '<=': start.endOf('month').format()
       }
     };
     if (req.param('id') !== 'all') {
