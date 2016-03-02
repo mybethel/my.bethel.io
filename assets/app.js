@@ -130,11 +130,6 @@ angular.module('Bethel', [
     }
   });
 
-  $scope.$on('$stateChangeSuccess', function(event, toState) {
-    $scope.pageTitle = '';
-    if (toState.data && toState.data.pageTitle) $scope.pageTitle = toState.data.pageTitle;
-  });
-
 }]);
 
 String.prototype.capitalize = function() {
