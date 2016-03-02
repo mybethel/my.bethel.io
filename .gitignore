@@ -52,3 +52,4 @@ config/local.js
 coverage
 docs
 *.archive
+docs

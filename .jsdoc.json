@@ -1,0 +1,17 @@
+{
+  "source": {
+    "include": ["api", "assets", "workers", "package.json", "README.md"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "opts": {
+    "destination": "./docs/",
+    "encoding": "utf8",
+    "private": true,
+    "recurse": true,
+    "template": "./node_modules/minami"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ]
+}
