@@ -66,6 +66,8 @@ angular.module('Bethel.podcast')
       $scope.subscriberChart.data[0].push(subscribers);
       $scope.subscriberChart.labels.push(moment(String(week), 'YYYYWW').format('MMM D'));
     });
+    $scope.subscriberChart.data[0].pop();
+    $scope.subscriberChart.labels.pop();
     $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0] || 0;
     $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0];
     $scope.subscriberDifference = $scope.subscriberCount - $scope.subscriberCompare;
