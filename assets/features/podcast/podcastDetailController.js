@@ -64,7 +64,7 @@ angular.module('Bethel.podcast')
     $scope.subscriberChart.labels = [];
     angular.forEach(newValue.historical, function (subscribers, week) {
       $scope.subscriberChart.data[0].push(subscribers);
-      $scope.subscriberChart.labels.push(moment(String(week), 'YYYYw').format('MMM D'));
+      $scope.subscriberChart.labels.push(moment(String(week), 'YYYYWW').format('MMM D'));
     });
     $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0] || 0;
     $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0];
