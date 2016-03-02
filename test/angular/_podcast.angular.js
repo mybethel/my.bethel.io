@@ -141,7 +141,8 @@ window.test.podcast = function() {
         expect(scope.thumbnail.name).toEqual('testFile.jpg');
         // Thumbnail is sent to S3.
         scope.uploadThumbnail({
-          key: 's3key'
+          action: 'https://s3.amazonaws.com/cloud.bethel.io',
+          key: 's3key',
         });
         // After upload is finished, thumbnail applied.
         scope.applyThumbnail();
