@@ -4,7 +4,7 @@ const Vimeo = require('vimeo-api').Vimeo;
 
 function VimeoSync(refreshAll, podcastId) {
   this.api = new Vimeo(sails.config.vimeo.apiKey);
-  this.refreshAll = typeof refreshAll !== 'undefined' ? refreshAll : false;
+  this.refreshAll = refreshAll || false;
 
   if (!Podcast) {
     sails.log.error('Sails failed to bootstrap: Podcast undefined.');
@@ -18,7 +18,7 @@ function VimeoSync(refreshAll, podcastId) {
   };
 
   sails.log.info('Syncing Vimeo storage...');
-  return new Promise((resolve) => podcastId ? this.syncOne(podcastId) : this.sync(resolve));
+  return new Promise(resolve => podcastId ? this.syncOne(podcastId) : this.sync(resolve));
 }
 
 VimeoSync.prototype.sync = function(resolve) {
@@ -28,18 +28,18 @@ VimeoSync.prototype.sync = function(resolve) {
       return resolve();
     }
 
-    podcasts = podcasts.map((podcast) => this.queryApi(podcast));
+    podcasts = podcasts.map(podcast => this.queryApi(podcast));
 
     Promise.all(podcasts).then(() => {
       this.debug.end = new Date().getTime();
-      sails.log.info(`Vimeo sync completed in ${ this.debug.end - this.debug.start } ms.`);
+      sails.log.info(`Vimeo sync completed in ${this.debug.end - this.debug.start} ms.`);
       resolve();
     });
   });
 };
 
 VimeoSync.prototype.updateUrl = function(videoId, newUrl) {
-  PodcastMedia.update(videoId, { url: newUrl }, (err) => {
+  PodcastMedia.update(videoId, { url: newUrl }, err => {
     if (err) return sails.log.error(err);
     sails.log('Updated Vimeo URL to ' + file.link_secure + ' for media: ' + video.id);
   });
@@ -47,34 +47,34 @@ VimeoSync.prototype.updateUrl = function(videoId, newUrl) {
 
 // Search for Vimeo podcast media that are missing a URL.
 VimeoSync.prototype.fixMissingUrl = function(podcast) {
-  PodcastMedia.find({ url: '', podcast: podcast.id }, (err, media) => {
-    if (media.length < 1) return;
+  PodcastMedia.find({ url: '', podcast: podcast.id }, err, media => {
+    if (err || media.length < 1) return;
 
     sails.log.warn(`${podcast.id}: Found ${media.length} media with missing URLs.`);
 
-    media.forEach((video) => {
+    media.forEach(video => {
       this.api.request({
         path: `/videos/${video.uuid}`,
-        headers:  { 'Authorization': `Bearer ${podcast.service.accessToken}` }
+        headers: { Authorization: `Bearer ${podcast.service.accessToken}` }
       }, (error, body, statusCode) => {
         if (!body || !body.files) {
           sails.log.error(`Vimeo API returned status code ${statusCode} for video ${video.uuid}.`);
           return;
         }
 
-        body.files.forEach((file) => {
+        body.files.forEach(file => {
           if (file.quality === 'sd') {
             this.updateUrl(video.id, file.link_secure);
           }
         });
-      })
+      });
     });
   });
-}
+};
 
 VimeoSync.prototype.syncOne = function(resolve) {
   Podcast.findOne(podcastId).populate('service').exec((err, podcast) => {
-    if (!podcast) {
+    if (err || !podcast) {
       sails.log.error(`${podcastId}: Podcast not found.`);
       return resolve();
     }
@@ -91,9 +91,9 @@ VimeoSync.prototype.syncOne = function(resolve) {
 VimeoSync.prototype.queryApi = function(podcast) {
   this.fixMissingUrl(podcast);
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     sails.log.info(`${podcast.id}: Querying Vimeo API.`);
-    var queryHeaders = { 'Authorization': `Bearer ${podcast.service.accessToken}` };
+    var queryHeaders = { Authorization: `Bearer ${podcast.service.accessToken}` };
 
     if (!this.refreshAll) {
       queryHeaders['If-Modified-Since'] = moment().subtract(6, 'minutes').toString();
@@ -137,7 +137,7 @@ VimeoSync.prototype.queryApi = function(podcast) {
 };
 
 VimeoSync.prototype.getResultsPage = function(user, podcast, page, headers) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     this.api.request({
       path: `${user}/videos?per_page=50&page=${page}`,
       headers: headers
@@ -153,14 +153,14 @@ VimeoSync.prototype.getResultsPage = function(user, podcast, page, headers) {
 };
 
 VimeoSync.prototype.processPage = function(results, podcast) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     var videosToProcess = [];
 
-    results.data.forEach((video) => {
+    results.data.forEach(video => {
       if (!video.tags) return;
       if (video.privacy && video.privacy.view !== 'anybody') return;
 
-      video.tags.forEach((tag) => {
+      video.tags.forEach(tag => {
         if (podcast.sourceMeta.toString().toLowerCase().indexOf(tag.name.toLowerCase()) === -1)
           return;
 
@@ -176,7 +176,7 @@ VimeoSync.prototype.processPage = function(results, podcast) {
 };
 
 VimeoSync.prototype.podcastMediaUpsert = function(video, podcast) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (!video) return resolve();
 
     var videoId = video.uri.toString().replace('/videos/', '');
@@ -185,10 +185,12 @@ VimeoSync.prototype.podcastMediaUpsert = function(video, podcast) {
 
     var videoTags = [];
     if (video.tags) {
-      video.tags.forEach((tag) => videoTags.push(tag.name));
+      video.tags.forEach(tag => videoTags.push(tag.name));
     }
 
-    var videoThumbnail = '', thumbSize = 0;
+    var videoThumbnail = '',
+        thumbSize = 0;
+
     if (video.pictures && video.pictures.sizes) {
       video.pictures.sizes.forEach(function(picture) {
         if (picture.width > thumbSize) {
