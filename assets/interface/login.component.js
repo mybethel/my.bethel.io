@@ -18,12 +18,13 @@ angular.module('Bethel.util').component('login', {
 // Component Controller
 // --------------------
 
-function LoginComponent($scope, authService, sailsSocket) {
+function LoginComponent(authService, sailsSocket) {
 
   var $ctrl = this;
 
   // User credentials are sent through socket.io on login.
-  $ctrl.login = function() {
+  $ctrl.login = function(scope) {
+    if (scope.userLoginForm) $ctrl.form = scope.userLoginForm;
     sailsSocket.post('/session/create', $ctrl.credentials).then($ctrl.loginConfirmed, $ctrl.loginError);
   };
 
@@ -31,7 +32,7 @@ function LoginComponent($scope, authService, sailsSocket) {
   // which will pull session information for the current user through sockets
   // and update the UI accordingly.
   // https://github.com/witoldsz/angular-http-auth
-  $ctrl.loginConfirmed = function(response) {
+  $ctrl.loginConfirmed = function() {
     authService.loginConfirmed();
   };
 
@@ -39,20 +40,20 @@ function LoginComponent($scope, authService, sailsSocket) {
 
     // Whenever possible we attempt to provide hints to the user and highlight
     // the field(s) on the frontend which were entered incorrectly.
-    if (response.error && $scope.userLoginForm) {
-      $scope.userLoginForm.email.$setValidity('loginValid', !response.error.name);
-      $scope.userLoginForm.password.$setValidity('loginValid', !response.error.pass);
+    if (response.error && $ctrl.form) {
+      $ctrl.form.email.$setValidity('loginValid', !response.error.name);
+      $ctrl.form.password.$setValidity('loginValid', !response.error.pass);
     }
 
     // A page reload doesn't occur on login so we provide an extra visual cue
     // to the user to inform them of the login error by shaking the dialog box.
     angular.element(document.querySelector('#login-signup'))
       .addClass('shake animated')
-      .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+      .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
         angular.element(this).removeClass('shake animated');
       });
   };
 
 }
 
-LoginComponent.$inject = ['$scope', 'authService', 'sailsSocket'];
+LoginComponent.$inject = ['authService', 'sailsSocket'];

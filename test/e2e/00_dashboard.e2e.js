@@ -17,13 +17,14 @@ describe('Dashboard', function() {
 
       Ministry.create({
         name: 'Public Relations'
-      }, function (err, ministry) {
+      }, (err, ministry) => {
+        if (err) deferred.reject(err);
         User.create({
           name: 'Jayne Cobb',
           email: 'test@bethel.io',
           password: 'v3ra',
           ministry: ministry.id
-        }, function (err, user) {
+        }, err => {
           if (err) deferred.reject(err);
           deferred.fulfill(true);
         });
@@ -35,8 +36,8 @@ describe('Dashboard', function() {
 
   it('should warn on missing or invalid credentials.', function() {
 
-    element(by.model('credentials.name')).sendKeys('test@bethel.io');
-    element(by.model('credentials.name')).submit();
+    element(by.model('$ctrl.credentials.name')).sendKeys('test@bethel.io');
+    element(by.model('$ctrl.credentials.name')).submit();
 
     expect(element(by.css('input[name="password"].ng-invalid-required')).isPresent()).toBe(true);
 
@@ -44,16 +45,11 @@ describe('Dashboard', function() {
 
   it('should accept valid login credentials.', function() {
 
-    element(by.model('credentials.pass')).sendKeys('v3ra');
+    element(by.model('$ctrl.credentials.pass')).sendKeys('v3ra');
     element(by.css('button')).click();
 
-    browser.wait(function() {
-      return element(by.css('.welcome-modal h2')).isPresent().then(function (el) {
-        return el === true;
-      });
-    }, 2000).then(function() {
-      expect(element(by.css('.welcome-modal h2')).getText()).toBe('Welcome, Jayne Cobb');
-    });
+    browser.wait(() => element(by.css('.welcome-modal h2')).isPresent(), 2000);
+    expect(element(by.css('.welcome-modal h2')).getText()).toBe('Welcome, Jayne Cobb');
 
   });
 
