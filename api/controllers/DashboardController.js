@@ -7,7 +7,7 @@
 
 module.exports = {
 
-  dashboard: function (req, res) {
+  dashboard: function(req, res) {
     res.view();
   },
 
@@ -23,7 +23,7 @@ module.exports = {
 
       if (podcasts && podcasts.length > 0) {
         podcasts.forEach(function(podcast) {
-          allPodcasts.push({object: podcast.id});
+          allPodcasts.push({ object: podcast.id });
           if (podcast.storage > 0)
             storageBytes += podcast.storage;
         });
@@ -38,7 +38,7 @@ module.exports = {
           });
         }
 
-        Stats.find().where({or: allPodcasts}).sort('date').exec(function foundStats(err, weeklyStats) {
+        Stats.find().where({ or: allPodcasts }).sort('date').exec(function foundStats(err, weeklyStats) {
           if (err) res.send(err, 500);
 
           var statistics = [];
