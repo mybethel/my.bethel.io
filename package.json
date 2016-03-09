@@ -19,6 +19,7 @@
     "angular-ui-router": "^0.2.15",
     "angular-wizard": "^0.5.5",
     "angulartics": "^1.0.3",
+    "angulartics-google-analytics": "^0.1.4",
     "animate.css": "^3.4.0",
     "awaken": "github:mybethel/awaken",
     "aws-sdk": "^2.1",

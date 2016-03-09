@@ -62,7 +62,7 @@ window.test.staff = function() {
 
       it('calls state transition when user row is clicked', function() {
         var requestUrl = 'staff.detailedUser',
-            userRequest = {'userId': 1};
+            userRequest = { userId: 1 };
 
         $state = injector.get('$state');
         spyOn($state, 'transitionTo');
@@ -77,7 +77,7 @@ window.test.staff = function() {
 
         spyOn($mdDialog, 'show').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({name: "Mal"});
+          deferred.resolve({ name: 'Mal' });
           return deferred.promise;
         });
 
@@ -110,7 +110,7 @@ window.test.staff = function() {
 
       it('calls state transition when ministry row is clicked', function() {
         var requestUrl = 'staff.detailedMinistry',
-            userRequest = {'ministryId': 1};
+            userRequest = { ministryId: 1 };
 
         $state = injector.get('$state');
         spyOn($state, 'transitionTo');
@@ -125,7 +125,7 @@ window.test.staff = function() {
 
         spyOn($mdDialog, 'show').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({name: 'Season 2 Ministry'});
+          deferred.resolve({ name: 'Season 2 Ministry' });
           return deferred.promise;
         });
 
@@ -137,10 +137,10 @@ window.test.staff = function() {
 
     describe('staffUserCreateController', function() {
 
-      setupController('staffUserCreateController', {'ministries': [{id: 1, name: "One Ministry"}, {id: 2, name: "Two Ministry"}]});
+      setupController('staffUserCreateController', { ministries: [{ id: 1, name: "One Ministry" }, { id: 2, name: "Two Ministry" }] });
 
       it('bootstraps successfully', function() {
-        scope.createUser = {$setValidity: function() {} };
+        scope.createUser = { $setValidity: function() {} };
         expect(scope.newUser).toBeDefined();
         expect(scope.ministries[0].name).toEqual("One Ministry");
         expect(scope.searchText).toEqual("");
@@ -150,16 +150,16 @@ window.test.staff = function() {
       });
 
       it('skips ministry creation if existing ministry is selected', function() {
-        scope.newUser = {ministry: {id: 1}};
+        scope.newUser = { ministry: { id: 1 } };
         spyOn(scope, 'createNewUser');
-        var sender = {$invalid: false};
+        var sender = { $invalid: false };
 
         scope.createUserSubmit(sender);
         expect(scope.createNewUser).toHaveBeenCalled();
       });
 
       it('populates ministries after new ministry created', function() {
-        var ministryToCreate = {name: 'Inland Coastal Ministry'};
+        var ministryToCreate = { name: 'Inland Coastal Ministry' };
 
         scope.ministries = [];
         spyOn(scope, 'createNewUser');
@@ -173,7 +173,7 @@ window.test.staff = function() {
         sailsSocket = injector.get('sailsSocket');
         spyOn(sailsSocket, 'post').and.callThrough();
 
-        var sender = {$invalid: true};
+        var sender = { $invalid: true };
 
         scope.createUserSubmit(sender);
         expect(sailsSocket.post).not.toHaveBeenCalled();
@@ -182,14 +182,14 @@ window.test.staff = function() {
       it('creates a ministry if specified with new user', function() {
         sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
-        scope.createUser = {$setValidity: function() {} };
+        scope.createUser = { $setValidity: function() {} };
         scope.ministries = [];
         scope.searchText = 'Mew Ninistry';
-        var sender = {$invalid: false};
+        var sender = { $invalid: false };
 
         spyOn(sailsSocket, 'post').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({name: "Mew Ninistry"});
+          deferred.resolve({ name: "Mew Ninistry" });
           return deferred.promise;
         });
         scope.createUserSubmit(sender);
@@ -202,7 +202,7 @@ window.test.staff = function() {
       it('uses an existing ministry if searchText matches ministry name', function() {
         scope.newUser = {};
         scope.searchText = "one ministry";
-        var sender = {$invalid: false};
+        var sender = { $invalid: false };
 
         scope.createUserSubmit(sender);
 
@@ -210,7 +210,7 @@ window.test.staff = function() {
       });
 
       it('does not close dialog if there were errors creating user', function() {
-        var response = {invalidAttributes: {}};
+        var response = { invalidAttributes: {} };
         $mdDialog = injector.get('$mdDialog');
         spyOn($mdDialog, 'hide');
 
@@ -219,7 +219,7 @@ window.test.staff = function() {
       });
 
       it('handles new users after promise with errors', function() {
-        var newUser = {id: 1, name: 'Fiona'};
+        var newUser = { id: 1, name: 'Fiona' };
         $mdDialog = injector.get('$mdDialog');
         spyOn($mdDialog, 'hide');
 
@@ -233,19 +233,19 @@ window.test.staff = function() {
 
         spyOn(sailsSocket, 'post').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({name: "Uew Nser"});
+          deferred.resolve({ name: "Uew Nser" });
           return deferred.promise;
         });
 
-        scope.newUser = {name: 'Laguna Larry'};
-        scope.newMinistry = {id: 3};
+        scope.newUser = { name: 'Laguna Larry' };
+        scope.newMinistry = { id: 3 };
 
         scope.createNewUser(scope.newMinistry);
         expect(scope.newUser.ministry).toEqual(3);
 
         expect(sailsSocket.post).toHaveBeenCalledWith('/user', scope.newUser);
 
-        scope.newUser = {name: 'Paradise Peter', ministry: {id: 4}};
+        scope.newUser = { name: 'Paradise Peter', ministry: { id: 4 } };
 
         scope.createNewUser();
         expect(scope.newUser.ministry).toEqual(4);
@@ -276,7 +276,7 @@ window.test.staff = function() {
       });
 
       it('creates a new ministry', function() {
-        scope.newMinistry = {name: 'UnitTest Ministry'};
+        scope.newMinistry = { name: 'UnitTest Ministry' };
         $mdDialog = injector.get('$mdDialog');
         sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
@@ -298,7 +298,7 @@ window.test.staff = function() {
 
     describe('staffUserDetailController', function() {
 
-      setupController('staffUserDetailController', {'$stateParams': {userId: '543b2b0b06ee1cb56414cbc4'}});
+      setupController('staffUserDetailController', { $stateParams: { userId: '543b2b0b06ee1cb56414cbc4' } });
 
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(0);
@@ -310,7 +310,7 @@ window.test.staff = function() {
 
         spyOn(sailsSocket, 'get').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({name: 'Francisco'});
+          deferred.resolve({ name: 'Francisco' });
           return deferred.promise;
         });
 
@@ -321,14 +321,13 @@ window.test.staff = function() {
       });
 
       it('populates user on init', function() {
-        var detailedUser = {name: 'OneUser'};
+        var detailedUser = { name: 'OneUser' };
 
         scope.user = {};
 
         ctrl.populateUser(detailedUser);
         expect(scope.user.name).toEqual(detailedUser.name);
       });
-
 
       it('redirects if invalid user id provided', function() {
         $location = injector.get('$location');
@@ -345,8 +344,8 @@ window.test.staff = function() {
       });
 
       it('toggles the lock status of a user', function() {
-        var updatedUser = {isLocked: true};
-        scope.user = {isLocked: false};
+        var updatedUser = { isLocked: true };
+        scope.user = { isLocked: false };
         ctrl.setLockedStatus(updatedUser, {});
         expect(scope.user.isLocked).toBe(true);
       });
@@ -358,7 +357,7 @@ window.test.staff = function() {
 
         spyOn(sailsSocket, 'get').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({isLocked: true});
+          deferred.resolve({ isLocked: true });
           return deferred.promise;
         });
         scope.lockUnlock();
@@ -369,7 +368,7 @@ window.test.staff = function() {
       });
 
       it('alerts user after successful invite email sent', function() {
-        var response = {invited: new Date()};
+        var response = { invited: new Date() };
         scope.user = {};
 
         ctrl.getEmailConfirmation(response);
@@ -378,7 +377,7 @@ window.test.staff = function() {
       });
 
       it('alerts user after failed invite email', function() {
-        var response = {error: 'There was a problem sending the invite email.'};
+        var response = { error: 'There was a problem sending the invite email.' };
         scope.user = {};
 
         ctrl.getEmailConfirmation(response);
@@ -387,7 +386,7 @@ window.test.staff = function() {
       });
 
       it('requests email sending through sockets', function() {
-        var response = {error: 'There was a problem sending the invite email.'};
+        var response = { error: 'There was a problem sending the invite email.' };
 
         sailsSocket = injector.get('sailsSocket');
         $q = injector.get('$q');
@@ -416,7 +415,7 @@ window.test.staff = function() {
 
     describe('staffMinistryDetailController', function() {
 
-      setupController('staffMinistryDetailController', {'$stateParams': {ministryId: '5574d437484aee280fa67fc2'}});
+      setupController('staffMinistryDetailController', { $stateParams: { ministryId: '5574d437484aee280fa67fc2' } });
 
       it('bootstraps successfully', function() {
         expect(scope.$parent.tabIndex).toBe(1);
@@ -427,7 +426,7 @@ window.test.staff = function() {
         sailsSocket = injector.get('sailsSocket');
         spyOn(sailsSocket, 'get').and.callFake(function() {
           var deferred = $q.defer();
-          deferred.resolve({id: '5574d437484aee280fa67fc2', name: 'Francisco\'s Ministry'});
+          deferred.resolve({ id: '5574d437484aee280fa67fc2', name: 'Francisco\'s Ministry' });
           return deferred.promise;
         });
 

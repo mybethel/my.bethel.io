@@ -2,9 +2,9 @@ var setupController = function(controllerName, params) {
 
   params = params || {};
 
-  beforeEach(inject(function ($rootScope, $controller, $injector, $httpBackend, $q) {
+  beforeEach(inject(function($rootScope, $controller, $injector, $httpBackend, $q) {
     scope = $rootScope.$new();
-    params['$scope'] = scope;
+    params.$scope = scope;
     ctrl = $controller(controllerName, params);
     injector = $injector;
     q = $q;
@@ -29,7 +29,7 @@ describe('Angular unit tests', function() {
 
     setupController('AppCtrl');
 
-    it('bootstraps successfully.', function () {
+    it('bootstraps successfully.', function() {
       expect(true).toEqual(true);
     });
 

@@ -49,7 +49,7 @@ var libraryDependencies = [
   'angular-ui-router/release/angular-ui-router.min.js',
   'angular-wizard/dist/angular-wizard.min.js',
   'angulartics/dist/angulartics.min.js',
-  'angulartics/dist/angulartics-ga.min.js',
+  'angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
   'ng-file-upload/dist/ng-file-upload-all.min.js'
 ].map(path => `node_modules/${path}`);
 
