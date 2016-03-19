@@ -69,8 +69,8 @@ Setup.prototype.cloneDb = function cloneDb() {
     `-p${this.remoteConfig[app.database.password]}`,
     '--excludeCollection=system.users'
   ]);
-  dump.on('exit', code => {
 
+  dump.on('exit', code => {
     if (code !== 0)
       return console.warn('Archive of Production database failed...');
 
@@ -80,8 +80,10 @@ Setup.prototype.cloneDb = function cloneDb() {
       '--drop'
     ]);
     restore.on('exit', () => console.log('Production database copied to local.'));
-
+    dump.on('error', () => console.warn('mongorestore does not appear to be installed.'));
   });
+
+  dump.on('error', () => console.warn('mongodump does not appear to be installed.'));
 };
 
 var setup = new Setup();
