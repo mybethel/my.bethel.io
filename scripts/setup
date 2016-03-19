@@ -7,7 +7,11 @@ const spawn = require('child_process').spawn;
 
 function Setup() {
   this.remoteConfig = {};
-  this.localConfig = require('../config/local.js');
+  try {
+    this.localConfig = require('../config/local.js');
+  } catch (e) {
+    this.localConfig = {};
+  }
 }
 
 Setup.prototype.mergeConfig = function mergeConfig() {
@@ -18,14 +22,31 @@ Setup.prototype.mergeConfig = function mergeConfig() {
 };
 
 Setup.prototype.getRemote = function getRemote() {
+  const heroku = spawn('heroku', ['config', '--json', `--app=${app.appName}`]);
+
   return new Promise((resolve, reject) => {
-    const heroku = spawn('heroku', ['config', '--json', `--app=${app.appName}`]);
-    heroku.stdout.on('data', (config) => {
+    heroku.stdout.on('data', config => {
+
+      if (config.indexOf('Enter your Heroku credentials') !== -1) {
+        console.error('You must log in to Heroku Toolbelt first.');
+        return reject();
+      }
+
       config = JSON.parse(config.toString());
-      if (!config) return console.error('Unable to authenticate to Heroku.');
+      if (!config) {
+        console.error('Unable to authenticate to Heroku.');
+        return reject();
+      }
+
       this.remoteConfig = config;
       this.mergeConfig();
       resolve(this.localConfig);
+    });
+
+    heroku.on('error', () => {
+      console.warn('The Heroku CLI client does not appear to be installed.');
+      console.warn('https://toolbelt.heroku.com');
+      reject();
     });
   });
 };
@@ -40,22 +61,31 @@ Setup.prototype.cloneDb = function cloneDb() {
   if (!this.localConfig.connections)
     return console.warn('A local database connection must be defined.');
 
-  const dump = spawn('mongodump', ['--archive=databaseProd.archive', `--db=${app.database.db}`, `--host=${app.database.host}`, `--username=${app.database.user}`, `-p${this.remoteConfig[app.database.password]}`, '--excludeCollection=system.users']);
-  dump.on('exit', (code) => {
+  const dump = spawn('mongodump', [
+    '--archive=databaseProd.archive',
+    `--db=${app.database.db}`,
+    `--host=${app.database.host}`,
+    `--username=${app.database.user}`,
+    `-p${this.remoteConfig[app.database.password]}`,
+    '--excludeCollection=system.users'
+  ]);
+  dump.on('exit', code => {
 
     if (code !== 0)
       return console.warn('Archive of Production database failed...');
 
-    const restore = spawn('mongorestore', ['--archive=databaseProd.archive', `--host=${this.localConfig.connections.local.host}:${this.localConfig.connections.local.port}`, '--drop']);
-    restore.on('exit', (code) => {
-      console.log('Production database copied to local.');
-    });
+    const restore = spawn('mongorestore', [
+      '--archive=databaseProd.archive',
+      `--host=${this.localConfig.connections.local.host}:${this.localConfig.connections.local.port}`,
+      '--drop'
+    ]);
+    restore.on('exit', () => console.log('Production database copied to local.'));
 
   });
 };
 
 var setup = new Setup();
-setup.getRemote().then((config) => {
+setup.getRemote().then(config => {
   setup.writeConfig(config);
   setup.cloneDb();
 });
