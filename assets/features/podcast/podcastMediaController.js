@@ -20,6 +20,10 @@ angular.module('Bethel.podcast')
       });
   };
 
+  $scope.deletePodcastEpisode = function($event, media) {
+    $mdDialog.hide({deleteMedia: true, media: media});
+  };
+
   $scope.save = function() {
     sailsSocket.put('/podcastmedia/' + mediaId, {
       name: $scope.media.name,

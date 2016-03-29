@@ -56,7 +56,9 @@ module.exports.policies = {
     'download': true,
     'stat': true,
     'subscribe': true,
-    'related': true
+    'related': true,
+    'update': 'ministryOwned',
+    'destroy': 'ministryOwned'
   },
 
   staff: {

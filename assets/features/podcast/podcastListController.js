@@ -1,19 +1,20 @@
 angular.module('Bethel.podcast')
 .controller('podcastListController', ['$scope', '$state', '$mdDialog', 'sailsSocket', '$location',
-  function ($scope, $state, $mdDialog, sailsSocket, $location) {
+function($scope, $state, $mdDialog, sailsSocket, $location) {
 
   var $ctrl = this;
   $scope.historicalStats = {};
   $scope.podcasts = [];
+  $scope.podcastMedia = [];
   $scope.statistics = {};
 
   $scope.init = function() {
     if (!$scope.$root.ministry) return;
-    $scope.podcasts = sailsSocket.populateMany('podcast', { 'ministry': $scope.$root.ministry.id });
+    $scope.podcasts = sailsSocket.populateMany('podcast', { ministry: $scope.$root.ministry.id });
   };
 
   // Bind the podcast list over socket.io for this ministry.
-  $scope.$root.$watch('ministry', function (newValue) {
+  $scope.$root.$watch('ministry', function(newValue) {
     if (!newValue || !newValue.id) return;
     $scope.init();
   });
@@ -22,7 +23,12 @@ angular.module('Bethel.podcast')
     $state.go('podcastView', { podcastId: podcast });
   };
 
-  $ctrl.getSubscriberCount = function(podcast) {
+  $ctrl.getPodcastMeta = function(podcast) {
+    if (podcast.media) {
+      podcast.media = podcast.media.filter(function(episode) {
+        return episode.deleted !== true;
+      });
+    }
     sailsSocket.get('/_analytics/podcastSubscribers/' + podcast.id).then(function(response) {
       $scope.statistics[response.podcast] = response.subscribers;
       $scope.historicalStats[response.podcast] = response.historical;
@@ -31,7 +37,7 @@ angular.module('Bethel.podcast')
 
   // Fetch stats for each of the podcasts.
   $scope.$watchCollection('podcasts', function(newValue) {
-    angular.forEach(newValue, $ctrl.getSubscriberCount);
+    angular.forEach(newValue, $ctrl.getPodcastMeta);
   });
 
   $scope.showWizard = function(event) {
@@ -40,9 +46,9 @@ angular.module('Bethel.podcast')
       controller: 'podcastWizardController',
       focusOnOpen: false,
       templateUrl: 'features/podcast/podcastWizardView.html',
-      targetEvent: event,
+      targetEvent: event
     })
-    .then(function (podcast) {
+    .then(function(podcast) {
       $scope.podcasts.push(podcast);
       $location.path('/podcast/' + podcast.id).replace();
     });

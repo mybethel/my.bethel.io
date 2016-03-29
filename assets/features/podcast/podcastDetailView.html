@@ -93,11 +93,11 @@
           <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
         </md-list-item>
         <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="media in podcast.media | orderBy : 'date' : true">
-          <div class="md-list-item-text" flex="70">
+          <div class="md-list-item-text" flex-gt-lg="60" flex="50">
             <h3> {{ media.name }} </h3>
             <p am-time-ago="media.date"></p>
           </div>
-          <div class="episode-tools" flex="30">
+          <div class="episode-tools" flex-gt-lg="40" flex="50">
             <md-button class="md-mini md-primary" ng-click="editMedia($event, media.id)">Edit</md-button>
             <md-button class="md-mini" ng-click="embedMedia($event, media.id)">Embed</md-button>
           </div>
