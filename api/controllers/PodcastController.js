@@ -87,7 +87,7 @@ module.exports = {
   },
 
   edit: function (req, res) {
-    Podcast.findOne(req.param('id')).populate('media').populate('service').exec(function foundPodcast(err, podcast) {
+    Podcast.findOne(req.param('id')).populate('media', { deleted: { $ne: true } }).populate('service').exec(function foundPodcast(err, podcast) {
       if (err || !podcast || !podcast.id) return next(err);
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
@@ -142,7 +142,7 @@ module.exports = {
   },
 
   feed: function (req, res) {
-    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { sort: { date: 0 } }).exec(function (err, podcast) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { $ne: true} }, { sort: { date: 0 } }).exec(function (err, podcast) {
       if (err) return res.serverError(err);
       if (!podcast) return res.notFound();
 

@@ -66,6 +66,10 @@ module.exports = {
 
     podcast: {
       model: 'podcast'
+    },
+
+    deleted: {
+      type: 'boolean'
     }
 
 	},

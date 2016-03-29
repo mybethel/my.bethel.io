@@ -73,6 +73,27 @@ module.exports = {
         });
       });
     });
+  },
+
+  destroy: function(req, res) {
+    PodcastMedia.findOne(req.param('id')).exec(function(err, media) {
+      if (err) return res.serverError(err);
+      if (media.podcast.type === 2) {
+        PodcastMedia.destroy(req.param('id'), function deletedMedia(err) {
+          if (err) {
+            sails.log.error(err);
+            return res.serverError(err);
+          }
+          // @TODO: Destroy media stored in S3 if podcast media is hosted on Bethel Cloud
+          res.ok();
+        });
+      } else {
+        PodcastMedia.update(req.param('id'), { deleted: true }, function(err, updated) {
+          if (err) return res.serverError(err);
+          res.ok(updated);
+        });
+      }
+    });
   }
 
 };

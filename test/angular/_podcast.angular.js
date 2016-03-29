@@ -54,7 +54,7 @@ window.test.podcast = function() {
           });
           return deferred.promise;
         });
-        ctrl.getSubscriberCount({ id: 1 });
+        ctrl.getPodcastMeta({ id: 1 });
         expect(sailsSocket.get).toHaveBeenCalledWith('/_analytics/podcastSubscribers/1');
         scope.$digest();
         expect(scope.statistics.Ghy2).toEqual(123);

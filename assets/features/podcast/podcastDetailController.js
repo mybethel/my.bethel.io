@@ -2,8 +2,8 @@ angular.module('Bethel.podcast')
 .run(function() {
   Chart.defaults.global.colours[0] = '#455a64';
 })
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket', 'notifyService',
-  function ($scope, $state, $stateParams, upload, $mdDialog, sailsSocket, notifyService) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket', 'notifyService', 'confirmDelete',
+function($scope, $state, $stateParams, upload, $mdDialog, sailsSocket, notifyService, confirmDelete) {
 
   var $ctrl = this;
   $scope.id = $stateParams.podcastId;
@@ -24,7 +24,7 @@ angular.module('Bethel.podcast')
   };
 
   $ctrl.init = function() {
-    sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
+    sailsSocket.get('/podcast/edit/' + $scope.id).then(function(data) {
       $scope.podcast = data.podcast;
       $scope.podcastTags = (Array.isArray(data.podcast.tags)) ? data.podcast.tags.join(', ') : '';
       $scope.feed = 'http://podcast.bethel.io/' + data.podcast.id + '.xml';
@@ -58,11 +58,11 @@ angular.module('Bethel.podcast')
     $scope.subscriberPercentChange = Math.abs(($scope.subscriberDifference / $scope.subscriberCompare) * 100);
   };
 
-  $scope.$watch('podcastStats', function (newValue) {
+  $scope.$watch('podcastStats', function(newValue) {
     if (!newValue || !newValue.historical) return;
     $scope.subscriberChart.data[0] = [];
     $scope.subscriberChart.labels = [];
-    angular.forEach(newValue.historical, function (subscribers, week) {
+    angular.forEach(newValue.historical, function(subscribers, week) {
       $scope.subscriberChart.data[0].push(subscribers);
       $scope.subscriberChart.labels.push(moment(String(week), 'YYYYWW').format('MMM D'));
     });
@@ -98,7 +98,7 @@ angular.module('Bethel.podcast')
     }
   };
 
-  $scope.openFileSelector = function () {
+  $scope.openFileSelector = function() {
     angular.element(document.querySelector('.upload-button'))[0].click();
   };
 
@@ -122,11 +122,11 @@ angular.module('Bethel.podcast')
           size: file.size,
           podcast: $scope.id,
           type: 'cloud'
-        }).then(function (podcast) {
+        }).then(function(podcast) {
           // Call the endpoint to generate metadata.
           sailsSocket.get('/podcastmedia/meta/' + podcast.id);
           // Ensures older browsers or slow connections don't miss the socket publish.
-          sailsSocket.get('/podcast/edit/' + $scope.id).then(function (data) {
+          sailsSocket.get('/podcast/edit/' + $scope.id).then(function(data) {
             $scope.podcast.media = data.podcast.media;
           });
           $scope.uploading = false;
@@ -142,6 +142,10 @@ angular.module('Bethel.podcast')
       targetEvent: event,
       locals: { mediaId: id },
       controller: 'podcastMediaController'
+    }).then(function(response) {
+      if (response.deleteMedia && response.media) {
+        $scope.deletePodcastEpisode(response.media);
+      }
     });
   };
 
@@ -168,22 +172,36 @@ angular.module('Bethel.podcast')
       parent: parentEl,
       targetEvent: $event,
       templateUrl: 'features/podcast/podcastPublishView.html',
-      locals: {feed: $scope.feed, unpublished: $scope.isDemo},
+      locals: { feed: $scope.feed, unpublished: $scope.isDemo },
       controller: 'publishPodcastController'
     });
-  }
+  };
+
+  $scope.deletePodcastEpisode = function(media) {
+    var options = { type: "episode" };
+
+    // Vimeo podcast
+    if ($scope.podcast.type === 2) {
+      options.title = 'Delete ' + media.name + '?';
+      options.message = 'Are you sure you want to delete this episode? Remember to remove applicable tags on Vimeo or it will reappear here.';
+    }
+
+    confirmDelete(options).then(function() {
+      salesSocket.delete('/podcastMedia/' + media.id).then($ctrl.init);
+    });
+  };
 
 }]);
 
 angular.module('Bethel.podcast')
 .controller('publishPodcastController', ['$scope', '$mdDialog', 'feed', 'unpublished',
-  function ($scope, $mdDialog, feed, unpublished) {
+function($scope, $mdDialog, feed, unpublished) {
 
   $scope.feed = feed;
   $scope.unpublished = unpublished;
 
   $scope.close = function() {
     $mdDialog.hide();
-  }
+  };
 
 }]);
