@@ -24,6 +24,7 @@
     "awaken": "github:mybethel/awaken",
     "aws-sdk": "^2.1",
     "bcrypt": "^0.8",
+    "bethel-ui": "mybethel/bethel-ui",
     "bluebird": "^2.9.34",
     "commander": "^2.8.1",
     "connect": "^3.4.0",

@@ -5,6 +5,7 @@
  * @type {angular.Module}
  */
 angular.module('Bethel', [
+  'bethel.ui',
   'Bethel.util',
   'Bethel.user',
   'Bethel.podcast',
@@ -12,8 +13,8 @@ angular.module('Bethel', [
   'Bethel.streaming'
 ])
 
-.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', '$compileProvider', 'sailsSocketProvider',
-  function ($urlRouterProvider, $translateProvider, $mdThemingProvider, $compileProvider, sailsSocketProvider) {
+.config(['$urlRouterProvider', '$translateProvider', '$compileProvider', 'sailsSocketProvider',
+  function ($urlRouterProvider, $translateProvider, $compileProvider, sailsSocketProvider) {
 
   $translateProvider.preferredLanguage('en');
   $translateProvider.useLoader('$translatePartialLoader', {
@@ -22,17 +23,8 @@ angular.module('Bethel', [
 
   sailsSocketProvider.config.transports = ['websocket'];
 
-  $mdThemingProvider.definePalette('brandBlue', $mdThemingProvider.extendPalette('blue', {
-    '500': '1591b5',
-    '800': '106982'
-  }));
-
   if (!window.__minimal && !window.__anonymous)
     $urlRouterProvider.otherwise('/dashboard');
-
-  $mdThemingProvider.theme('default')
-    .primaryPalette('brandBlue')
-    .accentPalette('blue-grey');
 
   $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|mailto):/);
 

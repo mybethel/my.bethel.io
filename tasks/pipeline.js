@@ -50,7 +50,9 @@ var libraryDependencies = [
   'angular-wizard/dist/angular-wizard.min.js',
   'angulartics/dist/angulartics.min.js',
   'angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
-  'ng-file-upload/dist/ng-file-upload-all.min.js'
+  'ng-file-upload/dist/ng-file-upload-all.min.js',
+
+  'bethel-ui/dist/bethel.ui.min.js'
 ].map(path => `node_modules/${path}`);
 
 // Client-side javascript files to inject in order

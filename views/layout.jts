@@ -26,9 +26,9 @@
     <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
   </div>
 
-  <top-nav ministry="ministry" ministries="authorized" ng-if="user" user="user"></top-nav>
+  <top-bar ministry="ministry" ministries="authorized" ng-if="user" user="user"></top-bar>
 
-  <section layout="row" layout-fill flex>
+  <section layout="row" flex ng-if="user">
 
     <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" ng-cloak ng-if="user">
       <md-content flex>
