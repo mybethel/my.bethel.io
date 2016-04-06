@@ -86,6 +86,10 @@ module.exports = {
 
     lastSync: {
       type: 'date'
+    },
+
+    deleted: {
+      type: 'boolean'
     }
 
 	},

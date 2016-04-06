@@ -22,7 +22,7 @@ vimeo.sync = function(refreshAll) {
     var start = new Date().getTime();
     sails.log.info('Syncing Vimeo storage...');
 
-    Podcast.find({ source: 2 }).populate('service').exec(function (err, podcasts) {
+    Podcast.find({ source: 2, deleted: { $ne: true } }).populate('service').exec(function (err, podcasts) {
       if (err) {
         sails.log.error(err);
         return resolve();

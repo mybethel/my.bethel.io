@@ -4,7 +4,7 @@ window.test.podcast = function() {
   describe('Podcasting', function() {
 
     describe('podcastDetailController', function() {
-      setupController('podcastDetailController', { $stateParams: { podcastId: 2 }});
+      setupController('podcastDetailController', { $stateParams: { podcastId: 2 } });
 
       it('bootstraps successfully.', function() {
         expect(scope.id).toEqual(2);
@@ -12,14 +12,41 @@ window.test.podcast = function() {
         spyOn(sailsSocket, 'get').and.callFake(function() {
           var deferred = q.defer();
           deferred.resolve({
-            podcast: { name: 'Test'},
+            podcast: {
+              name: 'Test',
+              tags: ['sermon', 'tv'],
+              media: []
+            },
             s3form: { secret: 'not_telling' },
             uploadEpisode: { form: 'data' }
           });
           return deferred.promise;
         });
+        spyOn(sailsSocket, 'sync').and.callFake(function() {
+          var deferred = q.defer();
+          deferred.resolve({});
+          return deferred.promise;
+        });
         ctrl.init();
         expect(sailsSocket.get).toHaveBeenCalledWith('/podcast/edit/2');
+        scope.$digest();
+        expect(sailsSocket.sync).toHaveBeenCalled();
+        expect(scope.podcastTags).toBe('sermon, tv');
+      });
+
+      it('redirects to /podcast if podcast is deleted', function() {
+        $location = injector.get('$location');
+        sailsSocket = injector.get('sailsSocket');
+        spyOn(sailsSocket, 'get').and.callFake(function() {
+          var deferred = q.defer();
+          deferred.resolve({
+            podcast: { name: 'Test', deleted: true }
+          });
+          return deferred.promise;
+        });
+        ctrl.init();
+        scope.$digest();
+        expect($location.path()).toBe('/podcast');
       });
 
     });
@@ -50,7 +77,7 @@ window.test.podcast = function() {
           deferred.resolve({
             podcast: 'Ghy2',
             subscribers: 123,
-            historical: [1,2,3]
+            historical: [1, 2, 3]
           });
           return deferred.promise;
         });
@@ -65,7 +92,7 @@ window.test.podcast = function() {
         $mdDialog = injector.get('$mdDialog');
         spyOn($mdDialog, 'show').and.callFake(function() {
           var deferred = q.defer();
-          deferred.resolve({ id: 1, name: 'Test Podcast'});
+          deferred.resolve({ id: 1, name: 'Test Podcast' });
           return deferred.promise;
         });
         scope.showWizard({});
@@ -86,7 +113,7 @@ window.test.podcast = function() {
     describe('podcastWizardController', function() {
       setupController('podcastWizardController');
 
-      beforeEach(inject(function (WizardHandler) {
+      beforeEach(inject(function(WizardHandler) {
         angular.element(document.body).append('<input class="focus" />');
 
         WizardHandler.wizard = function() {
@@ -96,7 +123,7 @@ window.test.podcast = function() {
         };
       }));
 
-      it('bootstraps successfully.', function () {
+      it('bootstraps successfully.', function() {
         expect(scope.newPodcast).toBeDefined();
 
         scope.$root.ministry = undefined;
@@ -136,13 +163,13 @@ window.test.podcast = function() {
 
       it('uploads a thumbnail to the newly created podcast.', function() {
         // User selects a thumbnail.
-        scope.selectThumbnail([ { name: 'testFile.jpg' }]);
+        scope.selectThumbnail([{ name: 'testFile.jpg' }]);
         expect(scope.thumbnailUploading).toEqual(true);
         expect(scope.thumbnail.name).toEqual('testFile.jpg');
         // Thumbnail is sent to S3.
         scope.uploadThumbnail({
           action: 'https://s3.amazonaws.com/cloud.bethel.io',
-          key: 's3key',
+          key: 's3key'
         });
         // After upload is finished, thumbnail applied.
         scope.applyThumbnail();

@@ -66,34 +66,20 @@ module.exports = {
     }
   },
 
-  list: function (req, res) {
-    if (!req.param('id') && typeof req.session.ministry === 'undefined')
-      return res.badRequest('ministry id required');
-
-    var ministryId = (req.param('id')) ? req.param('id') : req.session.ministry;
-    var query = Podcast.find({ ministry: ministryId });
-
-    if (req.param('episodes'))
-      query.populate('media', { sort: { date: 0 } });
-
-    query.exec(function (err, podcasts) {
-      if (err) return next(err);
-      res.send(podcasts);
-    });
-  },
-
   new: function (req, res) {
     res.send(S3Upload.prepare('images/podcast/tmp'));
   },
 
-  edit: function (req, res) {
+  edit: function(req, res) {
     Podcast.findOne(req.param('id')).populate('media', { deleted: { $ne: true } }).populate('service').exec(function foundPodcast(err, podcast) {
-      if (err || !podcast || !podcast.id) return next(err);
+      if (err) return res.serverError(err);
+      if (!podcast || !podcast.id) return res.notFound();
 
       var uploadForm = S3Upload.prepare('images/podcast/tmp');
       Podcast.subscribe(req, podcast.id);
 
       Service.find({ provider: 'vimeo', ministry: req.session.ministry }, function foundServices(err, services) {
+        if (err) return res.serverError(err);
         res.send({
           s3form: uploadForm,
           uploadEpisode: S3Upload.prepare('podcast/' + podcast.ministry + '/' + podcast.id),
@@ -105,17 +91,17 @@ module.exports = {
   },
 
   destroy: function(req, res) {
-    Podcast.destroy(req.param('id'), function deletedPodcast(err) {
-      if (err) {
-        sails.log.error(err);
-        return res.serverError(err);
+    Podcast.findOne(req.param('id')).populate('media').exec(function(err, podcast) {
+      if (err) return res.serverError(err);
+      if (podcast.source === 1 && !podcast.media.length) {
+        return Podcast.destroy(req.param('id')).exec(function(err) {
+          if (err) return res.serverError(err);
+          res.ok();
+        });
       }
-
-      // @TODO: Destroy media stored in S3 if podcast media is hosted on Bethel Cloud
-      PodcastMedia.destroy({ podcast: req.param('id') }, function deletedPodcastMedia(err) {
-        if (err) sails.log.error(err);
-
-        res.redirect('/#/podcast');
+      Podcast.update(req.param('id'), { deleted: true }, function(err, updated) {
+        if (err) return res.serverError(err);
+        return res.ok(updated);
       });
     });
   },
@@ -141,8 +127,8 @@ module.exports = {
     });
   },
 
-  feed: function (req, res) {
-    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { $ne: true} }, { sort: { date: 0 } }).exec(function (err, podcast) {
+  feed: function(req, res) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { $ne: true } }, { sort: { date: 0 } }).exec(function(err, podcast) {
       if (err) return res.serverError(err);
       if (!podcast) return res.notFound();
 
