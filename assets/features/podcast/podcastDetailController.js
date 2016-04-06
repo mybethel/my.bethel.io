@@ -2,8 +2,8 @@ angular.module('Bethel.podcast')
 .run(function() {
   Chart.defaults.global.colours[0] = '#455a64';
 })
-.controller('podcastDetailController', ['$scope', '$state', '$stateParams', 'upload', '$mdDialog', 'sailsSocket', 'notifyService', 'confirmDelete',
-function($scope, $state, $stateParams, upload, $mdDialog, sailsSocket, notifyService, confirmDelete) {
+.controller('podcastDetailController', ['$scope', '$state', '$stateParams', '$location', 'upload', '$mdDialog', 'sailsSocket', 'notifyService', 'confirmDelete',
+function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket, notifyService, confirmDelete) {
 
   var $ctrl = this;
   $scope.id = $stateParams.podcastId;
@@ -25,6 +25,7 @@ function($scope, $state, $stateParams, upload, $mdDialog, sailsSocket, notifySer
 
   $ctrl.init = function() {
     sailsSocket.get('/podcast/edit/' + $scope.id).then(function(data) {
+      if (data.podcast.deleted) $location.path('/podcast').replace();
       $scope.podcast = data.podcast;
       $scope.podcastTags = (Array.isArray(data.podcast.tags)) ? data.podcast.tags.join(', ') : '';
       $scope.feed = 'http://podcast.bethel.io/' + data.podcast.id + '.xml';
@@ -181,13 +182,24 @@ function($scope, $state, $stateParams, upload, $mdDialog, sailsSocket, notifySer
     var options = { type: "episode" };
 
     // Vimeo podcast
-    if ($scope.podcast.type === 2) {
+    if ($scope.podcast.source === 2) {
       options.title = 'Delete ' + media.name + '?';
       options.message = 'Are you sure you want to delete this episode? Remember to remove applicable tags on Vimeo or it will reappear here.';
     }
 
     confirmDelete(options).then(function() {
-      salesSocket.delete('/podcastMedia/' + media.id).then($ctrl.init);
+      console.log('confirmed', media.id);
+      sailsSocket.delete('/podcastMedia/' + media.id).then($ctrl.init);
+    });
+  };
+
+  $scope.deletePodcast = function() {
+    var options = {
+      type: 'podcast',
+      title: 'Delete ' + $scope.podcast.name + '?'
+    };
+    confirmDelete(options).then(function() {
+      sailsSocket.delete('/podcast/' + $scope.id).then($location.path('/podcast').replace());
     });
   };
 
