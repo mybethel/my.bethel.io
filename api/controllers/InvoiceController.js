@@ -25,7 +25,8 @@ module.exports = {
       criteria.ministry = req.param('id') ? req.param('id') : req.session.ministry;
     }
 
-    Invoice.find(criteria).exec(function (err, invoices) {
+    Invoice.find(criteria).exec(function(err, invoices) {
+      if (err) return res.serverError(err);
       var total = 0;
       var summary = {};
       for (var i = 0; i < invoices.length; i++) {
@@ -44,6 +45,14 @@ module.exports = {
         daily: invoices
       });
     });
+  },
+
+  missedDays: function(req, res) {
+    var daysAgo = req.param('daysAgo') || 1;
+
+    Machine.create('cdnUsage', 'Standard-1X', daysAgo);
+
+    res.ok();
   }
 
 };
