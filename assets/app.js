@@ -1,4 +1,3 @@
-io.sails.transports = ['websocket'];
 
 /**
  * The main Sails Angular app module
@@ -13,12 +12,14 @@ angular.module('Bethel', [
   'Bethel.streaming'
 ])
 
-.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider) {
+.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', 'sailsSocketProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider, sailsSocketProvider) {
 
   $translateProvider.preferredLanguage('en');
   $translateProvider.useLoader('$translatePartialLoader', {
     urlTemplate: '/i18n/{part}/{lang}.json'
   });
+
+  sailsSocketProvider.config.transports = ['websocket'];
 
   $mdThemingProvider.definePalette('brandBlue', $mdThemingProvider.extendPalette('blue', {
     '500': '1591b5',
