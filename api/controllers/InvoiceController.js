@@ -5,6 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 const moment = require('moment');
+const invoiceHelpers = require('../services/InvoiceHelper.js');
 
 module.exports = {
 
@@ -29,16 +30,53 @@ module.exports = {
       if (err) return res.serverError(err);
       var total = 0;
       var summary = {};
-      for (var i = 0; i < invoices.length; i++) {
-        invoices[i].amount = invoices[i].units * sails.config.invoice[invoices[i].type];
+      var previousUsage = 0
+      var cumulativeUsage;
 
-        if (!summary[invoices[i].type]) {
-          summary[invoices[i].type] = { units: 0, amount: 0 };
-        }
-        summary[invoices[i].type].units += invoices[i].units;
-        summary[invoices[i].type].amount += invoices[i].amount;
-        total += invoices[i].amount;
-      }
+      // invoices.forEach(function(invoice, index) {
+      //   var type = invoice.type;
+      //   var rate = invoiceHelpers.getRatePerUsage(type, cumulativeUsage);
+      //
+      //   invoice.amount = invoice.units * rate;
+      //   console.log('amount ', invoice.amount);
+      // });
+
+      cumulativeUsage = invoices.reduce(function(prev, current) {
+        return prev + current.units
+      }, 0);
+
+      // for (var i = 0; i < invoices.length; i++) {
+      //   // cumulativeUsage += invoices[i].units;
+      //   var rate = invoiceHelpers.getRatePerUsage(invoices[i].type, previousUsage, cumulativeUsage);
+      //   // invoices[i].amount = invoices[i].units * rate;
+      //
+      //   if (!summary[invoices[i].type]) {
+      //     summary[invoices[i].type] = { units: 0, amount: 0 };
+      //   }
+      //   summary[invoices[i].type].units += invoices[i].units;
+      //   summary[invoices[i].type].amount += invoices[i].amount;
+      //   // total += invoices[i].amount;
+      // }
+      //
+
+      // START HERE TOMORROW
+      // TYPE IS NOT DEFINED RIGHT NOW
+      // Need to break invoices into types then get cumulative usage per type
+      total = invoiceHelpers.getInvoiceTotal(type, cumulativeUsage);
+      console.log('total ', total);
+      //
+      // for (var i = 0; i < invoices.length; i++) {
+      //   var rate = invoiceHelpers.getRatePerUsage(invoices[i].type, cumulativeUsage);
+      //   invoices[i].amount = invoices[i].units * sails.config.invoice[invoices[i].type];
+      //
+      //   if (!summary[invoices[i].type]) {
+      //     summary[invoices[i].type] = { units: 0, amount: 0 };
+      //   }
+      //   summary[invoices[i].type].units += invoices[i].units;
+      //   summary[invoices[i].type].amount += invoices[i].amount;
+      //   total += invoices[i].amount;
+      // }
+
       res.send({
         amount: total,
         summary: summary,

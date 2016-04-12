@@ -64,7 +64,8 @@ module.exports.policies = {
   },
 
   invoice: {
-    '*': ['sessionAuth', 'platformStaff']
+    '*': true
+    // '*': ['sessionAuth', 'platformStaff']
   }
 
   /*
