@@ -25,26 +25,36 @@ module.exports = {
     if (req.param('id') !== 'all') {
       criteria.ministry = req.param('id') ? req.param('id') : req.session.ministry;
     }
+    //
+    // criteria.groupBy = ['type'];
+    // criteria.sum = ['units'];
 
     Invoice.find(criteria).exec(function(err, invoices) {
       if (err) return res.serverError(err);
+
       var total = 0;
       var summary = {};
-      var previousUsage = 0
-      var cumulativeUsage;
+      var previousUsage = 0;
+      var groupedInvoices;
 
-      // invoices.forEach(function(invoice, index) {
-      //   var type = invoice.type;
-      //   var rate = invoiceHelpers.getRatePerUsage(type, cumulativeUsage);
-      //
-      //   invoice.amount = invoice.units * rate;
-      //   console.log('amount ', invoice.amount);
-      // });
+      groupedInvoices = _.groupBy(invoices, 'type');
 
-      cumulativeUsage = invoices.reduce(function(prev, current) {
-        return prev + current.units
-      }, 0);
+      for (var invoiceType in groupedInvoices) {
+        groupedInvoices[invoiceType] = {
+          daily: groupedInvoices[invoiceType]
+        };
 
+        groupedInvoices[invoiceType].total = groupedInvoices[invoiceType].daily.reduce(function(prev, current) {
+          return prev + current.units;
+        }, 0);
+
+        // something like this to get new totals
+        // total = invoiceHelpers.getInvoiceTotal(type, cumulativeUsage);
+      }
+
+      res.send(groupedInvoices);
+
+      // STARTED CHANGING THINGS AROUND DYNAMIC RATES
       // for (var i = 0; i < invoices.length; i++) {
       //   // cumulativeUsage += invoices[i].units;
       //   var rate = invoiceHelpers.getRatePerUsage(invoices[i].type, previousUsage, cumulativeUsage);
@@ -59,12 +69,7 @@ module.exports = {
       // }
       //
 
-      // START HERE TOMORROW
-      // TYPE IS NOT DEFINED RIGHT NOW
-      // Need to break invoices into types then get cumulative usage per type
-      total = invoiceHelpers.getInvoiceTotal(type, cumulativeUsage);
-      console.log('total ', total);
-      //
+      // ORIGINAL
       // for (var i = 0; i < invoices.length; i++) {
       //   var rate = invoiceHelpers.getRatePerUsage(invoices[i].type, cumulativeUsage);
       //   invoices[i].amount = invoices[i].units * sails.config.invoice[invoices[i].type];
@@ -77,11 +82,11 @@ module.exports = {
       //   total += invoices[i].amount;
       // }
 
-      res.send({
-        amount: total,
-        summary: summary,
-        daily: invoices
-      });
+      // res.send({
+      //   amount: total,
+      //   summary: summary,
+      //   daily: invoices
+      // });
     });
   },
 

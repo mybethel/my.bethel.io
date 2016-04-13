@@ -61,3 +61,11 @@ exports.getInvoiceTotal = function(type, usage) {
 
   return total;
 };
+
+exports.getCumulativeUsage = function(invoices) {
+  if (!invoices) return;
+
+  return invoices.reduce(function(prev, current) {
+    return prev + current.units;
+  }, 0);
+}
