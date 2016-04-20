@@ -26,6 +26,12 @@ module.exports = {
       cwd: './node_modules/video.js/dist',
       src: ['*.min*', '*.swf'],
       dest: '.tmp/public/libraries'
+    },
+    {
+      expand: true,
+      cwd: './node_modules/sails.io.js-dist',
+      src: ['*.js'],
+      dest: '.tmp/public/libraries'
     }]
   },
   build: {

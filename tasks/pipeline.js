@@ -56,8 +56,6 @@ var libraryDependencies = [
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsDependencies = [
-  // Load sails.io before everything else
-  'node_modules/sails.io.js/sails.io.js',
   'assets/shared/sharedConfig.js',
   'assets/shared/**/*.js',
   'assets/features/**/*Config.js',
