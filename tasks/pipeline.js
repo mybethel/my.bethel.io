@@ -21,6 +21,7 @@ var cssDependencies = [
 var testDependencies = [
   'socket.io-client/socket.io.js',
   'angular/angular.js',
+  'sails.io.js-dist/sails.io.js'
 ].map(path => `node_modules/${path}`);
 
 var libraryDependencies = [

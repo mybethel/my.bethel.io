@@ -18,6 +18,8 @@ var setupController = function(controllerName, params) {
 
 };
 
+io.sails.environment = 'production';
+
 describe('Angular unit tests', function() {
 
   beforeEach(module('Bethel'));

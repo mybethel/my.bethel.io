@@ -9,8 +9,7 @@ module.exports = function(config) {
     preprocessors: {
       'assets/features/**/*.js': 'coverage',
       'assets/js/app.js': 'coverage',
-      'assets/js/**/!(dependencies)/*.js': 'coverage',
-      'assets/shared/!(sails.io)*.js': 'coverage'
+      'assets/js/**/!(dependencies)/*.js': 'coverage'
     },
     reporters: ['spec', 'coverage'],
     coverageReporter: {
