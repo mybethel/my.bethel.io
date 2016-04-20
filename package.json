@@ -63,7 +63,7 @@
     "sails-hook-machines": "^1.0.11",
     "sails-mongo": "^0.12.0",
     "sails.io.js": "^0.13.4",
-    "socket.io-redis": "^0.1.4",
+    "socket.io-redis": "1.0.0",
     "tripwire": "^4.0.0",
     "video.js": "^5.4.6",
     "vimeo-api": "^1.1.4",
