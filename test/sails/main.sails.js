@@ -12,7 +12,7 @@ before(function (done) {
     elasticsearch: {
       host: 'localhost:9200'
     },
-    log: { level: 'info' },
+    log: { level: 'silent' },
     models: {
       migrate: 'drop',
       connection: 'mongo'
