@@ -110,14 +110,14 @@ vimeo.queryApi = function(podcast) {
 
       var totalPages = 0;
       if (body.total > body.page * body.per_page) {
-        totalPages = Math.ceil((body.total - (body.page * body.per_page)) / body.per_page);
+        totalPages = Math.ceil((body.total - (body.page * body.per_page)) / body.per_page) + 1;
       }
 
       sails.log.info(podcast.id + ': Found ' + totalPages + ' total pages of videos.');
 
       var processApiResults = [];
       processApiResults.push(vimeo.processPage(body, podcast));
-      for (var i = 1; i < totalPages; i++) {
+      for (var i = 1; i <= totalPages; i++) {
         processApiResults.push(vimeo.getResultsPage(podcast, i, headers));
       }
 
