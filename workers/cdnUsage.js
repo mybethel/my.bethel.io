@@ -63,7 +63,7 @@ CDNUsage.prototype.logStat = function(stat) {
  * of logs based on UTC time. These are returned as JSON and parsed into the raw
  * bytes used by each ministry. Finally, these are saved as Invoice rows.
  */
-CDNUsage.prototype.run = function(cb, daysAgo) {
+CDNUsage.prototype.run = function(daysAgo) {
   var pullUrl = `${this.hostname}/${sails.config.log.logentries}/hosts/bethel/keycdn/`;
 
   var day = moment().utc().subtract(daysAgo || 1, 'days');
@@ -91,7 +91,7 @@ CDNUsage.prototype.run = function(cb, daysAgo) {
       });
     }
 
-    Invoice.create(invoices).exec(cb);
+    return Invoice.create(invoices);
 
   });
 };
