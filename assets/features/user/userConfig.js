@@ -1,23 +1,23 @@
 angular.module('Bethel.user', ['uiGmapgoogle-maps'])
-.config(['$stateProvider', 'uiGmapGoogleMapApiProvider',
-  function ($stateProvider, GoogleMapApiProviders) {
+.config(['$stateProvider', 'uiGmapGoogleMapApiProvider', function($stateProvider, GoogleMapApiProviders) {
 
   $stateProvider
     .state('dashboard', {
       url: '/dashboard',
       templateUrl: 'features/user/dashboardView.html',
-      data : { pageTitle: 'Dashboard' }
+      controller: 'dashboardController',
+      data: { pageTitle: 'Dashboard' }
     })
     .state('settings', {
       url: '/settings/:page',
       templateUrl: 'features/user/settingsView.html',
       controller: 'settingsController',
-      data : { pageTitle: 'Settings' }
+      data: { pageTitle: 'Settings' }
     })
     .state('beta', {
       url: '/beta',
       templateUrl: 'features/user/betaView.html',
-      data : { pageTitle: 'Feature in Beta' }
+      data: { pageTitle: 'Feature in Beta' }
     });
 
   GoogleMapApiProviders.configure({

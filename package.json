@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "The platform to power the digital church.",
   "dependencies": {
+    "@bethel/ui": "^0.1.0",
     "angular": "^1.5.0",
     "angular-animate": "^1.5.0",
     "angular-aria": "^1.5.0",
@@ -11,7 +12,7 @@
     "angular-dom": "^0.1.1",
     "angular-google-maps": "^2.2.1",
     "angular-http-auth": "^1.2.1",
-    "angular-material": "^1.0.6",
+    "angular-material": "^1.1.0-rc.5",
     "angular-messages": "^1.5.0",
     "angular-moment": "^0.10.3",
     "angular-sails-socket": "^0.3.0",
@@ -24,7 +25,6 @@
     "awaken": "github:mybethel/awaken",
     "aws-sdk": "^2.1",
     "bcrypt": "^0.8",
-    "bethel-ui": "mybethel/bethel-ui",
     "bluebird": "^2.9.34",
     "commander": "^2.8.1",
     "connect": "^3.4.0",
@@ -65,6 +65,7 @@
     "video.js": "^5.4.6",
     "vimeo": "^1.2.0",
     "waterline": "^0.11.0",
+    "winston": "^2.2.0",
     "zencoder": "^1.1.0"
   },
   "devDependencies": {

@@ -1,23 +1,27 @@
-<md-subheader class="md-no-sticky">Ministry Locations</md-subheader>
-<md-whiteframe class="md-whiteframe-z1 locations-list" layout="column" ng-controller="locationsController">
-  <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
+<div class="locations-list" flex layout="row" layout-fill ng-controller="locationsController">
+  <ui-gmap-google-map center="map.center" flex="80" zoom="map.zoom" options="map.options">
     <ui-gmap-markers models="locations" coords="'loc'" fit="true" icon="'pin'"></ui-gmap-markers>
   </ui-gmap-google-map>
-  <md-button class="md-fab md-fab-top-right md-hue-3" aria-label="Add" ng-click="locationForm($event)">
+
+  <md-button class="md-fab md-fab-bottom-right md-hue-3" aria-label="Add" ng-click="locationForm($event)">
     <md-tooltip>New Location</md-tooltip>
     <md-icon>add</md-icon>
   </md-button>
-  <md-list>
-    <md-list-item ng-cloak ng-if="locations.length < 1">
-      <p>Add your ministry locations using the <md-icon>add</md-icon> button to the right!</p>
-    </md-list-item>
-    <md-list-item class="md-2-line" ng-cloak ng-click="locationForm($event, location.id)" ng-repeat="location in locations | orderBy: 'name'">
-      <md-icon>location_on</md-icon>
-      <div class="md-list-item-text">
-        <h3>{{ location.name }}</h3>
-        <p>{{ location.address | addressShort }}</p>
-      </div>
-      <md-divider ng-if="!$last"></md-divider>
-    </md-list-item>
-  </md-list>
-</md-whiteframe>
+
+  <md-whiteframe class="md-whiteframe-z1" layout="column">
+    <md-list>
+      <md-subheader class="md-no-sticky">Ministry Locations</md-subheader>
+      <md-list-item ng-cloak ng-if="locations.length < 1">
+        <p>Add your ministry locations using the <md-icon>add</md-icon> button to the right!</p>
+      </md-list-item>
+      <md-list-item class="md-3-line md-long-text" ng-cloak ng-click="locationForm($event, location.id)" ng-repeat="location in locations | orderBy: 'name'">
+        <md-icon md-svg-icon="md/location_on.svg"></md-icon>
+        <div class="md-list-item-text">
+          <h3>{{ location.name }}</h3>
+          <p>{{ location.address | addressShort }}</p>
+        </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-whiteframe>
+</div>

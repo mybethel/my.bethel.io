@@ -28,24 +28,7 @@
 
   <top-bar ministry="ministry" ministries="authorized" ng-if="user" user="user"></top-bar>
 
-  <section layout="row" flex ng-if="user">
-
-    <md-sidenav class="md-sidenav-left md-whiteframe-z2" layout="column" md-component-id="left" md-is-locked-open="$mdMedia('gt-xs')" ng-cloak ng-if="user">
-      <md-content flex>
-        <md-list class="md-accent md-hue-3">
-          <md-list-item ng-repeat="link in navLinks" ng-click="nav(link.url)" ng-class="{ 'active': navActive == link.url }" ng-cloak>
-            <md-icon>{{ link.icon }}</md-icon>
-            <p>{{ link.title }}</p>
-          </md-list-item>
-        </md-list>
-      </md-content>
-    </md-sidenav>
-
-    <div class="main-content" flex layout="column" ng-if="user" ui-view>
-      <!--ANGULAR VIEW-->
-    </div>
-
-  </section>
+  <main-content admin="isAdmin" flex layout="row" links="navLinks" ng-if="user"></main-content>
 
   ${ body }
 

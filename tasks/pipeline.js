@@ -15,7 +15,7 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssDependencies = [
-  '.tmp/public/styles/app.css',
+  '.tmp/public/styles/app.css'
 ];
 
 var testDependencies = [
@@ -52,7 +52,7 @@ var libraryDependencies = [
   'angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
   'ng-file-upload/dist/ng-file-upload-all.min.js',
 
-  'bethel-ui/dist/bethel.ui.min.js'
+  '@bethel/ui/dist/bethel.ui.min.js'
 ].map(path => `node_modules/${path}`);
 
 // Client-side javascript files to inject in order

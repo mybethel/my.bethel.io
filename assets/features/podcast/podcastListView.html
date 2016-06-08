@@ -3,22 +3,22 @@
   <md-icon>add</md-icon>
 </md-button>
 
-<md-content class="main-content" equalize="md-card-content" flex layout="row" layout-align="center center" layout-wrap>
+<div ng-if="podcasts.length < 1 && !sailsSocket.outstanding" flex="50">
+  <md-card class="getting-started">
+    <md-card-content>
+      <h2 class="md-title">{{ 'PODCAST.HELP.TITLE' | translate }}</h2>
+      <p>{{ 'PODCAST.HELP.CREATE' | translate }}</p>
+      <md-button ng-click="showWizard($event)">{{ 'PODCAST.HELP.CREATE_BUTTON' | translate }}</md-button>
+    </md-card-content>
+    <md-divider></md-divider>
+    <md-card-content>
+      <p>{{ 'PODCAST.HELP.MIGRATE' | translate }}</p>
+      <md-button href="mailto:help@bethel.io">{{ 'PODCAST.HELP.MIGRATE_BUTTON' | translate }}</md-button>
+    </md-card-content>
+  </md-card>
+</div>
 
-  <div ng-if="podcasts.length < 1 && !sailsSocket.outstanding" flex="50">
-    <md-card class="getting-started">
-      <md-card-content>
-        <h2 class="md-title">{{ 'PODCAST.HELP.TITLE' | translate }}</h2>
-        <p>{{ 'PODCAST.HELP.CREATE' | translate }}</p>
-        <md-button ng-click="showWizard($event)">{{ 'PODCAST.HELP.CREATE_BUTTON' | translate }}</md-button>
-      </md-card-content>
-      <md-divider></md-divider>
-      <md-card-content>
-        <p>{{ 'PODCAST.HELP.MIGRATE' | translate }}</p>
-        <md-button href="mailto:help@bethel.io">{{ 'PODCAST.HELP.MIGRATE_BUTTON' | translate }}</md-button>
-      </md-card-content>
-    </md-card>
-  </div>
+<div layout="row" layout-align="center" layout-wrap>
 
   <md-card ng-click="view(podcast.id)" ng-repeat="podcast in podcasts | orderBy : 'name'" flex="25">
     <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" class="md-card-image" alt="{{ podcast.name }}" />
@@ -29,4 +29,4 @@
     <md-subheader class="md-no-sticky">{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }} subscribers, {{ podcast.media.length }} episodes</md-subheader>
   </md-card>
 
-</md-content>
+</div>

@@ -1,75 +1,73 @@
-<md-content class="md-padding main-content" ng-controller="dashboardController">
+<md-whiteframe class="md-whiteframe-z1 md-padding welcome-modal">
+  <div layout="row">
+    <div flex="40" flex-sm="100">
+      <h2 class="light">Welcome, {{ user.name }}</h2>
+      <p hide-sm hide-xs>Thanks for joining us!</p>
+      <p hide-gt-sm>We're still optimizing the platform for mobile devices. Pardon our dust!
+        Meanwhile, please use a full-size device to access Bethel.</p>
+      <p>Feedback? Need help? <a href="mailto:help@bethel.io">Talk to us</a>.</p>
+    </div>
+    <div flex-offset="10" flex="50" hide-sm>
+      <md-list>
+        <md-list-item class="md-2-line">
+          <md-button class="md-fab md-hue-2" aria-label="Locations" href="#/settings/locations">
+            <md-icon>location_on</md-icon>
+          </md-button>
+          <div class="md-list-item-text">
+            <h3>Ministry locations</h3>
+            <p>Update your locations and service times here.</p>
+          </div>
+        </md-list-item>
+        <md-divider md-inset></md-divider>
+        <md-list-item class="md-2-line">
+          <md-button class="md-fab md-hue-2" aria-label="Settings" href="#/settings/">
+            <md-icon>settings</md-icon>
+          </md-button>
+          <div class="md-list-item-text">
+            <h3>My Settings</h3>
+            <p>Edit your account and customize your settings.</p>
+          </div>
+        </md-list-item>
+        <md-divider md-inset></md-divider>
+        <md-list-item class="md-2-line">
+          <md-button class="md-fab md-hue-2" aria-label="Help"  href="mailto:help@bethel.io">
+            <md-icon>live_help</md-icon>
+          </md-button>
+          <div class="md-list-item-text">
+            <h3>Need help?</h3>
+            <p>We're a phone call or a click away!</p>
+          </div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+</md-whiteframe>
 
-  <md-whiteframe class="md-whiteframe-z1 md-padding welcome-modal" layout="column">
-    <div layout="row">
-      <div flex="40" flex-sm="100">
-        <h2 class="light">Welcome, {{ user.name }}</h2>
-        <p hide-sm hide-xs>Thanks for joining us!</p>
-        <p hide-gt-sm>We're still optimizing the platform for mobile devices. Pardon our dust!
-          Meanwhile, please use a full-size device to access Bethel.</p>
-        <p>Feedback? Need help? <a href="mailto:help@bethel.io">Talk to us</a>.</p>
+<div layout="row">
+
+  <div layout="column" layout-fill flex="40" hide-sm>
+    <md-whiteframe class="md-whiteframe-z1 stats teaser" layout layout-align="center center">
+      <div>
+        <md-icon>insert_chart</md-icon>
+        <h3 class="light">Statistics Coming Soon!</h3>
       </div>
-      <div flex-offset="10" flex="50" hide-sm>
+    </md-whiteframe>
+  </div>
+
+  <div layout="column" flex="60" flex-sm="100">
+    <md-whiteframe class="md-whiteframe-z1 platform-updates" layout>
+      <md-content>
         <md-list>
-          <md-list-item class="md-2-line">
-            <md-button class="md-fab md-hue-2" aria-label="Locations" href="#/settings/locations">
-              <md-icon>location_on</md-icon>
-            </md-button>
+          <md-list-item class="md-3-line" ng-click="loadUpdate(update)" ng-cloak ng-repeat="update in platformUpdates">
+            <md-icon>mode_comment</md-icon>
             <div class="md-list-item-text">
-              <h3>Ministry locations</h3>
-              <p>Update your locations and service times here.</p>
-            </div>
-          </md-list-item>
-          <md-divider md-inset></md-divider>
-          <md-list-item class="md-2-line">
-            <md-button class="md-fab md-hue-2" aria-label="Settings" href="#/settings/">
-              <md-icon>settings</md-icon>
-            </md-button>
-            <div class="md-list-item-text">
-              <h3>My Settings</h3>
-              <p>Edit your account and customize your settings.</p>
-            </div>
-          </md-list-item>
-          <md-divider md-inset></md-divider>
-          <md-list-item class="md-2-line">
-            <md-button class="md-fab md-hue-2" aria-label="Help"  href="mailto:help@bethel.io">
-              <md-icon>live_help</md-icon>
-            </md-button>
-            <div class="md-list-item-text">
-              <h3>Need help?</h3>
-              <p>We're a phone call or a click away!</p>
+              <h3>{{ update.title }} <small am-time-ago="update.publishedDate"></small></h3>
+              <p class="snippet">{{ update.contentSnippet }}</p>
             </div>
           </md-list-item>
         </md-list>
-      </div>
-    </div>
-  </md-whiteframe>
-
-  <div layout="row" equalize="md-whiteframe">
-
-    <div layout="column" flex="40" hide-sm>
-      <md-whiteframe class="md-whiteframe-z1 stats teaser" layout layout-align="center center">
-        <div>
-          <md-icon>insert_chart</md-icon>
-          <h3 class="light">Statistics Coming Soon!</h3>
-        </div>
-      </md-whiteframe>
-    </div>
-
-    <div layout="column" flex="60" flex-sm="100">
-        <md-whiteframe class="md-whiteframe-z1 platform-updates" layout>
-          <md-list>
-            <md-list-item class="md-3-line" ng-click="loadUpdate(update)" ng-cloak ng-repeat="update in platformUpdates">
-              <md-icon>mode_comment</md-icon>
-              <div class="md-list-item-text">
-                <h3>{{ update.title }} <small am-time-ago="update.publishedDate"></small></h3>
-                <p class="snippet">{{ update.contentSnippet }}</p>
-              </div>
-            </md-list-item>
-          </md-list>
-        </md-whiteframe>
-    </div>
-
+      </md-content>
+    </md-whiteframe>
   </div>
 
-</md-content>
+</div>

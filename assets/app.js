@@ -47,8 +47,7 @@ angular.module('Bethel', [
     { title: 'Volunteers', icon: 'people', url: 'beta' },
     { title: 'Live Streaming', icon: 'videocam', url: 'streaming' },
     { title: 'Giving', icon: 'attach_money', url: 'beta' },
-    { title: 'Social Media', icon: 'thumb_up', url: 'beta' },
-    { title: 'Settings', icon: 'settings', url: 'settings' }
+    { title: 'Social Media', icon: 'thumb_up', url: 'beta' }
   ];
   $scope.user = null;
   $scope.ministry = null;
@@ -72,10 +71,6 @@ angular.module('Bethel', [
       notifyService.beforeNotify = function () {
         return !$scope.previousUser;
       };
-
-      if (response.isAdmin && $scope.navLinks[0].title !== 'Staff') {
-        $scope.navLinks.unshift({ title: 'Staff', icon: 'verified_user', url: 'staff.users' });
-      }
     }, function() {
       $scope.authCheck = true;
     });
