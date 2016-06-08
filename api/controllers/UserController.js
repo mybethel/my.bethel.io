@@ -15,7 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var Mandrill = require('machinepack-mandrill');
+var jtsEngine = require('jts');
+var JTS = new jtsEngine();
 
 module.exports = {
 
@@ -48,41 +49,31 @@ module.exports = {
 
   },
 
-  sendInvite: function (req, res) {
+  sendInvite: function(req, res) {
 
-    User.findOne(req.param('id')).exec(function (err, user) {
+    User.findOne(req.param('id')).exec(function(err, user) {
       if (err) return res.serverError(err);
 
       if (!user) return res.serverError('No user found with that id');
 
-      var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+','-').replace('/','_'),
-          inviteUrl = req.headers['origin'] + '/invite/' + inviteCode,
-          currentDate = new Date(),
-          templateVariables = [
-            {name: 'inviteUrl', content: inviteUrl},
-            {name: 'userName', content: user.name},
-            {name: 'year', content: new Date().getFullYear()}
-          ];
+      var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+', '-').replace('/', '_'),
+          templateVars = {
+            userName: user.name,
+            inviteUrl: req.headers['origin'] + '/invite/' + inviteCode
+          };
 
-      Mandrill.sendTemplateEmail({
-        apiKey: sails.config.mandrill.key,
-        toEmail: user.email,
-        templateName: 'beta-invite',
-        toName: user.name,
+      var file = JTS.read('views/email/invite.jts');
+
+      var mailOptions = {
+        to: user.email,
         subject: 'Welcome to Bethel!',
-        fromEmail: 'hello@bethel.io',
-        fromName: 'Bethel',
-        mergeVars: templateVariables,
-      }).exec({
-        error: function() {
-          return res.send({error: 'There was a problem sending the invite email.'});
-        },
-        success: function() {
-          User.update(user.id, {invited: currentDate}, function (err, updatedUser) {
-            if (err) return res.serverError(err);
-            return res.ok(updatedUser[0]);
-          });
-        },
+        message: JTS.compile(file, templateVars)
+      };
+
+      Mailgun.sendMail(mailOptions, function(err, results) {
+        console.log('ERR ', err);
+        if (err) return res.serverError({ error: err });
+        res.ok('success');
       });
 
     });
