@@ -25,10 +25,15 @@
       "required": true,
       "local": "keen.writeKey"
     },
-    "MANDRILL_KEY": {
-      "description": "Mandrill: API key for sending of mail.",
+    "MAILGUN_API_KEY": {
+      "description": "Mailgun: API key for sending of mail.",
       "required": true,
-      "local": "mandrill.key"
+      "local": "mailgun.key"
+    },
+    "MAILGUN_DOMAIN": {
+      "description": "Mailgun: domain for sending of mail.",
+      "required": true,
+      "local": "mailgun.domain"
     },
     "MONGO_PASS": {
       "description": "MongoHQ: Password for production database.",

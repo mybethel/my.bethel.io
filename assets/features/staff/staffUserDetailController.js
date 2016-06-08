@@ -1,7 +1,7 @@
 angular.module('Bethel.staff')
 
 .controller('staffUserDetailController', ['$scope', '$stateParams', '$location', '$filter', 'sailsSocket', '$timeout', '$mdToast',
-  function ($scope, $stateParams, $location, $filter, sailsSocket, $timeout, $mdToast) {
+function($scope, $stateParams, $location, $filter, sailsSocket, $timeout, $mdToast) {
 
   var $ctrl = this;
   $scope.$parent.tabIndex = 0;
@@ -15,7 +15,7 @@ angular.module('Bethel.staff')
     }
   });
 
-  // TODO Make custom directive to allow filtering of ng-model property so we
+  // @TODO Make custom directive to allow filtering of ng-model property so we
   // don't have to do this
   $ctrl.populateUser = function(user) {
     user.createdAt = $filter('date')(user.createdAt);
@@ -39,9 +39,8 @@ angular.module('Bethel.staff')
 
   $ctrl.getEmailConfirmation = function(response) {
     var message = 'Invite Email Sent.';
-
     if (response.error) {
-      message = response.error;
+      message = 'Error: ' + response.error;
     } else {
       $scope.user.invited = $filter('date')(response.invited);
     }
@@ -57,7 +56,7 @@ angular.module('Bethel.staff')
 
   $scope.sendInviteEmail = function() {
     $scope.emailSending = true;
-    sailsSocket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation);
+    sailsSocket.get('/user/sendInvite/' + $scope.id).then($ctrl.getEmailConfirmation, $ctrl.getEmailConfirmation);
   };
 
   $scope.masquerade = function() {
