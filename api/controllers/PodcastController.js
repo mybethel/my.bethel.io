@@ -66,6 +66,23 @@ module.exports = {
     }
   },
 
+  // This route is in use by the Wordpress plugin to provide embedable players.
+  list: function(req, res) {
+    if (!req.param('id') && typeof req.session.ministry === 'undefined')
+      return res.badRequest('ministry id required');
+
+    var ministryId = (req.param('id')) ? req.param('id') : req.session.ministry;
+    var query = Podcast.find({ ministry: ministryId });
+
+    if (req.param('episodes'))
+      query.populate('media', { sort: { date: 0 } });
+
+    query.exec(function(err, podcasts) {
+      if (err) return next(err);
+      res.send(podcasts);
+    });
+  },
+
   new: function (req, res) {
     res.send(S3Upload.prepare('images/podcast/tmp'));
   },
