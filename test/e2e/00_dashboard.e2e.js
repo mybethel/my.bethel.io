@@ -3,6 +3,7 @@ describe('Dashboard', function() {
   it('requires users to login.', function() {
     browser.get('#/dashboard');
 
+    browser.wait(() => element(by.css('form')).isPresent());
     // Login form main wrapping element.
     expect(element(by.css('form[name="userLoginForm"]')).isPresent()).toBe(true);
     // New user create account link.
@@ -47,13 +48,8 @@ describe('Dashboard', function() {
     element(by.model('credentials.pass')).sendKeys('v3ra');
     element(by.css('button')).click();
 
-    browser.wait(function() {
-      return element(by.css('.welcome-modal h2')).isPresent().then(function (el) {
-        return el === true;
-      });
-    }, 2000).then(function() {
-      expect(element(by.css('.welcome-modal h2')).getText()).toBe('Welcome, Jayne Cobb');
-    });
+    browser.wait(() => element(by.css('.welcome-modal h2')).isPresent());
+    expect(element(by.css('.welcome-modal h2')).getText()).toBe('Welcome, Jayne Cobb');
 
   });
 
