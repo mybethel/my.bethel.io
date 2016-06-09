@@ -4,12 +4,12 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+const Vimeo = require('vimeo').Vimeo;
 
 module.exports = {
 
   vimeo: function(req, res, next) {
-    var Vimeo = require('vimeo-api').Vimeo,
-        VimeoAPI = new Vimeo(sails.config.services.vimeo.key, sails.config.services.vimeo.secret),
+    var VimeoAPI = new Vimeo(sails.config.services.vimeo.key, sails.config.services.vimeo.secret),
         redirectUrl = 'http://my.bethel.io/service/vimeo/authorized';
 
     // If this is not a response from Vimeo, redirect the user to request permission.
@@ -19,7 +19,7 @@ module.exports = {
     }
 
     // Construct and store the access token based on the Vimeo response.
-    VimeoAPI.accessToken(req.query.code, redirectUrl, function (err, token) {
+    VimeoAPI.accessToken(req.query.code, redirectUrl, function(err, token) {
       if (err) return next(err);
 
       if (req.query.state !== req.session.ministry.toString('base64') || typeof token.access_token === 'undefined')
