@@ -1,12 +1,14 @@
-var expect = require('expect'),
-    request = require('supertest');
+const expect = require('expect');
+const request = require('supertest');
+
+const fixtures = require('../fixtures');
 
 describe('podcast', function() {
 
   var podcastId, mediaId;
 
   it('allows the creation of a podcast', function(done) {
-    Ministry.findOne({ name: 'Bethel Technologies' }).exec(function(err, ministry) {
+    Ministry.findOne({ name: fixtures.ministry.name }).exec(function(err, ministry) {
       if (err) return done(err);
       Podcast.create({ name: 'Test Podcast', type: 1, source: 1, ministry: ministry.id }).exec(function(err, podcast) {
         if (err) return done(err);
@@ -55,6 +57,20 @@ describe('podcast', function() {
     request(sails.hooks.http.app)
       .get('/podcast/feed/' + podcastId)
       .expect(200, done);
+  });
+
+  describe('wordpress plugin', function() {
+
+    it('validates that a ministry ID is provided', done =>
+      request(sails.hooks.http.app)
+        .get('/podcast/list/')
+        .expect(400, done));
+
+    // it('validates that a ministry ID is provided', done =>
+    //   request(sails.hooks.http.app)
+    //     .get('/podcast/list/')
+    //     .expect(400, done));
+
   });
 
 });

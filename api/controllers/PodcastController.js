@@ -5,23 +5,21 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-const moment = require('moment');
-
 module.exports = {
 
-  embed: function (req, res) {
+  embed: function(req, res) {
     if (!req.param('type') || !req.param('id'))
       return res.badRequest('type and id are required');
 
     if (req.param('type') === 'episode') {
-      PodcastMedia.findOne(req.param('id')).populate('podcast').exec(function (err, episode) {
-        if (!episode)
-          return res.notFound('episode not found');
+      PodcastMedia.findOne(req.param('id')).populate('podcast').then(episode => {
+        if (!episode) return res.notFound('episode not found');
 
         episode.podcast.type = (episode.podcast.type === 1) ? 'audio' : 'video';
         episode.url = episode.url.replace('http://cloud.bethel.io', 'https://s3.amazonaws.com/cloud.bethel.io');
 
-        var background, embedStyles = '';
+        var background,
+            embedStyles = '';
         var podcast = episode.podcast;
 
         if (podcast.type === 'video') {
@@ -29,7 +27,7 @@ module.exports = {
         } else if (podcast.embedSettings && podcast.embedSettings.backgroundColor) {
           background = 'background:' + podcast.embedSettings.backgroundColor;
         } else {
-          background = 'background-image:url(https://images.bethel.io/images/' + (podcast.image ? podcast.image : 'DefaultPodcaster.png') + '?crop=faces&fit=crop&w=200&h=200&blur=150);'
+          background = 'background-image:url(https://images.bethel.io/images/' + (podcast.image ? podcast.image : 'DefaultPodcaster.png') + '?crop=faces&fit=crop&w=200&h=200&blur=150);';
         }
 
         if (background) {
@@ -43,8 +41,8 @@ module.exports = {
 
           if (podcast.embedSettings.controlColor) {
             embedStyles += '.video-js.vjs-bethel-skin{color:' + podcast.embedSettings.controlColor + ';}';
-            embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-play-progress,.video-js.vjs-bethel-skin .vjs-volume-level,.video-js.vjs-bethel-skin .vjs-mouse-display,.video-js.vjs-bethel-skin .vjs-mouse-display:after'
-            embedStyles += '{background:' + podcast.embedSettings.controlColor + '}'
+            embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-play-progress,.video-js.vjs-bethel-skin .vjs-volume-level,.video-js.vjs-bethel-skin .vjs-mouse-display,.video-js.vjs-bethel-skin .vjs-mouse-display:after';
+            embedStyles += '{background:' + podcast.embedSettings.controlColor + '}';
           }
 
           if (podcast.embedSettings.sliderColor) {
@@ -53,7 +51,7 @@ module.exports = {
         }
 
         var posterImage = episode.thumbnail ? episode.thumbnail :
-          `https://images.bethel.io/images/${ podcast.image ? podcast.image : 'DefaultPodcaster.png' }?crop=faces&fit=crop&w=140&h=140`;
+          `https://images.bethel.io/images/${podcast.image ? podcast.image : 'DefaultPodcaster.png'}?crop=faces&fit=crop&w=140&h=140`;
 
         res.view({
           layout: 'none',
@@ -62,7 +60,7 @@ module.exports = {
           posterImage: posterImage,
           embedStyles: embedStyles
         });
-      });
+      }).catch(res.serverError);
     }
   },
 
@@ -145,23 +143,26 @@ module.exports = {
   },
 
   feed: function(req, res) {
-    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { $ne: true } }, { sort: { date: 0 } }).exec(function(err, podcast) {
-      if (err) return res.serverError(err);
-      if (!podcast) return res.notFound();
+    Podcast.findOne(req.param('id'))
+      .populate('ministry')
+      .populate('media', { deleted: { $ne: true } }, { sort: { date: 0 } })
+      .then(podcast => {
+        if (!podcast) return res.notFound();
 
-      Analytics.registerHit('podcast.feed', req.param('id'), req, {
-        ministry: podcast.ministry.id
-      });
+        Analytics.registerHit('podcast.feed', req.param('id'), req, {
+          ministry: podcast.ministry.id
+        });
 
-      res.header('Content-Type', 'text/xml; charset=UTF-8');
+        res.header('Content-Type', 'text/xml; charset=UTF-8');
 
-      return res.view({
-        layout: 'rss',
-        podcast: podcast,
-        ministry: podcast.ministry,
-        podcastMedia: podcast.media
-      });
-    });
+        return res.view({
+          layout: 'rss',
+          podcast: podcast,
+          ministry: podcast.ministry,
+          podcastMedia: podcast.media
+        });
+      })
+      .catch(res.serverError);
   }
 
 };

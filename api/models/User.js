@@ -5,9 +5,8 @@
  * @description :: A short summary of how this model works and what it represents.
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
-
-var Passwords = require('machinepack-passwords'),
-    Gravatar = require('gravatar');
+const crypto = require('crypto');
+const Passwords = require('machinepack-passwords');
 
 module.exports = {
 
@@ -59,29 +58,17 @@ module.exports = {
     },
 
     hasRole: function(roleName) {
-
-      if (!this.roles || this.roles.indexOf(roleName) === -1) {
-        return false;
-      }
-
-      return true;
-
+      return this.roles && this.roles.indexOf(roleName) >= 0;
     },
 
     loginSuccess: function() {
-      User.update(this.id, { lastLogin: new Date() }, function (err) {
-        if (err) sails.log.error(err);
-      });
+      this.lastLogin = new Date();
+      this.save();
     },
 
     toJSON: function() {
       var obj = this.toObject();
-
-      obj.inviteCode = new Buffer(obj.id, 'hex')
-        .toString('base64')
-        .replace('+','-')
-        .replace('/','_');
-
+      obj.inviteCode = User.inviteCode(obj.email);
       delete obj.password;
       return obj;
     }
@@ -91,63 +78,48 @@ module.exports = {
   beforeCreate: function(values, next) {
     delete values.id;
 
-    values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
-
-    if (values.password) {
-      Passwords.encryptPassword({ password: values.password }).exec({
-        error: function(err) {
-          next(err);
-        },
-        success: function(result) {
-          values.password = result;
-          next();
-        }
-      });
-    }
-    else {
-      next();
-    }
-  },
-
-  afterCreate: function(values, next) {
+    var hash = crypto.createHash('md5').update(values.email).digest('hex');
+    values.avatar = `//gravatar.com/avatar/${hash}.png?d=mm&s=100`;
 
     if (!values.password || values.password === '') {
-      values.password = new Buffer(values.id, 'hex')
-        .toString('base64')
-        .replace('+','-')
-        .replace('/','_');
+      values.password = this.inviteCode(values.email);
+    }
 
-      User.update(values.id, { password: values.password }, function userUpdated(err) {
-        if (err) return next(err);
-
+    Passwords.encryptPassword({ password: values.password }).exec({
+      error: next,
+      success: function(result) {
+        values.password = result;
         next();
-      });
-    }
-    else {
-      next();
-    }
-
+      }
+    });
   },
 
   beforeUpdate: function(values, next) {
 
     if (values.email) {
-      values.avatar = Gravatar.url(values.email, { s: 100, d: 'mm' }, true);
+      var hash = crypto.createHash('md5').update(values.email).digest('hex');
+      values.avatar = `//gravatar.com/avatar/${hash}.png?d=mm&s=100`;
     }
 
-    if (values.password) {
-      Passwords.encryptPassword({ password: values.password }).exec({
-        error: function(err) {
-          next(err);
-        },
-        success: function(result) {
-          values.password = result;
-          next();
-        }
-      });
-    } else {
-      next();
-    }
-  }
+    if (!values.password) return next();
+
+    Passwords.encryptPassword({ password: values.password }).exec({
+      error: next,
+      success: function(result) {
+        values.password = result;
+        next();
+      }
+    });
+  },
+
+  /**
+   * A new user can have their password temporarily set to this invite code
+   * which is generated off their e-mail address. This allows for a single-click
+   * login experience when first interacting with the platform and requires the
+   * user to change their password immediately.
+   * @param {String} email The user's e-mail address.
+   * @return {String} The invite code for this user.
+   */
+  inviteCode: email => new Buffer(email).toString('base64').replace('+', '-').replace('/', '_')
 
 };

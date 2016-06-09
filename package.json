@@ -30,7 +30,6 @@
     "elasticsearch": "^10.0.1",
     "gm": "^1.18.1",
     "googleapis": "^2.0.4",
-    "gravatar": "^1.2.0",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
