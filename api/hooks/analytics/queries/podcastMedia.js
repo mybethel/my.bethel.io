@@ -25,6 +25,9 @@ module.exports = {
         topEpisodes: top,
         medium: medium
       });
+    }).catch(err => {
+      sails.log.error(err);
+      return res.json({});
     });
   },
   required: ['uuid', 'start', 'end'],

@@ -48,7 +48,8 @@ module.exports = function AnalyticsHook(sails) {
             body: validQuery
           }).then(function(records) {
             return query.process(records, res);
-          }, function(err) {
+          }).catch(function(err) {
+            sails.log.error(err);
             return res.badRequest(err);
           });
         }

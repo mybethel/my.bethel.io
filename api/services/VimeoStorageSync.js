@@ -59,7 +59,7 @@ vimeo.sync = function(refreshAll) {
           var end = new Date().getTime();
           sails.log.info(`Vimeo sync completed in ${(end - start)} ms.`);
           resolve();
-        });
+        }).catch(sails.log.error);
       })
       .catch(err => {
         sails.log.error(err);
@@ -84,7 +84,7 @@ vimeo.syncOne = function(podcastId) {
           return resolve();
         }
 
-        vimeo.queryApi(podcast).then(resolve);
+        vimeo.queryApi(podcast).then(resolve).catch(sails.log.error);
       })
       .catch(err => {
         sails.log.error(err);
@@ -131,7 +131,7 @@ vimeo.queryApi = function(podcast) {
           resolve();
         });
 
-      });
+      }).catch(sails.log.error);
     });
   });
 };
@@ -144,7 +144,7 @@ vimeo.getResultsPage = function(podcast, page, headers) {
         return resolve();
       }
 
-      vimeo.processPage(body, podcast).then(resolve);
+      vimeo.processPage(body, podcast).then(resolve).catch(sails.log.error);
     });
   });
 };
@@ -161,7 +161,7 @@ vimeo.processPage = function(results, podcast) {
   sails.log.info(podcast.id + ': Page ' + results.page + ' - found ' + videosToProcess.length + ' matching videos.');
 
   videosToProcess.map(video => vimeo.podcastMediaUpsert(video, podcast));
-  return new Promise(resolve => Promise.all(videosToProcess).then(resolve));
+  return new Promise(resolve => Promise.all(videosToProcess).then(resolve).catch(sails.log.error));
 };
 
 /**

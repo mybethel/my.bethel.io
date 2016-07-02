@@ -19,6 +19,6 @@ exports.registerHit = (objectType, objectId, req, properties) => {
     index: collection[0],
     type: collection[1],
     body: record
-  }).then(sails.log.verbose, sails.log.error);
+  }).then(sails.log.verbose).catch(sails.log.error);
 
 };

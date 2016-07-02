@@ -97,7 +97,7 @@ module.exports = {
   moveThumbnail: function(temporaryImage, id, cb) {
     if (!temporaryImage || !id) return cb();
 
-    S3Upload.removeTemp('images/podcast', temporaryImage, id).then(function (result) {
+    S3Upload.removeTemp('images/podcast', temporaryImage, id).then(function(result) {
       request.post({
         url: 'https://api.imgix.com/v2/image/purger',
         auth: {
@@ -111,7 +111,7 @@ module.exports = {
         sails.log.info('Purge IMGIX cache:', response);
         cb(result);
       });
-    });
+    }).catch(sails.log.error);
   },
 
   beforeCreate: function(values, next) {
