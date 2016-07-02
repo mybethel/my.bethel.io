@@ -24,22 +24,31 @@ exports.getRatePerUsage = function(type, previous, current) {
   // });
 };
 
+exports.getUnitInBytes = function(unit) {
+  switch (unit) {
+    case 'gb': return 1000000000;
+    default: return 1000000000;
+  }
+};
+
 exports.getInvoiceTotal = function(type, usage) {
   if (!type || undefined === typeof usage) return;
 
-  var rates = sails.config.invoice[type],
+  var invoice = sails.config.invoice[type],
+      unit = this.getUnitInBytes(invoice.unit),
+      rates = invoice.levels,
       tiers = Object.keys(rates),
-      remainingUsage = usage,
+      remainingUsage = usage / unit,
       currentTier = 0,
       total = 0;
 
 // {
-  // 50      : 0.25 / 1000000000,
-  // 150     : 0.15 / 1000000000,
-  // Infinity: 0.10 / 1000000000 <--
+//   50      : 0.25 / 1000000000,
+//   150     : 0.15 / 1000000000,
+//   Infinity: 0.10 / 1000000000
 // }
 
-  while (remainingUsage > 0) { // 4
+  while (remainingUsage > 0) {
     // currentTier = rates[currentTier] ? currentTier : currentTier - 1;
     // rate = rates[currentTier] ? rates[currentTier] : rates[tiers[tiers.length - 1]]; // 0.10 / 1000000000
 
@@ -48,15 +57,17 @@ exports.getInvoiceTotal = function(type, usage) {
     //   rate = rates[tiers[tiers.length - 1]];
     //   currentTier -= 1;
     // }
+    var rate = rates[tiers[currentTier]],
+        tier = tiers[currentTier];
 
-    if (remainingUsage >= tiers[currentTier]) { // 4 >= Infinity
-      total += tiers[currentTier] * rates[currentTier]; // 150 * 0.15
-      remainingUsage -= tier; // 154 - 150 = 4
-      currentTier++; // 2
-    } else {
-      total += remainingUsage * rates[currentTier]; // 4 * 0.10
+    if (remainingUsage <= tier) {
+      total += remainingUsage * rate;
       remainingUsage = 0;
+    } else {
+      total += tier * rate;
+      remainingUsage -= tier;
     }
+
   }
 
   return total;
