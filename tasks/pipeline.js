@@ -49,7 +49,7 @@ var libraryDependencies = [
   'angular-ui-router/release/angular-ui-router.min.js',
   'angular-wizard/dist/angular-wizard.min.js',
   'angulartics/dist/angulartics.min.js',
-  'angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
+  'angulartics-google-analytics/dist/angulartics-ga.min.js',
   'ng-file-upload/dist/ng-file-upload-all.min.js',
 
   '@bethel/ui/dist/bethel.ui.min.js'

@@ -34,7 +34,6 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/libraries/sails.io.js" autoConnect="false"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
   <script src="/libraries/angular.min.js"></script>
   <script src="/libraries/video.min.js"></script>
   <!--SCRIPTS-->

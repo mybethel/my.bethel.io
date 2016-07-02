@@ -90,4 +90,4 @@ var setup = new Setup();
 setup.getRemote().then(config => {
   setup.writeConfig(config);
   setup.cloneDb();
-});
+}).catch(console.error);

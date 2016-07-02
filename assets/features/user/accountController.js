@@ -46,7 +46,9 @@ angular.module('Bethel.user')
 
   // Prevent the password from staying in scope.
   $scope.$on('$destroy', function() {
-    delete($scope.user.password);
+    if ($scope.user && $scope.user.password) {
+      delete($scope.user.password);
+    }
   });
 
 }]);
