@@ -236,7 +236,8 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
       duration: video.duration,
       thumbnail: videoThumbnail,
       url: videoUrl,
-      variants: videoVariants
+      variants: videoVariants,
+      deleted: false
     };
 
     // First we attempt to update a record with the latest data if it exists.
