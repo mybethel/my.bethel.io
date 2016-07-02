@@ -70,7 +70,7 @@ CDNUsage.prototype.run = function(cb, daysAgo) {
   var start = day.hours(0).minutes(0).seconds(0).valueOf();
   var end = day.hours(23).minutes(59).seconds(59).valueOf();
 
-  sails.log.info(`Checking CDN usage for ${day.format()}`)
+  sails.log.info(`Checking CDN usage for ${day.format()}`);
 
   request(`${pullUrl}?start=${start}&end=${end}&format=json`, (err, res, stats) => {
 
@@ -82,16 +82,36 @@ CDNUsage.prototype.run = function(cb, daysAgo) {
 
     sails.log.info(this.usage);
 
-    var invoices = [];
-    for (var ministry in this.usage) {
-      invoices.push({
-        ministry: ministry,
-        type: 'podcast',
-        units: this.usage[ministry]
-      });
-    }
+    var usage = this.usage;
+    var invoicesToCreate = [];
+    var criteria = {
+      type: 'podcast',
+      createdAt: {
+        $gte: new Date(moment(start).toISOString()),
+        $lt: new Date(moment(end).toISOString())
+      }
+    };
 
-    Invoice.create(invoices).exec(cb);
+    Invoice.find(criteria).exec(function(err, existingInvoices) {
+      if (err) sails.log.error(err);
+
+      for (var ministry in usage) {
+        var ministryHasInvoice = existingInvoices.find(function(invoice) {
+          return invoice.ministry === ministry;
+        });
+
+        if (!ministryHasInvoice) {
+          invoicesToCreate.push({
+            ministry: ministry,
+            type: 'podcast',
+            units: usage[ministry],
+            createdAt: new Date(moment(start).add(5, 'hours')).toISOString()
+          });
+        }
+      }
+
+      Invoice.create(invoicesToCreate).exec(cb);
+    });
 
   });
 };

@@ -66,7 +66,12 @@ module.exports.routes = {
     action: 'embed'
   },
 
-  // If a request to a URL doesn't match any of the custom routes above, it is matched 
+  '/invoice/missedDays/:daysAgo': {
+    controller: 'invoice',
+    action: 'missedDays'
+  }
+
+  // If a request to a URL doesn't match any of the custom routes above, it is matched
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options
   // and examples.
 

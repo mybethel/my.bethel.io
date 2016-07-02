@@ -20,11 +20,11 @@ module.exports.policies = {
 
   user: {
     '*': ['sessionAuth', 'platformStaff'],
-  	'login': true,
-  	'new': true,
-  	'create': true,
+    'login': true,
+    'new': true,
+    'create': true,
     'update': 'sessionAuth',
-  	'welcome': 'sessionAuth',
+    'welcome': 'sessionAuth',
     'invite': true
   },
 
@@ -60,6 +60,10 @@ module.exports.policies = {
   },
 
   staff: {
+    '*': ['sessionAuth', 'platformStaff']
+  },
+
+  invoice: {
     '*': ['sessionAuth', 'platformStaff']
   }
 
