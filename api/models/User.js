@@ -6,8 +6,8 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
-var Passwords = require('machinepack-passwords'),
-    Gravatar = require('gravatar');
+const crypto = require('crypto');
+const Passwords = require('machinepack-passwords');
 
 module.exports = {
 
@@ -38,10 +38,6 @@ module.exports = {
       type: 'array'
     },
 
-    avatar: {
-      type: 'string'
-    },
-
     roles: {
       type: 'array'
     },
@@ -58,6 +54,11 @@ module.exports = {
       type: 'date'
     },
 
+    getAvatar(size) {
+      const hash = crypto.createHash('md5').update(this.email).digest('hex');
+      return `//gravatar.com/avatar/${hash}.png?d=mm&s=${size || ''}`;
+    },
+
     hasRole: function(roleName) {
 
       if (!this.roles || this.roles.indexOf(roleName) === -1) {
@@ -69,18 +70,19 @@ module.exports = {
     },
 
     loginSuccess: function() {
-      User.update(this.id, { lastLogin: new Date() }, function (err) {
+      User.update(this.id, { lastLogin: new Date() }, function(err) {
         if (err) sails.log.error(err);
       });
     },
 
     toJSON: function() {
+      this.avatar = this.getAvatar(200);
       var obj = this.toObject();
 
       obj.inviteCode = new Buffer(obj.id, 'hex')
         .toString('base64')
-        .replace('+','-')
-        .replace('/','_');
+        .replace('+', '-')
+        .replace('/', '_');
 
       delete obj.password;
       return obj;
@@ -91,63 +93,46 @@ module.exports = {
   beforeCreate: function(values, next) {
     delete values.id;
 
-    values.avatar = Gravatar.url(values.email, {s: 100, d: 'mm'}, true);
+    if (!values.password) return next();
 
-    if (values.password) {
-      Passwords.encryptPassword({ password: values.password }).exec({
-        error: function(err) {
-          next(err);
-        },
-        success: function(result) {
-          values.password = result;
-          next();
-        }
-      });
-    }
-    else {
-      next();
-    }
+    Passwords.encryptPassword({ password: values.password }).exec({
+      error: function(err) {
+        next(err);
+      },
+      success: function(result) {
+        values.password = result;
+        next();
+      }
+    });
   },
 
   afterCreate: function(values, next) {
+    if (values.password && values.password !== '') return next();
 
-    if (!values.password || values.password === '') {
-      values.password = new Buffer(values.id, 'hex')
-        .toString('base64')
-        .replace('+','-')
-        .replace('/','_');
+    values.password = new Buffer(values.id, 'hex')
+      .toString('base64')
+      .replace('+', '-')
+      .replace('/', '_');
 
-      User.update(values.id, { password: values.password }, function userUpdated(err) {
-        if (err) return next(err);
+    User.update(values.id, { password: values.password }, function userUpdated(err) {
+      if (err) return next(err);
 
-        next();
-      });
-    }
-    else {
       next();
-    }
-
+    });
   },
 
   beforeUpdate: function(values, next) {
+    if (!values.password) return next();
 
-    if (values.email) {
-      values.avatar = Gravatar.url(values.email, { s: 100, d: 'mm' }, true);
-    }
-
-    if (values.password) {
-      Passwords.encryptPassword({ password: values.password }).exec({
-        error: function(err) {
-          next(err);
-        },
-        success: function(result) {
-          values.password = result;
-          next();
-        }
-      });
-    } else {
-      next();
-    }
+    Passwords.encryptPassword({ password: values.password }).exec({
+      error: function(err) {
+        next(err);
+      },
+      success: function(result) {
+        values.password = result;
+        next();
+      }
+    });
   }
 
 };
