@@ -50,5 +50,5 @@ config/local.js
 # testing
 ########################
 coverage
-
+docs
 *.archive

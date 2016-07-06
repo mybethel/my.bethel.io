@@ -72,6 +72,7 @@
   "devDependencies": {
     "angular-mocks": "^1.5.0",
     "codacy-coverage": "^1.1.2",
+    "docker": "^1.0.0-alpha.2",
     "dot-object": "^1.3.1",
     "eslint": "^2.3.0",
     "eslint-config-google": "^0.4.0",
@@ -95,6 +96,7 @@
     "postinstall": "./node_modules/.bin/grunt prod",
     "debug": "node debug app.js",
     "start": "node app.js",
+    "docs": "./node_modules/.bin/docker -o docs -I -n -x node_modules,coverage,docs,tests/e2e/*,tests/sails/*,views,scripts,*.md",
     "test": "npm run unit && npm run protractor",
     "posttest": "cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage --token 411a15d5ec144bcc89cd4f57b147bb8f --verbose",
     "mocha": "mocha test/sails/main.sails.js test/sails/*.js --timeout 15000",
