@@ -1,10 +1,9 @@
 const Sails = require('sails');
 
 module.exports = function() {
-  console.log(`Booting worker from ${process.cwd()}`);
   return new Promise((resolve, reject) => {
     Sails.load({
-      environment: 'development',
+      environment: 'production',
       hooks: {
         blueprints: false,
         csrf: false,
