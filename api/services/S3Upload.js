@@ -2,8 +2,10 @@ var crypto = require('crypto'),
     moment = require('moment'),
     request = require('request'),
     AWS = require('aws-sdk'),
-    Uploader = require('s3-upload-stream').Uploader,
-    Q = require('q');
+    Uploader = require('s3-upload-stream').Uploader;
+
+AWS.config.update(sails.config.aws);
+var s3 = new AWS.S3();
 
 exports.prepare = function(bucketName) {
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
@@ -12,45 +14,44 @@ exports.prepare = function(bucketName) {
   var p = policy(bucketName),
       s = signature(p);
 
-  return({
+  return {
     action: 'https://s3.amazonaws.com/cloud.bethel.io',
     policy: p,
     signature: s,
     key: sails.config.aws.accessKeyId,
     bucket: bucketName
-  });
+  };
 };
 
 exports.removeTemp = function(bucketName, fileName, newId) {
-  AWS.config.update(sails.config.aws);
-  var s3 = new AWS.S3(),
-      extension = fileName.split('.').slice(-1);
+  var extension = fileName.split('.').slice(-1);
 
   var params = {
     Bucket: 'cloud.bethel.io',
-    CopySource: 'cloud.bethel.io/' + bucketName + '/tmp/' + fileName,
-    Key: bucketName + '/' + newId + '.' + extension
+    CopySource: `cloud.bethel.io/${bucketName}/tmp/${fileName}`,
+    Key: `${bucketName}/${newId}.${extension}`
   };
 
-  var deferred = Q.defer();
+  return new Promise((resolve, reject) => {
+    s3.copyObject(params, function(err) {
+      if (err) {
+        sails.log.error(err);
+        return reject(err);
+      }
 
-  s3.copyObject(params, function(err) {
-    if (err) {
-      sails.log.error(err);
-      return deferred.reject(new Error(err));
-    }
-    var params = {
-      Bucket: 'cloud.bethel.io',
-      Key: bucketName + '/tmp/' + fileName
-    };
-    s3.deleteObject(params, function(err) {
-      if (err) sails.log.error(err, err.stack);
+      s3.deleteObject({
+        Bucket: 'cloud.bethel.io',
+        Key: `${bucketName}/tmp/${fileName}`
+      }, function(err) {
+        if (err) {
+          sails.log.error(err, err.stack);
+          reject(err);
+        }
+      });
+
+      resolve(bucketName.replace('images/', '') + '/' + newId + '.' + extension);
     });
-
-    deferred.resolve(bucketName.replace('images/', '') + '/' + newId + '.' + extension);
   });
-
-  return deferred.promise;
 };
 
 exports.transport = function(fileUrl, bucketName, key, callback) {
@@ -60,7 +61,7 @@ exports.transport = function(fileUrl, bucketName, key, callback) {
   if (!sails.config.aws.accessKeyId || !sails.config.aws.secretAccessKey)
     return callback('S3Upload:transport no AWS credentials set');
 
-  new Uploader(
+  var ul = new Uploader(
     {
       accessKeyId: sails.config.aws.accessKeyId,
       secretAccessKey: sails.config.aws.secretAccessKey,
@@ -70,7 +71,7 @@ exports.transport = function(fileUrl, bucketName, key, callback) {
       Bucket: 'cloud.bethel.io',
       Key: bucketName + '/' + key
     },
-    function (err, uploadStream) {
+    function(err, uploadStream) {
       if (err) return callback(err);
 
       uploadStream.on('uploaded', function() {
@@ -81,6 +82,8 @@ exports.transport = function(fileUrl, bucketName, key, callback) {
       request.get(fileUrl).pipe(uploadStream);
     }
   );
+
+  return ul;
 };
 
 signature = function(policy) {
