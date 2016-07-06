@@ -4,7 +4,7 @@
 // end users assigned to ministries, partners who have permission to manage
 // multiple ministries, and staff members of Bethel with administrative rights.
 const crypto = require('crypto');
-const Passwords = require('machinepack-passwords');
+const bcrypt = require('bcrypt');
 
 module.exports = {
 
@@ -129,14 +129,11 @@ module.exports = {
       return;
     }
 
-    // Encrypt the plain text password before it is stored in the database. See
-    // [Machinepack-Passwords](http://node-machine.org/machinepack-passwords).
-    Passwords.encryptPassword({ password: values.password }).exec({
-      error: next,
-      success: password => {
-        values.password = password;
-        next();
-      }
+    // Encrypt the plain text password before it is stored in the database.
+    bcrypt.hash(values.password, 10, (err, password) => {
+      if (err) return next(err);
+      values.password = password;
+      next();
     });
   },
 
