@@ -19,15 +19,15 @@ var config = {
 // `local.js` configuration available. @TODO: it may make sense to move these
 // into a dedicated settings file in `config/env`.
 if (process.env.TRAVIS) {
-  // Mongo and Postgres connections are configured at the default Travis ports.
+  // Mongo and ElasticSearch connections are configured at default Travis ports.
   // See [Travis documentation](https://docs.travis-ci.com/user/database-setup/)
   config.connections = {
-    elasticsearch: {
-      host: 'localhost:9200'
-    },
     mongo: {
       url: 'mongodb://localhost:27017'
     }
+  };
+  config.elasticsearch = {
+    host: 'localhost:9200'
   };
 }
 
