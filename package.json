@@ -99,7 +99,7 @@
     "postunit": "node ./test/report.js"
   },
   "engines": {
-    "node": "5.x",
+    "node": "6.x",
     "npm": "3.x"
   },
   "main": "app.js",
