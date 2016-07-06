@@ -1,6 +1,9 @@
+const path = require('path');
 const Sails = require('sails');
 
 module.exports = function() {
+  process.chdir(path.resolve(__dirname, '../../'));
+
   return new Promise((resolve, reject) => {
     Sails.load({
       environment: 'development',

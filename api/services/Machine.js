@@ -1,5 +1,5 @@
 const Awaken = require('awaken');
-const worker = new Awaken(process.env.HEROKU_API_TOKEN, './workers');
+const worker = new Awaken(process.env.HEROKU_API_TOKEN);
 
 exports.create = function(script, dyno, arg) {
 
