@@ -71,20 +71,18 @@ module.exports = {
       if (err || !user)
         return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
+      var payload = {
+        user,
+        isAdmin: user.hasRole('ROLE_SUPER_ADMIN') || req.session.isAdmin,
+        previousUser: req.session.previousUser
+      };
+
       Ministry.findOne(req.session.ministry).exec((err, ministry) => {
-        if (err || !ministry)
-          return res.forbidden({ error: 'Please login at http://my.bethel.io' });
-
-        var payload = {
-          user: user,
-          ministry: ministry,
-          isAdmin: user.hasRole('ROLE_SUPER_ADMIN') || req.session.isAdmin,
-          previousUser: req.session.previousUser
-        };
-
+        if (err) sails.log.error(err);
+        payload.ministry = ministry;
         if (req.session.previousUser) return res.send(payload);
 
-        User.update(req.session.user, { lastLogin: new Date() }, function (err, user) {
+        User.update(req.session.user, { lastLogin: new Date() }, function(err, user) {
           if (err)
             return res.forbidden({ error: 'Please login at http://my.bethel.io' });
 
