@@ -3,6 +3,7 @@ describe('Podcasting', function() {
   it('permits user to create new podcasts.', function() {
     browser.get('#/podcast');
 
+    browser.wait(() => element(by.css('.getting-started')).isPresent().then(present => present));
     expect(element(by.css('button.md-fab')).isPresent()).toBe(true);
     expect(element(by.css('.getting-started')).isPresent()).toBe(true);
     expect(element(by.css('.getting-started h2')).getText()).toBe('Getting Started with Podcasting');
