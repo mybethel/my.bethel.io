@@ -1,37 +1,123 @@
-md-whiteframe.welcome-modal {
-  button {
-    margin-right: 15px;
+.splash {
+  background: url('https://static.bethel.io/images/splash.jpg') center center no-repeat;
+  background-size: cover;
+  bottom: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  > div {
+    color: white;
+    background: transparent;
+    background: linear-gradient(180deg, rgba(0, 0, 0, .55) 0, transparent 30%, transparent 70%, rgba(0, 0, 0, .55));
+    position: absolute;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    h1 {
+      font-size: 45px;
+      font-weight: 300;
+      text-align: center;
+      @media (min-width: 960px) {
+        margin: 8% 0 0 3rem;
+        text-align: left;
+      }
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 300;
+      margin-top: 8px;
+      text-align: center;
+      @media (min-width: 960px) {
+        margin: 8px 0 0 3rem;
+        text-align: left;
+      }
+    }
+    ul {
+      list-style: none;
+      margin-top: 3rem;
+      padding: 0;
+      text-shadow: none;
+      @media (min-width: 960px) {
+        padding: 0 0 0 3rem;
+      }
+      md-icon {
+        color: #212121;
+        margin-right: 12px;
+        font-size: 2rem;
+        width: 2rem;
+        height: 2rem;
+        @media (min-width: 960px) {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          margin-right: 6px;
+          min-width: 20px;
+          min-height: 20px;
+        }
+      }
+      li {
+        background: rgba(255, 255, 255, 0.3);
+        border: 1px solid #FFF;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        opacity: 0.6;
+        transition: opacity 0.3s ease-in-out;
+        width: 17rem;
+        margin: 0 auto 10px;
+        @media (min-width: 960px) {
+          display: inline-block;
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: uppercase;
+          width: auto;
+          margin-right: 10px;
+        }
+        a {
+          color: #212121;
+          display: inline-block;
+          line-height: 50px;
+          padding: 0 1rem 0 0.8rem;
+          text-decoration: none;
+          transition: color 0.3s ease-in-out;
+          @media (min-width: 960px) {
+            line-height: 30px;
+          }
+        }
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
   }
-  .md-fab {
-    margin-right: 20px;
-  }
-  md-icon {
-    font-size: 30px;
-    height: 30px;
-    width: 30px;
-  }
-  md-list-item:hover {
-    cursor: pointer;
-  }
-  md-divider {
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-}
-
-.stats.teaser {
-  text-align: center;
-  md-icon {
-    opacity: 0.3;
-    width: 72px;
-    height: 72px;
-    font-size: 72px;
-  }
-}
-
-md-whiteframe.platform-updates {
-  .md-list-item-text p.snippet {
-    font-weight: normal;
+  a.small {
+    line-height: 30px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #FFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    opacity: 0.6;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.3s ease-in-out;
+    md-icon {
+      color: #f15151;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      min-height: 20px;
+    }
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
