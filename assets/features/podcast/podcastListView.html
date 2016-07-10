@@ -1,3 +1,10 @@
+<div ng-if="podcasts.length">
+  <action-card ng-click="view(podcast.id)" ng-repeat="podcast in podcasts | orderBy : 'name'" img="podcast.imageUrl">
+    <h2>{{ podcast.name }}</h2>
+    <p>{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }} subscribers, {{ podcast.media.length }} episodes</p>
+  </action-card>
+<div>
+
 <md-button class="md-fab md-fab-bottom-right md-hue-3" aria-label="Add" ng-click="showWizard($event)">
   <md-tooltip md-direction="top">New Podcast</md-tooltip>
   <md-icon>add</md-icon>
@@ -16,17 +23,4 @@
       <md-button href="mailto:help@bethel.io">{{ 'PODCAST.HELP.MIGRATE_BUTTON' | translate }}</md-button>
     </md-card-content>
   </md-card>
-</div>
-
-<div layout="row" layout-align="center" layout-wrap>
-
-  <md-card ng-click="view(podcast.id)" ng-repeat="podcast in podcasts | orderBy : 'name'" flex="25">
-    <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" class="md-card-image" alt="{{ podcast.name }}" />
-    <md-card-content>
-      <h2 class="md-title">{{ podcast.name }}</h2>
-    </md-card-content>
-    <md-divider></md-divider>
-    <md-subheader class="md-no-sticky">{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }} subscribers, {{ podcast.media.length }} episodes</md-subheader>
-  </md-card>
-
 </div>

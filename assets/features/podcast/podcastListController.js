@@ -29,6 +29,9 @@ function($scope, $state, $mdDialog, sailsSocket, $location) {
         return episode.deleted !== true;
       });
     }
+    podcast.imageUrl = 'https://images.bethel.io/images/';
+    podcast.imageUrl += podcast.image ? podcast.image : 'DefaultPodcaster.png';
+    podcast.imageUrl += '?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified=' + podcast.updatedAt;
     sailsSocket.get('/_analytics/podcastSubscribers/' + podcast.id).then(function(response) {
       $scope.statistics[podcast.id] = response.subscribers;
       $scope.historicalStats[podcast.id] = response.historical;
