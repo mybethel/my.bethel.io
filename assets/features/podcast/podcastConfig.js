@@ -1,6 +1,10 @@
-angular.module('Bethel.podcast', ['Bethel.util', 'chart.js', 'mgo-angular-wizard'])
+angular.module('Bethel.podcast', [
+  'Bethel.util',
+  'chart.js',
+  'mgo-angular-wizard'
+]).config(PodcastConfig);
 
-.config(['$stateProvider', '$translatePartialLoaderProvider', function ($stateProvider, $translatePartialLoaderProvider) {
+function PodcastConfig($stateProvider, $translatePartialLoaderProvider) {
 
   $translatePartialLoaderProvider.addPart('podcast');
 
@@ -9,12 +13,15 @@ angular.module('Bethel.podcast', ['Bethel.util', 'chart.js', 'mgo-angular-wizard
       url: '/podcast',
       templateUrl: 'features/podcast/podcastListView.html',
       controller: 'podcastListController',
-      data : { pageTitle: 'Podcasting' }
+      data: { pageTitle: 'Podcasting' }
     })
     .state('podcastView', {
       url: '/podcast/:podcastId',
       templateUrl: 'features/podcast/podcastDetailView.html',
-      controller: 'podcastDetailController'
+      controller: 'podcastDetailController',
+      data: { pageTitle: 'Podcasting' }
     });
 
-}]);
+}
+
+PodcastConfig.$inject = ['$stateProvider', '$translatePartialLoaderProvider'];
