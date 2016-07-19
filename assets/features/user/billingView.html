@@ -15,20 +15,24 @@
     <md-list>
       <invoice-line-item style="min-height:34px"
         ng-repeat="(feature, usage) in currentBill.summary"
-        amount="usage.amount"
+        amount="usage.total"
         type="feature">
       </invoice-line-item>
     </md-list>
   </md-card>
   <md-card flex="100" style="font-size:90%">
-    <md-list>
-      <invoice-line-item
-        ng-repeat="dailyUsage in currentBill.daily"
-        amount="dailyUsage.amount"
-        date="dailyUsage.createdAt"
-        type="dailyUsage.type"
-        units="dailyUsage.units">
-      </invoice-line-item>
+    <md-list flex>
+      <div ng-repeat="invoiceType in currentBill.summary">
+
+        <md-subheader class="md-no-sticky">{{invoiceType.name}}</md-subheader>
+
+        <invoice-line-item
+          ng-repeat="day in invoiceType.daily"
+          units="day.units"
+          date="day.createdAt">
+        </invoice-line-item>
+      </div>
+
     </md-list>
   </md-card>
 

@@ -1,5 +1,6 @@
 module.exports.invoice = {
   podcast: {
+    friendlyName: 'Podcast Streaming',
     unit: 'gb',
     levels: {
       50: 0.25,

@@ -24,12 +24,6 @@ module.exports = {
       ministry: req.param('id') ? req.param('id') : req.session.ministry
     };
 
-    // if (req.param('id') !== 'all') {
-    // }
-
-    // criteria.groupBy = ['type'];
-    // criteria.sum = ['units'];
-
     Invoice.find(criteria).exec(function(err, invoices) {
       if (err) return res.serverError(err);
 
@@ -39,6 +33,7 @@ module.exports = {
       for (var invoiceType in groupedInvoices) {
 
         groupedInvoices[invoiceType] = {
+          name: sails.config.invoice[invoiceType].friendlyName,
           daily: groupedInvoices[invoiceType],
           total: 0
         };
@@ -52,7 +47,7 @@ module.exports = {
       }
 
       res.send({
-        ministryTotal: ministryTotal,
+        total: ministryTotal,
         summary: groupedInvoices
       });
 
@@ -82,7 +77,7 @@ module.exports = {
       //   summary[invoices[i].type].units += invoices[i].units;
       //   summary[invoices[i].type].amount += invoices[i].amount;
       //   total += invoices[i].amount;
-      // }
+    // }
 
       // res.send({
       //   amount: total,
