@@ -3,26 +3,15 @@ angular.module('Bethel.staff', ['ui.router'])
 
   $stateProvider
     .state('staff', {
-      url: '/staff',
+      url: '/staff/:page',
       templateUrl: 'features/staff/staffView.html',
-      controller: 'staffController'
-    })
-    .state('staff.users', {
-      url: '/user',
-      templateUrl: 'features/staff/staffUserListView.html',
-      controller: 'staffUserListController',
-      data : { pageTitle: 'Staff' }
+      controller: 'staffController',
+      data: { pageTitle: 'Staff' }
     })
     .state('staff.detailedUser', {
       url: '/user/:userId',
       templateUrl: 'features/staff/staffUserDetailView.html',
       controller: 'staffUserDetailController'
-    })
-    .state('staff.ministry', {
-      url: '/ministry',
-      templateUrl: 'features/staff/staffMinistryListView.html',
-      controller: 'staffMinistryListController',
-      data : { pageTitle: 'Staff' }
     })
     .state('staff.detailedMinistry', {
       url: '/ministry/:ministryId',
@@ -31,8 +20,8 @@ angular.module('Bethel.staff', ['ui.router'])
     })
     .state('staff.invoice', {
       url: '/invoice',
-      templateUrl: 'features/staff/staffInvoiceView.html',
-      data : { pageTitle: 'Staff' }
+      templateUrl: 'features/staff/invoiceView.html',
+      data: { pageTitle: 'Staff' }
     });
 
 }]);

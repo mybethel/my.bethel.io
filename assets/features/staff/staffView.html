@@ -1,4 +1,10 @@
-<div layout="row" layout-wrap>
+<md-tabs flex="100" md-border-bottom class="tall" md-selected="currentTab" md-stretch-tabs="always">
+  <md-tab ng-repeat="(id, tab) in staffTabs" label="{{ tab.label }}" md-on-select="updateLocation(id)">
+    <md-content ng-include="'/features/staff/' + id + 'View.html'"></md-content>
+  </md-tab>
+</md-tabs>
+
+<!-- <div layout="row" layout-wrap>
   <div flex="50" flex-sm="100">
     <md-tabs md-border-bottom md-selected="tabIndex" md-center-tabs="false" class="staffTabs tall">
       <md-tab label="people" ui-sref=".users"></md-tab>
@@ -15,4 +21,4 @@
   </div>
 </div>
 
-<div class="panel-body" layout="column" ui-view flex></div>
+<div class="panel-body" layout="column" ui-view flex></div> -->

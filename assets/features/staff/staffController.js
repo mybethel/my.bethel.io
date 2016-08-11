@@ -1,24 +1,45 @@
 angular.module('Bethel.staff')
+.controller('staffController', StaffController);
 
-.controller('staffController', ['$rootScope', '$scope', '$location',
-  function ($rootScope, $scope, $location) {
-
+function StaffController($location, $scope, $state, $stateParams) {
   var $ctrl = this;
 
-  $rootScope.$watch('isAdmin', function() {
-    if (typeof $rootScope.isAdmin !== 'undefined' && $rootScope.isAdmin === false) {
+  $scope.staffTabs = {
+    users: {
+      index: 0,
+      label: 'people'
+    },
+    ministry: {
+      index: 1,
+      label: 'ministry'
+    },
+    invoice: {
+      index: 2,
+      label: 'all billables'
+    }
+  };
+
+  if ($stateParams && $stateParams.page)
+    $scope.currentTab = $scope.staffTabs[$stateParams.page].index;
+
+  // Ensure that the location in the address bar is always correct.
+  $scope.updateLocation = function(tab) {
+    $state.go('staff', { page: tab }, { notify: false });
+  };
+
+  $scope.$root.$watch('isAdmin', function() {
+    if (angular.isDefined($scope.$root.isAdmin) && $scope.$root.isAdmin === false) {
       $location.path('/').replace();
     }
   });
 
-  $ctrl.init = function () {
+  $ctrl.init = function() {
     if ($location.path() === '/staff') {
       $location.path('/staff/user').replace();
     }
   };
 
   $ctrl.init();
+}
 
-}]);
-
-
+StaffController.$inject = ['$location', '$scope', '$state', '$stateParams'];
