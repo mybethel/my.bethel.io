@@ -24,10 +24,6 @@ module.exports = {
     res.view();
   },
 
-  new: function (req, res) {
-    res.view();
-  },
-
   invite: function (req, res) {
 
     var inviteCode = req.param('inviteCode'),
@@ -47,6 +43,10 @@ module.exports = {
 
     });
 
+  },
+
+  signup: function (req, res) {
+    res.view();
   },
 
   sendInvite: function(req, res) {

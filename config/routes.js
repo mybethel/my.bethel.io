@@ -36,9 +36,9 @@ module.exports.routes = {
     action: 'login'
   },
 
-  '/register': {
+  '/signup': {
     controller: 'user',
-    action: 'new'
+    action: 'signup'
   },
 
   '/logout': {
@@ -64,9 +64,9 @@ module.exports.routes = {
   '/podcast/embed/:type/:id': {
     controller: 'podcast',
     action: 'embed'
-  },
+  }
 
-  // If a request to a URL doesn't match any of the custom routes above, it is matched 
+  // If a request to a URL doesn't match any of the custom routes above, it is matched
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options
   // and examples.
 

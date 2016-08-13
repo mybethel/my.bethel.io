@@ -24,7 +24,8 @@ module.exports.policies = {
     'create': true,
     'update': 'sessionAuth',
     'welcome': 'sessionAuth',
-    'invite': true
+    'invite': true,
+    'signup': true
   },
 
   location: {
