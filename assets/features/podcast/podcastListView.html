@@ -1,4 +1,4 @@
-<div ng-if="podcasts.length">
+<div layout="row" layout-align="center center" layout-wrap ng-if="podcasts.length" style="flex: 1 0 auto !important">
   <action-card ng-click="view(podcast.id)" ng-repeat="podcast in podcasts | orderBy : 'name'" img="podcast.imageUrl">
     <h2>{{ podcast.name }}</h2>
     <p>{{ statistics[podcast.id] ? statistics[podcast.id] : 0 }} subscribers, {{ podcast.media.length }} episodes</p>

@@ -11,11 +11,7 @@ function StaffController($location, $scope, $state, $stateParams) {
     },
     ministry: {
       index: 1,
-      label: 'ministry'
-    },
-    invoice: {
-      index: 2,
-      label: 'all billables'
+      label: 'ministries'
     }
   };
 

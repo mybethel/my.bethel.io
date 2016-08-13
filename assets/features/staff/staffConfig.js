@@ -1,5 +1,5 @@
 angular.module('Bethel.staff', ['ui.router'])
-.config(['$stateProvider', function ($stateProvider) {
+.config(['$stateProvider', function($stateProvider) {
 
   $stateProvider
     .state('staff', {
@@ -8,13 +8,13 @@ angular.module('Bethel.staff', ['ui.router'])
       controller: 'staffController',
       data: { pageTitle: 'Staff' }
     })
-    .state('staff.detailedUser', {
-      url: '/user/:userId',
+    .state('staffViewUser', {
+      url: '/staff/user/:userId',
       templateUrl: 'features/staff/staffUserDetailView.html',
       controller: 'staffUserDetailController'
     })
-    .state('staff.detailedMinistry', {
-      url: '/ministry/:ministryId',
+    .state('staffViewMinistry', {
+      url: '/staff/ministry/:ministryId',
       templateUrl: 'features/staff/staffMinistryDetailView.html',
       controller: 'staffMinistryDetailController'
     })

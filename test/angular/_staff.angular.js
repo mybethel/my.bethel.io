@@ -61,7 +61,7 @@ window.test.staff = function() {
       });
 
       it('calls state transition when user row is clicked', function() {
-        var requestUrl = 'staff.detailedUser',
+        var requestUrl = 'staffViewUser',
             userRequest = { userId: 1 };
 
         $state = injector.get('$state');
@@ -109,7 +109,7 @@ window.test.staff = function() {
       });
 
       it('calls state transition when ministry row is clicked', function() {
-        var requestUrl = 'staff.detailedMinistry',
+        var requestUrl = 'staffViewMinistry',
             userRequest = { ministryId: 1 };
 
         $state = injector.get('$state');

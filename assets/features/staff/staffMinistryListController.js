@@ -9,7 +9,7 @@ angular.module('Bethel.staff')
   $scope.ministries = sailsSocket.populateMany('/ministry');
 
   $scope.detailedMinistryTransition = function(ministryId) {
-    $state.transitionTo('staff.detailedMinistry', {'ministryId': ministryId});
+    $state.go('staffViewMinistry', {'ministryId': ministryId});
   };
 
   $scope.showCreateMinistry = function(event) {

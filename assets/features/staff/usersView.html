@@ -1,10 +1,8 @@
-
-<button class="md-fab md-fab-bottom-right md-hue-3 md-button md-default-theme" style="overflow: hidden;" aria-label="Create User"  ng-click="showCreateUser($event)">
-  <md-tooltip md-direction="top">Create User</md-tooltip>
-  <md-icon>add</md-icon>
-</button>
-
-<md-content>
+<md-content ng-controller="staffUserListController">
+  <button class="md-fab md-fab-bottom-right md-hue-3 md-button md-default-theme" style="position: fixed !important;" aria-label="Create User"  ng-click="showCreateUser($event)">
+    <md-tooltip md-direction="top">Create User</md-tooltip>
+    <md-icon>add</md-icon>
+  </button>
 
   <md-list>
     <md-list-item>
