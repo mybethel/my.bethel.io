@@ -1,14 +1,13 @@
 angular.module('Bethel.user')
-.controller('accountController', ['$scope', 'notifyService', 'sailsSocket',
-  function ($scope, notifyService, sailsSocket) {
+  .controller('accountController', UserAccountController)
 
-  $scope.$watch('user', function (newValue, oldValue) {
+function UserAccountController($scope, notifyService, sailsSocket) {
+
+  $scope.user = $scope.$root.user;
+  $scope.ministry = $scope.$root.ministry;
+
+  $scope.$watch('user', function(newValue, oldValue) {
     if (newValue === oldValue) return;
-
-    // if (newValue.email === oldValue.email) {
-    //   console.log('invalid? ', $scope.editUser.email.$invalid);
-    //   $scope.editUser.email.$setValidity('unique', true);
-    // }
 
     var updatedUser = {
       name: newValue.name,
@@ -26,7 +25,7 @@ angular.module('Bethel.user')
     }
   }, true);
 
-  $scope.$watch('ministry', function (newValue, oldValue) {
+  $scope.$watch('ministry', function(newValue, oldValue) {
     if (newValue === oldValue) return;
 
     var updatedMinistry = {
@@ -38,7 +37,7 @@ angular.module('Bethel.user')
     };
 
     if ($scope.editMinistry.$valid) {
-      sailsSocket.put('/ministry/' + newValue.id, updatedMinistry).then(function () {
+      sailsSocket.put('/ministry/' + newValue.id, updatedMinistry).then(function() {
         notifyService.showCommon('saved');
       });
     }
@@ -47,8 +46,10 @@ angular.module('Bethel.user')
   // Prevent the password from staying in scope.
   $scope.$on('$destroy', function() {
     if ($scope.user && $scope.user.password) {
-      delete($scope.user.password);
+      delete $scope.user.password;
     }
   });
 
-}]);
+}
+
+UserAccountController.$inject = ['$scope', 'notifyService', 'sailsSocket'];

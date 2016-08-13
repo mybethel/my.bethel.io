@@ -1,25 +1,26 @@
 angular.module('Bethel.user')
-.controller('settingsController', ['$scope', '$state', '$stateParams',
-  function ($scope, $state, $stateParams) {
+.controller('settingsController', SettingsController);
+
+function SettingsController($scope, $state, $stateParams) {
 
   $scope.userTabs = {
-    'account': {
+    account: {
       index: 0,
       label: 'my account'
     },
-    'locations': {
+    locations: {
       index: 1,
       label: 'locations'
     },
-    'team': {
+    team: {
       index: 2,
       label: 'my team'
     },
-    'integrations': {
+    integrations: {
       index: 3,
       label: 'integrations'
     },
-    'billing': {
+    billing: {
       index: 4,
       label: 'subscription and billing'
     }
@@ -33,4 +34,6 @@ angular.module('Bethel.user')
     $state.go('settings', { page: tab }, { notify: false });
   };
 
-}]);
+}
+
+SettingsController.$inject = ['$scope', '$state', '$stateParams'];
