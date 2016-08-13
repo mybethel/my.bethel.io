@@ -8,7 +8,31 @@
     <md-card layout-fill id="login-signup">
 
       <md-card-content>
-        signup form here
+
+        <form name="userSignupForm" ng-submit="signup(newSignup)" novalidate>
+
+          <md-input-container>
+            <label>Email Address</label>
+            <input
+              type="email"
+              name="email"
+              ng-model="newSignup.email"
+              ng-model-options="{ updateOn: 'default blur', debounce: {'default': 100, 'blur': 0 } }"
+              pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+              required>
+            <div ng-messages="!userSignupForm.email.$untouched && userSignupForm.email.$error">
+              <div ng-message="required">Email is required.</div>
+              <div ng-message="pattern">Invalid email address.</div>
+            </div>
+          </md-input-container>
+
+          <div layout="row">
+            <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" flex ng-disabled="userSignupForm.$invalid">
+              Sign Up
+            </md-button>
+          </div>
+        </form>
+
 
       </md-card-content>
 

@@ -9,7 +9,7 @@
 
       <md-card-content>
 
-        <form name="userInviteForm" ng-submit="signup(invitedUser)" novalidate>
+        <form name="userInviteForm" ng-submit="submitInvite(invitedUser)" novalidate>
 
           <md-input-container>
             <label>Name</label>
