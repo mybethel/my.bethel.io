@@ -19,8 +19,7 @@ module.exports = {
 
     // `name` is the full first and last name of the individual user.
     name: {
-      type: 'string',
-      required: true
+      type: 'string'
     },
 
     // `email` is used for the user's contact e-mail and their login username.
@@ -65,7 +64,8 @@ module.exports = {
 
     // `isLocked` enables accounts to be de-activated to prevent logging in.
     isLocked: {
-      type: 'boolean'
+      type: 'boolean',
+      defaultsTo: false
     },
 
     // `invited` represents the date the user was sent an e-mail inviting them

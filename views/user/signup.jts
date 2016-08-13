@@ -23,6 +23,8 @@
             <div ng-messages="!userSignupForm.email.$untouched && userSignupForm.email.$error">
               <div ng-message="required">Email is required.</div>
               <div ng-message="pattern">Invalid email address.</div>
+              <div ng-message="unique">Email address already in use.</div>
+              <div ng-message="generic">Unable to create new account, please contact hello@bethel.io</div>
             </div>
           </md-input-container>
 

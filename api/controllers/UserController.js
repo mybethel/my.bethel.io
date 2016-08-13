@@ -20,32 +20,32 @@ var JTS = new jtsEngine();
 
 module.exports = {
 
-  login: function (req, res) {
+  login: function(req, res) {
     res.view();
   },
 
-  invite: function (req, res) {
+  invite: function(req, res) {
 
     var inviteCode = req.param('inviteCode'),
-        userId = new Buffer(inviteCode.replace('-','+').replace('_','/'), 'base64').toString('hex');
+        userId = new Buffer(inviteCode.replace('-', '+').replace('_', '/'), 'base64').toString('hex');
 
     if (req.session.user) {
       return res.redirect('/');
     }
 
-    User.findOne(userId).exec(function (err, user) {
+    User.findOne(userId).exec(function(err, user) {
       if (err) return res.serverError(err);
 
       if (!user) return res.forbidden('Invalid invite code');
 
       user.inviteCode = req.param('inviteCode');
-      return res.view({invitedUser: JSON.stringify(user)});
+      return res.view({ invitedUser: JSON.stringify(user) });
 
     });
 
   },
 
-  signup: function (req, res) {
+  signup: function(req, res) {
     res.view();
   },
 
@@ -59,7 +59,7 @@ module.exports = {
       var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+', '-').replace('/', '_'),
           templateVars = {
             userName: user.name,
-            inviteUrl: req.headers['origin'] + '/invite/' + inviteCode
+            inviteUrl: req.headers.origin + '/invite/' + inviteCode
           };
 
       var file = JTS.read('views/email/invite.jts');
@@ -88,12 +88,12 @@ module.exports = {
     });
   },
 
-  lockUnlock: function (req, res) {
+  lockUnlock: function(req, res) {
 
-    User.findOne(req.param('id')).exec(function (err, user) {
+    User.findOne(req.param('id')).exec(function(err, user) {
       if (err) return next(err);
 
-      User.update(user.id, { isLocked: !user.isLocked }, function (err, updatedUser) {
+      User.update(user.id, { isLocked: !user.isLocked }, function(err, updatedUser) {
         if (err) return res.serverError(err);
 
         res.send(updatedUser[0]);

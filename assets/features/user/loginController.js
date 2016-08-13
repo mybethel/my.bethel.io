@@ -36,8 +36,22 @@ angular.module('Bethel.user')
   };
 
   $scope.signup = function(newSignup) {
-    console.log('newSignup ', newSignup);
+    sailsSocket.post('/user', newSignup).then(function(response) {
+      console.log('post res ', response);
+      // Hit send email api route
+    }).catch(function(err) {
+      if (err.invalidAttributes.email[0].rule === 'unique') {
+        $scope.userSignupForm.email.$setValidity('unique', false);
+      } else {
+        $scope.userSignupForm.email.$setValidity('generic', false);
+      }
+    });
   };
+
+  $scope.$watch('newSignup.email', function() {
+    $scope.userSignupForm.email.$setValidity('unique', true);
+    $scope.userSignupForm.email.$setValidity('generic', true);
+  });
 
   $scope.$watch('error', function(error) {
     if (!error) return;
