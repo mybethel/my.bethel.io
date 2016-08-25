@@ -27,8 +27,7 @@ var testDependencies = [
 var libraryDependencies = [
   // Global libraries
   'outdated-browser/outdatedbrowser/outdatedbrowser.min.js',
-  'chart.js/src/Chart.Core.js',
-  'chart.js/src/Chart.Line.js',
+  'chart.js/dist/Chart.min.js',
   'lodash/lodash.js',
   'moment/min/moment.min.js',
 

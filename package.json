@@ -8,7 +8,7 @@
     "angular": "^1.5.0",
     "angular-animate": "^1.5.0",
     "angular-aria": "^1.5.0",
-    "angular-chart.js": "^0.8.8",
+    "angular-chart.js": "^1.0.2",
     "angular-dom": "^0.1.1",
     "angular-google-maps": "^2.2.1",
     "angular-http-auth": "^1.2.1",

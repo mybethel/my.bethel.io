@@ -1,6 +1,6 @@
 angular.module('Bethel.podcast')
 .run(function() {
-  Chart.defaults.global.colours[0] = '#455a64';
+  Chart.defaults.global.colors[0] = '#455a64';
 })
 .controller('podcastDetailController', ['$scope', '$state', '$stateParams', '$location', 'upload', '$mdDialog', 'sailsSocket', 'notifyService', 'confirmDelete',
 function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket, notifyService, confirmDelete) {
