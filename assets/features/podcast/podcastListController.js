@@ -30,8 +30,8 @@ function($scope, $state, $mdDialog, sailsSocket, $location) {
       });
     }
     sailsSocket.get('/_analytics/podcastSubscribers/' + podcast.id).then(function(response) {
-      $scope.statistics[response.podcast] = response.subscribers;
-      $scope.historicalStats[response.podcast] = response.historical;
+      $scope.statistics[podcast.id] = response.subscribers;
+      $scope.historicalStats[podcast.id] = response.historical;
     });
   };
 
