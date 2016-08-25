@@ -12,7 +12,7 @@ module.exports = {
 
     res.send({
       podcast: this.uuid,
-      subscribers: subscribers,
+      subscribers: Math.round(subscribers / records.aggregations.hits_over_time.buckets.length),
       historical: results
     });
   },
