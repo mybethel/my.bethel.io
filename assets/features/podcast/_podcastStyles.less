@@ -1,3 +1,38 @@
+.podcast.detail {
+  .header {
+    [layout=column] {
+      padding: 1rem;
+      padding-left: 0;
+      position: relative;
+      &:first-child {
+        padding-left: 1rem;
+      }
+    }
+    img {
+      border-radius: 2px;
+    }
+    md-menu {
+      position: absolute;
+      right: 0.5rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 0;
+      small {
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+    }
+    p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+      opacity: 0.6;
+    }
+  }
+}
+
 .podcast-toolbar {
   position: relative;
 
@@ -82,6 +117,8 @@ md-list.episode-list {
   }
   md-card {
     background: rgb(69, 90, 100);
+    margin: 0 0 0.5rem;
+    min-width: 10rem;
     &.good {
       background: #496445;
     }
@@ -96,7 +133,11 @@ md-list.episode-list {
       font-size: 32px;
     }
     small {
-      font-size: 16px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
   }
   canvas {
