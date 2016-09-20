@@ -71,7 +71,7 @@
         <div layout="column" layout-align="center center" ng-show="newPodcast.source == 2">
           <md-select placeholder="Select a Vimeo account" ng-model="newPodcast.service">
             <md-option ng-repeat="service in services" value="{{ service.id }}">{{ service.name }}</md-option>
-            <md-option value="SERVICES_NEW">{{ 'PODCAST.VIMEO_CONNECT' | translate }}</md-option>
+            <md-option value="SERVICES_NEW">Connect a new Vimeo account...</md-option>
           </md-select>
           <md-input-container ng-show="newPodcast.service">
             <label>What tags should be used to sync videos from Vimeo?</label>

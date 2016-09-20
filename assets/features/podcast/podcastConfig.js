@@ -4,9 +4,7 @@ angular.module('Bethel.podcast', [
   'mgo-angular-wizard'
 ]).config(PodcastConfig);
 
-function PodcastConfig($stateProvider, $translatePartialLoaderProvider) {
-
-  $translatePartialLoaderProvider.addPart('podcast');
+function PodcastConfig($stateProvider) {
 
   $stateProvider
     .state('podcast', {
@@ -24,4 +22,4 @@ function PodcastConfig($stateProvider, $translatePartialLoaderProvider) {
 
 }
 
-PodcastConfig.$inject = ['$stateProvider', '$translatePartialLoaderProvider'];
+PodcastConfig.$inject = ['$stateProvider'];

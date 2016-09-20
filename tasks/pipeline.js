@@ -43,8 +43,6 @@ var libraryDependencies = [
   'angular-moment/angular-moment.min.js',
   'angular-sails-socket/dist/angular-sails-socket.min.js',
   'angular-simple-logger/dist/angular-simple-logger.min.js',
-  'angular-translate/dist/angular-translate.min.js',
-  'angular-translate/dist/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
   'angular-ui-router/release/angular-ui-router.min.js',
   'angular-wizard/dist/angular-wizard.min.js',
   'angulartics/dist/angulartics.min.js',

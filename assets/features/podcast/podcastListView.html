@@ -13,14 +13,14 @@
 <div ng-if="podcasts.length < 1 && !sailsSocket.outstanding" flex="50">
   <md-card class="getting-started">
     <md-card-content>
-      <h2 class="md-title">{{ 'PODCAST.HELP.TITLE' | translate }}</h2>
-      <p>{{ 'PODCAST.HELP.CREATE' | translate }}</p>
-      <md-button ng-click="showWizard($event)">{{ 'PODCAST.HELP.CREATE_BUTTON' | translate }}</md-button>
+      <h2 class="md-title">Getting Started with Podcasting</h2>
+      <p>Creating a podcast is easy! Answer a few questions and you'll be ready to upload your first episode in a matter of minutes.</p>
+      <md-button ng-click="showWizard($event)">New Podcast</md-button>
     </md-card-content>
     <md-divider></md-divider>
     <md-card-content>
-      <p>{{ 'PODCAST.HELP.MIGRATE' | translate }}</p>
-      <md-button href="mailto:help@bethel.io">{{ 'PODCAST.HELP.MIGRATE_BUTTON' | translate }}</md-button>
+      <p>Already have an existing podcast you'd like to move to Bethel? We'll take care of everything including forwarding your old podcast URL. Your subscribers won't miss a thing!</p>
+      <md-button href="mailto:help@bethel.io">Contact Us</md-button>
     </md-card-content>
   </md-card>
 </div>
