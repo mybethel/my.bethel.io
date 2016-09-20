@@ -17,9 +17,21 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
   $scope.subscriberChart = {
     data: [[]],
     labels: [],
+    datasets: [{
+      borderWidth: 0
+    }],
     options: {
       scaleShowVerticalLines: false,
-      pointHitDetectionRadius: 5
+      pointHitDetectionRadius: 5,
+      maintainAspectRatio: false,
+      scales: {
+        xAxes: [{
+          barPercentage: 1,
+          categoryPercentage: 1,
+          display: false
+        }],
+        yAxes: [{ display: false }]
+      }
     }
   };
 
@@ -61,6 +73,7 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
 
   $scope.$watch('podcastStats', function(newValue) {
     if (!newValue || !newValue.historical) return;
+    console.log(newValue);
     $scope.subscriberChart.data[0] = [];
     $scope.subscriberChart.labels = [];
     angular.forEach(newValue.historical, function(subscribers, week) {

@@ -40,6 +40,10 @@
       <p><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize>
         <span ng-if="uploading"> (1 uploading)</span>
         <span ng-if="podcast.source === 2"> from Vimeo account <strong>{{ podcast.service.name }}</strong>. <em>Last sync: <span am-time-ago="podcast.lastSync" ng-if="podcast.lastSync"></span><span ng-if="!podcast.lastSync">in progress</span></em></span></p>
+
+      <div class="subscriber-chart">
+        <canvas id="bar" class="chart chart-bar" chart-data="subscriberChart.data" chart-labels="subscriberChart.labels" chart-options="subscriberChart.options"></canvas>
+      </div>
     </div>
     <div class="statistics" layout="column">
       <md-card>
