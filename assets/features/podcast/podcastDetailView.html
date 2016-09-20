@@ -1,7 +1,9 @@
 <div class="podcast detail">
   <div class="header" flex="100" layout="row">
     <div layout="column">
-      <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="150" height="150" />
+      <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" ngf-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg" width="150" height="150" />
+      <md-button ng-show="!thumbnailUploading">Upload Image</md-button>
+      <md-progress-circular md-diameter="86" md-mode="indeterminate" ng-show="thumbnailUploading"></md-progress-circular>
     </div>
     <div layout="column" flex>
       <md-menu md-position-mode="target-right target">
@@ -40,10 +42,6 @@
       <p><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize>
         <span ng-if="uploading"> (1 uploading)</span>
         <span ng-if="podcast.source === 2"> from Vimeo account <strong>{{ podcast.service.name }}</strong>. <em>Last sync: <span am-time-ago="podcast.lastSync" ng-if="podcast.lastSync"></span><span ng-if="!podcast.lastSync">in progress</span></em></span></p>
-
-      <div class="subscriber-chart">
-        <canvas id="bar" class="chart chart-bar" chart-data="subscriberChart.data" chart-labels="subscriberChart.labels" chart-options="subscriberChart.options"></canvas>
-      </div>
     </div>
     <div class="statistics" layout="column">
       <md-card>
@@ -61,12 +59,12 @@
     </div>
   </div>
 
-  <div flex="100" class="episodes">
+  <md-button class="md-fab md-fab-bottom-right md-hue-3" aria-label="Upload Episode" ngf-select="onFileSelect($files)" ng-if="podcast.source === 1 && !uploading" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*">
+    <md-tooltip md-direction="top">Upload Episode</md-tooltip>
+    <md-icon>add</md-icon>
+  </md-button>
 
-    <button class="upload-button md-fab md-hue-3 md-button md-default-theme" aria-label="Upload Episode" ngf-select="onFileSelect($files)" ng-if="podcast.source === 1 && !uploading" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*" style="overflow: hidden;">
-      <md-tooltip md-direction="left">Upload Episode</md-tooltip>
-      <md-icon>add</md-icon>
-    </button>
+  <div flex="100" class="episodes">
 
     <md-whiteframe class="md-whiteframe-z1" layout>
       <md-list class="episode-list" flex="100">
@@ -93,60 +91,11 @@
 
   </div>
 
-  <!-- <div layout="row">
-  <md-content class="main-content" flex layout="row" layout-wrap>
-
-    <div class="overlay" flex="100" layout-fill layout-align="center center" ng-if="isDemo">
-      <md-whiteframe class="md-whiteframe-z2 md-padding" layout="column" flex-offset="20" flex="60" layout-align="center center">
-        <h3 class="light">Welcome to your new podcast!</h3>
-        <span>Real stats will appear when we have a few weeks of data.</span>
-        <span ng-if="podcast.source === 1 && podcast.media.length < 1">Go ahead, upload some episodes and when you're ready...</span>
-        <span ng-if="podcast.source === 2 && !podcast.lastSync">Your episodes will sync with Vimeo shortly...</span>
-        <md-input-container>
-          <label>Podcast feed URL</label>
-          <input onclick="this.select();" ng-model="feed" readonly type="text" />
-        </md-input-container>
-        <md-button class="md-primary" href="https://buy.itunes.apple.com/WebObjects/MZFinance.woa/wa/publishPodcast" ng-if="subscriberCount < 1 || isDemo" target="_blank">Submit to iTunes</md-button>
-      </md-whiteframe>
-    </div>
-
-    <div class="statistics" flex="100" layout="row" layout-padding ng-class="{ 'demo': isDemo }">
-      <div flex="30">
-        <h3>Last Week:</h3>
-        <md-card>
-          <md-card-content>
-            <strong>{{ subscriberCount | number }}</strong><br />
-            <small>audience</small>
-          </md-card-content>
-        </md-card>
-        <md-card ng-class="subscriberDifference > 0 ? 'good' : 'bad'" ng-if="subscriberPercentChange !== 0">
-          <md-card-content>
-            <strong>{{ subscriberPercentChange | number : 1 }}%</strong><br />
-            <small>{{ subscriberDifference > 0 ? 'increase' : 'decrease' }}</small>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div flex="70">
-        <p>Weekly Podcast Audience Since {{ subscriberChart.labels[0] }}</p>
-        <canvas id="line" class="chart chart-line" chart-data="subscriberChart.data" chart-labels="subscriberChart.labels" chart-options="subscriberChart.options"></canvas>
-      </div>
-    </div>
-
-  </md-content>
+  <!--
 
   <md-sidenav class="md-sidenav-right md-whiteframe-z1" layout="column" md-is-locked-open="$mdMedia('gt-sm')" flex="30">
 
     <md-content>
-
-      <img ng-src="https://images.bethel.io/images/{{ podcast.image ? podcast.image : 'DefaultPodcaster.png' }}?crop=faces&amp;fit=crop&amp;w=300&amp;h=300&amp;modified={{ podcast.updatedAt }}" alt="{{ podcast.name }}" width="100%" />
-
-      <div layout="row" layout-align="center center" ng-hide="thumbnailUploading">
-        <button class="md-primary md-button md-default-theme" ngf-select="uploadThumbnail($files)" accept="image/png,image/jpg,image/jpeg">Upload New Image</button>
-      </div>
-
-      <div layout="row" layout-align="center center" ng-show="thumbnailUploading">
-        <md-progress-circular md-diameter="24" md-mode="indeterminate"></md-progress-circular>
-      </div>
 
       <div layout="column" layout-margin>
 

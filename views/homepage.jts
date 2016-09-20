@@ -1,1 +1,1 @@
-<login class="main-content inverse" id="login" layout="row" layout-align="center center" layout-fill ng-cloak ng-if="!user" confirmed="authCheck"></login>
+<login class="main-content inverse" layout="row" layout-fill ng-cloak ng-if="!user" confirmed="authCheck"></login>

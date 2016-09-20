@@ -35,6 +35,34 @@
       width: 100%;
     }
   }
+  md-progress-circular {
+    left: 3rem;
+    position: absolute;
+    top: 3rem;
+    svg path {
+      stroke: #FFF;
+    }
+  }
+  img[ngf-select] {
+    cursor: pointer;
+    height: 150px;
+    position: relative;
+    width: 150px;
+    + button {
+      background: rgba(0,0,0,0.6);
+      color: white;
+      display: block;
+      height: 150px;
+      margin: 0;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      width: 150px;
+    }
+    &:hover + button {
+      opacity: 1;
+    }
+  }
 }
 
 .podcast-toolbar {
