@@ -12,12 +12,7 @@ angular.module('Bethel', [
   'Bethel.streaming'
 ])
 
-.config(['$urlRouterProvider', '$translateProvider', '$mdThemingProvider', 'sailsSocketProvider', function ($urlRouterProvider, $translateProvider, $mdThemingProvider, sailsSocketProvider) {
-
-  $translateProvider.preferredLanguage('en');
-  $translateProvider.useLoader('$translatePartialLoader', {
-    urlTemplate: '/i18n/{part}/{lang}.json'
-  });
+.config(['$urlRouterProvider', '$mdThemingProvider', 'sailsSocketProvider', function($urlRouterProvider, $mdThemingProvider, sailsSocketProvider) {
 
   sailsSocketProvider.config.transports = ['websocket'];
 

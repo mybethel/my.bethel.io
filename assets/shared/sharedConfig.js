@@ -8,6 +8,5 @@ angular.module('Bethel.util', [
   'ngMaterial',
   'ngMessages',
   'ngFileUpload',
-  'pascalprecht.translate',
-  'ui.router',
+  'ui.router'
 ]);

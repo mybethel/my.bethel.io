@@ -6,7 +6,7 @@
     <div layout-padding>
 
       <md-input-container>
-        <label>{{ 'PODCAST.MEDIA.TITLE' | translate }}<span ng-if="vimeo"> (syncing from Vimeo)</span></label>
+        <label>Episode title<span ng-if="vimeo"> (syncing from Vimeo)</span></label>
         <input type="text" ng-disabled="vimeo" ng-model="media.name" />
       </md-input-container>
 
@@ -21,7 +21,7 @@
           md-items="item in getSeries(seriesSearchText)"
           md-item-text="item"
           ng-show="$root.ministry.cms"
-          placeholder="{{ 'PODCAST.MEDIA.PLAYER_HELP' | translate }}">
+          placeholder="Media player category">
         <md-item-template>
           <span md-highlight-text="seriesSearchText" md-highlight-flags="^i">{{ item }}</span>
         </md-item-template>
@@ -31,13 +31,13 @@
       </md-autocomplete>
 
       <md-input-container >
-        <label>{{ 'PODCAST.MEDIA.DESCRIPTION' | translate }}<span ng-if="vimeo"> (syncing from Vimeo)</span></label>
+        <label>Description<span ng-if="vimeo"> (syncing from Vimeo)</span></label>
         <textarea ng-disabled="vimeo" ng-model="media.description" columns="1" rows="3"></textarea>
       </md-input-container>
 
       <div class="form-group" data-ng-if="ministry.url">
-        <label><small data-ng-bind="'PODCAST.MEDIA.PLAYER' | translate"></small></label>
-        <input type="text" class="form-control" placeholder="{{ 'PODCAST.MEDIA.PLAYER_HELP' | translate }}" data-ng-model="media.reference" typeahead="series for series in getSeries($viewValue)" />
+        <label><small>Media player</small></label>
+        <input type="text" class="form-control" placeholder="Media player category" data-ng-model="media.reference" typeahead="series for series in getSeries($viewValue)" />
       </div>
 
     </div>

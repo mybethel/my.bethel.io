@@ -1,8 +1,5 @@
 angular.module('Bethel.podcast', ['Bethel.util', 'chart.js', 'mgo-angular-wizard'])
-
-.config(['$stateProvider', '$translatePartialLoaderProvider', function ($stateProvider, $translatePartialLoaderProvider) {
-
-  $translatePartialLoaderProvider.addPart('podcast');
+.config(['$stateProvider', function($stateProvider) {
 
   $stateProvider
     .state('podcast', {
