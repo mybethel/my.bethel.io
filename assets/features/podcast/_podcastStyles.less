@@ -1,4 +1,5 @@
 .podcast.detail {
+  padding-bottom: 2rem;
   .header {
     [layout=column] {
       padding: 1rem;
@@ -57,10 +58,25 @@
       opacity: 0;
       pointer-events: none;
       position: absolute;
+      top: 1rem;
       width: 150px;
     }
     &:hover + button {
       opacity: 1;
+    }
+  }
+  button.md-fab-bottom-right {
+    position: fixed;
+  }
+  expansion-panel {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    fieldset {
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      margin: 0 -2px -18px;
+      padding: 0;
     }
   }
 }
@@ -71,16 +87,6 @@
   md-icon {
     font-size: 32px;
     margin-top: -10px;
-  }
-}
-
-md-dialog.podcast-media {
-  iframe {
-    margin-bottom: 20px;
-    width: 100%;
-  }
-  .md-icon-button {
-    margin: 0;
   }
 }
 

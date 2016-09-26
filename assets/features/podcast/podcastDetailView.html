@@ -39,7 +39,7 @@
       </md-menu>
 
       <h1>{{ podcast.name }} <small>{{ podcast.type === 1 ? 'Audio' : 'Video' }} Podcast</small></h1>
-      <p><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 podcast episode', 'other': '{} podcast episodes' }"></ng-pluralize>
+      <p><ng-pluralize count="podcast.media.length" when="{ '0': 'No Episodes', '1': '1 episode', 'other': '{} episodes' }"></ng-pluralize>
         <span ng-if="uploading"> (1 uploading)</span>
         <span ng-if="podcast.source === 2"> from Vimeo account <strong>{{ podcast.service.name }}</strong>. <em>Last sync: <span am-time-ago="podcast.lastSync" ng-if="podcast.lastSync"></span><span ng-if="!podcast.lastSync">in progress</span></em></span></p>
     </div>
@@ -59,37 +59,71 @@
     </div>
   </div>
 
+  <div ng-if="podcast.media.length < 1">
+    <p ng-if="!uploading && podcast.source === 1">Upload your first podcast episode using the <md-icon>add</md-icon> button above!</p>
+    <p ng-if="podcast.source === 2 && !podcast.lastSync">We're pulling your videos from Vimeo now! They'll appear here shortly.</p>
+    <p ng-if="podcast.source === 2 && podcast.lastSync">No videos matching the tags you've entered were found. Just uploaded a video? Your video will show up on the next sync.</p>
+    <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
+  </div>
+
   <md-button class="md-fab md-fab-bottom-right md-hue-3" aria-label="Upload Episode" ngf-select="onFileSelect($files)" ng-if="podcast.source === 1 && !uploading" accept="audio/mp4,audio/x-m4a,audio/*,video/mp4,video/x-m4v,video/*">
     <md-tooltip md-direction="top">Upload Episode</md-tooltip>
     <md-icon>add</md-icon>
   </md-button>
 
-  <div flex="100" class="episodes">
+  <expansion-panel ng-repeat="media in podcast.media | orderBy : 'date' : true" ng-model="media">
+    <header>
+      <div class="title">{{ media.name }}</div>
+      <div class="summary" am-time-ago="media.date"></div>
+      <md-icon>keyboard_arrow_down</md-icon>
+    </header>
+    <content>
+      <fieldset ng-disabled="!media.$expanded">
+        <div flex layout="row">
+          <md-input-container flex="70">
+            <label>Episode name</label>
+            <input type="text" ng-model="media.name" ng-model-options="{ updateOn: 'default blur' }" />
+          </md-input-container>
+          <md-input-container flex="30">
+            <label>Episode Date</label>
+            <input type="text" ng-model="media.date" ng-model-options="{ updateOn: 'blur' }" />
+          </md-input-container>
+        </div>
 
-    <md-whiteframe class="md-whiteframe-z1" layout>
-      <md-list class="episode-list" flex="100">
-        <md-progress-linear md-mode="determinate" ng-if="uploading" value="{{ uploadProgress }}"></md-progress-linear>
-        <md-list-item ng-if="podcast.media.length < 1">
-          <p ng-if="!uploading && podcast.source === 1">Upload your first podcast episode using the <md-icon>add</md-icon> button above!</p>
-          <p ng-if="podcast.source === 2 && !podcast.lastSync">We're pulling your videos from Vimeo now! They'll appear here shortly.</p>
-          <p ng-if="podcast.source === 2 && podcast.lastSync">No videos matching the tags you've entered were found. Just uploaded a video? Your video will show up on the next sync.</p>
-          <p ng-if="uploading">Way to go! Your first podcast episode is uploading...</p>
-        </md-list-item>
-        <md-list-item class="md-2-line md-no-proxy" layout="row" ng-repeat="media in podcast.media | orderBy : 'date' : true">
-          <div class="md-list-item-text" flex-gt-lg="60" flex="50">
-            <h3> {{ media.name }} </h3>
-            <p am-time-ago="media.date"></p>
-          </div>
-          <div class="episode-tools" flex-gt-lg="40" flex="50">
-            <md-button class="md-mini md-primary" ng-click="editMedia($event, media.id)">Edit</md-button>
-            <md-button class="md-mini" ng-click="embedMedia($event, media.id)">Embed</md-button>
-          </div>
-          <md-divider ng-if="!$last"></md-divider>
-        </md-list-item>
-      </md-list>
-    </md-whiteframe>
+        <md-autocomplete
+            md-selected-item="media.reference"
+            md-search-text="seriesSearchText"
+            md-items="item in getSeries(seriesSearchText)"
+            md-item-text="item"
+            ng-show="$root.ministry.cms"
+            placeholder="Media player category">
+          <md-item-template>
+            <span md-highlight-text="seriesSearchText" md-highlight-flags="^i">{{ item }}</span>
+          </md-item-template>
+          <md-not-found>
+            No matches found for "{{ seriesSearchText }}".
+          </md-not-found>
+        </md-autocomplete>
 
-  </div>
+        <md-input-container>
+          <label>Description<span ng-if="podcast.source === 2"> (syncing from Vimeo)</span></label>
+          <textarea ng-disabled="podcast.source === 2" ng-model="media.description" columns="1" rows="3"></textarea>
+        </md-input-container>
+
+        <div class="form-group" data-ng-if="ministry.url">
+          <label><small>Media player</small></label>
+          <input type="text" class="form-control" placeholder="Media player category" data-ng-model="media.reference" typeahead="series for series in getSeries($viewValue)" />
+        </div>
+
+      </fieldset>
+    </content>
+    <footer>
+      <md-button class="md-warn" ng-click="deletePodcastEpisode(media)">Delete</md-button>
+      <div class="flex"></div>
+      <md-button ng-click="episodeCancel(media)" cancel>Cancel</md-button>
+      <md-button class="md-primary" ng-click="episodeSave(media)">Save</md-button>
+    </footer>
+  </expansion-panel>
 
   <!--
 

@@ -14,27 +14,6 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
   $scope.subscriberDifference = 0;
   $scope.subscriberPercentChange = 0;
 
-  $scope.subscriberChart = {
-    data: [[]],
-    labels: [],
-    datasets: [{
-      borderWidth: 0
-    }],
-    options: {
-      scaleShowVerticalLines: false,
-      pointHitDetectionRadius: 5,
-      maintainAspectRatio: false,
-      scales: {
-        xAxes: [{
-          barPercentage: 1,
-          categoryPercentage: 1,
-          display: false
-        }],
-        yAxes: [{ display: false }]
-      }
-    }
-  };
-
   $ctrl.init = function() {
     sailsSocket.get('/podcast/edit/' + $scope.id).then(function(data) {
       if (data.podcast.deleted) $location.path('/podcast').replace();
@@ -57,38 +36,6 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
   $ctrl.init();
 
   $scope.podcastStats = sailsSocket.populateOne('_analytics/podcastSubscribers/' + $scope.id);
-
-  $ctrl.populateDemo = function() {
-    $scope.isDemo = ($scope.subscriberCount < 1 || $scope.subscriberChart.data[0].length < 3);
-    if (!$scope.isDemo) return;
-    for (var i = 0; i < 10; i++) {
-      $scope.subscriberChart.data[0].push(Math.round((i * 10) + (Math.random() * 30)));
-      $scope.subscriberChart.labels.push(moment().subtract(10 - i, 'weeks').format('MMM D'));
-    }
-    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0];
-    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0];
-    $scope.subscriberDifference = $scope.subscriberCount - $scope.subscriberCompare;
-    $scope.subscriberPercentChange = Math.abs(($scope.subscriberDifference / $scope.subscriberCompare) * 100);
-  };
-
-  $scope.$watch('podcastStats', function(newValue) {
-    if (!newValue || !newValue.historical) return;
-    console.log(newValue);
-    $scope.subscriberChart.data[0] = [];
-    $scope.subscriberChart.labels = [];
-    angular.forEach(newValue.historical, function(subscribers, week) {
-      $scope.subscriberChart.data[0].push(subscribers);
-      $scope.subscriberChart.labels.push(moment(String(week), 'YYYYWW').format('MMM D'));
-    });
-    $scope.subscriberChart.data[0].pop();
-    $scope.subscriberChart.labels.pop();
-    $scope.subscriberCount = $scope.subscriberChart.data[0].slice(-1)[0] || 0;
-    $scope.subscriberCompare = $scope.subscriberChart.data[0].slice(-2)[0];
-    $scope.subscriberDifference = $scope.subscriberCount - $scope.subscriberCompare;
-    $scope.subscriberPercentChange = Math.abs(($scope.subscriberDifference / $scope.subscriberCompare) * 100);
-
-    $ctrl.populateDemo();
-  }, true);
 
   $scope.uploadThumbnail = function($files) {
     if (!$files || $files.length < 1) return;
@@ -149,20 +96,6 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
       });
   };
 
-  $scope.editMedia = function(event, id) {
-    $mdDialog.show({
-      clickOutsideToClose: true,
-      templateUrl: 'features/podcast/podcastMediaView.html',
-      targetEvent: event,
-      locals: { mediaId: id },
-      controller: 'podcastMediaController'
-    }).then(function(response) {
-      if (response.deleteMedia && response.media) {
-        $scope.deletePodcastEpisode(response.media);
-      }
-    });
-  };
-
   $scope.embedMedia = function(event, id) {
     $mdDialog.show({
       clickOutsideToClose: true,
@@ -191,8 +124,37 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
     });
   };
 
+  // Autocomplete for ministries using the Bethel web platform.
+  $scope.getSeries = function(query) {
+    if (angular.isUndefined($scope.$root.ministry.url))
+      return;
+
+    return $http.get($scope.$root.ministry.url + '/bethel/podcaster/autocomplete/' + query)
+      .then(function(response) {
+        return response.data.results;
+      });
+  };
+
+  $scope.episodeCancel = function(media) {
+    sailsSocket.get('/podcastmedia/' + media.id).then(function(data) {
+      angular.merge(media, data);
+      media.$toggle();
+    });
+  };
+
+  $scope.episodeSave = function(media) {
+    sailsSocket.put('/podcastmedia/' + media.id, {
+      name: media.name,
+      date: media.date,
+      description: media.description,
+      reference: media.reference
+    }).then(function() {
+      media.$toggle();
+    });
+  };
+
   $scope.deletePodcastEpisode = function(media) {
-    var options = { type: "episode" };
+    var options = { type: 'episode' };
 
     // Vimeo podcast
     if ($scope.podcast.source === 2) {
@@ -201,7 +163,6 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
     }
 
     confirmDelete(options).then(function() {
-      console.log('confirmed', media.id);
       sailsSocket.delete('/podcastMedia/' + media.id).then($ctrl.init);
     });
   };
