@@ -31,6 +31,11 @@ module.exports.routes = {
     action: 'invite'
   },
 
+  '/register/:registerCode': {
+    controller: 'user',
+    action: 'register'
+  },
+
   '/login': {
     controller: 'user',
     action: 'login'

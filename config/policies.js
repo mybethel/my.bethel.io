@@ -25,6 +25,8 @@ module.exports.policies = {
     'update': 'sessionAuth',
     'welcome': 'sessionAuth',
     'invite': true,
+    'register': true,
+    'sendRegistration': true,
     'signup': true
   },
 

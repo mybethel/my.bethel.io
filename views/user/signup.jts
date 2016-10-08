@@ -29,12 +29,10 @@
           </md-input-container>
 
           <div layout="row">
-            <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" flex ng-disabled="userSignupForm.$invalid">
-              Sign Up
+            <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" ng-bind="emailSending ? 'Signing Up...' : 'Sign Up'" flex ng-disabled="userSignupForm.$invalid">
             </md-button>
           </div>
         </form>
-
 
       </md-card-content>
 

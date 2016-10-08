@@ -1,0 +1,69 @@
+
+<md-content class="main-content inverse" id="login" flex layout="row" layout-align="center center">
+
+  <div flex="30" flex-sm="90" flex-md="50" flex layout="column" layout-align="center center" ng-controller="LoginController" ng-init="registeringUser = ${ _jts.s(registeringUser) }">
+
+    <img src="/images/logo-landscape.svg" />
+
+    <md-card layout-fill id="login-signup">
+
+      <md-card-content>
+
+        <form name="userRegisterForm" ng-submit="submitRegistration(registeringUser)" novalidate>
+
+          <md-input-container>
+            <label>Name</label>
+            <input autocorrect="off" autocapitalize="off" name="name" ng-model="registeringUser.name" required spellcheck="false" type="text" />
+            <div ng-messages="userRegisterForm.name.$error" ng-if="userRegisterForm.name.$touched">
+              <div ng-message="required">Name is required.</div>
+            </div>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Email</label>
+            <input name="email" ng-model="registeringUser.email" type="email" disabled/>
+          </md-input-container>
+
+          <div layout="row" layout-align="space-between center">
+            <md-input-container flex>
+              <label>Password</label>
+              <input autocorrect="off" autocapitalize="off" name="password" ng-model="registeringUser.password" required spellcheck="false" type="{{showPass ? 'text' : 'password'}}" />
+              <div ng-messages="userRegisterForm.password.$error" ng-if="userRegisterForm.password.$touched">
+                <div ng-message="required">Password is required.</div>
+              </div>
+            </md-input-container>
+            <div>
+              <md-button type="button" class="md-icon-button" ng-click="showPass = !showPass" nosubmit>
+                <md-icon>{{ showPass ? 'visibility_off' : 'visibility' }}</md-icon>
+              </md-button>
+            </div>
+          </div>
+
+          <md-input-container>
+            <label>Registration Code</label>
+            <input autocorrect="off" autocapitalize="off" name="registerCode" ng-model="registeringUser.registerCode" spellcheck="false" type="text" disabled />
+          </md-input-container>
+
+          <div layout="row">
+            <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" flex ng-disabled="userRegisterForm.$invalid">
+              Let's Go
+            </md-button>
+          </div>
+
+        </form>
+
+      </md-card-content>
+
+      <md-divider></md-divider>
+
+      <md-card-footer>
+        <a href="/">Already a member? &nbsp;<span>Log In</span></a>
+      </md-card-footer>
+
+    </md-card>
+
+  </div>
+
+</md-content>
+
+<script>window.__anonymous = true;</script>

@@ -49,20 +49,64 @@ module.exports = {
     res.view();
   },
 
+  register: function(req, res) {
+
+    var registerCode = req.param('registerCode'),
+        userId = new Buffer(registerCode.replace('-', '+').replace('_', '/'), 'base64').toString('hex');
+
+    if (req.session.user) {
+      return res.redirect('/');
+    }
+
+    User.findOne(userId).exec(function(err, user) {
+      if (err) return res.serverError(err);
+      if (!user) return res.forbidden('Invalid registration link');
+
+      user.registerCode = req.param('registerCode');
+      return res.view({ registeringUser: JSON.stringify(user) });
+
+    });
+
+  },
+
+  sendRegistration: function(req, res) {
+
+    User.findOne(req.param('id')).exec(function(err, user) {
+      if (err) return res.serverError(err);
+      if (!user) return res.serverError('No user found with that id');
+
+      var registerCode = new Buffer(user.id, 'hex').toString('base64').replace('+', '-').replace('/', '_'),
+          templateVars = { confirmationUrl: req.headers.origin + '/register/' + registerCode },
+          file = JTS.read('views/email/register.jts');
+
+      var mailOptions = {
+        to: user.email,
+        subject: 'Register for Bethel!',
+        message: JTS.compile(file, templateVars)
+      };
+
+      Mailgun.sendMail(mailOptions, function(err, results) {
+        console.log('ERR ', err);
+        if (err) return res.serverError({ error: err });
+        res.ok('success');
+      });
+
+    });
+
+  },
+
   sendInvite: function(req, res) {
 
     User.findOne(req.param('id')).exec(function(err, user) {
       if (err) return res.serverError(err);
-
       if (!user) return res.serverError('No user found with that id');
 
       var inviteCode = new Buffer(user.id, 'hex').toString('base64').replace('+', '-').replace('/', '_'),
           templateVars = {
             userName: user.name,
-            inviteUrl: req.headers.origin + '/invite/' + inviteCode
-          };
-
-      var file = JTS.read('views/email/invite.jts');
+            confirmationUrl: req.headers.origin + '/invite/' + inviteCode
+          },
+          file = JTS.read('views/email/invite.jts');
 
       var mailOptions = {
         to: user.email,
