@@ -62,7 +62,7 @@ module.exports = {
       if (err) return res.serverError(err);
       if (!user) return res.forbidden('Invalid registration link');
 
-      user.registerCode = req.param('registerCode');
+      user.registerCode = new Buffer(user.email).toString('base64').replace('+', '-').replace('/', '_');
       return res.view({ registeringUser: JSON.stringify(user) });
 
     });

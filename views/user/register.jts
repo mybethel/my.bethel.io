@@ -39,10 +39,7 @@
             </div>
           </div>
 
-          <md-input-container>
-            <label>Registration Code</label>
-            <input autocorrect="off" autocapitalize="off" name="registerCode" ng-model="registeringUser.registerCode" spellcheck="false" type="text" disabled />
-          </md-input-container>
+          <input autocorrect="off" autocapitalize="off" name="registerCode" ng-model="registeringUser.registerCode" spellcheck="false" type="hidden" disabled />
 
           <div layout="row">
             <md-button aria-label="Sign Up" type="submit" class="md-accent md-hue-3 md-raised" flex ng-disabled="userRegisterForm.$invalid">
