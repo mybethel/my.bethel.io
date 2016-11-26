@@ -11,7 +11,7 @@ const app = require('../app.json');
 // users with the quickest path to getting started with no existing `local.js`.
 var defaultConfig = {
   connections: {
-    mongo: {
+    local: {
       url: 'mongodb://127.0.0.1:32768/mybethel'
     }
   },
