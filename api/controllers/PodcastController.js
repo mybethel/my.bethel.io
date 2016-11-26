@@ -88,7 +88,7 @@ module.exports = {
   },
 
   edit: function(req, res) {
-    Podcast.findOne(req.param('id')).populate('media', { deleted: { $ne: true } }).populate('service').exec(function foundPodcast(err, podcast) {
+    Podcast.findOne(req.param('id')).populate('media', { deleted: { '!': true } }).populate('service').exec(function foundPodcast(err, podcast) {
       if (err) return res.serverError(err);
       if (!podcast || !podcast.id) return res.notFound();
 
@@ -145,7 +145,7 @@ module.exports = {
   },
 
   feed: function(req, res) {
-    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { $ne: true } }, { sort: { date: 0 } }).exec(function(err, podcast) {
+    Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { '!': true } }, { sort: { date: 0 } }).exec(function(err, podcast) {
       if (err) return res.serverError(err);
       if (!podcast) return res.notFound();
 

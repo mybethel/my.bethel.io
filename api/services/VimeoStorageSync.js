@@ -51,7 +51,7 @@ vimeo.sync = function(refreshAll) {
     var start = new Date().getTime();
     sails.log.info('Syncing Vimeo storage...');
 
-    Podcast.find({ source: 2, deleted: { $ne: true } }).populate('service')
+    Podcast.find({ source: 2, deleted: { '!': true } }).populate('service')
       .then(podcasts => {
         podcasts = podcasts.map(podcast => vimeo.queryApi(podcast));
 

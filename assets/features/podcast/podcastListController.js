@@ -10,7 +10,7 @@ function($scope, $state, $mdDialog, sailsSocket, $location) {
 
   $scope.init = function() {
     if (!$scope.$root.ministry) return;
-    $scope.podcasts = sailsSocket.populateMany('podcast', { ministry: $scope.$root.ministry.id, deleted: { $ne: true } });
+    $scope.podcasts = sailsSocket.populateMany('podcast', { ministry: $scope.$root.ministry.id, deleted: { '!': true } });
   };
 
   // Bind the podcast list over socket.io for this ministry.
