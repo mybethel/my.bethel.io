@@ -8,11 +8,18 @@ Built in Node and powered by Sails.
 
 #### Technical Requirements ####
 
-* Node
+* Node 6.x
 * MongoDB
 
-#### Installation and Setup ####
+### Getting Started ###
 
-* Run `./scripts/setup.sh` in the docroot to setup local environment.
-* Modify `./config/local.js` if needed to match the local MongoDB configuration.
-* The Sails server will be lifted locally at `http://localhost:1337`.
+1. Run `npm install` to get the NPM dependencies.
+2. Download and install the Java Runtime Environment (JRE) and the Java
+   Development Kit (JDK) in order to run end-to-end tests through Selenium.
+3. Run `./scripts/setup` to create a local configuration file. You will need to
+   be logged in via the Heroku Toolbelt with appropriate access to production.
+4. Create a new MongoDB instance locally using Docker and Kitematic.
+5. Edit `config/local.js` to edit the port number of Mongo (if necessary.)
+
+If you have access to the production database, you can pull data straight from
+the production server by running `./scripts/copydb --local`.

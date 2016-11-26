@@ -1,61 +1,44 @@
 #!/usr/bin/env node
-
-const app = require('../app.json');
 const dot = require('dot-object');
 const fs = require('fs');
-const spawn = require('child_process').spawn;
+const util = require('util');
 
-function Setup() {
-  this.remoteConfig = {};
-  this.localConfig = require('../config/local.js');
-}
+const heroku = require('./lib/heroku-config');
+const app = require('../app.json');
 
-Setup.prototype.mergeConfig = function mergeConfig() {
+// These are the basic defaults that are necessary for the application to run
+// locally. They can be overwritten with proper understanding but this provides
+// users with the quickest path to getting started with no existing `local.js`.
+var defaultConfig = {
+  connections: {
+    mongo: {
+      url: 'mongodb://127.0.0.1:32768/mybethel'
+    }
+  },
+  session: { adapter: 'memory' },
+  sockets: { adapter: 'memory' }
+};
+
+// If a `local.js` file already exists, we attempt to merge it with the defaults
+// so that none of your custom settings are overwritten by this script.
+try {
+  var localConfig = require('../config/local.js');
+  config = Object.assign(defaultConfig, localConfig);
+} catch (e) {}
+
+heroku('bethel').then(config => {
+  // Each required setting is defined in `app.json` to allow for Heroku to
+  // create review applications for pull requests. We have extended this by
+  // adding an additional parameter `local` in each environment setting. This
+  // determines where the remote setting will be placed in the `local.js` file
+  // using dot syntax. Anything with a `local` parameter will overwrite any
+  // settings that have been defined in an existing `local.js` file.
   for (var env in app.env) {
     if (!app.env[env].local) continue;
-    dot.str(app.env[env].local, this.remoteConfig[env], this.localConfig);
+    dot.str(app.env[env].local, config[env], defaultConfig);
   }
-};
 
-Setup.prototype.getRemote = function getRemote() {
-  return new Promise((resolve, reject) => {
-    const heroku = spawn('heroku', ['config', '--json', `--app=${app.appName}`]);
-    heroku.stdout.on('data', (config) => {
-      config = JSON.parse(config.toString());
-      if (!config) return console.error('Unable to authenticate to Heroku.');
-      this.remoteConfig = config;
-      this.mergeConfig();
-      resolve(this.localConfig);
-    });
-  });
-};
-
-Setup.prototype.writeConfig = function writeConfig(config) {
+  // Once everything is combined, the resulting `local.js` is written.
   var localConfig = require('path').resolve(__dirname, '../config/local.js');
-  fs.writeFileSync(localConfig, `module.exports = ${JSON.stringify(config, null, 2)}`);
-  console.log('Local configuration has been saved.');
-};
-
-Setup.prototype.cloneDb = function cloneDb() {
-  if (!this.localConfig.connections)
-    return console.warn('A local database connection must be defined.');
-
-  const dump = spawn('mongodump', ['--archive=databaseProd.archive', `--db=${app.database.db}`, `--host=${app.database.host}`, `--username=${app.database.user}`, `-p${this.remoteConfig[app.database.password]}`, '--excludeCollection=system.users']);
-  dump.on('exit', (code) => {
-
-    if (code !== 0)
-      return console.warn('Archive of Production database failed...');
-
-    const restore = spawn('mongorestore', ['--archive=databaseProd.archive', `--host=${this.localConfig.connections.local.host}:${this.localConfig.connections.local.port}`, '--drop']);
-    restore.on('exit', (code) => {
-      console.log('Production database copied to local.');
-    });
-
-  });
-};
-
-var setup = new Setup();
-setup.getRemote().then((config) => {
-  setup.writeConfig(config);
-  setup.cloneDb();
-});
+  fs.writeFileSync(localConfig, `module.exports = ${util.inspect(defaultConfig)};`);
+}).catch(() => process.exit(-1));

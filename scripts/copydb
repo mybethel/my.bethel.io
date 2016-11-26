@@ -1,0 +1,128 @@
+#!/usr/bin/env node
+const spawn = require('child_process').spawn;
+const heroku = require('./lib/heroku-config');
+
+const commonConfig = [
+  '--archive=databaseProd.archive',
+  '--db=mybethel',
+  '--username=mybethel-prod',
+  // The following settings are required when we migrate off "legacy".
+  // '--ssl',
+  // '--sslAllowInvalidCertificates'
+];
+
+/**
+ * Copy Production database to Development
+ * --
+ * The following script will automate the process of dumping the Production
+ * database to the deployed Development database. This is done by running a
+ * combination of `mongodump` and `mongorestore`.
+ * Credentials are grabbed from Heroku so it is important to have the Heroku
+ * Toolbelt installed which includes the CLI application.
+ */
+heroku('bethel').then(config => {
+  if (!config.DB_MONGO) {
+    console.error('A production database address must be set.');
+    process.exit(-1);
+  }
+
+  archiveProduction(config.DB_MONGO)
+    .then(() => {
+      if (process.argv.indexOf('--local') > 0)
+        return restoreToLocal();
+
+      if (!config.DB_MONGO_DEV) {
+        console.error('A development database address must be set.');
+        process.exit(-1);
+      }
+
+      restoreToDevelopment(config.DB_MONGO_DEV);
+    })
+    .catch(console.error);
+}).catch(() => process.exit(-1));
+
+/**
+ * Archive the Production database locally. Spawns an instance of `mongodump`
+ * which it uses to archive the databse to `databaseProd.archive` locally.
+ * @param {String} database - The complete connection string for the database.
+ * The username, password and replicaset address will be extracted with Regex.
+ * @return {Promise} - Fulfilled when the dump has completed.
+ */
+function archiveProduction(database) {
+  const connection = database.match(/(?:mongodb:\/\/)mybethel-prod:(.*)@(.*:\d+)(?:\/mybethel)/i);
+  const dumpConfig = commonConfig.concat([
+    `--host=${connection[2]}`,
+    `-p${connection[1]}`,
+    '--excludeCollection=system.users'
+  ]);
+
+  return new Promise((resolve, reject) => {
+    const dump = spawn('mongodump', dumpConfig);
+
+    dump.stdout.on('data', data => console.log(String(data)));
+    dump.stderr.on('data', data => console.error(String(data)));
+    dump.on('exit', code => {
+      if (code !== 0) {
+        console.error(dumpConfig);
+        reject('Unable to dump Production database.');
+      }
+      resolve();
+    });
+    dump.on('error', reject);
+  });
+}
+
+/**
+ * Restore the dumpfile created during the `archiveProduction()` step.
+ * @param {String} database - The complete connection string for the database.
+ * The username, password and replicaset address will be extracted with Regex.
+ */
+function restoreToDevelopment(database) {
+  const connection = database.match(/(?:mongodb:\/\/)mybethel-prod:(.*)@(.*:\d+)(?:\/mybethel)/i);
+  runRestore(commonConfig.concat([
+    `--host=${connection[2]}`,
+    `-p${connection[1]}`,
+    '--drop'
+  ]));
+}
+
+/**
+ * Restore the dumpfile created during the `archiveProduction()` step to the
+ * local database. You need to have the connection defined in `config/local.js`
+ * pointing to your local database for this step to work.
+ */
+function restoreToLocal() {
+  const localConfig = require('../config/local.js');
+  const database = localConfig.connections.mongo.url;
+  const connection = database.match(/(?:mongodb:\/\/)(.*:\d+)(?:\/.*)/i);
+  runRestore([
+    '--archive=databaseProd.archive',
+    `--host=${connection[1]}`,
+    '--db=mybethel',
+    '--drop'
+  ]);
+}
+
+/**
+ * Run the restore step which uses `mongorestore`.
+ * @param {Array} config - Array of options to pass to the script.
+ */
+function runRestore(config) {
+  const restore = spawn('mongorestore', config);
+
+  restore.stdout.on('data', data => console.log(String(data)));
+  restore.stderr.on('data', data => console.error(String(data)));
+  restore.on('exit', code => {
+    if (code !== 0) {
+      console.error(config);
+      console.error('Unable to restore Production to Dev.');
+      process.exit(-1);
+    }
+
+    process.exit(0);
+  });
+  restore.on('error', () => {
+    console.warn('mongorestore does not appear to be installed.');
+    process.exit(-1);
+  });
+}
