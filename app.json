@@ -3,12 +3,6 @@
   "appName": "bethel",
   "description": "The Bethel platform to power the digital church..",
   "repository": "https://github.com/mybethel/my.bethel.io",
-  "database": {
-    "db": "mybethel",
-    "host": "candidate.12.mongolayer.com:10300",
-    "user": "mybethel-prod",
-    "password": "MONGO_PASS"
-  },
   "env": {
     "AWS_KEY": {
       "description": "Amazon Web Services: API key.",
@@ -19,6 +13,10 @@
       "description": "Amazon Web Services: API secret.",
       "required": true,
       "local": "aws.secretAccessKey"
+    },
+    "DB_MONGO": {
+      "description": "Compose: Mongo database connection string.",
+      "required": true
     },
     "KEEN_READ": {
       "description": "Keen: Read-only API key for analytic access.",
@@ -34,10 +32,6 @@
       "description": "Mailgun: domain for sending of mail.",
       "required": true,
       "local": "mailgun.domain"
-    },
-    "MONGO_PASS": {
-      "description": "MongoHQ: Password for production database.",
-      "required": true
     },
     "REDIS_PASS": {
       "description": "Redis: Password for session and socket storage.",
