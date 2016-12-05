@@ -11,7 +11,7 @@
   <${ podcast.type } id="embedded" class="video-js vjs-bethel-skin" uuid="${ episode.id }" ${ (podcast.embedSettings && podcast.embedSettings.feedUrl) ? `feed="${ podcast.embedSettings.feedUrl }"` : '' } controls poster="${ posterImage }" preload="none">
 
   ${ !episode.variants ? `
-    <source src="/podcastmedia/download/${ episode.id }?embed" type="${ PodcastHelper.mimeTypeFromUrl(episode.url) }" />
+    <source src="/podcastmedia/download/${ episode.id }?embed" type="${ episode.mime() }" />
   ` : `
     ${ episode.variants.hls ? `<source src="/podcastmedia/download/${ episode.id }?variant=hls&embed" type="application/x-mpegURL" />` : '' }
     <source src="/podcastmedia/download/${ episode.id }?variant=mp4&embed" type="video/mp4" />

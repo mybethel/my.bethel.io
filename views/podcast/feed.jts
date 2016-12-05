@@ -25,13 +25,13 @@
   ${ podcastMedia.map(media => !media.url ? '' : `<item>
     <title>${ (media.name) ? _jts.s(media.name) : media.url.split('/').pop() }</title>
     <pubDate>${ (media.date) ? media.date.toUTCString() : new Date().toUTCString() }</pubDate>
-    <guid isPermaLink="false">${ req.baseUrl }/podcastmedia/download/${ media.id }${ PodcastHelper.extensionFromUrl(media.url) }</guid>
+    <guid isPermaLink="false">${ req.baseUrl }/podcastmedia/download/${ media.id }.${ media.url.split('.').pop() }</guid>
     <itunes:author>${ (podcast.owner) ? podcast.owner : ministry.name }</itunes:author>
     <description>
       ${ _jts.s(media.description) }
     </description>
     <itunes:duration>${ media.duration }</itunes:duration>
-    <enclosure url="${ req.baseUrl }/podcastmedia/download/${ media.id }${ PodcastHelper.extensionFromUrl(media.url) }" length="${ (media.size) ? media.size : '0' }" type="${ PodcastHelper.mimeTypeFromUrl(media.url) }"/>
+    <enclosure url="${ req.baseUrl }/podcastmedia/download/${ media.id }.${ media.url.split('.').pop() }" length="${ (media.size) ? media.size : '0' }" type="${ media.mime() }"/>
     <itunes:explicit>no</itunes:explicit>
     <itunes:block>no</itunes:block>
   </item>`).join('') }
