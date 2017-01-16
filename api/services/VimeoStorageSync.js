@@ -1,56 +1,20 @@
-const moment = require('moment');
-const Promise = require('bluebird');
-const Vimeo = require('vimeo').Vimeo;
+const AWS = require('aws-sdk');
+AWS.config.update(sails.config.aws);
+const lambda = new AWS.Lambda({ region: 'us-east-1' });
 
 var vimeo = {};
 
-vimeo.refreshAll = false;
-
-/**
- * Generate a new API client with a user's access token.
- * @see https://github.com/vimeo/vimeo.js
- * @param {string} token User access token.
- * @return {Object} Vimeo API client.
- */
-vimeo.api = function(token) {
-  return new Vimeo(sails.config.services.vimeo.key, sails.config.services.vimeo.secret, token);
-};
-
-/**
- * Get videos for a user from the Vimeo API.
- * @param {Object} service Service object for podcast.
- * @param {string} service.accessToken Vimeo access token to authorize.
- * @param {string} service.user Vimeo username to query videos for.
- * @param {Number} page The page number requested.
- * @param {Object} headers Additional headers for the request.
- * @param {Function} cb Callback when request is finished.
- */
-vimeo.getVideos = function(service, page, headers, cb) {
-  headers = headers || {};
-  page = page || 1;
-  vimeo.api(service.accessToken).request({
-    headers,
-    method: 'GET',
-    path: `${service.user}/videos`,
-    query: { page, per_page: 50 }
-  }, cb);
-};
-
-vimeo.sync = function(refreshAll) {
-
-  vimeo.refreshAll = refreshAll || false;
-
+vimeo.sync = function() {
   if (!Podcast) {
     sails.log.error('Sails failed to bootstrap: Podcast undefined.');
     sails.log.error(sails.config.connections);
     resolve();
   }
 
+  var start = new Date().getTime();
+  sails.log.info('Syncing Vimeo storage...');
+
   return new Promise(resolve => {
-
-    var start = new Date().getTime();
-    sails.log.info('Syncing Vimeo storage...');
-
     Podcast.find({ source: 2, deleted: { '!': true } }).populate('service')
       .then(podcasts => {
         podcasts = podcasts.map(podcast => vimeo.queryApi(podcast));
@@ -60,18 +24,15 @@ vimeo.sync = function(refreshAll) {
           sails.log.info(`Vimeo sync completed in ${(end - start)} ms.`);
           resolve();
         }).catch(sails.log.error);
-      })
-      .catch(err => {
+      }).catch(err => {
         sails.log.error(err);
         resolve();
       });
-
   });
 };
 
 vimeo.syncOne = function(podcastId) {
   return new Promise(function(resolve) {
-
     Podcast.findOne(podcastId).populate('service')
       .then(podcast => {
         if (!podcast) {
@@ -95,99 +56,37 @@ vimeo.syncOne = function(podcastId) {
 
 vimeo.queryApi = function(podcast) {
   return new Promise(function(resolve) {
-    sails.log.info(podcast.id + ': Querying Vimeo API.');
-
-    var headers = {};
-    if (!vimeo.refreshAll) {
-      headers['If-Modified-Since'] = moment().subtract(6, 'minutes').toString();
-    }
-
-    vimeo.getVideos(podcast.service, 1, headers, (error, body, statusCode) => {
-      if (error || (statusCode === 304 && !vimeo.refreshAll) || statusCode !== 200 || (!body && !body.data)) {
-        sails.log.error('Vimeo API returned status code ' + statusCode + ' for podcast ' + podcast.id + '.');
+    lambda.invoke({
+      FunctionName: 'vimeoSync',
+      Payload: JSON.stringify({
+        auth: sails.config.services.vimeo,
+        tags: podcast.sourceMeta && podcast.sourceMeta.toString(),
+        token: podcast.service.accessToken
+      })
+    }, function(err, data) {
+      if (err) {
+        sails.log.error(err);
         return resolve();
       }
 
-      var totalPages = 0;
-      if (body.total > body.page * body.per_page) {
-        totalPages = Math.ceil((body.total - (body.page * body.per_page)) / body.per_page) + 1;
-      }
+      let videosToProcess = JSON.parse(data.Payload);
+      let count = videosToProcess.length || 0;
+      sails.log.info(`${podcast.id}: ${count} matching videos.`);
 
-      sails.log.info(podcast.id + ': Found ' + totalPages + ' total pages of videos.');
-
-      var processApiResults = [];
-      processApiResults.push(vimeo.processPage(body, podcast));
-      for (var i = 1; i <= totalPages; i++) {
-        processApiResults.push(vimeo.getResultsPage(podcast, i, headers));
-      }
-
-      Promise.all(processApiResults).then(function() {
-
-        // Update the last sync date on the podcast and inform all listening sockets.
-        Podcast.update(podcast.id, { lastSync: new Date() }).exec(function(err, updatedPodcast) {
-          if (err) return sails.log.error(err);
-          Podcast.publishUpdate(updatedPodcast[0].id, { lastSync: updatedPodcast[0].lastSync });
-
-          resolve();
-        });
-
-      }).catch(sails.log.error);
-    });
-  });
-};
-
-vimeo.getResultsPage = function(podcast, page, headers) {
-  return new Promise(function(resolve) {
-    vimeo.getVideos(podcast.service, page, headers, (error, body, statusCode) => {
-      if (error || statusCode !== 200 || (!body && !body.data)) {
-        sails.log.error(podcast.id + ': Vimeo API returned status code ' + statusCode + '.');
+      if (!videosToProcess || count < 1) {
+        if (data.Payload.errorMessage)
+          sails.log.error(data.Payload.errorMessage);
+        vimeo.finishSync(podcast.id);
         return resolve();
       }
 
-      vimeo.processPage(body, podcast).then(resolve).catch(sails.log.error);
+      videosToProcess.map(video => vimeo.podcastMediaUpsert(video, podcast));
+      Promise.all(videosToProcess).then(function() {
+        vimeo.finishSync(podcast.id);
+        resolve();
+      });
     });
   });
-};
-
-/**
- * Process a single page of Vimeo results. Each video is checked and either
- * included in the pending sync or removed entirely.
- * @param {Object} results Page of results from the Vimeo API.
- * @param {Object} podcast The podcast which is being sync'd.
- * @return {Promise} Fulfilled when all relevant episodes have been sync'd.
- */
-vimeo.processPage = function(results, podcast) {
-  var videosToProcess = results.data.filter(video => vimeo.processEntry(video, podcast.sourceMeta));
-  sails.log.info(podcast.id + ': Page ' + results.page + ' - found ' + videosToProcess.length + ' matching videos.');
-
-  videosToProcess.map(video => vimeo.podcastMediaUpsert(video, podcast));
-  return new Promise(resolve => Promise.all(videosToProcess).then(resolve).catch(sails.log.error));
-};
-
-/**
- * Process a single Vimeo video and determine whether or not to sync.
- * @param {Object} video The video as returned by the Vimeo API.
- * @param {Array|String} tagsToSync A single or multiple tags to sync.
- * @return {Bool} Whether the video should be sync'd.
- */
-vimeo.processEntry = (video, tagsToSync) => {
-  if (!video.tags) return false;
-
-  if (video.privacy && video.privacy.view !== 'anybody') {
-    sails.log.verbose(`Ignoring private video ${video.uri}`);
-    return false;
-  }
-
-  var match = false;
-  tagsToSync = tagsToSync.toString().toLowerCase();
-
-  video.tags.map(tag => {
-    tag = tag.name.toLowerCase();
-    if (tagsToSync.indexOf(tag) !== -1) match = true;
-    return tag;
-  });
-
-  return match;
 };
 
 vimeo.podcastMediaUpsert = function(video, podcast) {
@@ -242,7 +141,6 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
 
     // First we attempt to update a record with the latest data if it exists.
     PodcastMedia.update({ uuid: videoId, podcast: podcast.id }, payload, function podcastMediaUpdate(err, media) {
-
       // If no error and a media object is returned, the media already exists.
       if (!err && media && media[0]) {
         PodcastMedia.publishUpdate(media[0].id, payload);
@@ -261,9 +159,15 @@ vimeo.podcastMediaUpsert = function(video, podcast) {
         PodcastMedia.publishCreate(media);
         resolve();
       });
-
     });
   });
+};
+
+vimeo.finishSync = function(podcastId) {
+  // Update the last sync date on the podcast and inform all listening sockets.
+  return Podcast.update(podcastId, { lastSync: new Date() }).then(updatedPodcast => {
+    return Podcast.publishUpdate(updatedPodcast[0].id, { lastSync: updatedPodcast[0].lastSync });
+  }).catch(sails.log.error);
 };
 
 module.exports = vimeo;
