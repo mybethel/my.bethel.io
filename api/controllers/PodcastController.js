@@ -4,8 +4,8 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
-
 const moment = require('moment');
+const request = require('request');
 
 module.exports = {
 
@@ -148,6 +148,23 @@ module.exports = {
     Podcast.findOne(req.param('id')).populate('ministry').populate('media', { deleted: { '!': true } }, { sort: { date: 0 } }).exec(function(err, podcast) {
       if (err) return res.serverError(err);
       if (!podcast) return res.notFound();
+
+      request({
+        method: 'post',
+        body: {
+          collection: 'podcast',
+          podcast: req.param('id'),
+          ministry: podcast.ministry.id,
+          ip_address: req.headers['x-forwarded-for'] || req.ip,
+          user_agent: req.headers['user-agent'],
+        },
+        json: true,
+        url: 'https://api.bethel.io/performance/track',
+      }, function(err) {
+        if (err) {
+          sails.log.error(err);
+        }
+      });
 
       Analytics.registerHit('podcast.feed', req.param('id'), req, {
         ministry: podcast.ministry.id

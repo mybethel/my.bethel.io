@@ -4,6 +4,7 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+const request = require('request');
 
 module.exports = {
 
@@ -13,6 +14,24 @@ module.exports = {
     PodcastMedia.findOne(mediaId).populate('podcast').exec(function (err, media) {
       if (err) return res.serverError(err);
       if (!media) return res.notFound();
+
+      request({
+        method: 'post',
+        body: {
+          collection: 'media',
+          media: req.param('id'),
+          medium: embed ? 'embed' : 'podcast',
+          ministry: media.podcast.ministry,
+          ip_address: req.headers['x-forwarded-for'] || req.ip,
+          user_agent: req.headers['user-agent'],
+        },
+        json: true,
+        url: 'https://api.bethel.io/performance/track',
+      }, function(err) {
+        if (err) {
+          sails.log.error(err);
+        }
+      });
 
       Analytics.registerHit('podcast.media', req.param('id'), req, {
         medium: embed ? 'embed' : 'podcast',
