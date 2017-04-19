@@ -12,8 +12,8 @@
 
 module.exports = {
 
-  models: {
-    connection: 'local'
+  log: {
+    level: 'verbose'
   },
 
   session: {

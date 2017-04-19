@@ -20,11 +20,6 @@
 
 module.exports.connections = {
 
-  local: {
-    adapter  : 'sails-mongo',
-    schema   : true
-  },
-
   mongo: {
     adapter: 'sails-mongo',
     schema: true,
