@@ -31,23 +31,13 @@ describe('podcast', function() {
     });
   });
 
-  it('allows the user to embed a single podcast episode', function(done) {
-    request(sails.hooks.http.app)
-      .get('/podcast/embed/episode/' + mediaId)
-      .expect(200, done);
-  });
-
   it('prohibits an embed without the proper parameters', function(done) {
     request(sails.hooks.http.app)
       .get('/podcast/embed/' + mediaId)
       .expect(400, function() {
         request(sails.hooks.http.app)
           .get('/podcast/embed')
-          .expect(400, function() {
-            request(sails.hooks.http.app)
-              .get('/podcast/embed/episode/1234')
-              .expect(404, done);
-          });
+          .expect(400, done);
       });
   });
 

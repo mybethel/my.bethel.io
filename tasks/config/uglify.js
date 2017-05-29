@@ -12,8 +12,7 @@
 module.exports = {
   dist: {
     files: {
-      '.tmp/public/min/frontend.min.js': '.tmp/public/concat/frontend.js',
-      '.tmp/public/min/embed.min.js': '.tmp/public/js/embed.js'
+      '.tmp/public/min/frontend.min.js': '.tmp/public/concat/frontend.js'
     }
   }
 };

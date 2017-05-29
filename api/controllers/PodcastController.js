@@ -4,66 +4,15 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
-const moment = require('moment');
 const request = require('request');
 
 module.exports = {
 
-  embed: function (req, res) {
+  embed: function(req, res) {
     if (!req.param('type') || !req.param('id'))
       return res.badRequest('type and id are required');
 
-    if (req.param('type') === 'episode') {
-      PodcastMedia.findOne(req.param('id')).populate('podcast').exec(function (err, episode) {
-        if (!episode)
-          return res.notFound('episode not found');
-
-        episode.podcast.type = (episode.podcast.type === 1) ? 'audio' : 'video';
-        episode.url = episode.url.replace('http://cloud.bethel.io', 'https://s3.amazonaws.com/cloud.bethel.io');
-
-        var background, embedStyles = '';
-        var podcast = episode.podcast;
-
-        if (podcast.type === 'video') {
-          background = 'background:#000';
-        } else if (podcast.embedSettings && podcast.embedSettings.backgroundColor) {
-          background = 'background:' + podcast.embedSettings.backgroundColor;
-        } else {
-          background = 'background-image:url(https://images.bethel.io/images/' + (podcast.image ? podcast.image : 'DefaultPodcaster.png') + '?crop=faces&fit=crop&w=200&h=200&blur=150);'
-        }
-
-        if (background) {
-          embedStyles += '#embedded.vjs-bethel-skin{' + background + '}';
-        }
-
-        if (podcast.embedSettings) {
-          if (podcast.embedSettings.textColor) {
-            embedStyles += '.meta,.meta small,.extras a{color:' + podcast.embedSettings.textColor + ';}';
-          }
-
-          if (podcast.embedSettings.controlColor) {
-            embedStyles += '.video-js.vjs-bethel-skin{color:' + podcast.embedSettings.controlColor + ';}';
-            embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-play-progress,.video-js.vjs-bethel-skin .vjs-volume-level,.video-js.vjs-bethel-skin .vjs-mouse-display,.video-js.vjs-bethel-skin .vjs-mouse-display:after'
-            embedStyles += '{background:' + podcast.embedSettings.controlColor + '}'
-          }
-
-          if (podcast.embedSettings.sliderColor) {
-            embedStyles += '.video-js.vjs-bethel-skin .vjs-progress-control .vjs-progress-holder{background:' + podcast.embedSettings.sliderColor + '}';
-          }
-        }
-
-        var posterImage = episode.thumbnail ? episode.thumbnail :
-          `https://images.bethel.io/images/${ podcast.image ? podcast.image : 'DefaultPodcaster.png' }?crop=faces&fit=crop&w=140&h=140`;
-
-        res.view({
-          layout: 'none',
-          episode: episode,
-          podcast: podcast,
-          posterImage: posterImage,
-          embedStyles: embedStyles
-        });
-      });
-    }
+    res.redirect(`https://embed.bethel.io/${req.param('id')}`);
   },
 
   // This route is in use by the Wordpress plugin to provide embedable players.
