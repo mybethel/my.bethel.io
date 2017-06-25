@@ -87,13 +87,13 @@
     "debug": "node debug app.js",
     "start": "node app.js",
     "docs": "./node_modules/.bin/docker -o docs -I -n -x node_modules,coverage,docs,tests/e2e/*,tests/sails/*,views,scripts,*.md",
-    "test": "npm run unit && npm run protractor",
+    "test": "npm run unit",
     "posttest": "cat coverage/lcov.info | ./node_modules/.bin/codacy-coverage --token 411a15d5ec144bcc89cd4f57b147bb8f --verbose",
     "mocha": "mocha test/sails.spec.js test/sails/*.js --timeout 15000",
     "preprotractor": "./node_modules/.bin/webdriver-manager update",
     "protractor": "protractor test/e2e.config.js",
     "karma": "karma start test/angular.config.js",
-    "unit": "istanbul cover -x '**/config/**' -x 'api/responses/**' --dir ./coverage/sails _mocha -- test/sails.spec.js test/sails/*.js --timeout 15000 && npm run karma",
+    "unit": "istanbul cover -x '**/config/**' -x 'api/responses/**' --dir ./coverage/sails _mocha -- test/sails.spec.js test/sails/*.js --timeout 15000",
     "postunit": "node ./test/report.js"
   },
   "engines": {
