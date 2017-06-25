@@ -39,6 +39,8 @@ module.exports = {
       });
 
       if (media.url.indexOf('cloud.bethel.io') !== -1) {
+        // Ensure that cloud downloads happen over HTTPS rather than HTTP.
+        media.url = media.url.replace('http://', 'https://');
         // Encode hashtags or question marks in uploaded file names.
         media.url = media.url.replace(/#/g, '%23').replace(/\?/g, '%3F').replace(/\+/g, '%2B');
       }
