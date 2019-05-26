@@ -20,12 +20,10 @@
     "animate.css": "^3.4.0",
     "awaken": "github:mybethel/awaken",
     "aws-sdk": "^2.1",
-    "bcrypt": "^0.8",
+    "bcrypt": "^3.0.6",
     "bluebird": "^2.9.34",
     "commander": "^2.8.1",
     "connect-redis": "1.4.5",
-    "cron": "^1.0",
-    "elasticsearch": "^10.0.1",
     "googleapis": "^2.0.4",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
@@ -97,8 +95,8 @@
     "postunit": "node ./test/report.js"
   },
   "engines": {
-    "node": "6.x",
-    "npm": "3.x"
+    "node": "10.x",
+    "npm": "6.x"
   },
   "main": "app.js",
   "repository": {

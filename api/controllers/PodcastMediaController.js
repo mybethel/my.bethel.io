@@ -33,11 +33,6 @@ module.exports = {
         }
       });
 
-      Analytics.registerHit('podcast.media', req.param('id'), req, {
-        medium: embed ? 'embed' : 'podcast',
-        ministry: media.podcast.ministry
-      });
-
       if (media.url.indexOf('cloud.bethel.io') !== -1) {
         // Ensure that cloud downloads happen over HTTPS rather than HTTP.
         media.url = media.url.replace('http://', 'https://');

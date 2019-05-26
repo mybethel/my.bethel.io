@@ -14,9 +14,6 @@ beforeAll(function() {
           url: 'mongodb://localhost:27017'
         }
       },
-      elasticsearch: {
-        host: 'localhost:9200'
-      },
       log: { level: 'warn' },
       models: {
         migrate: 'drop',

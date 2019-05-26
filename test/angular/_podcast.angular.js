@@ -70,24 +70,6 @@ window.test.podcast = function() {
         expect($state.go).toHaveBeenCalledWith('podcastView', { podcastId: 1 });
       });
 
-      it('gets subscriber statistics for each podcast.', function() {
-        sailsSocket = injector.get('sailsSocket');
-        spyOn(sailsSocket, 'get').and.callFake(function() {
-          var deferred = q.defer();
-          deferred.resolve({
-            podcast: 'Ghy2',
-            subscribers: 123,
-            historical: [1, 2, 3]
-          });
-          return deferred.promise;
-        });
-        ctrl.getPodcastMeta({ id: 'Ghy2' });
-        expect(sailsSocket.get).toHaveBeenCalledWith('/_analytics/podcastSubscribers/Ghy2');
-        scope.$digest();
-        expect(scope.statistics.Ghy2).toEqual(123);
-        expect(scope.historicalStats.Ghy2[1]).toEqual(2);
-      });
-
       it('displays a wizard to walk the user through creating a new podcast.', function() {
         $mdDialog = injector.get('$mdDialog');
         spyOn($mdDialog, 'show').and.callFake(function() {

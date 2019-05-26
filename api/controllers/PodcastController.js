@@ -115,10 +115,6 @@ module.exports = {
         }
       });
 
-      Analytics.registerHit('podcast.feed', req.param('id'), req, {
-        ministry: podcast.ministry.id
-      });
-
       res.header('Content-Type', 'text/xml; charset=UTF-8');
 
       return res.view({

@@ -44,8 +44,6 @@ function($scope, $state, $stateParams, $location, upload, $mdDialog, sailsSocket
 
   $ctrl.init();
 
-  $scope.podcastStats = sailsSocket.populateOne('_analytics/podcastSubscribers/' + $scope.id);
-
   $ctrl.populateDemo = function() {
     $scope.isDemo = ($scope.subscriberCount < 1 || $scope.subscriberChart.data[0].length < 3);
     if (!$scope.isDemo) return;

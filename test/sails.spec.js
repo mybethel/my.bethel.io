@@ -26,9 +26,6 @@ if (process.env.TRAVIS) {
       url: 'mongodb://localhost:27017'
     }
   };
-  config.elasticsearch = {
-    host: 'localhost:9200'
-  };
 }
 
 // Before all tests are run, ensure that the Sails server is lifted and ready.

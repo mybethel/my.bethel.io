@@ -29,10 +29,6 @@ function($scope, $state, $mdDialog, sailsSocket, $location) {
         return episode.deleted !== true;
       });
     }
-    sailsSocket.get('/_analytics/podcastSubscribers/' + podcast.id).then(function(response) {
-      $scope.statistics[podcast.id] = response.subscribers;
-      $scope.historicalStats[podcast.id] = response.historical;
-    });
   };
 
   // Fetch stats for each of the podcasts.
