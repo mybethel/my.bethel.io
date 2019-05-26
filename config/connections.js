@@ -23,11 +23,7 @@ module.exports.connections = {
   mongo: {
     adapter: 'sails-mongo',
     schema: true,
-    url: process.env.DB_MONGO,
-    mongos: {
-      ssl: Boolean(process.env.DB_MONGO),
-      sslValidate: false
-    }
+    url: process.env.DB_MONGO
   }
 
 };
