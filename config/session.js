@@ -26,10 +26,9 @@ module.exports.session = {
   // }
 
   adapter: 'redis',
-  host: 'aws-us-east-1-portal.6.dblayer.com',
-  port: 10593,
-  db: 0,
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
   prefix: 'sess:',
-  pass: process.env.REDIS_PASS,
+  pass: process.env.REDIS_PASS
 
 };

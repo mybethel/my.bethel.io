@@ -15,9 +15,8 @@ module.exports.sockets = {
   serveClient: true,
 
   adapter: 'socket.io-redis',
-  host: 'aws-us-east-1-portal.6.dblayer.com',
-  port: 10593,
-  db: process.env.REDIS_DB_SOCKETS,
+  host: process.env.REDIS_HOST,
+  port: process.env.REDIS_PORT,
   pass: process.env.REDIS_PASS,
 
 
