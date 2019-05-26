@@ -17,8 +17,7 @@
  * For more information on configuration, check out:
  * http://links.sailsjs.org/docs/config/connections
  */
-
-module.exports.connections = {
+const connections = {
 
   mongo: {
     adapter: 'sails-mongo',
@@ -27,3 +26,14 @@ module.exports.connections = {
   }
 
 };
+
+if (process.env.DB_MONGO) {
+  connections.mongo.mongos = {
+    authSource: 'admin',
+    replicaSet: 'bethel-shard-0',
+    ssl: true
+  };
+  connections.mongo.ssl = true;
+}
+
+module.exports.connections = connections;
