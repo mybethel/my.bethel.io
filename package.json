@@ -26,7 +26,7 @@
     "connect-redis": "1.4.5",
     "cron": "^1.0",
     "elasticsearch": "^10.0.1",
-    "googleapis": "^2.0.4",
+    "googleapis": "^59.0.0",
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
